@@ -1,0 +1,28 @@
+{
+  // ── Tailwind CSS v4 (CSS-first config) ──────────────────────────────────
+  "tailwindCSS.experimental.configFile": "src/app/globals.css",
+
+  // Exclude docs markdown from Tailwind analysis (stops false lint hints)
+  "tailwindCSS.files.exclude": [
+    "**/.git/**",
+    "**/node_modules/**",
+    "**/.hg/**",
+    "docs/**"
+  ],
+
+  // Treat .css files in the src directory as Tailwind entry points
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+
+  // ── TypeScript ────────────────────────────────────────────────────────────
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // ── Editor ────────────────────────────────────────────────────────────────
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" }
+}

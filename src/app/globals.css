@@ -1,14 +1,95 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "tailwindcss";
+
+/* ─── Font ──────────────────────────────────────────────────────────── */
+@theme {
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-manrope: var(--font-manrope), system-ui, sans-serif;
+  --font-roboto: var(--font-roboto), system-ui, sans-serif;
+  --font-montserrat: var(--font-montserrat), system-ui, sans-serif;
+
+  /* ─── Neutral ────────────────────────────────────────────────────── */
+  --color-neutral-0:   #ffffff;
+  --color-neutral-10:  #fbfbfb;
+  --color-neutral-20:  #f6f6f6;
+  --color-neutral-30:  #ededed;
+  --color-neutral-40:  #e2e2e2;
+  --color-neutral-50:  #c7c7c7;
+  --color-neutral-60:  #bab8b9;
+  --color-neutral-70:  #afafae;
+  --color-neutral-80:  #a1a1a1;
+  --color-neutral-90:  #949393;
+  --color-neutral-100: #878886;
+  --color-neutral-200: #797878;
+  --color-neutral-300: #6b6b6b;
+  --color-neutral-400: #615f5f;
+  --color-neutral-500: #535252;
+  --color-neutral-600: #484747;
+  --color-neutral-700: #393737;
+  --color-neutral-800: #292928;
+  --color-neutral-900: #201e1e;
+
+  /* ─── Primary (orange-red brand) ────────────────────────────────── */
+  --color-primary-50:  #fff0ec;
+  --color-primary-100: #ffd2c4;
+  --color-primary-200: #ffbca8;
+  --color-primary-300: #ff9d80;
+  --color-primary-400: #ff8a67;
+  --color-primary-500: #ff6d41;
+  --color-primary-600: #e8633b;
+  --color-primary-700: #b54d2e;
+  --color-primary-800: #8c3c24;
+  --color-primary-900: #6b2e1b;
+
+  /* ─── Yellow ─────────────────────────────────────────────────────── */
+  --color-yellow-50:  #fffce6;
+  --color-yellow-100: #fef7b1;
+  --color-yellow-200: #fef38b;
+  --color-yellow-300: #feed56;
+  --color-yellow-400: #fde935;
+  --color-yellow-500: #fde403;
+  --color-yellow-600: #e6cf03;
+  --color-yellow-700: #b4a202;
+  --color-yellow-800: #8b7d02;
+  --color-yellow-900: #6a6001;
+
+  /* ─── Orange ─────────────────────────────────────────────────────── */
+  --color-orange-50:  #fff5e7;
+  --color-orange-100: #fee0b6;
+  --color-orange-200: #fdd192;
+  --color-orange-300: #fcbd61;
+  --color-orange-400: #fcb042;
+  --color-orange-500: #fb9c13;
+  --color-orange-600: #e48e11;
+  --color-orange-700: #b26f0d;
+  --color-orange-800: #8a560a;
+  --color-orange-900: #694208;
+
+  /* ─── Red ────────────────────────────────────────────────────────── */
+  --color-red-50:  #fee9e8;
+  --color-red-100: #fcbcb9;
+  --color-red-200: #fb9b97;
+  --color-red-300: #f96e67;
+  --color-red-400: #f85149;
+  --color-red-500: #f6261c;
+  --color-red-600: #e02319;
+  --color-red-700: #af1b14;
+  --color-red-800: #87150f;
+  --color-red-900: #67100c;
+
+  /* ─── Semantic aliases ───────────────────────────────────────────── */
+  --color-bg:         #ffffff;
+  --color-bg-subtle:  #f6f6f6;
+  --color-surface:    #ffffff;
+  --color-border:     #ededed;
+  --color-text:       #201e1e;
+  --color-text-muted: #6b6b6b;
+
+  /* ─── Border radii ───────────────────────────────────────────────── */
+  --radius-button: 9999px;
+  --radius-input:  12px;
+  --radius-card:   16px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 html {
   height: 100%;
