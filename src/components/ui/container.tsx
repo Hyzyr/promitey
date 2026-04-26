@@ -7,7 +7,7 @@ interface ContainerProps {
 
 export function Container({ children, className }: ContainerProps) {
   return (
-    <div className={cn("px-[104px] w-full", className)}>
+    <div className={cn("container", className)}>
       {children}
     </div>
   );

@@ -15,7 +15,7 @@ function stripLocale(pathname: string): string {
   return pathname;
 }
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const intlResponse = intlMiddleware(request);
 
   const strippedPath = stripLocale(request.nextUrl.pathname);

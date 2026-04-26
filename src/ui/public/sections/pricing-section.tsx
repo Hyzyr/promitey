@@ -1,9 +1,14 @@
 ﻿import { Container } from "@/components/ui/container";
 
+const imgImage135 =
+  "https://www.figma.com/api/mcp/asset/555cf65b-1eae-4784-a908-84004414d9af";
+const imgEllipse75 =
+  "https://www.figma.com/api/mcp/asset/0bc200db-fd01-4de2-a8fa-3dc9a57793c0";
+
 function DiscountBadge({ label }: { label: string }) {
   return (
     <div
-      className="relative flex items-center justify-center overflow-hidden rounded-[36px] px-[16px] py-[8px]"
+      className="relative flex items-center justify-center overflow-hidden rounded-[36px] px-4 py-2"
       style={{
         background:
           "linear-gradient(169.87deg, rgba(255,255,255,0.12) 7.1%, rgba(255,109,65,0.24) 42.8%, rgba(255,109,65,0.24) 67%, rgba(255,255,255,0.048) 95.5%)",
@@ -12,7 +17,7 @@ function DiscountBadge({ label }: { label: string }) {
           "4px 11px 11px 0px rgba(0,0,0,0.05), inset 0px -0.6px 1.3px rgba(0,0,0,0.25), inset 0px 7px 8.7px rgba(255,255,255,0.8), inset 0px -0.5px 2px 1px rgba(255,255,255,0.5)",
       }}
     >
-      <span className="font-[family-name:var(--font-manrope)] font-medium text-[20px] text-[#484747]">{label}</span>
+      <span className="font-manrope font-medium text-[20px] text-neutral-600">{label}</span>
     </div>
   );
 }
@@ -42,14 +47,14 @@ function PricingCard({
 }: PricingCardProps) {
   return (
     <div
-      className={`flex flex-col gap-[16px] overflow-hidden rounded-[24px] bg-[#f6f6f6] px-[24px] py-[32px] w-full ${height}`}
+      className={`flex flex-col gap-4 overflow-hidden rounded-[24px] bg-neutral-20 px-6 py-8 w-full ${height}`}
       style={{ boxShadow: "0px 20px 32px 0px rgba(0,0,0,0.06)" }}
     >
       {/* Top content block */}
-      <div className="flex flex-1 flex-col gap-[24px] items-start min-h-0">
+        <div className="flex flex-1 flex-col gap-6 items-start min-h-0">
         {/* Plan label */}
         <p
-          className="font-[family-name:var(--font-manrope)] font-extrabold text-[24px] leading-none tracking-[-0.72px] text-[#2b2929] whitespace-nowrap"
+          className="font-manrope font-extrabold text-[24px] leading-none tracking-[-0.72px] text-[#2b2929] whitespace-nowrap"
           style={{ textShadow: "0px 4px 8.4px rgba(254,243,139,0.17)" }}
         >
           {label}
@@ -58,7 +63,7 @@ function PricingCard({
         {/* Original price (strikethrough) */}
         {originalPrice && (
           <div className="relative inline-grid" style={{ gridTemplateColumns: "max-content", gridTemplateRows: "max-content" }}>
-            <p className="col-start-1 row-start-1 font-[family-name:var(--font-manrope)] font-normal text-[48px] leading-[0.9] text-[#a1a1a1] whitespace-nowrap">
+            <p className="col-start-1 row-start-1 font-manrope font-normal text-[48px] leading-[0.9] text-[#a1a1a1] whitespace-nowrap">
               {originalPrice}
             </p>
             <div className="col-start-1 row-start-1 h-[4px] w-[93px] bg-[#878686] mt-[19px] self-start" />
@@ -68,7 +73,7 @@ function PricingCard({
         {/* Main price + discount badge */}
         <div className="flex items-center justify-between w-full">
           <p
-            className="font-[family-name:var(--font-montserrat)] font-bold leading-none tracking-[-2.58px] text-[86px] whitespace-nowrap"
+            className="font-montserrat font-bold leading-none tracking-[-2.58px] text-[86px] whitespace-nowrap"
             style={{ color: priceColor, textShadow: "0px 4px 8.4px rgba(254,243,139,0.17)" }}
           >
             {price}
@@ -79,26 +84,26 @@ function PricingCard({
 
       {/* Divider + period */}
       <div
-        className={`flex items-center border-t border-[#e2e2e2] pt-[16px] pb-[6px] ${perMonth ? "justify-between" : ""}`}
+        className={`flex items-center border-t border-neutral-40 pt-4 pb-1.5 ${perMonth ? "justify-between" : ""}`}
       >
         {perMonth && (
-          <span className="font-[family-name:var(--font-manrope)] font-normal text-[24px] text-[#484747] whitespace-nowrap">
+          <span className="font-manrope font-normal text-[24px] text-neutral-600 whitespace-nowrap">
             {perMonth}
           </span>
         )}
-        <span className="font-[family-name:var(--font-manrope)] font-normal text-[24px] text-[#484747] whitespace-nowrap">
+        <span className="font-manrope font-normal text-[24px] text-neutral-600 whitespace-nowrap">
           {period}
         </span>
       </div>
 
       {/* Select button */}
       {featured ? (
-        <button className="w-full rounded-[20px] bg-[#ff6d41] px-[66px] py-[18px] font-[family-name:var(--font-manrope)] font-semibold text-[22px] text-center text-[#201e1e]">
+        <button className="w-full rounded-[20px] bg-primary-500 px-16.5 py-4.5 font-manrope font-semibold text-[22px] text-center text-neutral-900">
           Select
         </button>
       ) : (
         <button
-          className="w-full rounded-[20px] px-[66px] py-[18px] font-[family-name:var(--font-manrope)] font-semibold text-[22px] text-center text-[#2b2929]"
+          className="w-full rounded-[20px] px-16.5 py-4.5 font-manrope font-semibold text-[22px] text-center text-[#2b2929]"
           style={{
             background: "rgba(43,41,41,0.12)",
             boxShadow: "0px 4px 46px 10px rgba(255,200,0,0.06)",
@@ -115,25 +120,42 @@ export function PricingSection() {
   return (
     <section
       id="pricing"
-      className="relative w-full pb-[120px] pt-[90px] overflow-hidden"
+      className="relative w-full pb-30 pt-22.5 overflow-hidden"
     >
       {/* Dark background */}
-      <div className="absolute inset-0 bg-[#201e1e] rounded-[32px]" />
+      <div className="absolute inset-0 bg-[#201e1e] rounded-[32px] overflow-hidden">
+        {/* Top glow ellipse */}
+        <div className="absolute left-[352px] top-[46px] w-[515px] h-[143px]">
+          <img
+            src={imgEllipse75}
+            alt=""
+            className="absolute inset-[-140%_-39%] w-[calc(100%+280%)] h-[calc(100%+280%)] max-w-none"
+          />
+        </div>
+        {/* Bottom decorative image */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1728px] h-[702px]">
+          <img
+            src={imgImage135}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          />
+        </div>
+      </div>
 
-      <Container className="relative flex flex-col items-center gap-[80px]">
+      <Container className="relative flex flex-col items-center gap-20">
         {/* Heading */}
-        <div className="flex flex-col items-center gap-[16px] text-center">
-          <p className="font-[family-name:var(--font-manrope)] font-normal text-[56px] leading-[1.1] tracking-[-1.12px] text-[#fffce6]">
+          <div className="flex flex-col items-center gap-4 text-center">
+            <p className="font-manrope font-normal text-[56px] leading-[1.1] tracking-[-1.12px] text-yellow-50">
             Choose a suitable plan
           </p>
-          <p className="font-[family-name:var(--font-manrope)] font-normal w-[902px] text-[24px] leading-[1.4] tracking-[-0.48px] text-[#ededed]">
+            <p className="font-manrope font-normal w-[902px] text-[24px] leading-[1.4] tracking-[-0.48px] text-neutral-30">
             Simple and transparent pricing for a stable and secure connection on
             any device.
           </p>
         </div>
 
         {/* Cards row — items-end so ONE MONTH (shortest) aligns to bottom */}
-        <div className="flex w-full items-end gap-[8px] justify-center">
+<div className="flex w-full items-end gap-2 justify-center">
 
           {/* ONE MONTH */}
           <div className="flex flex-1 items-center min-w-0 p-[8px]">
@@ -155,9 +177,9 @@ export function PricingSection() {
             }}
           >
             {/* Best Offer label */}
-            <div className="flex w-full items-center justify-center pb-[14px] pt-[12px] px-[66px]">
+            <div className="flex w-full items-center justify-center pb-3.5 pt-3 px-16.5">
               <p
-                className="font-[family-name:var(--font-manrope)] font-bold text-[28px] tracking-[0.56px] text-center bg-clip-text text-transparent"
+                className="font-manrope font-bold text-[28px] tracking-[0.56px] text-center bg-clip-text text-transparent"
                 style={{
                   backgroundImage:
                     "linear-gradient(182.28deg, rgb(251,251,251) 41.4%, rgb(254,247,177) 97.7%)",

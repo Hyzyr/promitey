@@ -17,29 +17,29 @@ export function LandingHeader() {
   return (
     <header className="sticky top-0 z-50 w-full bg-[#201e1e]" style={{ backdropFilter: "blur(24.75px)" }}>
       {/* Desktop nav */}
-      <div className="hidden w-full items-center justify-between px-[104px] py-[24px] lg:flex">
+      <div className="hidden w-full items-center justify-between px-26 py-6 lg:flex">
         {/* Left: Logo + Language switcher */}
-        <div className="flex items-center gap-[24px]">
+          <div className="flex items-center gap-6">
           {/* Logo */}
-          <Link href="/" className="flex h-[56px] w-[284px] items-center gap-[12px]">
+            <Link href="/" className="flex h-14 w-[284px] items-center gap-3">
             {/* Logo image placeholder */}
-            <div className="h-[54px] w-[32px] bg-[#e2e2e2] rounded-[4px]" />
-            <p className="font-[family-name:var(--font-manrope)] text-[35px] text-[#fbfbfb] whitespace-nowrap">
+              <div className="h-[54px] w-8 bg-neutral-40 rounded-[4px]" />
+              <p className="font-manrope text-[35px] text-neutral-10 whitespace-nowrap">
               <span className="font-medium">Prometey</span>{" "}
               <span className="font-bold">VPN</span>
             </p>
           </Link>
 
           {/* Language switcher */}
-          <div className="flex items-center gap-[4px] rounded-[12px] bg-white/[0.12] p-[8px]">
+            <div className="flex items-center gap-1 rounded-[12px] bg-white/[0.12] p-2">
             {/* Globe icon placeholder */}
-            <div className="h-[24px] w-[24px] rounded-full bg-white/20 flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbfbfb" strokeWidth="2">
                 <circle cx="12" cy="12" r="10"/>
                 <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
               </svg>
             </div>
-            <span className="font-[family-name:var(--font-roboto)] font-normal text-[18px] text-[#fbfbfb]">  En</span>
+              <span className="font-roboto font-normal text-[18px] text-neutral-10">  En</span>
             <div className="rotate-90">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbfbfb" strokeWidth="2">
                 <path d="M9 18l6-6-6-6"/>
@@ -49,19 +49,19 @@ export function LandingHeader() {
         </div>
 
         {/* Right: Nav links + Login */}
-        <div className="flex items-center gap-[40px]">
+        <div className="flex items-center gap-10">
           {NAV.map(({ href, label }) => (
             <a
               key={href}
               href={href}
-              className="font-[family-name:var(--font-roboto)] font-normal text-[18px] text-[#fbfbfb]"
+              className="font-roboto font-normal text-[18px] text-neutral-10"
             >
               {label}
             </a>
           ))}
           <Link
             href="/login"
-            className="inline-flex items-center justify-center rounded-[16px] bg-[#ff6d41] px-[32px] py-[16px] font-[family-name:var(--font-manrope)] font-semibold text-[18px] text-[#201e1e]"
+            className="inline-flex items-center justify-center rounded-[16px] bg-primary-500 px-8 py-4 font-manrope font-semibold text-[18px] text-neutral-900"
           >
             Login
           </Link>
@@ -72,7 +72,7 @@ export function LandingHeader() {
       <div className="flex items-center justify-between px-5 py-4 lg:hidden">
         <Link href="/" className="flex items-center gap-2">
           <div className="h-8 w-6 bg-[#e2e2e2] rounded-[4px]" />
-          <span className="font-[family-name:var(--font-manrope)] text-[20px] font-bold text-[#fbfbfb]">
+          <span className="font-manrope text-[20px] font-bold text-neutral-10">
             Prometey VPN
           </span>
         </Link>
@@ -86,20 +86,19 @@ export function LandingHeader() {
       </div>
 
       {mobileOpen && (
-        <div className="space-y-4 border-t border-[#484747] px-5 py-6 lg:hidden">
+          <div className="space-y-4 border-t border-neutral-600 px-5 py-6 lg:hidden">
           {NAV.map(({ href, label }) => (
             <a
               key={href}
               href={href}
               onClick={() => setMobileOpen(false)}
-              className="block font-[family-name:var(--font-roboto)] text-[18px] text-[#fbfbfb]"
-            >
+              className="block font-roboto text-[18px] text-neutral-10"            >
               {label}
             </a>
           ))}
           <Link
             href="/login"
-            className="block w-full rounded-[16px] bg-[#ff6d41] px-8 py-4 text-center font-[family-name:var(--font-manrope)] font-semibold text-[18px] text-[#201e1e]"
+            className="block w-full rounded-[16px] bg-primary-500 px-8 py-4 text-center font-manrope font-semibold text-[18px] text-neutral-900"
           >
             Login
           </Link>

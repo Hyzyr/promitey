@@ -3,6 +3,11 @@
 import { useState } from "react";
 import { Container } from "@/components/ui/container";
 
+const imgPolygon14 =
+  "https://www.figma.com/api/mcp/asset/8f2a007e-17a6-484a-948d-06e6e89cd9ed";
+const imgPolygon15 =
+  "https://www.figma.com/api/mcp/asset/afdb9bf3-ba01-43c5-a0c6-7310774d5385";
+
 const FAQ_ITEMS = [
   {
     q: "What is Prometey VPN and how does it work?",
@@ -43,21 +48,21 @@ export function FaqSection() {
   }
 
   return (
-    <section id="faq" className="w-full pb-[120px] pt-[90px]">
-      <Container className="flex flex-col gap-[60px] items-center">
+    <section id="faq" className="w-full pb-30 pt-22.5">
+      <Container className="flex flex-col gap-15 items-center">
         {/* Heading */}
-        <p className="font-[family-name:var(--font-manrope)] font-medium text-[40px] leading-[1.1] tracking-[-0.8px] text-[#484747] text-center w-full">
+        <p className="font-manrope font-medium text-[40px] leading-[1.1] tracking-[-0.8px] text-neutral-600 text-center w-full">
           Frequently Asked Questions
         </p>
 
         {/* Accordion list */}
-        <div className="flex w-[1010px] flex-col gap-[24px]">
+          <div className="flex w-[1010px] flex-col gap-6">
           {FAQ_ITEMS.map((item, i) => {
             const isOpen = open.has(i);
             return (
               <div
                 key={i}
-                className={`flex flex-col rounded-[16px] bg-[#f6f6f6]${isOpen ? " gap-[12px]" : ""}`}
+                className={`flex flex-col rounded-[16px] bg-neutral-20${isOpen ? " gap-3" : ""}`}
                 style={{
                   border: isOpen ? "1px solid #ff6d41" : "1px solid #e2e2e2",
                   boxShadow: isOpen ? "none" : "0px 10px 22.1px 0px rgba(0,0,0,0.02)",
@@ -66,27 +71,26 @@ export function FaqSection() {
                 {/* Question row */}
                 <button
                   onClick={() => toggle(i)}
-                  className="flex w-full items-center gap-[10px] p-[26px] text-left"
+                  className="flex w-full items-center gap-2.5 p-6.5 text-left"
                   aria-expanded={isOpen}
                 >
-                  <p className="flex-1 font-[family-name:var(--font-manrope)] font-bold text-[24px] leading-[1.2] text-[#2b2929]">
+                  <p className="flex-1 font-manrope font-bold text-[24px] leading-[1.2] text-[#2b2929]">
                     {item.q}
                   </p>
                   {/* Arrow icon */}
-                  <div
-                    className="shrink-0 transition-transform"
-                    style={{ transform: isOpen ? "rotate(90deg)" : "rotate(0deg)" }}
-                  >
-                    <svg width="16" height="20" viewBox="0 0 16 20" fill="none">
-                      <path d="M4 4L12 10L4 16" stroke="#2b2929" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </div>
+                  {isOpen ? (
+                    <div className="shrink-0" style={{ transform: "rotate(90deg)" }}>
+                      <img src={imgPolygon14} alt="" className="w-[20px] h-[16px]" />
+                    </div>
+                  ) : (
+                    <img src={imgPolygon15} alt="" className="shrink-0 w-[16px] h-[20px]" />
+                  )}
                 </button>
 
                 {/* Answer */}
                 {isOpen && (
-                  <div className="pb-[26px] px-[26px]">
-                    <p className="font-[family-name:var(--font-montserrat)] font-normal text-[18px] leading-[1.6] text-[#2b2929]">
+                  <div className="pb-6.5 px-6.5">
+                    <p className="font-montserrat font-normal text-[18px] leading-[1.6] text-[#2b2929]">
                       {item.a}
                     </p>
                   </div>

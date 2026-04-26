@@ -88,6 +88,28 @@
   --radius-button: 9999px;
   --radius-input:  12px;
   --radius-card:   16px;
+
+  /* ─── Container ─────────────────────────────────────────────────── */
+  --container-max-width: 1440px;
+  --container-padding-x: 6.5rem;   /* 104px — matches Figma layout */
+  --container-padding-x-sm: 2rem;  /* 32px — mobile */
+  --container-padding-x-md: 3rem;  /* 48px — tablet */
+}
+
+/* ─── Container utility ──────────────────────────────────────────────── */
+@utility container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding-x-sm);
+
+  @media (width >= 768px) {
+    padding-inline: var(--container-padding-x-md);
+  }
+
+  @media (width >= 1280px) {
+    padding-inline: var(--container-padding-x);
+  }
 }
 
 
