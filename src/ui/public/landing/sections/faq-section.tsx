@@ -56,7 +56,7 @@ export function FaqSection() {
         </p>
 
         {/* Accordion list */}
-          <div className="flex w-[1010px] flex-col gap-6">
+          <div className="flex w-252.5 flex-col gap-6">
           {FAQ_ITEMS.map((item, i) => {
             const isOpen = open.has(i);
             return (
@@ -80,10 +80,10 @@ export function FaqSection() {
                   {/* Arrow icon */}
                   {isOpen ? (
                     <div className="shrink-0" style={{ transform: "rotate(90deg)" }}>
-                      <img src={imgPolygon14} alt="" className="w-[20px] h-[16px]" />
+                      <img src={imgPolygon14} alt="" className="w-5 h-4" />
                     </div>
                   ) : (
-                    <img src={imgPolygon15} alt="" className="shrink-0 w-[16px] h-[20px]" />
+                    <img src={imgPolygon15} alt="" className="shrink-0 w-4 h-5" />
                   )}
                 </button>
 

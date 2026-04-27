@@ -1,6 +1,8 @@
 "use client";
 
 import { Container } from "@/components/ui/container";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const SOCIAL = [
   { label: "Instagram" },
@@ -33,11 +35,11 @@ export function LandingFooter() {
 <div className="flex gap-4 items-start w-full">
 
         {/* Col 1 — Brand */}
-          <div className="flex w-[496px] shrink-0 flex-col gap-6 pr-12">
+          <div className="flex w-124 shrink-0 flex-col gap-6 pr-12">
           {/* Logo */}
-            <div className="flex h-14 w-[293px] items-center gap-3">
+            <div className="flex h-14 w-73.25 items-center gap-3">
               {/* Logo image placeholder */}
-              <div className="h-[54px] w-8 bg-neutral-600 rounded-[4px]" />
+              <div className="h-13.5 w-8 bg-neutral-600 rounded-sm" />
               <p className="font-manrope text-[35px] text-neutral-30 whitespace-nowrap">
               <span className="font-medium">Prometey</span>{" "}
               <span className="font-bold">VPN</span>
@@ -59,25 +61,26 @@ export function LandingFooter() {
             </p>
               <div className="flex gap-2">
               {SOCIAL.map(({ label }) => (
-                <button
+                <Button
                   key={label}
                   aria-label={label}
-                  className="flex items-center justify-center rounded-[12px] bg-neutral-600 p-2.5"
+                  size="sm"
+                  className="p-2.5 bg-neutral-600"
                 >
                   {/* Social icon placeholder */}
                   <div className="h-6 w-6" />
-                </button>
+                </Button>
               ))}
             </div>
           </div>
         </div>
 
         {/* Col 2 — Platform */}
-          <div className="flex w-[238px] shrink-0 flex-col gap-6">
+          <div className="flex w-59.5 shrink-0 flex-col gap-6">
             <p className="font-manrope font-normal text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
             Платформа
           </p>
-          <nav className="flex flex-col gap-3 w-[171px]">
+          <nav className="flex flex-col gap-3 w-42.75">
             {PLATFORM_LINKS.map(({ label, href }) => (
               <a
                 key={href}
@@ -91,7 +94,7 @@ export function LandingFooter() {
         </div>
 
         {/* Col 3 — Support */}
-        <div className="flex w-[240px] shrink-0 flex-col gap-6">
+        <div className="flex w-60 shrink-0 flex-col gap-6">
           <p className="font-manrope font-normal text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
             Информация и поддержка
           </p>
@@ -110,34 +113,28 @@ export function LandingFooter() {
 
         {/* Col 4 — Contact */}
         <div className="flex flex-1 flex-col items-end">
-          <div className="flex w-[370px] flex-col gap-8">
+          <div className="flex w-92.5 flex-col gap-8">
             <p className="font-manrope font-normal text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               Contact Us
             </p>
             <form className="flex flex-col gap-4 w-full" onSubmit={(e) => e.preventDefault()}>
               {/* Email input */}
-              <div className="flex items-center rounded-[16px] border border-[#bab9b9] bg-neutral-20 px-5.5 py-4.5">
-                <input
-                  type="email"
-                  placeholder="Your email address"
-                  className="font-roboto font-medium w-full bg-transparent text-[16px] tracking-[0.32px] text-neutral-600 outline-none placeholder:text-neutral-600"
-                />
-              </div>
+              <Input
+                type="email"
+                placeholder="Your email address"
+              />
               {/* Message textarea */}
-              <div className="flex items-start rounded-[16px] border border-[#bab9b9] bg-neutral-20 px-5.5 py-4.5">
+              <div className="flex items-start rounded-2xl border border-neutral-60 bg-neutral-20 px-5.5 py-4.5">
                 <textarea
                   placeholder="Message"
                   rows={4}
-                  className="font-roboto font-medium w-full h-[131px] resize-none bg-transparent text-[16px] tracking-[0.32px] text-neutral-600 outline-none placeholder:text-neutral-600"
+                  className="font-roboto font-medium w-full h-32.75 resize-none bg-transparent text-[16px] tracking-[0.32px] text-neutral-600 outline-none placeholder:text-neutral-600"
                 />
               </div>
               {/* Send button */}
-              <button
-                type="submit"
-                className="w-[138px] rounded-[16px] bg-primary-500 px-8 py-4 font-manrope font-semibold text-[18px] tracking-[0.36px] text-neutral-900"
-              >
+              <Button type="submit" variant="orange" size="md" className="w-34.5">
                 Send
-              </button>
+              </Button>
             </form>
           </div>
         </div>

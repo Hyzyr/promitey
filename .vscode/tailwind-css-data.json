@@ -1,0 +1,35 @@
+{
+  "version": 1.1,
+  "atDirectives": [
+    {
+      "name": "@theme",
+      "description": "Tailwind v4: Define design tokens as CSS custom properties. Replaces tailwind.config.js `theme`.",
+      "references": [{ "name": "Tailwind CSS Docs", "url": "https://tailwindcss.com/docs/theme" }]
+    },
+    {
+      "name": "@utility",
+      "description": "Tailwind v4: Define a custom utility class.",
+      "references": [{ "name": "Tailwind CSS Docs", "url": "https://tailwindcss.com/docs/adding-custom-styles" }]
+    },
+    {
+      "name": "@source",
+      "description": "Tailwind v4: Explicitly add a source path for content scanning.",
+      "references": [{ "name": "Tailwind CSS Docs", "url": "https://tailwindcss.com/docs/detecting-classes-in-source-files" }]
+    },
+    {
+      "name": "@variant",
+      "description": "Tailwind v4: Define a custom variant.",
+      "references": [{ "name": "Tailwind CSS Docs", "url": "https://tailwindcss.com/docs/adding-custom-styles" }]
+    },
+    {
+      "name": "@layer",
+      "description": "Tailwind CSS: Target a specific layer — base, components, or utilities.",
+      "references": [{ "name": "Tailwind CSS Docs", "url": "https://tailwindcss.com/docs/adding-custom-styles#using-css-and-layer" }]
+    },
+    {
+      "name": "@apply",
+      "description": "Tailwind CSS: Inline any existing utility classes into your own custom CSS.",
+      "references": [{ "name": "Tailwind CSS Docs", "url": "https://tailwindcss.com/docs/reusing-styles#extracting-classes-with-apply" }]
+    }
+  ]
+}

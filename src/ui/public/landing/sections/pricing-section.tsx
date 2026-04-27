@@ -1,4 +1,5 @@
 ﻿import { Container } from "@/components/ui/container";
+import { Button } from "@/components/ui/button";
 
 const imgImage135 =
   "https://www.figma.com/api/mcp/asset/555cf65b-1eae-4784-a908-84004414d9af";
@@ -43,11 +44,11 @@ function PricingCard({
   perMonth,
   period,
   featured = false,
-  height = "h-[431px]",
+    height = "h-107.75",
 }: PricingCardProps) {
   return (
     <div
-      className={`flex flex-col gap-4 overflow-hidden rounded-[24px] bg-neutral-20 px-6 py-8 w-full ${height}`}
+      className={`flex flex-col gap-4 overflow-hidden rounded-3xl bg-neutral-20 px-6 py-8 w-full ${height}`}
       style={{ boxShadow: "0px 20px 32px 0px rgba(0,0,0,0.06)" }}
     >
       {/* Top content block */}
@@ -63,10 +64,10 @@ function PricingCard({
         {/* Original price (strikethrough) */}
         {originalPrice && (
           <div className="relative inline-grid" style={{ gridTemplateColumns: "max-content", gridTemplateRows: "max-content" }}>
-            <p className="col-start-1 row-start-1 font-manrope font-normal text-[48px] leading-[0.9] text-[#a1a1a1] whitespace-nowrap">
+            <p className="col-start-1 row-start-1 font-manrope font-normal text-[48px] leading-[0.9] text-neutral-80 whitespace-nowrap">
               {originalPrice}
             </p>
-            <div className="col-start-1 row-start-1 h-[4px] w-[93px] bg-[#878686] mt-[19px] self-start" />
+            <div className="col-start-1 row-start-1 h-1 w-23.25 bg-[#878686] mt-4.75 self-start" />
           </div>
         )}
 
@@ -97,21 +98,13 @@ function PricingCard({
       </div>
 
       {/* Select button */}
-      {featured ? (
-        <button className="w-full rounded-[20px] bg-primary-500 px-16.5 py-4.5 font-manrope font-semibold text-[22px] text-center text-neutral-900">
-          Select
-        </button>
-      ) : (
-        <button
-          className="w-full rounded-[20px] px-16.5 py-4.5 font-manrope font-semibold text-[22px] text-center text-[#2b2929]"
-          style={{
-            background: "rgba(43,41,41,0.12)",
-            boxShadow: "0px 4px 46px 10px rgba(255,200,0,0.06)",
-          }}
-        >
-          Select
-        </button>
-      )}
+      <Button
+        variant={featured ? 'orange' : 'secondary'}
+        size="lg"
+        className="w-full"
+      >
+        Select
+      </Button>
     </div>
   );
 }
@@ -123,17 +116,17 @@ export function PricingSection() {
       className="relative w-full pb-30 pt-22.5 overflow-hidden"
     >
       {/* Dark background */}
-      <div className="absolute inset-0 bg-[#201e1e] rounded-[32px] overflow-hidden">
+      <div className="absolute inset-0 bg-neutral-900 rounded-4xl overflow-hidden">
         {/* Top glow ellipse */}
-        <div className="absolute left-[352px] top-[46px] w-[515px] h-[143px]">
+        <div className="absolute left-88 top-11.5 w-128.75 h-35.75">
           <img
             src={imgEllipse75}
             alt=""
-            className="absolute inset-[-140%_-39%] w-[calc(100%+280%)] h-[calc(100%+280%)] max-w-none"
+            className="absolute inset-[-140%_-39%] w-[380%] h-[380%] max-w-none"
           />
         </div>
         {/* Bottom decorative image */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[1728px] h-[702px]">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-432 h-175.5">
           <img
             src={imgImage135}
             alt=""
@@ -148,7 +141,7 @@ export function PricingSection() {
             <p className="font-manrope font-normal text-[56px] leading-[1.1] tracking-[-1.12px] text-yellow-50">
             Choose a suitable plan
           </p>
-            <p className="font-manrope font-normal w-[902px] text-[24px] leading-[1.4] tracking-[-0.48px] text-neutral-30">
+            <p className="font-manrope font-normal w-225.5 text-[24px] leading-[1.4] tracking-[-0.48px] text-neutral-30">
             Simple and transparent pricing for a stable and secure connection on
             any device.
           </p>
@@ -158,18 +151,18 @@ export function PricingSection() {
 <div className="flex w-full items-end gap-2 justify-center">
 
           {/* ONE MONTH */}
-          <div className="flex flex-1 items-center min-w-0 p-[8px]">
+          <div className="flex flex-1 items-center min-w-0 p-2">
             <PricingCard
               label="ONE MONTH"
               price="3 €"
               period="1 Month"
-              height="h-[431px]"
+              height="h-107.75"
             />
           </div>
 
           {/* YEAR — featured */}
           <div
-            className="flex flex-1 flex-col items-center min-w-0 overflow-hidden pb-[8px] px-[8px] rounded-[36px] shadow-[4px_11px_11px_0px_rgba(0,0,0,0.12)] relative"
+            className="flex flex-1 flex-col items-center min-w-0 overflow-hidden pb-2 px-2 rounded-[36px] shadow-[4px_11px_11px_0px_rgba(0,0,0,0.12)] relative"
             style={{
               background:
                 "linear-gradient(152.45deg, rgba(255,255,255,0.07) 7.1%, rgba(254,243,139,0.126) 42.8%, rgba(254,243,139,0.14) 67%, rgba(255,255,255,0.028) 95.5%)",
@@ -197,12 +190,12 @@ export function PricingSection() {
               perMonth="1 € / mo"
               period="12 Months"
               featured
-              height="h-[500px]"
+              height="h-125"
             />
           </div>
 
           {/* HALF YEAR */}
-          <div className="flex flex-1 flex-col min-w-0 p-[8px]">
+          <div className="flex flex-1 flex-col min-w-0 p-2">
             <PricingCard
               label="HALF YEAR"
               originalPrice="18 €"
@@ -210,12 +203,12 @@ export function PricingSection() {
               discount="-33%"
               perMonth="1.33 € / mo"
               period="6 Months"
-              height="h-[500px]"
+              height="h-125"
             />
           </div>
 
           {/* THREE MONTHS */}
-          <div className="flex flex-1 flex-col min-w-0 p-[8px]">
+          <div className="flex flex-1 flex-col min-w-0 p-2">
             <PricingCard
               label="THREE MONTHS"
               originalPrice="9 €"
@@ -223,7 +216,7 @@ export function PricingSection() {
               discount="-17%"
               perMonth="1.67 € / mo"
               period="3 Months"
-              height="h-[500px]"
+              height="h-125"
             />
           </div>
         </div>

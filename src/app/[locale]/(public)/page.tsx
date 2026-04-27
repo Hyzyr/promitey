@@ -1,9 +1,9 @@
-import { HeroSection } from "@/ui/public/sections/hero-section";
-import { BenefitsSection } from "@/ui/public/sections/benefits-section";
-import { ConnectGuide } from "@/ui/public/sections/connect-guide";
-import { TestimonialsSection } from "@/ui/public/sections/testimonials-section";
-import { PricingSection } from "@/ui/public/sections/pricing-section";
-import { FaqSection } from "@/ui/public/sections/faq-section";
+import { HeroSection } from "@/ui/public/landing/sections/hero-section";
+import { BenefitsSection } from "@/ui/public/landing/sections/benefits/benefits-section";
+import { ConnectGuide } from "@/ui/public/landing/sections/connect-guide";
+import { TestimonialsSection } from "@/ui/public/landing/sections/testimonials-section";
+import { PricingSection } from "@/ui/public/landing/sections/pricing-section";
+import { FaqSection } from "@/ui/public/landing/sections/faq-section";
 
 export default function LandingPage() {
   return (

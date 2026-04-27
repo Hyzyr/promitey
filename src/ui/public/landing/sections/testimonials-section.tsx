@@ -68,7 +68,7 @@ export function TestimonialsSection() {
     >
       {/* Blurred background decoration (left side) */}
       <div
-        className="absolute left-[-213px] top-[73px] w-[938px] h-[800px] pointer-events-none"
+        className="absolute -left-53.25 top-18.25 w-234.5 h-200 pointer-events-none"
         style={{ filter: "blur(0.5px)" }}
       >
         <img
@@ -128,11 +128,11 @@ export function TestimonialsSection() {
         </div>
 
         {/* Cards row */}
-        <div className="flex gap-4 items-center pt-[37px]">
+        <div className="flex gap-4 items-center pt-9.25">
           {TESTIMONIALS.map((t) => (
             <div
               key={t.id}
-              className="relative flex w-[525px] shrink-0 gap-[16px] rounded-[24px] pl-[18px] pr-[24px] py-[18px] items-center"
+              className="relative flex w-131.25 shrink-0 gap-4 rounded-3xl pl-4.5 pr-6 py-4.5 items-center"
               style={{
                 border: `1px solid ${t.border}`,
                 background: t.bg,
@@ -142,7 +142,7 @@ export function TestimonialsSection() {
             >
               {/* Quote badge (absolute top-right) */}
               <div
-                className="absolute -top-[31px] right-12 flex h-15 w-15 items-center justify-center rounded-full"
+                className="absolute -top-7.75 right-12 flex h-15 w-15 items-center justify-center rounded-full"
                 style={{
                   background:
                     "linear-gradient(160.98deg, rgba(255,255,255,0.16) 7.1%, rgba(254,243,139,0.288) 42.8%, rgba(251,156,19,0.16) 67%, rgba(255,255,255,0.064) 95.5%)",

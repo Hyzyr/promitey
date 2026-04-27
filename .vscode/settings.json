@@ -2,6 +2,10 @@
   // ── Tailwind CSS v4 (CSS-first config) ──────────────────────────────────
   "tailwindCSS.experimental.configFile": "src/app/globals.css",
 
+  // Teach VS Code's CSS language server about Tailwind v4 at-rules (@theme, @utility, @apply…)
+  // This is the proper approach — VS Code understands these natively with docs, not just ignores them
+  "css.customData": [".vscode/tailwind-css-data.json"],
+
   // Exclude docs markdown from Tailwind analysis (stops false lint hints)
   "tailwindCSS.files.exclude": [
     "**/.git/**",
