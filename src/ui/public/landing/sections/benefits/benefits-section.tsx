@@ -4,7 +4,7 @@ import {
   YourInternetCard,
   ForYourFamilyCard,
   HighSpeedCard,
-} from './benefits-components';
+} from './benefits-cards';
 
 export function BenefitsSection() {
   return (

@@ -139,11 +139,34 @@ body {
 @utility logo {
   @apply text-[20px] h-[2em] w-auto;
 }
+@utility icon {
+  font-size: inherit;
+  width: 1em;
+  height: 1em;
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
 @utility glass {
-  background: linear-gradient(176.11deg, rgba(255,255,255,0.075) 7.1%, rgba(254,243,139,0.135) 42.8%, rgba(254,243,139,0.15) 67%, rgba(255,255,255,0.03) 95.5%);
-  box-shadow: 4px 11px 5.5px rgba(0,0,0,0.05), inset -0.5px 0.5px 1.5px rgba(255,255,255,0.77), inset 0.5px -0.5px 1px rgba(0,0,0,0.6), inset 0px 4px 9.4px rgba(255,255,255,0.25);
-  border: 0.5px solid rgba(255,255,255,0.25);
+  background: linear-gradient(
+    176.11deg,
+    rgba(255, 255, 255, 0.075) 7.1%,
+    rgba(254, 243, 139, 0.135) 42.8%,
+    rgba(254, 243, 139, 0.15) 67%,
+    rgba(255, 255, 255, 0.03) 95.5%
+  );
+  box-shadow:
+    4px 11px 5.5px rgba(0, 0, 0, 0.05),
+    inset -0.5px 0.5px 1.5px rgba(255, 255, 255, 0.77),
+    inset 0.5px -0.5px 1px rgba(0, 0, 0, 0.6),
+    inset 0px 4px 9.4px rgba(255, 255, 255, 0.25);
+  border: 0.5px solid rgba(255, 255, 255, 0.25);
 }
 @utility bg {
   @apply absolute isolate inset-0 -z-1 pointer-events-none;
+}
+@utility bg-item {
+  @apply absolute w-auto!;
+  max-width: unset;
 }
