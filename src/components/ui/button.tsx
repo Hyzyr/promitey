@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
 
-type Variant = "default" | "secondary" | "orange";
+type Variant = "default" | "secondary" | "orange" | "glass";
 type Size = "sm" | "md" | "lg";
 
 interface ButtonProps extends React.ComponentPropsWithRef<"button"> {
@@ -24,13 +24,16 @@ const variantClasses: Record<Variant, string> = {
   secondary:
     "bg-[rgba(43,41,41,0.12)] text-neutral-800 font-manrope font-semibold shadow-[0px_4px_46px_10px_rgba(255,200,0,0.06)] " +
     "hover:bg-[rgba(43,41,41,0.20)] active:bg-[rgba(43,41,41,0.28)]",
+  glass:
+    "glass text-neutral-800 font-manrope font-semibold " +
+    "hover:brightness-[1.06] active:brightness-95",
 };
 
-// sm=12px radius, md=16px radius, lg=20px radius
+// sm=12px radius, md=16px radius, lg=24px radius
 const sizeClasses: Record<Size, string> = {
-  sm: "px-6 py-3 rounded-xl text-base",
-  md: "px-8 py-3.5 rounded-2xl text-[18px]",
-  lg: "px-16.5 py-4 rounded-[20px] text-[22px]",
+  sm: "px-6 py-3 rounded-sm text-base",
+  md: "px-8 py-3.5 rounded-md text-[18px]",
+  lg: "px-16.5 py-4 rounded-lg text-[22px]",
 };
 
 const isExternal = (href: string) =>
@@ -38,7 +41,7 @@ const isExternal = (href: string) =>
 
 const isAnchor = (href: string) => href.startsWith("#");
 
-export function Button({
+export const Button = ({
   ref,
   href,
   variant = "default",
@@ -48,7 +51,7 @@ export function Button({
   children,
   disabled,
   ...props
-}: ButtonProps) {
+}: ButtonProps) => {
   const baseClass = cn(
     "flex items-center justify-center whitespace-nowrap leading-[2.1]",
     "transition duration-150 focus-visible:outline-none",

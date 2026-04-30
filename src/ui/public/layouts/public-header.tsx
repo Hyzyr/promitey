@@ -1,20 +1,22 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { Menu, X } from 'lucide-react';
 import { Logo, LogoWithText } from '@/components/ui/logo';
 import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { Button } from '@/components/ui/button';
 
-const NAV = [
-  { href: '#benefits', label: 'Benefits' },
-  { href: '#pricing', label: 'Pricing' },
-  { href: '#guide', label: 'How to connect' },
-  { href: '#faq', label: 'F.A.Q' },
-];
-
-export function LandingHeader() {
+export const LandingHeader = () => {
+  const t = useTranslations('landing.header');
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const NAV = [
+    { href: '#benefits', label: t('nav.benefits') },
+    { href: '#pricing', label: t('nav.pricing') },
+    { href: '#guide', label: t('nav.guide') },
+    { href: '#faq', label: t('nav.faq') },
+  ];
 
   return (
     <header className="absolute top-0 z-2 w-full bg-neutral-900">
@@ -39,7 +41,7 @@ export function LandingHeader() {
               {label}
             </a>
           ))}
-          <Button href="/login" variant="orange" size="md">Login</Button>
+          <Button href="/login" variant="orange" size="md">{t('login')}</Button>
         </div>
       </div>
 
@@ -69,7 +71,7 @@ export function LandingHeader() {
               {label}
             </a>
           ))}
-          <Button href="/login" variant="orange" size="md" className="w-full">Login</Button>
+          <Button href="/login" variant="orange" size="md" className="w-full">{t('login')}</Button>
         </div>
       )}
     </header>

@@ -16,12 +16,12 @@ interface DropdownProps {
   className?: string;
 }
 
-export function Dropdown({
+export const Dropdown = ({
   trigger,
   items,
   align = 'left',
   className,
-}: DropdownProps) {
+}: DropdownProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -47,7 +47,7 @@ export function Dropdown({
       {open && (
         <div
           className={cn(
-            'absolute top-full z-50 mt-1.5 min-w-full overflow-hidden rounded-xl border border-white/10',
+            'absolute top-full z-50 mt-1.5 min-w-full overflow-hidden rounded-sm border border-white/10',
             'bg-neutral-900 shadow-[0_8px_24px_rgba(0,0,0,0.35)]',
             align === 'right' ? 'right-0' : 'left-0',
           )}>

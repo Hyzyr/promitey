@@ -5,7 +5,7 @@ interface ContainerProps {
   className?: string;
 }
 
-export function Container({ children, className }: ContainerProps) {
+export const Container = ({ children, className }: ContainerProps) => {
   return (
     <div className={cn("container", className)}>
       {children}

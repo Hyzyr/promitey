@@ -11,7 +11,7 @@ const LOCALES: { value: Locale; label: string }[] = [
   { value: 'ru', label: 'Ru' },
 ];
 
-export function LanguageSwitcher() {
+export const LanguageSwitcher = () => {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const pathname = usePathname();
@@ -19,7 +19,7 @@ export function LanguageSwitcher() {
   const current = LOCALES.find((l) => l.value === locale) ?? LOCALES[0];
 
   const trigger = (
-    <div className="flex items-center gap-1 rounded-xl bg-white/12 p-2">
+    <div className="flex items-center gap-1 rounded-sm bg-white/12 p-2">
       <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/20">
         <Globe className="h-4 w-4 text-neutral-10" strokeWidth={2} />
       </div>

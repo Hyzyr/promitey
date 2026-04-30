@@ -30,7 +30,7 @@
         "line1": "Turn the internet 180°",
         "line2": "Your freedom in one click"
       },
-      "subtitle": "<b>Prometey is a high-speed VPN</b> for accessing any service and ensuring stable business operations. <b>One subscription for 10 of your devices</b>. It simply works where others give up.",
+      "subtitle": "**Prometey is a high-speed VPN** for accessing any service and ensuring stable business operations. **One subscription for 10 of your devices**. It simply works where others give up.",
       "ctaPrimary": "Try for Free",
       "ctaSecondary": "How it works?"
     },
@@ -46,12 +46,12 @@
           "body": "No card required. A real free test: verify the quality, then decide."
         },
         "rules": {
-          "title": "Your internet — your rules",
+          "title": "Your internet\n— your rules",
           "body": "Watch movies, chat, read news without restrictions. Prometey removes all barriers.",
           "cta": "Try Now"
         },
         "family": {
-          "title": "For you, your family, and loved ones",
+          "title": "For you, your family,\nand loved ones",
           "body": "Up to 10 devices on one subscription. Phone, laptop, tablet, TV — enough for the whole family."
         },
         "speed": {
@@ -61,7 +61,7 @@
       }
     },
     "guide": {
-      "title": "Connect in <strong>2 minutes</strong>",
+      "title": "Connect in **2 minutes**",
       "steps": [
         "Choose a plan and pay on the website or via Telegram",
         "Get your configuration file on the website or through our bot",
@@ -134,7 +134,7 @@
       ]
     },
     "footer": {
-      "tagline": "Opening up a free and high-speed gateway to the digital world. Prometey delivers uncompromising privacy and stability through modern VLESS and OpenVPN protocols.",
+      "tagline": "Opening up a free and high-speed gateway to the digital world. **Prometey** delivers uncompromising privacy and stability through modern VLESS and OpenVPN protocols.",
       "follow": "Follow us on:",
       "platform": {
         "title": "Platform",

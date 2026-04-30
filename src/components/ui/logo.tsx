@@ -1,4 +1,5 @@
 type LogoProps = {
+  size?: number;
   href?: string;
   onClick?: () => void;
 };
@@ -11,9 +12,11 @@ export const Logo = ({ href, onClick }: LogoProps) => {
   );
 };
 
-export const LogoWithText = ({ href, onClick }: LogoProps) => {
+export const LogoWithText = ({ href, size, onClick }: LogoProps) => {
+  const style = !size ? {} : { fontSize: size };
+  
   return (
-    <a href={href} onClick={onClick} className="logo">
+    <a href={href} onClick={onClick} className="logo" style={style}>
       <img
         src="/logo-with-text.svg"
         alt="Prometey VPN Logo"

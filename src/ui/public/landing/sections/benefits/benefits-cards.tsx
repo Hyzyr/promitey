@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import {
   CloackBlurred,
@@ -17,8 +18,8 @@ import {
   BenefitCard,
   ParallaxItem,
   useCardParallax,
-  VideoCard,
 } from './components';
+import { VideoCard } from '@/components/ui/video-card';
 
 // ── Images ────────────────────────────────────────────────────────────────────
 
@@ -30,16 +31,22 @@ const imgYourInternet = '/images/benefits/circle-blurred.png';
 
 // ── Cards ─────────────────────────────────────────────────────────────────────
 
-export function CustomerSupportCard() {
+type CardProps = {
+  isActive?: boolean;
+};
+
+export const CustomerSupportCard = ({ isActive }: CardProps) => {
+  const t = useTranslations('landing.benefits.items.support');
   const { ref, rawX, rawY, onMouseMove, onMouseLeave } = useCardParallax();
   return (
     <BenefitCard
       ref={ref as React.RefObject<HTMLDivElement>}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
+      isActive={isActive}
       className="col-start-1 row-start-1"
-      title="Customer Support"
-      description="We respond quickly*. Real people are on Telegram, not bots; we will help you set up and launch everything.">
+      title={t('title')}
+      description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
         <img
           src={imgCustomerSupport}
@@ -57,16 +64,18 @@ export function CustomerSupportCard() {
   );
 }
 
-export function TryItFreeCard() {
+export const TryItFreeCard = ({ isActive }: CardProps) => {
+  const t = useTranslations('landing.benefits.items.free');
   const { ref, rawX, rawY, onMouseMove, onMouseLeave } = useCardParallax();
   return (
     <BenefitCard
       ref={ref as React.RefObject<HTMLDivElement>}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
+      isActive={isActive}
       className="col-start-2 row-start-1"
-      title="Try it. Truly free"
-      description="No card required. A real free test. See the quality for yourself, then decide.">
+      title={t('title')}
+      description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
         <img
           src={imgTryItFree}
@@ -75,7 +84,7 @@ export function TryItFreeCard() {
         />
       </ParallaxItem>
       <ParallaxItem depth={0.25} rawX={rawX} rawY={rawY}>
-        <DollarSVG className="bg-item right-[4.5%] bottom-[24%] h-[32%] rotate-[17.5deg]" />
+        <DollarSVG className="bg-item right-[5.7%] bottom-[24.6%] h-[32%] rotate-[17.5deg]" />
       </ParallaxItem>
       <ParallaxItem depth={0.45} rawX={rawX} rawY={rawY}>
         <ZeroBlurred className="bg-item right-[13%] bottom-[15%] h-[62%]" />
@@ -84,21 +93,23 @@ export function TryItFreeCard() {
   );
 }
 
-export function YourInternetCard() {
+export const YourInternetCard = ({ isActive }: CardProps) => {
+  const t = useTranslations('landing.benefits.items.rules');
   const { ref, rawX, rawY, onMouseMove, onMouseLeave } = useCardParallax();
   return (
     <BenefitCard
       ref={ref as React.RefObject<HTMLDivElement>}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="col-start-3 row-start-1 row-span-2 h-auto border-orange-400 px-6 py-8"
+      isActive={isActive}
+      className="col-start-3 row-start-1 row-span-2 h-auto px-6 py-8"
       mediaClassName="min-h-0"
-      title={'Your internet \n— your rules'}
-      description="Watch your favorite movies, chat on social media, and read any news without restrictions. Prometey removes borders so you can feel at home anywhere in the world."
+      title={t('title')}
+      description={t('body')}
       footer={
         <div className="flex items-center justify-end relative z-10">
           <Button variant="default" size="md">
-            Try Now
+            {t('cta')}
           </Button>
         </div>
       }>
@@ -110,7 +121,7 @@ export function YourInternetCard() {
         />
       </ParallaxItem>
       <ParallaxItem depth={0.15} rawX={rawX} rawY={rawY}>
-        <span className="bg-item icon color-neutral-800 left-[35%] bottom-[63%] text-[5vh] -rotate-[3.5deg]">
+        <span className="bg-item icon color-neutral-800 left-[35%] bottom-[63%] text-[5vh] rotate-[-3.5deg]">
           {telegramSVG}
         </span>
       </ParallaxItem>
@@ -126,23 +137,25 @@ export function YourInternetCard() {
       </ParallaxItem>
       <VideoCard
         src="/videos/woman-feedback-promitey.webm"
-        title="Real customer story"
-        className="right-[2.5%] bottom-[12%] w-[40%] h-auto"
+        title="#feedback"
+        className="right-[2.5%] bottom-[12%] w-[40%] h-auto rotate-[6.18deg] hover:rotate-0 hover:w-[45%] will-change-auto transition-all"
       />
     </BenefitCard>
   );
 }
 
-export function ForYourFamilyCard() {
+export const ForYourFamilyCard = ({ isActive }: CardProps) => {
+  const t = useTranslations('landing.benefits.items.family');
   const { ref, rawX, rawY, onMouseMove, onMouseLeave } = useCardParallax();
   return (
     <BenefitCard
       ref={ref as React.RefObject<HTMLDivElement>}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
+      isActive={isActive}
       className="col-start-1 row-start-2"
-      title={'For you, your family,\nand loved ones'}
-      description="Up to 10 devices on one subscription. Phone, laptop, tablet, TV. All at once.">
+      title={t('title')}
+      description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
         <img
           src={imgForYourFamily}
@@ -163,16 +176,18 @@ export function ForYourFamilyCard() {
   );
 }
 
-export function HighSpeedCard() {
+export const HighSpeedCard = ({ isActive }: CardProps) => {
+  const t = useTranslations('landing.benefits.items.speed');
   const { ref, rawX, rawY, onMouseMove, onMouseLeave } = useCardParallax();
   return (
     <BenefitCard
       ref={ref as React.RefObject<HTMLDivElement>}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
+      isActive={isActive}
       className="col-start-2 row-start-2"
-      title="High Speed"
-      description="Forget about buffering. Work and watch whatever you want at maximum speed. Without limits.">
+      title={t('title')}
+      description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
         <img
           src={imgHighSpeed}

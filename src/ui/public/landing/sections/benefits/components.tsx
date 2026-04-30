@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useLayoutEffect, useState } from 'react';
 import {
   motion,
   useMotionValue,
@@ -26,7 +26,7 @@ export function useCardParallax() {
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
 
-  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     animate(
@@ -41,7 +41,7 @@ export function useCardParallax() {
     );
   }
 
-  function onMouseLeave() {
+  const onMouseLeave = () => {
     animate(rawX, 0, LEAVE_SPRING);
     animate(rawY, 0, LEAVE_SPRING);
   }
@@ -55,18 +55,20 @@ export function useCardParallax() {
 type ParallaxItemProps = {
   depth?: number;
   reverse?: boolean;
+  // @ts-ignore - MotionValue is valid in client components (false positive in Next.js 16)
   rawX: MotionValue<number>;
+  // @ts-ignore - MotionValue is valid in client components (false positive in Next.js 16)
   rawY: MotionValue<number>;
   children: React.ReactNode;
 };
 
-export function ParallaxItem({
+export const ParallaxItem = ({
   depth = 0.5,
   rawX,
   rawY,
   reverse = false,
   children,
-}: ParallaxItemProps) {
+}: ParallaxItemProps) => {
   const MAX = 22;
   const d = reverse ? -1 : 1;
   const x = useTransform(rawX, (v) => d * v * depth * MAX);
@@ -84,13 +86,16 @@ type BenefitCardProps = {
   ref: React.RefObject<HTMLElement>;
   children?: React.ReactNode;
   footer?: React.ReactNode;
+  isActive?: boolean;
   className?: string;
   mediaClassName?: string;
+  // @ts-ignore - Event handlers are valid in client components (false positive in Next.js 16)
   onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void;
+  // @ts-ignore - Event handlers are valid in client components (false positive in Next.js 16)
   onMouseLeave: (e: React.MouseEvent<HTMLDivElement>) => void;
 };
 
-export function BenefitCard({
+export const BenefitCard = ({
   ref,
   onMouseMove,
   onMouseLeave,
@@ -98,16 +103,18 @@ export function BenefitCard({
   description,
   children,
   footer,
+  isActive = false,
   className,
   mediaClassName,
-}: BenefitCardProps) {
+}: BenefitCardProps) => {
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       className={cn(
-        'relative isolate flex h-96 flex-col overflow-hidden rounded-2xl border border-neutral-40 bg-neutral-20 px-5 py-6.5',
+        'relative isolate flex h-96 flex-col overflow-hidden rounded-md border bg-neutral-20 px-5 py-6.5 transition-colors duration-200',
+        isActive ? 'border-orange-400' : 'border-neutral-40',
         className,
       )}>
       <h5 className="font-manrope font-bold text-[36px] leading-[1.12] text-[#2b2929]">
@@ -124,53 +131,6 @@ export function BenefitCard({
         {children}
       </div>
       {footer}
-    </div>
-  );
-}
-
-// ── VideoCard ─────────────────────────────────────────────────────────────────
-
-type VideoCardProps = {
-  src: string;
-  title: string;
-  className?: string;
-};
-
-export function VideoCard({ src, title, className }: VideoCardProps) {
-  return (
-    <div
-      className={cn('absolute overflow-hidden rounded-3xl aspect-[3/5] rotate-[6.18deg]', className)}
-      style={{ boxShadow: '-41px 54px 16.8px -16px rgba(0, 0, 0, 0.25)' }}
-    >
-      <video
-        src={src}
-        className="h-full! w-full! object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
-      <div
-        className="absolute inset-0 flex flex-col justify-end p-4"
-        style={{
-          background:
-            'linear-gradient(180deg, rgba(34, 34, 34, 0) 62.5%, rgba(34, 34, 34, 0.015) 81.25%, rgba(34, 34, 34, 0.5) 100%)',
-          borderRadius: 'inherit',
-        }}
-      >
-        <div className="flex items-center gap-2.5">
-          <button
-            type="button"
-            className="shrink-0 flex items-center justify-center w-9 h-9 rounded-full bg-white/25 backdrop-blur-sm"
-            aria-label="Play video"
-          >
-            <svg width="12" height="14" viewBox="0 0 12 14" fill="none" aria-hidden="true">
-              <path d="M1.5 1.5L10.5 7L1.5 12.5V1.5Z" fill="white" />
-            </svg>
-          </button>
-          <span className="text-white text-[13px] font-medium leading-snug">{title}</span>
-        </div>
-      </div>
     </div>
   );
 }

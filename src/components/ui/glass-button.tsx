@@ -9,18 +9,18 @@ interface GlassButtonProps extends React.ComponentPropsWithRef<"button"> {
 }
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-6 py-3 rounded-xl text-base",
-  md: "px-8 py-4 rounded-2xl text-[18px]",
-  lg: "px-16.5 py-4.5 rounded-[20px] text-[22px]",
+  sm: "px-6 py-3 rounded-sm text-base",
+  md: "px-8 py-4 rounded-md text-[18px]",
+  lg: "px-16.5 py-4.5 rounded-lg text-[22px]",
 };
 
-export function GlassButton({
+export const GlassButton = ({
   ref,
   size = "md",
   className,
   children,
   ...props
-}: GlassButtonProps) {
+}: GlassButtonProps) => {
   return (
     <button
       ref={ref}

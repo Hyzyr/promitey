@@ -5,7 +5,7 @@ export type FormatTextProps = {
   doubleBr?: boolean;
 };
 
-export function FormatText({ text, doubleBr = false }: FormatTextProps) {
+export const FormatText = ({ text, doubleBr = false }: FormatTextProps) => {
   const normalized = text.replace(/\\n/g, '\n');
   const lines = normalized.split('\n');
 

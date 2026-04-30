@@ -1,15 +1,13 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { GlassButton } from '@/components/ui/glass-button';
+import { FormatText } from '@/components/ui/format-text';
 
-const imgImage121 =
-  'https://www.figma.com/api/mcp/asset/9bcf0072-8618-48d8-aea9-e59d53c3c490';
-const imgImage120 =
-  'https://www.figma.com/api/mcp/asset/d887fc4d-32ae-4063-bf9c-614098694f3d';
-
-export function HeroSection() {
+export const HeroSection = () => {
+  const t = useTranslations('landing.hero');
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -18,7 +16,7 @@ export function HeroSection() {
     }
   }, []);
   const bgClass =
-    'absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[2000px] object-cover object-[center, 10%] pointer-events-none';
+    'absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[2000px] object-cover object-[center, 30%] pointer-events-none';
 
   return (
     <section
@@ -27,14 +25,14 @@ export function HeroSection() {
       {/* Background image with mask */}
       <div className="bg">
         <img src={'/main-bg.png'} alt="" className={bgClass} />
-        {/* <video
+         {/* <video
           ref={videoRef}
           src="/kling_20260426_VIDEO_Video1this_3858_0.mp4"
           className={bgClass}
           autoPlay
           loop
           muted
-        /> */}
+        />  */}
       </div>
 
       {/* Content */}
@@ -43,20 +41,13 @@ export function HeroSection() {
         <div className="flex flex-col gap-7.5 items-center pt-10">
           {/* Heading */}
           <h1 className="flex flex-col font-manrope font-bold leading-[1.1] tracking-[0.72px] text-neutral-900 text-[72px] text-center items-center whitespace-nowrap">
-            <p>Turn the internet 180°</p>
-            <p>Your freedom in one click</p>
+            <p>{t('title.line1')}</p>
+            <p>{t('title.line2')}</p>
           </h1>
 
           {/* Body */}
           <p className="font-roboto font-normal text-[24px] leading-[1.4] tracking-[-0.48px] text-[#2b2929] text-center w-198.5">
-            <strong className="font-bold">Prometey is a high-speed VPN</strong>
-            {
-              ' for accessing any service and ensuring stable business operations. '
-            }
-            <strong className="font-bold">
-              One subscription for 10 of your devices
-            </strong>
-            {'. It simply works where others give up.'}
+            <FormatText text={t.raw('subtitle')} />
           </p>
         </div>
 
@@ -70,12 +61,12 @@ export function HeroSection() {
             style={{
               boxShadow: '4px 11px 5.5px rgba(0,0,0,0.05)',
             }}>
-            Try for Free
+            {t('ctaPrimary')}
           </Button>
 
           {/* Glass button */}
           <GlassButton size="md" className="w-52 px-4 py-2 tracking-[-0.36px]">
-            How it works?
+            {t('ctaSecondary')}
           </GlassButton>
         </div>
       </div>

@@ -85,10 +85,10 @@ The shell is a single full-bleed hero. The card sits on the right, the orange-fl
 |:---|:---|:---|
 | Outer wrapper                | `1728 × 1035 px`, `bg-[#fbfbfb]` (neutral-10)                      | `relative min-h-screen w-full bg-neutral-10 lg:h-[1035px] lg:overflow-hidden` |
 | Left flame backdrop          | `#ededed` (neutral-30) base, `1353 × 1035 px`, `left:-7px`         | absolute `inset-y-0 left-[-7px] w-[1353px] bg-neutral-30` |
-| Dark blur shape              | `596 × 341 px`, `bg-neutral-900`, `blur:106.85px`, `opacity:9%`, `rotate:-7.35deg`, anchored `top:746.56 left:-110.91` | absolute, decorative `aria-hidden`, see code below |
+| Dark blur shape              | `596 × 341 px`, `bg-[#201e1e]`, `blur:106.85px`, `opacity:9%`, `rotate:-7.35deg`, anchored `top:746.56 left:-110.91` | absolute, decorative `aria-hidden`, see code below |
 | Image 130 (background flame) | `2150 × 1210 px`, `opacity:44%`, masked through Image 129          | absolute `aria-hidden`, masked PNG (see code) |
 | Image 128 (foreground flame) | `1014 × 915 px`, anchored `top:32 left:82`, masked through Image 129 | absolute `aria-hidden` |
-| Right dark gradient panel    | `550 × 1035 px`, `left:1178`, `bg-gradient-to-b from-neutral-900 to-[#1e1e1e]` | absolute `right-0 top-0 h-full w-[550px] bg-gradient-to-b from-neutral-900 to-[#1e1e1e]` |
+| Right dark gradient panel    | `550 × 1035 px`, `left:1178`, `bg-gradient-to-b from-[#201e1e] to-[#1e1e1e]` | absolute `right-0 top-0 h-full w-[550px] bg-gradient-to-b from-neutral-900 to-[#1e1e1e]` |
 | Hero inner padding           | `px-[110px]`, `gap-[40px]`, `items-end justify-center`             | `flex h-full items-center justify-end px-[110px]` |
 | `<AuthHeader>`               | absolute `top:0`, `1728 × 88` (`px-[101px] py-[24px]`), `backdrop-blur:24.75px`, `items-end justify-between` | absolute `inset-x-0 top-0 z-30` |
 | `<AuthCard>`                 | `558 × min-h:750 px`, `bg-white`, `rounded-[36px]`, `pt-[60px] pb-[46px] px-[60px]`, `gap-[36px]`, shadow `0 19px 41.3px rgba(0,0,0,0.22), 0 49px 25.1px rgba(0,0,0,0.12)` | `relative z-20 w-[558px] min-h-[750px] rounded-[36px] bg-white px-[60px] pt-[60px] pb-[46px]` |
