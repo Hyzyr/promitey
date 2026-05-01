@@ -1,15 +1,19 @@
-import { LoginForm } from "@/ui/auth/components/login-form";
-import { Shield } from "lucide-react";
+import { getTranslations } from 'next-intl/server';
 
-export default function LoginPage() {
+import { AuthCard } from '@/ui/auth/components/auth-card';
+import { AuthPolicy } from '@/ui/auth/components/auth-policy';
+import { LoginForm } from '@/ui/auth/components/login-form';
+
+export default async function LoginPage() {
+  const t = await getTranslations('auth.login');
+
   return (
-    <div className="w-full max-w-105 rounded-2xl bg-white p-8 shadow-sm">
-      <div className="mb-8 flex flex-col items-center gap-2">
-        <Shield className="h-10 w-10 text-primary-500" />
-        <h1 className="text-2xl font-semibold text-neutral-900">Prometey VPN</h1>
-        <p className="text-sm text-neutral-300">Войдите в панель управления</p>
-      </div>
+    <AuthCard
+      title={t('title')}
+      subtitle={t('subtitle')}
+      footer={<AuthPolicy />}
+    >
       <LoginForm />
-    </div>
+    </AuthCard>
   );
 }

@@ -1,18 +1,35 @@
 "use client";
 
 import Lenis from "lenis";
-import { useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+
+type ScrollToOptions = {
+  offset?: number;
+  duration?: number;
+  easing?: (t: number) => number;
+};
+
+type LenisContextValue = {
+  lenis: Lenis | null;
+  scrollTo: (target: string | number, options?: ScrollToOptions) => void;
+};
+
+const LenisContext = createContext<LenisContextValue | null>(null);
 
 export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
+  const [lenis, setLenis] = useState<Lenis | null>(null);
+
   useEffect(() => {
-    const lenis = new Lenis({
+    const lenisInstance = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
     });
 
+    setLenis(lenisInstance);
+
     function raf(time: number) {
-      lenis.raf(time);
+      lenisInstance.raf(time);
       requestAnimationFrame(raf);
     }
 
@@ -20,9 +37,36 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
 
     return () => {
       cancelAnimationFrame(rafId);
-      lenis.destroy();
+      lenisInstance.destroy();
     };
   }, []);
 
-  return <>{children}</>;
+  const scrollTo = (target: string | number, options?: ScrollToOptions) => {
+    if (!lenis) return;
+    lenis.scrollTo(target, options);
+  };
+
+  return (
+    <LenisContext.Provider value={{ lenis, scrollTo }}>
+      {children}
+    </LenisContext.Provider>
+  );
+};
+
+/**
+ * Hook to access Lenis smooth scroll instance and methods.
+ * Must be used within LenisProvider.
+ * 
+ * @example
+ * const { scrollTo } = useLenis();
+ * scrollTo('#section', { offset: -100, duration: 1.5 });
+ */
+export function useLenis() {
+  const context = useContext(LenisContext);
+  
+  if (!context) {
+    throw new Error('useLenis must be used within LenisProvider');
+  }
+  
+  return context;
 }

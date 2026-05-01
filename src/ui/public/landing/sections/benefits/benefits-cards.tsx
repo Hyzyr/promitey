@@ -44,7 +44,7 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       isActive={isActive}
-      className="col-start-1 row-start-1"
+      className="md:col-start-1 md:row-start-2 xl:col-start-1 xl:row-start-1"
       title={t('title')}
       description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
@@ -62,7 +62,7 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
       </ParallaxItem>
     </BenefitCard>
   );
-}
+};
 
 export const TryItFreeCard = ({ isActive }: CardProps) => {
   const t = useTranslations('landing.benefits.items.free');
@@ -73,7 +73,7 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       isActive={isActive}
-      className="col-start-2 row-start-1"
+      className="md:col-start-2 md:row-start-2 xl:col-start-2 xl:row-start-1"
       title={t('title')}
       description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
@@ -91,7 +91,7 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
       </ParallaxItem>
     </BenefitCard>
   );
-}
+};
 
 export const YourInternetCard = ({ isActive }: CardProps) => {
   const t = useTranslations('landing.benefits.items.rules');
@@ -102,13 +102,17 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       isActive={isActive}
-      className="col-start-3 row-start-1 row-span-2 h-auto px-6 py-8"
+      // Mobile: explicit 679px height (Figma); md: span 2 cols; xl: tall card spanning 2 rows
+      className="!h-[679px] md:!h-auto md:col-span-2 md:row-start-1 xl:col-span-1 xl:col-start-3 xl:row-start-1 xl:row-span-2 md:px-5 md:py-6.5 xl:px-6 xl:py-8"
       mediaClassName="min-h-0"
       title={t('title')}
       description={t('body')}
       footer={
         <div className="flex items-center justify-end relative z-10">
-          <Button variant="default" size="md">
+          <Button
+            variant="default"
+            size="md"
+            className="!px-[32px] !py-[16px] !text-[18px] !rounded-[16px] xl:!px-8 xl:!py-3.5 xl:!text-[18px]">
             {t('cta')}
           </Button>
         </div>
@@ -142,7 +146,7 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       />
     </BenefitCard>
   );
-}
+};
 
 export const ForYourFamilyCard = ({ isActive }: CardProps) => {
   const t = useTranslations('landing.benefits.items.family');
@@ -153,7 +157,7 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       isActive={isActive}
-      className="col-start-1 row-start-2"
+      className="md:col-start-2 md:row-start-3 xl:col-start-1 xl:row-start-2"
       title={t('title')}
       description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
@@ -174,7 +178,7 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
       </ParallaxItem>
     </BenefitCard>
   );
-}
+};
 
 export const HighSpeedCard = ({ isActive }: CardProps) => {
   const t = useTranslations('landing.benefits.items.speed');
@@ -185,7 +189,7 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       isActive={isActive}
-      className="col-start-2 row-start-2"
+      className="md:col-start-1 md:row-start-3 xl:col-start-2 xl:row-start-2"
       title={t('title')}
       description={t('body')}>
       <ParallaxItem depth={0.22} rawX={rawX} rawY={rawY} reverse>
@@ -203,4 +207,4 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
       </ParallaxItem>
     </BenefitCard>
   );
-}
+};

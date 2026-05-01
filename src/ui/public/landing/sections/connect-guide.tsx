@@ -13,28 +13,49 @@ export const ConnectGuide = () => {
   const topPct = `${(activeStep / steps.length) * 100}%`;
 
   return (
-    // stepCount × 100vh → each step owns one full viewport of scroll
-    <div ref={containerRef} id="guide" className="relative h-[200vh]">
+    // stepCount × 100vh — each step owns one full viewport of scroll on every breakpoint.
+    // Container is tall (300vh) and the inner card sticks for the entire scroll range,
+    // giving the active-step animation room to play on mobile too.
+    <div
+      ref={containerRef}
+      id="guide"
+      className="relative h-[300vh]">
       <div className="sticky top-0 flex h-screen items-center">
-        <section className="w-full py-22.5 px-26 overflow-hidden">
-          <div className="flex flex-col gap-20 items-center">
-            {/* Heading */}
-            <h2 className="font-manrope text-[40px] leading-[1.1] tracking-[-0.8px] text-neutral-600 text-center whitespace-pre">
+        <section
+          className="w-full overflow-hidden
+                     px-[20px] py-[40px]
+                     md:px-12 md:py-16 lg:py-20
+                     xl:px-26 xl:py-22.5">
+          <div
+            className="flex flex-col items-center
+                       gap-[24px] md:gap-12 lg:gap-16 xl:gap-20">
+            {/* Heading — mobile: 24px Manrope Bold #484747, single line per Figma */}
+            <h2
+              className="font-manrope text-neutral-600 text-center
+                         font-bold xl:font-normal
+                         text-[24px] md:text-[32px] lg:text-[37px] xl:text-[40px]
+                         leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]
+                         whitespace-nowrap xl:whitespace-pre
+                         px-0 md:px-4">
               <FormatText text={t.raw('title')} />
             </h2>
 
-            {/* Two-column layout */}
-            <div className=" flex items-center gap-18.5  w-full">
-              {/* Left: progress bar + steps */}
-              <div className="flex shrink-0 gap-13.25 items-center">
-                {/* Progress bar */}
-
-                {/* Step texts */}
-                <div className="relative pl-12 py-4 flex flex-col gap-9.25  w-176.25 font-manrope font-bold text-[32px] whitespace-pre-wrap  ">
-                  <div className="absolute top-0 left-0 h-full w-1.25 shrink-0 ">
-                    {/* Track */}
+            {/* Two-column layout (mobile: image above steps via flex-col-reverse) */}
+            <div
+              className="flex flex-col-reverse md:flex-row items-center w-full
+                         gap-[24px] md:gap-10 lg:gap-14 xl:gap-18.5">
+              {/* Steps column */}
+              <div className="flex shrink-0 items-center w-full md:w-auto gap-[24px] md:gap-8 lg:gap-10 xl:gap-13.25">
+                <div
+                  className="relative flex flex-col w-full md:w-auto md:max-w-[500px] xl:w-176.25
+                             pl-[24px] md:pl-8 lg:pl-10 xl:pl-12
+                             py-3 md:py-3.5 lg:py-4
+                             gap-[37px] md:gap-6 lg:gap-7.5 xl:gap-9.25
+                             font-manrope font-bold whitespace-pre-wrap
+                             text-[20px] md:text-[23px] lg:text-[28px] xl:text-[32px]">
+                  {/* Vertical track + active fill — 5px on mobile per Figma */}
+                  <div className="absolute top-0 left-0 h-full w-[5px] md:w-1.25 shrink-0">
                     <div className="absolute inset-0 rounded-sm bg-neutral-40" />
-                    {/* Step fill — animates between discrete heights */}
                     <motion.div
                       animate={{ top: topPct }}
                       style={{ height: `${100 / steps.length}%` }}
@@ -43,7 +64,7 @@ export const ConnectGuide = () => {
                         stiffness: 120,
                         damping: 20,
                       }}
-                      className="absolute left-0 w-1.25 rounded-sm bg-[#2b2929]"
+                      className="absolute left-0 w-[5px] md:w-1.25 rounded-sm bg-[#2b2929]"
                     />
                   </div>
                   {steps.map((text, i) => (
@@ -51,8 +72,8 @@ export const ConnectGuide = () => {
                       key={i}
                       className={
                         activeStep === i
-                          ? 'leading-[1.2] text-[#2b2929] transition-colors duration-300'
-                          : 'leading-normal text-neutral-80 transition-colors duration-300'
+                          ? 'leading-[1.3] text-[#2b2929] transition-colors duration-300'
+                          : 'leading-[1.3] text-neutral-80 transition-colors duration-300'
                       }>
                       {text}
                     </p>
@@ -60,12 +81,18 @@ export const ConnectGuide = () => {
                 </div>
               </div>
 
-              {/* Right: dark card with app screenshot */}
-              <div className="relative self-stretch min-h-110 w-188.25 shrink-0 rounded-3xl overflow-hidden bg-[#2b2929]">
+              {/* Image card — mobile uses aspect ratio (1506/858), desktop fixed sizing */}
+              <div
+                className="relative w-full md:w-[400px] xl:w-188.25 shrink-0
+                           aspect-[1506/858] md:aspect-auto
+                           md:min-h-[400px] xl:min-h-110
+                           md:self-stretch
+                           rounded-[16px] md:rounded-2xl xl:rounded-3xl
+                           overflow-hidden bg-[#2b2929]">
                 <img
                   src="/temp-guide-img.png"
                   alt=""
-                  className="absolute inset-0 w-auto h-full object-cover pointer-events-none"
+                  className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               </div>
             </div>
@@ -74,4 +101,4 @@ export const ConnectGuide = () => {
       </div>
     </div>
   );
-}
+};

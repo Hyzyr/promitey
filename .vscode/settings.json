@@ -21,8 +21,12 @@
   },
 
   // ── TypeScript ────────────────────────────────────────────────────────────
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  
+  // Suppress Next.js 16 false positive warnings for client component props
+  // These warnings appear in VS Code but don't affect compilation or runtime
+  "js/ts.tsserver.experimental.enableProjectDiagnostics": false,
 
   // ── Editor ────────────────────────────────────────────────────────────────
   "editor.defaultFormatter": "esbenp.prettier-vscode",

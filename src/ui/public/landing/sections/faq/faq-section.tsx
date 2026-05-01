@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useTranslations } from "next-intl";
-import { Container } from "@/components/ui/container";
-import { FaqItemComponent } from "./faq-item";
+import { useState } from 'react';
+import { useTranslations } from 'next-intl';
+import { Container } from '@/components/ui/container';
+import { FaqItemComponent } from './faq-item';
 
 export const FaqSection = () => {
   const t = useTranslations('landing.faq');
@@ -13,19 +13,27 @@ export const FaqSection = () => {
     setOpen((prev) => (prev === i ? null : i));
   };
 
-  // Get the number of FAQ items from translations
-  const faqCount = 6; // We know there are 6 items from the JSON
+  const faqCount = 6;
 
   return (
-    <section id="faq" className="w-full pb-30 pt-22.5">
-      <Container className="flex flex-col gap-15 items-center">
-        {/* Heading */}
-        <p className="font-manrope font-medium text-[40px] leading-[1.1] tracking-[-0.8px] text-neutral-600 text-center w-full">
+    <section
+      id="faq"
+      className="w-full
+                 px-[20px] pt-[90px] pb-[120px]
+                 md:px-0 md:pt-16 md:pb-20 lg:pt-20 lg:pb-25 xl:pt-22.5 xl:pb-30">
+      <Container className="flex flex-col items-center px-0! md:px-[unset]!
+                            gap-[36px] md:gap-10 lg:gap-12 xl:gap-15">
+        {/* Heading — mobile: 24px Manrope Bold #484747 tracking -0.48 text-center */}
+        <p
+          className="font-manrope text-neutral-600 text-center w-full px-0 md:px-4
+                     font-bold xl:font-medium
+                     text-[24px] md:text-[32px] lg:text-[37px] xl:text-[40px]
+                     leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]">
           {t('title')}
         </p>
 
         {/* Accordion list */}
-        <div className="flex w-252.5 flex-col gap-6">
+        <div className="flex w-full max-w-full md:max-w-[680px] xl:w-252.5 flex-col gap-[16px] md:gap-5 xl:gap-6">
           {Array.from({ length: faqCount }).map((_, i) => (
             <FaqItemComponent
               key={i}

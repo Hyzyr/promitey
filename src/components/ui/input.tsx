@@ -5,7 +5,7 @@ import { type LucideIcon } from 'lucide-react';
 import { useId } from 'react';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Shared base props for both Input and Textarea
+// Shared base props
 // ─────────────────────────────────────────────────────────────────────────────
 interface BaseFieldProps {
   label?: string;
@@ -13,52 +13,34 @@ interface BaseFieldProps {
   hint?: string;
   variant?: 'light' | 'dark';
   className?: string;
-  id?: string;
+  /** Optional override for the wrapper element class. */
+  wrapperClassName?: string;
+  /** Hide error/hint text region (e.g. when error is shown elsewhere). */
+  hideMessages?: boolean;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Input-specific props
+// Input — accepts ALL native <input> props (RHF-friendly)
 // ─────────────────────────────────────────────────────────────────────────────
-interface InputProps extends BaseFieldProps {
-  leftIcon?: LucideIcon;
-  rightIcon?: LucideIcon;
-  // Common convenience props at root level for better DX
-  type?: string;
-  placeholder?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  // All other native props go here if needed
-  inputProps?: Omit<
-    React.ComponentPropsWithRef<'input'>,
-    'type' | 'placeholder' | 'value' | 'onChange' | 'className' | 'id'
-  >;
-}
+type InputProps = BaseFieldProps &
+  Omit<React.ComponentPropsWithRef<'input'>, 'className'> & {
+    leftIcon?: LucideIcon;
+    rightIcon?: LucideIcon;
+  };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Textarea-specific props
+// Textarea — accepts ALL native <textarea> props (RHF-friendly)
 // ─────────────────────────────────────────────────────────────────────────────
-interface TextareaProps extends BaseFieldProps {
-  rows?: number;
-  // Common convenience props
-  placeholder?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  // All other native props go here if needed
-  textareaProps?: Omit<
-    React.ComponentPropsWithRef<'textarea'>,
-    'rows' | 'placeholder' | 'value' | 'onChange' | 'className' | 'id'
-  >;
-}
+type TextareaProps = BaseFieldProps &
+  Omit<React.ComponentPropsWithRef<'textarea'>, 'className'>;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared styling utilities
 // ─────────────────────────────────────────────────────────────────────────────
-const getWrapperClasses = (error?: string, variant: 'light' | 'dark' = 'light') =>
-  cn(
-    'input', // Base utility from globals.css
-    variant,
-    error && 'error',
-  );
+const getWrapperClasses = (
+  error?: string,
+  variant: 'light' | 'dark' = 'light',
+) => cn('input', variant, error && 'error');
 
 const getLabelClasses = (variant: 'light' | 'dark' = 'light') =>
   cn(
@@ -79,9 +61,10 @@ const getIconClasses = (variant: 'light' | 'dark' = 'light') =>
   );
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Input Component
+// Input
 // ─────────────────────────────────────────────────────────────────────────────
 export const Input = ({
+  ref,
   label,
   error,
   hint,
@@ -89,25 +72,29 @@ export const Input = ({
   leftIcon: LeftIcon,
   rightIcon: RightIcon,
   className,
+  wrapperClassName,
+  hideMessages = false,
   id,
-  type,
-  placeholder,
-  value,
-  onChange,
-  inputProps,
+  ...nativeProps
 }: InputProps) => {
   const generatedId = useId();
   const inputId = id ?? generatedId;
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex w-full flex-col gap-1.5">
       {label && (
         <label htmlFor={inputId} className={getLabelClasses(variant)}>
           {label}
         </label>
       )}
 
-      <div className={cn(getWrapperClasses(error, variant), 'relative flex items-center')}>
+      <div
+        className={cn(
+          getWrapperClasses(error, variant),
+          'relative flex items-center',
+          wrapperClassName,
+        )}
+      >
         {LeftIcon && (
           <LeftIcon
             className={cn('absolute left-5.5', getIconClasses(variant))}
@@ -116,16 +103,13 @@ export const Input = ({
 
         <input
           id={inputId}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
+          ref={ref}
           className={cn(
             LeftIcon && 'pl-12',
             RightIcon && 'pr-12',
             className,
           )}
-          {...inputProps}
+          {...nativeProps}
         />
 
         {RightIcon && (
@@ -135,53 +119,65 @@ export const Input = ({
         )}
       </div>
 
-      {error && <p className="font-roboto text-xs text-red-600">{error}</p>}
-      {hint && !error && <p className={getHintClasses(variant)}>{hint}</p>}
+      {!hideMessages && error && (
+        <p className="font-roboto text-xs text-red-600">{error}</p>
+      )}
+      {!hideMessages && hint && !error && (
+        <p className={getHintClasses(variant)}>{hint}</p>
+      )}
     </div>
   );
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Textarea Component
+// Textarea
 // ─────────────────────────────────────────────────────────────────────────────
 export const Textarea = ({
+  ref,
   label,
   error,
   hint,
   variant = 'light',
   className,
+  wrapperClassName,
+  hideMessages = false,
   id,
   rows = 4,
-  placeholder,
-  value,
-  onChange,
-  textareaProps,
+  ...nativeProps
 }: TextareaProps) => {
   const generatedId = useId();
   const textareaId = id ?? generatedId;
 
   return (
-    <div className="flex flex-col gap-1.5">
+    <div className="flex w-full flex-col gap-1.5">
       {label && (
         <label htmlFor={textareaId} className={getLabelClasses(variant)}>
           {label}
         </label>
       )}
 
-      <div className={cn(getWrapperClasses(error, variant), 'relative flex items-start')}>
+      <div
+        className={cn(
+          getWrapperClasses(error, variant),
+          'relative flex items-start',
+          wrapperClassName,
+        )}
+      >
         <textarea
           id={textareaId}
+          ref={ref}
           rows={rows}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
           className={cn('resize-none', className)}
-          {...textareaProps}
+          {...nativeProps}
         />
       </div>
 
-      {error && <p className="font-roboto text-xs text-red-600">{error}</p>}
-      {hint && !error && <p className={getHintClasses(variant)}>{hint}</p>}
+      {!hideMessages && error && (
+        <p className="font-roboto text-xs text-red-600">{error}</p>
+      )}
+      {!hideMessages && hint && !error && (
+        <p className={getHintClasses(variant)}>{hint}</p>
+      )}
     </div>
   );
 };

@@ -3,15 +3,20 @@
     "appName": "Prometey VPN",
     "save": "Save",
     "cancel": "Cancel",
-    "logout": "Log out"
+    "logout": "Log out",
+    "close": "Close",
+    "language": "Language"
   },
   "nav": {
     "dashboard": "Dashboard",
-    "users": "Users",
-    "subscriptions": "Subscriptions",
+    "instructions": "Instructions",
+    "configs": "Config files",
     "servers": "Servers",
-    "analytics": "Analytics",
-    "settings": "Settings"
+    "subscription": "Subscription",
+    "profile": "Profile",
+    "help": "Help",
+    "logout": "Log out",
+    "menu": "Menu"
   },
   "landing": {
     "header": {
@@ -164,6 +169,125 @@
       },
       "rights": "© 2026 Prometey VPN. All rights reserved.",
       "credit": "Designed and developed by:"
+    }
+  },
+  "auth": {
+    "header": {
+      "nav": "Features"
+    },
+    "footer": {
+      "policy": "By signing in, you confirm your agreement with the",
+      "policyLink": "Privacy Policy."
+    },
+    "promo": {
+      "slide1": "Network at full power: work without artificial limits or speed throttling."
+    },
+    "links": {
+      "createAccount": "Create a new account",
+      "signIn": "Sign in to existing",
+      "haveAccount": "Already have an account?",
+      "forgot": "Forgot password?"
+    },
+    "placeholders": {
+      "emailOrLogin": "Email or username",
+      "password": "Password",
+      "passwordRepeat": "Repeat password"
+    },
+    "errors": {
+      "emailRequired": "Enter your email or username",
+      "emailInvalid": "Invalid format",
+      "passwordRequired": "Enter your password",
+      "passwordMin": "At least 8 characters",
+      "passwordMismatch": "Passwords don't match",
+      "codeIncomplete": "Enter 6 digits",
+      "badCredentials": "Username or password is wrong, check if caps lock is on and try again"
+    },
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Authorize to continue.",
+      "submit": "Sign In",
+      "createAccount": "Create account"
+    },
+    "register": {
+      "title": "Create account",
+      "subtitle": "Create an account to get full access to Prometey",
+      "submit": "Sign In"
+    },
+    "forgot": {
+      "title": "Reset password",
+      "step1": "Step 1/3",
+      "step2": "Step 2/3",
+      "step3": "Step 3/3",
+      "emailDescription": "Please enter the email address for which you want to reset the password.",
+      "codeDescription": "Enter the code we sent to the email",
+      "resetDescription": "Great, now you can create a new password for user",
+      "next": "Next"
+    }
+  },
+  "dashboard": {
+    "breadcrumb": {
+      "home": "Home",
+      "servers": "Servers",
+      "instructions": "Instructions",
+      "subscription": "Subscription",
+      "profile": "Profile"
+    },
+    "welcome": {
+      "title": "Welcome to the <strong>Prometey VPN</strong> dashboard",
+      "signedInAs": "Signed in as",
+      "body": "Manage access, monitor client activity and keep an eye on server health — all in one place."
+    },
+    "configs": {
+      "title": "Download and install a configuration file.",
+      "edit": "Edit",
+      "configuration": "Configuration",
+      "howToPrompt": "Not sure how to do it?",
+      "howToCta": "Open the instructions"
+    },
+    "subscription": {
+      "title": "Subscription",
+      "currentPlan": "Your current plan is",
+      "expiresAt": "Your subscription expires on:",
+      "renew": "Renew subscription",
+      "manage": "Manage Subscription",
+      "status": "Status",
+      "active": "Active",
+      "expired": "Expired",
+      "startsAt": "Started on:"
+    },
+    "servers": {
+      "title": "Servers",
+      "location": "Location",
+      "status": "Status",
+      "load": "Load",
+      "ping": "Ping",
+      "connect": "Connect",
+      "connected": "Connected",
+      "online": "Online",
+      "offline": "Offline",
+      "maintenance": "Maintenance"
+    },
+    "instructions": {
+      "title": "Connection Instructions",
+      "subtitle": "Follow these simple steps to connect your device",
+      "step": "Step",
+      "download": "Download",
+      "install": "Install",
+      "connect": "Connect",
+      "copy": "Copy",
+      "copied": "Copied!"
+    },
+    "profile": {
+      "title": "Profile",
+      "personalInfo": "Personal Information",
+      "email": "Email",
+      "name": "Name",
+      "password": "Password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "save": "Save changes",
+      "changePassword": "Change Password"
     }
   }
 }

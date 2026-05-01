@@ -127,9 +127,10 @@ body {
 
   /* ─── Container ─────────────────────────────────────────────────── */
   --container-max-width: 1536px;
-  --container-padding-x: 4rem; /* 64px — desktop */
-  --container-padding-x-sm: 2rem; /* 32px — mobile */
-  --container-padding-x-md: 3rem; /* 48px — tablet */
+  --container-padding-x: 4rem; /* 64px — desktop 1280px+ */
+  --container-padding-x-sm: 1.25rem; /* 20px — mobile base */
+  --container-padding-x-md: 2rem; /* 32px — tablet 768px+ */
+  --container-padding-x-lg: 3rem; /* 48px — large tablet/small desktop 1024px+ */
 }
 
 /* ─── Container utility ──────────────────────────────────────────────── */
@@ -137,10 +138,14 @@ body {
   width: 100%;
   max-width: calc(var(--container-max-width) + var(--container-padding-x) * 2);
   margin-inline: auto;
-  padding: var(--container-padding-x-sm);
+  padding-inline: var(--container-padding-x-sm);
 
   @media (width >= 768px) {
     padding-inline: var(--container-padding-x-md);
+  }
+
+  @media (width >= 1024px) {
+    padding-inline: var(--container-padding-x-lg);
   }
 
   @media (width >= 1280px) {
@@ -208,8 +213,8 @@ body {
   &.dark {
     input,
     textarea {
-      @apply border-neutral-300 bg-neutral-600 text-neutral-20;
-      @apply focus:border-neutral-100 focus:text-neutral-0;
+      @apply border-neutral-700 bg-neutral-800 text-neutral-20;
+      @apply focus:border-neutral-500 focus:text-neutral-0;
       @apply disabled:bg-neutral-500 disabled:text-neutral-300 disabled:cursor-not-allowed;
    
       &::placeholder {

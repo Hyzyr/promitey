@@ -3,15 +3,20 @@
     "appName": "Prometey VPN",
     "save": "Сохранить",
     "cancel": "Отмена",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "close": "Закрыть",
+    "language": "Язык"
   },
   "nav": {
-    "dashboard": "Дашборд",
-    "users": "Пользователи",
-    "subscriptions": "Подписки",
-    "servers": "Серверы",
-    "analytics": "Аналитика",
-    "settings": "Настройки"
+    "dashboard": "панель управления",
+    "instructions": "инструкции",
+    "configs": "файлы конфигурации",
+    "servers": "серверы",
+    "subscription": "подписка",
+    "profile": "профиль",
+    "help": "помощь",
+    "logout": "Выйти",
+    "menu": "Меню"
   },
   "landing": {
     "header": {
@@ -164,6 +169,125 @@
       },
       "rights": "© 2026 Prometey VPN. Все права защищены.",
       "credit": "Дизайн и разработка:"
+    }
+  },
+  "auth": {
+    "header": {
+      "nav": "Возможности"
+    },
+    "footer": {
+      "policy": "Выполняя вход, вы подтверждаете свое согласие с",
+      "policyLink": "Политикой конфиденциальности."
+    },
+    "promo": {
+      "slide1": "Сеть на полной мощности: работайте без искусственных рамок и ограничений скорости."
+    },
+    "links": {
+      "createAccount": "Создать новую учетную запись",
+      "signIn": "Войти в существующую",
+      "haveAccount": "У вас уже есть аккаунт?",
+      "forgot": "Забыли пароль?"
+    },
+    "placeholders": {
+      "emailOrLogin": "Электронная почта или логин",
+      "password": "Пароль",
+      "passwordRepeat": "Повторите пароль"
+    },
+    "errors": {
+      "emailRequired": "Введите email или логин",
+      "emailInvalid": "Неверный формат",
+      "passwordRequired": "Введите пароль",
+      "passwordMin": "Минимум 8 символов",
+      "passwordMismatch": "Пароли не совпадают",
+      "codeIncomplete": "Введите 6 цифр",
+      "badCredentials": "Username or password is wrong, check if caps lock is on and try again"
+    },
+    "login": {
+      "title": "Вход",
+      "subtitle": "Авторизуйтесь, чтобы продолжить работу.",
+      "submit": "Войти",
+      "createAccount": "Создать аккаунт"
+    },
+    "register": {
+      "title": "Создать аккаунт",
+      "subtitle": "Создайте учетную запись, чтобы получить полный доступ к Prometey",
+      "submit": "Войти"
+    },
+    "forgot": {
+      "title": "Восстановить пароль",
+      "step1": "Шаг 1/3",
+      "step2": "Шаг 2/3",
+      "step3": "Шаг 3/3",
+      "emailDescription": "Пожалуйста, введите адрес электронной почты, для которого вы хотите восстановить пароль.",
+      "codeDescription": "Введите код, который мы отправили на электронный адрес",
+      "resetDescription": "Отлично, теперь вы можете создать новый пароль для пользователя",
+      "next": "Дальше"
+    }
+  },
+  "dashboard": {
+    "breadcrumb": {
+      "home": "Главная",
+      "servers": "Серверы",
+      "instructions": "Инструкции",
+      "subscription": "Подписка",
+      "profile": "Профиль"
+    },
+    "welcome": {
+      "title": "Добро пожаловать в панель управления <strong>Prometey VPN</strong>",
+      "signedInAs": "Вы вошли в систему как",
+      "body": "Управляйте доступами, отслеживайте активность клиентов и следите за состоянием серверов в одном месте."
+    },
+    "configs": {
+      "title": "Загрузите и установите файл конфигурации.",
+      "edit": "Редактировать",
+      "configuration": "Конфигурация",
+      "howToPrompt": "Не знаете, как это сделать?",
+      "howToCta": "Перейти к инструкциям"
+    },
+    "subscription": {
+      "title": "Подписка",
+      "currentPlan": "Вы используете тарифный план",
+      "expiresAt": "Ваша подписка заканчивается:",
+      "renew": "Обновить подписку",
+      "manage": "Управление подпиской",
+      "status": "Статус",
+      "active": "Активна",
+      "expired": "Истекла",
+      "startsAt": "Начало:"
+    },
+    "servers": {
+      "title": "Серверы",
+      "location": "Местоположение",
+      "status": "Статус",
+      "load": "Нагрузка",
+      "ping": "Пинг",
+      "connect": "Подключиться",
+      "connected": "Подключено",
+      "online": "Онлайн",
+      "offline": "Оффлайн",
+      "maintenance": "Обслуживание"
+    },
+    "instructions": {
+      "title": "Инструкции по подключению",
+      "subtitle": "Следуйте этим простым шагам, чтобы подключить устройство",
+      "step": "Шаг",
+      "download": "Скачать",
+      "install": "Установить",
+      "connect": "Подключиться",
+      "copy": "Копировать",
+      "copied": "Скопировано!"
+    },
+    "profile": {
+      "title": "Профиль",
+      "personalInfo": "Личная информация",
+      "email": "Email",
+      "name": "Имя",
+      "password": "Пароль",
+      "currentPassword": "Текущий пароль",
+      "newPassword": "Новый пароль",
+      "confirmPassword": "Подтвердите новый пароль",
+      "save": "Сохранить изменения",
+      "changePassword": "Изменить пароль"
     }
   }
 }
