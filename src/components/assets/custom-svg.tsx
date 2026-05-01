@@ -49,9 +49,9 @@ export const startColorfullSVG = (
         x2="6.22962"
         y2="14.002"
         gradientUnits="userSpaceOnUse">
-        <stop stop-color="#FB9C13" />
-        <stop offset="0.538462" stop-color="#F6261C" />
-        <stop offset="1" stop-color="#E02319" />
+        <stop stopColor="#FB9C13" />
+        <stop offset="0.538462" stopColor="#F6261C" />
+        <stop offset="1" stopColor="#E02319" />
       </linearGradient>
     </defs>
   </svg>

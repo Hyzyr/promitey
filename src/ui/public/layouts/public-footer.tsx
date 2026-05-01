@@ -197,33 +197,33 @@ const HyzyrLink = () => {
         <path
           d="M55.3392 3.74316H52.8438V7.07914L53.5894 7.96783L54.5969 9.16848H55.3392H56.2199V11.1027V11.331V12.4037H57.12H57.3116H57.7146H57.9062H58.7153V11.4395V11.2112V9.16848H59.596H60.4293L61.2107 8.23725L62.0915 7.18762V3.74316H59.596V6.97252H55.3392V3.74316Z"
           fill="currentColor"
-          fill-opacity="0.8"
+          fillOpacity="0.8"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M48.3093 9.90812L51.5117 6.0916L51.5234 6.07761V6.00543V4.1139L44.5676 12.4035H44.6597H46.2154H51.5234V9.90812H48.3093ZM50.4249 3.59619L43.45 11.9085V10.0031V9.99654L43.5242 9.90812L46.7267 6.0916L43.45 6.0916V3.59619H48.8206H50.3111H50.4249Z"
           fill="currentColor"
-          fill-opacity="0.8"
+          fillOpacity="0.8"
         />
         <path
           d="M35.3743 3.59619H32.8789V6.93216L33.6246 7.82085L34.6321 9.02151H35.3743H36.2551V10.9557V11.1841V12.2567H37.1551H37.3468H37.7498H37.9414H38.7505V11.2925V11.0642V9.02151H39.6312H40.4645L41.2459 8.09028L42.1266 7.04064V3.59619H39.6312V6.82555H35.3743V3.59619Z"
           fill="currentColor"
-          fill-opacity="0.8"
+          fillOpacity="0.8"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M22.8984 3.74316H25.3939V6.97252H29.0636V9.16849H25.3939V12.4037H22.8984V3.74316ZM29.6874 3.74316V12.4037H32.1461V3.74316H29.6874Z"
           fill="currentColor"
-          fill-opacity="0.8"
+          fillOpacity="0.8"
         />
         <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M62.9727 3.74316L71.3396 3.74316L71.3396 9.32115H69.2155L71.7405 12.3303H68.8739L66.3439 9.31527H65.4681V12.3303H62.9727L62.9727 3.74316ZM65.4681 7.11931V5.93912L69.1378 5.93912V7.11931H65.4681Z"
           fill="currentColor"
-          fill-opacity="0.8"
+          fillOpacity="0.8"
         />
       </svg>
     </a>
