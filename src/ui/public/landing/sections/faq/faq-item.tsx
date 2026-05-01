@@ -48,8 +48,8 @@ export const FaqItemComponent = ({
       <button
         onClick={onToggle}
         className="flex w-full items-center text-left
-                   gap-[24px] md:gap-6
-                   px-[16px] py-[12px] md:p-4"
+                   gap-6 md:gap-6
+                   px-4 py-3 md:p-4"
         aria-expanded={isOpen}>
         <p className="flex-1 font-manrope font-bold text-[18px] leading-[1.2] text-[#2b2929]">
           {question}
@@ -74,7 +74,7 @@ export const FaqItemComponent = ({
         }}>
         <div
           ref={contentRef}
-          className="pb-[20px] pt-[8px] px-[16px] md:pb-5 md:pt-2 md:px-4">
+          className="pb-5 pt-2 px-4 md:pb-5 md:pt-2 md:px-4">
           <p className="font-montserrat font-normal text-[16px] leading-[1.6] text-[#2b2929]">
             {answer}
           </p>

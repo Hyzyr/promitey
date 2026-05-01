@@ -57,8 +57,8 @@ export const BenefitsSection = () => {
   return (
     <section
       id="benefits"
-      className="w-full px-[20px] py-[60px] md:px-12 md:py-16 lg:py-20 xl:px-24 xl:py-22.5">
-      <div className="flex flex-col gap-[36px] md:gap-7 lg:gap-8 xl:gap-9">
+      className="w-full px-5 py-15 md:px-12 md:py-16 lg:py-20 xl:px-24 xl:py-22.5">
+      <div className="flex flex-col gap-9 md:gap-7 lg:gap-8 xl:gap-9">
         {/* Title */}
         <p
           className="font-manrope text-neutral-600
@@ -71,7 +71,7 @@ export const BenefitsSection = () => {
         {/* Cards. Each Card root carries data-benefit-card (set inside BenefitCard). */}
         <div
           ref={containerRef}
-          className="flex flex-col gap-[20px]
+          className="flex flex-col gap-5
                      md:grid md:grid-cols-2 md:gap-5
                      xl:grid-cols-3 xl:grid-rows-2"
           onPointerLeave={handleGridLeave}>
@@ -98,7 +98,7 @@ export const BenefitsSection = () => {
           <Button
             variant="orange"
             size="md"
-            className="!px-[32px] !py-[16px] !text-[18px] !rounded-[16px] !text-neutral-900">
+            className="px-8! py-4! text-[18px]! rounded-[16px]! text-neutral-900!">
             {tRules('cta')}
           </Button>
         </div>

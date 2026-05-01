@@ -47,12 +47,12 @@ export const PricingCard = ({
       className={`flex flex-col w-full
                   rounded-[12px] xl:rounded-lg bg-neutral-20 overflow-hidden
                   px-[12px] xl:px-6 pt-[22px] xl:py-8 pb-[16px]
-                  gap-[16px] xl:gap-4
+                  gap-4 xl:gap-4
                   shadow-[0px_20px_32px_0px_rgba(0,0,0,0.06)]
                   ${height ?? ''}`}>
       {/* Top content block */}
       <div className="flex flex-1 flex-col items-start min-h-0
-                      gap-[16px] xl:gap-6">
+                      gap-4 xl:gap-6">
         {/* Plan label */}
         <p
           className="font-manrope font-extrabold uppercase whitespace-nowrap text-[#2b2929]
@@ -64,7 +64,7 @@ export const PricingCard = ({
 
         {/* Mobile: inline discount row above price */}
         {originalPrice && (
-          <div className="flex xl:hidden items-center gap-[12px] w-full whitespace-nowrap">
+          <div className="flex xl:hidden items-center gap-3 w-full whitespace-nowrap">
             <span className="relative font-manrope font-normal text-[18px] leading-[0.9] text-neutral-80">
               <span className="relative inline-block">
                 {originalPrice}
@@ -114,9 +114,9 @@ export const PricingCard = ({
       {/* Divider + period info */}
       <div
         className={`flex flex-col xl:flex-row items-start xl:items-center
-                    gap-[6px] xl:gap-0
+                    gap-1.5 xl:gap-0
                     border-t border-neutral-40
-                    pt-[8px] xl:pt-4 pb-[6px] xl:pb-1.5 w-full
+                    pt-2 xl:pt-4 pb-1.5 xl:pb-1.5 w-full
                     ${perMonth ? 'xl:justify-between' : ''}`}>
         {perMonth && (
           <span className="font-manrope font-normal text-[14px] xl:text-[24px] text-neutral-600 whitespace-nowrap">

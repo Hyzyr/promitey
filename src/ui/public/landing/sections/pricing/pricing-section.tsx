@@ -48,12 +48,12 @@ export const PricingSection = () => {
       </div>
 
       <Container className="relative flex flex-col items-center
-                            gap-[80px] xl:gap-20
+                            gap-20 xl:gap-20
                             xl:min-h-screen xl:justify-center">
         {/* Heading — mobile w-320 gap-16 */}
         <div className="flex flex-col items-center text-center
-                        gap-[16px] xl:gap-4
-                        w-[320px] md:w-auto md:max-w-[680px] xl:max-w-none">
+                        gap-4 xl:gap-4
+                        w-[320px] md:w-auto md:max-w-170 xl:max-w-none">
           <p className="font-manrope font-normal text-yellow-50
                         text-[32px] md:text-[44px] xl:text-[56px]
                         leading-[1.1]

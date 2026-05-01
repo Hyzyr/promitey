@@ -103,7 +103,7 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       onMouseLeave={onMouseLeave}
       isActive={isActive}
       // Mobile: explicit 679px height (Figma); md: span 2 cols; xl: tall card spanning 2 rows
-      className="!h-[679px] md:!h-auto md:col-span-2 md:row-start-1 xl:col-span-1 xl:col-start-3 xl:row-start-1 xl:row-span-2 md:px-5 md:py-6.5 xl:px-6 xl:py-8"
+      className="h-169.75! md:h-auto! md:col-span-2 md:row-start-1 xl:col-span-1 xl:col-start-3 xl:row-start-1 xl:row-span-2 md:px-5 md:py-6.5 xl:px-6 xl:py-8"
       mediaClassName="min-h-0"
       title={t('title')}
       description={t('body')}
@@ -112,7 +112,7 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
           <Button
             variant="default"
             size="md"
-            className="!px-[32px] !py-[16px] !text-[18px] !rounded-[16px] xl:!px-8 xl:!py-3.5 xl:!text-[18px]">
+            className="px-8! py-4! text-[18px]! rounded-[16px]! xl:px-8! xl:py-3.5! xl:text-[18px]!">
             {t('cta')}
           </Button>
         </div>

@@ -29,7 +29,7 @@ export const TestimonialsSection = () => {
       ref={sectionRef as React.RefObject<HTMLDivElement>}
       id="testimonials"
       className="relative w-full -mb-8 overflow-hidden
-                 px-[20px] py-[90px]
+                 px-5 py-22.5
                  md:px-12 md:py-16 lg:py-20 xl:px-26 xl:py-22.5">
       {/* Background decoration */}
       <div
@@ -42,15 +42,15 @@ export const TestimonialsSection = () => {
         />
       </div>
 
-      <div className="relative flex flex-col gap-[32px] md:gap-7 lg:gap-7.5 xl:gap-8">
+      <div className="relative flex flex-col gap-8 md:gap-7 lg:gap-7.5 xl:gap-8">
         {/* Title row — arrows visible only on md+; on mobile they live at the bottom */}
-        <div className="flex items-start md:items-center justify-between gap-4 min-h-[40px] md:h-10.5 lg:h-11 xl:h-12">
+        <div className="flex items-start md:items-center justify-between gap-4 min-h-10 md:h-10.5 lg:h-11 xl:h-12">
           <p
             className="font-manrope text-neutral-600
                        font-bold xl:font-light
                        text-[24px] md:text-[32px] lg:text-[37px] xl:text-[40px]
                        leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]
-                       max-w-[210px] md:max-w-none">
+                       max-w-52.5 md:max-w-none">
             {t('title')}
           </p>
           <div className="hidden md:block shrink-0">
@@ -74,7 +74,7 @@ export const TestimonialsSection = () => {
         {/* Bottom controls.
             Mobile: arrows on either side of dots for thumb-friendly UX.
             Desktop: dots only (arrows live in header). */}
-        <div className="flex items-center justify-center gap-[16px] md:gap-0">
+        <div className="flex items-center justify-center gap-4 md:gap-0">
           <div className="md:hidden">
             <NavigationArrows onPrev={scrollPrev} onNext={scrollNext} />
           </div>

@@ -174,9 +174,9 @@ export const BenefitCard = ({
       onMouseLeave={onMouseLeave}
       data-benefit-card=""
       className={cn(
-        'relative isolate flex h-[384px] xl:h-96 flex-col overflow-hidden',
+        'relative isolate flex h-96 xl:h-96 flex-col overflow-hidden',
         'rounded-[16px] border bg-neutral-20 transition-colors duration-200',
-        'px-[16px] py-[20px] md:px-5 md:py-6 xl:px-4 xl:py-5',
+        'px-4 py-5 md:px-5 md:py-6 xl:px-4 xl:py-5',
         isActive ? 'border-orange-400' : 'border-neutral-40',
         className,
       )}>
@@ -189,7 +189,7 @@ export const BenefitCard = ({
       <p
         className="font-montserrat font-normal text-[#6c6b6b]
                    text-[16px] md:text-[16px] lg:text-[17px] xl:text-[18px]
-                   leading-[1.4] mt-[16px] xl:mt-4">
+                   leading-[1.4] mt-4 xl:mt-4">
         <FormatText text={description} />
       </p>
       <div

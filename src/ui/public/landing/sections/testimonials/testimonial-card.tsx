@@ -36,11 +36,11 @@ export const TestimonialCard = ({
   return (
     <div
       className={cn(
-        'relative flex shrink-0 ml-[16px] md:ml-4 border items-stretch md:items-center',
-        'w-[314px] md:w-131.25',
-        'rounded-[24px] md:rounded-lg',
-        'px-[12px] py-[16px] md:pl-4.5 md:pr-6 md:pb-2.5 md:pt-4.5',
-        'gap-[16px] md:gap-4',
+        'relative flex shrink-0 ml-4 md:ml-4 border items-stretch md:items-center',
+        'w-78.5 md:w-131.25',
+        'rounded-lg md:rounded-lg',
+        'px-3 py-4 md:pl-4.5 md:pr-6 md:pb-2.5 md:pt-4.5',
+        'gap-3 md:gap-4',
         active
           ? 'bg-neutral-0 border-red-300 md:border-primary-400'
           : 'bg-neutral-10 border-neutral-40',
@@ -49,14 +49,14 @@ export const TestimonialCard = ({
       {/* Quote badge — Figma mobile: 36x36 top -22 right 15 */}
       <div
         className="glass backdrop-blur-sm text-neutral-800 absolute
-                   -top-[22px] right-[15px] md:-top-7.75 md:right-12
+                   -top-5.5 right-3.75 md:-top-7.75 md:right-12
                    flex items-center justify-center rounded-full
-                   w-[36px] h-[36px] md:w-15 md:h-15">
+                   w-9 h-9 md:w-15 md:h-15">
         <span className="icon text-[14px] md:text-[24px]">{quoteSVG}</span>
       </div>
 
       {/* Avatar with mask + Instagram badge */}
-      <div className="relative shrink-0 self-end md:self-auto rounded-[30px] md:rounded-md w-[70px] h-[77px] md:w-42.5 md:h-47.5 overflow-hidden">
+      <div className="relative shrink-0 self-end md:self-auto rounded-lg md:rounded-md w-17.5 h-19.25 md:w-42.5 md:h-47.5 overflow-hidden">
         <img
           src={photo}
           alt={name}
@@ -70,7 +70,7 @@ export const TestimonialCard = ({
       </div>
 
       {/* Text content — gap 18 mobile per Figma */}
-      <div className="flex flex-1 flex-col gap-[18px] md:gap-3 pt-0 md:pt-4 h-full min-w-0">
+      <div className="flex flex-1 flex-col gap-4.5 md:gap-3 pt-0 md:pt-4 h-full min-w-0">
         <p className="flex-1 font-montserrat font-normal text-[14px] md:text-[16px] leading-[1.6] text-[#6c6b6b]">
           {quote}
         </p>
@@ -78,7 +78,7 @@ export const TestimonialCard = ({
         {/* Bottom block:
             - Mobile (Figma): stars row above name, role below name (all stacked).
             - Desktop: stars beside name on the same row, role below. */}
-        <div className="flex flex-col gap-[6px] md:gap-1.5">
+        <div className="flex flex-col gap-1.5 md:gap-1.5">
           {/* Mobile-only stars row */}
           <div className="md:hidden">
             <StarRating rating={rating} />

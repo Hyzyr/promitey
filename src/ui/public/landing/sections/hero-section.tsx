@@ -22,7 +22,7 @@ export const HeroSection = () => {
   return (
     <section
       id="hero"
-      className="relative isolate w-full min-h-[760px] md:min-h-[820px] xl:h-screen bg-neutral-30 flex items-center justify-center overflow-hidden">
+      className="relative isolate w-full min-h-190 md:min-h-205 xl:h-screen bg-neutral-30 flex items-center justify-center overflow-hidden">
       {/* Background image */}
       <div className="bg">
         <img src={'/main-bg.png'} alt="" className={bgClass} />
@@ -31,14 +31,14 @@ export const HeroSection = () => {
       {/* Content — Figma mobile: pb-32, px-20, gap-40 between text-block and buttons-block */}
       <div
         className="relative z-10 flex w-full max-w-full flex-col items-center
-                   gap-[40px] md:gap-9 lg:gap-9 xl:gap-10
-                   px-[20px] md:px-12 xl:px-24
+                   gap-10 md:gap-9 lg:gap-9 xl:gap-10
+                   px-5 md:px-12 xl:px-24
                    pt-6 md:pt-7 lg:pt-8 xl:pt-10
-                   pb-[32px] md:pb-12 xl:pb-16">
+                   pb-8 md:pb-12 xl:pb-16">
         {/* Text block — Figma: gap-30 inside (heading group → subtitle) */}
-        <div className="flex w-full max-w-full flex-col items-center gap-[30px] md:gap-7 xl:gap-7.5 text-center">
+        <div className="flex w-full max-w-full flex-col items-center gap-7.5 md:gap-7 xl:gap-7.5 text-center">
           {/* Heading group — Figma: gap-16 between tagline & main heading */}
-          <div className="flex flex-col items-center justify-center gap-[16px] md:gap-4 w-full">
+          <div className="flex flex-col items-center justify-center gap-4 md:gap-4 w-full">
             {/* Eyebrow tagline — mobile only per Figma (20px primary Manrope Bold) */}
             <p className="md:hidden font-manrope font-bold text-[20px] leading-[1.1] tracking-[0.2px] text-primary-500 text-center">
               {t('eyebrow')}
@@ -55,7 +55,7 @@ export const HeroSection = () => {
                 <span className="whitespace-nowrap">{t('title.line2')}</span>
               </span>
               {/* mobile: only line2, constrained 304px so it wraps */}
-              <span className="md:hidden block mx-auto max-w-[304px]">
+              <span className="md:hidden block mx-auto max-w-76">
                 {t('title.line2')}
               </span>
             </h1>
@@ -66,28 +66,28 @@ export const HeroSection = () => {
             className="font-roboto font-normal text-[#2b2929] text-center
                        text-[16px] md:text-[18px] lg:text-[21px] xl:text-[24px]
                        leading-[1.4] tracking-[-0.32px] md:tracking-[-0.4px] xl:tracking-[-0.48px]
-                       max-w-full md:max-w-[600px] xl:max-w-[794px]">
+                       max-w-full md:max-w-150 xl:max-w-198.5">
             <FormatText text={t.raw('subtitle')} />
           </p>
         </div>
 
         {/* Buttons — Figma mobile: gap-18 vertical, primary CTA px-32 py-16 18px, glass w-208 px-16 py-8 18px */}
-        <div className="flex w-full flex-col items-center gap-[18px] md:gap-4.5 md:w-auto">
+        <div className="flex w-full flex-col items-center gap-4.5 md:gap-4.5 md:w-auto">
           <Button
             variant="default"
             size="lg"
-            className="!px-[32px] !py-[16px] !text-[18px] !rounded-[16px]
-                       md:!px-12 md:!py-[18px] md:!text-[20px]
-                       xl:!px-16.5 xl:!py-4 xl:!text-[22px] xl:!rounded-lg"
+            className="px-8! py-4! text-[18px]! rounded-[16px]!
+                       md:px-12! md:py-4.5! md:text-[20px]!
+                       xl:px-16.5! xl:py-4! xl:text-[22px]! xl:rounded-lg!"
             style={{ boxShadow: '4px 11px 5.5px rgba(0,0,0,0.05)' }}>
             {t('ctaPrimary')}
           </Button>
 
           <GlassButton
             size="md"
-            className="!w-[208px] !px-[16px] !py-[8px] !text-[18px] !rounded-[16px] tracking-[-0.36px]
-                       md:!w-auto md:!px-10 md:!py-[14px]
-                       xl:!px-16.5 xl:!py-4.5 xl:!text-[22px] xl:!rounded-lg">
+            className="w-52! px-4! py-2! text-[18px]! rounded-[16px]! tracking-[-0.36px]
+                       md:w-auto! md:px-10! md:py-3.5!
+                       xl:px-16.5! xl:py-4.5! xl:text-[22px]! xl:rounded-lg!">
             {t('ctaSecondary')}
           </GlassButton>
         </div>

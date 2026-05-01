@@ -45,8 +45,8 @@ const PricingCard = ({
   return (
     <div
       className="flex flex-col w-full h-full rounded-[12px] xl:rounded-[16px] bg-neutral-20
-                 px-[12px] xl:px-6 pt-[22px] xl:pt-8 pb-[16px] xl:pb-8
-                 gap-[16px] xl:gap-6"
+                 px-3 xl:px-6 pt-5.5 xl:pt-8 pb-4 xl:pb-8
+                 gap-4 xl:gap-6"
       style={{ boxShadow: '0px 20px 32px 0px rgba(0,0,0,0.06)' }}>
       {/* Label */}
       <p
@@ -58,15 +58,15 @@ const PricingCard = ({
       </p>
 
       {/* Price block (height-matched between cards via min-h on the discount-having cards) */}
-      <div className="flex flex-col gap-[6px] xl:gap-4 min-h-[86px] xl:min-h-0 justify-end">
+      <div className="flex flex-col gap-1.5 xl:gap-4 min-h-21.5 xl:min-h-0 justify-end">
         {/* Inline discount row (mobile + desktop) — only for discounted plans */}
         {originalPrice && (
-          <div className="flex items-center gap-[12px] xl:gap-4">
+          <div className="flex items-center gap-3 xl:gap-4">
             <span className="relative font-manrope font-normal text-[18px] xl:text-[32px] leading-none text-neutral-80 whitespace-nowrap">
               <span className="relative inline-block">
                 {originalPrice}
                 <span
-                  className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-[2px] xl:h-[3px] bg-[#878686]"
+                  className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-0.5 xl:h-0.75 bg-[#878686]"
                   aria-hidden="true"
                 />
               </span>
@@ -96,8 +96,8 @@ const PricingCard = ({
       {/* Divider + period info */}
       <div
         className="flex flex-col xl:flex-row items-start xl:items-center
-                   gap-[6px] xl:gap-0 border-t border-neutral-40
-                   pt-[8px] xl:pt-4 pb-[6px] xl:pb-1.5
+                   gap-1.5 xl:gap-0 border-t border-neutral-40
+                   pt-2 xl:pt-4 pb-1.5 xl:pb-1.5
                    xl:justify-between">
         {perMonth && (
           <span className="font-manrope font-normal text-[14px] xl:text-[24px] text-neutral-600 whitespace-nowrap">
@@ -126,9 +126,9 @@ export const PricingSection = () => {
   return (
     <section
       id="pricing"
-      className="relative w-full px-[20px] py-[60px] md:px-8 md:py-20 xl:px-0 xl:pb-30 xl:pt-22.5 overflow-hidden">
+      className="relative w-full px-5 py-15 md:px-8 md:py-20 xl:px-0 xl:pb-30 xl:pt-22.5 overflow-hidden">
       {/* Dark background — mobile: rounded-24 contained; desktop: full bleed */}
-      <div className="absolute inset-[20px] md:inset-8 xl:inset-0 bg-neutral-900 rounded-[24px] xl:rounded-xl overflow-hidden">
+      <div className="absolute inset-5 md:inset-8 xl:inset-0 bg-neutral-900 rounded-lg xl:rounded-xl overflow-hidden">
         {/* Top glow ellipse (decorative) */}
         <div
           className="absolute left-[15%] top-[10%] w-[30%] h-0 circle shadow-[0px_0px_12vh_2vw_rgba(255,255,255,0.15)]"
@@ -144,9 +144,9 @@ export const PricingSection = () => {
 
       {/* Content wrapper — mobile px-0 (parent handles), desktop uses Container */}
       <div className="relative">
-        <Container className="relative flex flex-col items-center gap-[80px] xl:gap-20 xl:min-h-screen xl:justify-center xl:py-0 px-0! xl:px-[unset]!">
+        <Container className="relative flex flex-col items-center gap-20 xl:gap-20 xl:min-h-screen xl:justify-center xl:py-0 px-0! xl:px-[unset]!">
           {/* Heading — mobile w-320 gap-16 */}
-          <div className="flex flex-col items-center gap-[16px] xl:gap-4 text-center w-[320px] md:w-auto md:max-w-[680px] xl:max-w-none">
+          <div className="flex flex-col items-center gap-4 xl:gap-4 text-center w-[320px] md:w-auto md:max-w-170 xl:max-w-none">
             <p
               className="font-manrope font-normal text-yellow-50
                          text-[32px] md:text-[40px] xl:text-[56px]
@@ -172,9 +172,9 @@ export const PricingSection = () => {
           <div
             className="grid grid-cols-2 xl:grid-cols-4 items-stretch
                        gap-0 xl:gap-2
-                       w-full max-w-[374px] md:max-w-[700px] xl:max-w-none">
+                       w-full max-w-93.5 md:max-w-175 xl:max-w-none">
             {/* ONE MONTH */}
-            <div className="flex flex-col px-[4px] py-[8px] xl:p-0">
+            <div className="flex flex-col px-1 py-2 xl:p-0">
               <PricingCard
                 label={t('plans.oneMonth.label')}
                 price="3 €"
@@ -190,11 +190,11 @@ export const PricingSection = () => {
             <div
               className="flex flex-col items-center
                          bg-primary-500 xl:bg-transparent xl:glass xl:backdrop-blur-lg
-                         pb-[8px] px-[4px] xl:pb-2 xl:px-2
+                         pb-2 px-1 xl:pb-2 xl:px-2
                          rounded-[18px]
                          shadow-[4px_11px_11px_0px_rgba(0,0,0,0.12)]
                          relative overflow-hidden">
-              <div className="flex w-full items-center justify-center pt-[6px] pb-[10px] xl:pt-3 xl:pb-3.5 px-[24px] xl:px-16.5">
+              <div className="flex w-full items-center justify-center pt-1.5 pb-2.5 xl:pt-3 xl:pb-3.5 px-6 xl:px-16.5">
                 <p
                   className="font-manrope font-bold text-center bg-clip-text text-transparent whitespace-nowrap
                              text-[18px] xl:text-[28px]
@@ -219,7 +219,7 @@ export const PricingSection = () => {
             </div>
 
             {/* THREE MONTHS (per Figma — was previously labelled half-year) */}
-            <div className="flex flex-col px-[4px] py-[8px] xl:p-0">
+            <div className="flex flex-col px-1 py-2 xl:p-0">
               <PricingCard
                 label={t('plans.quarter.label')}
                 originalPrice="6 €"
@@ -232,7 +232,7 @@ export const PricingSection = () => {
             </div>
 
             {/* HALF YEAR */}
-            <div className="flex flex-col px-[4px] py-[8px] xl:p-0">
+            <div className="flex flex-col px-1 py-2 xl:p-0">
               <PricingCard
                 label={t('plans.halfYear.label')}
                 originalPrice="12 €"
