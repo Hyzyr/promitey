@@ -189,24 +189,39 @@
       "forgot": "Забыли пароль?"
     },
     "placeholders": {
-      "emailOrLogin": "Электронная почта или логин",
+      "email": "Электронная почта",
+      "emailOrLogin": "Электронная почта",
       "password": "Пароль",
       "passwordRepeat": "Повторите пароль"
     },
     "errors": {
-      "emailRequired": "Введите email или логин",
+      "emailRequired": "Введите email",
       "emailInvalid": "Неверный формат",
       "passwordRequired": "Введите пароль",
       "passwordMin": "Минимум 8 символов",
       "passwordMismatch": "Пароли не совпадают",
       "codeIncomplete": "Введите 6 цифр",
-      "badCredentials": "Username or password is wrong, check if caps lock is on and try again"
+      "badCredentials": "Неверный email или пароль",
+      "invalidTotp": "Неверный код аутентификатора",
+      "invalidResetToken": "Эта ссылка для сброса недействительна или устарела",
+      "emailTaken": "Аккаунт с таким email уже существует",
+      "tooManyRequests": "Слишком много попыток — подождите немного и повторите",
+      "generic": "Что-то пошло не так. Пожалуйста, повторите попытку.",
+      "wrongPassword": "Текущий пароль неверен",
+      "codeRequired": "Введите код",
+      "invalidPublicCode": "Неверный или устаревший код",
+      "alreadyLinked": "Аккаунт уже привязан к Telegram"
     },
     "login": {
       "title": "Вход",
       "subtitle": "Авторизуйтесь, чтобы продолжить работу.",
       "submit": "Войти",
-      "createAccount": "Создать аккаунт"
+      "createAccount": "Создать аккаунт",
+      "totpTitle": "Двухфакторная аутентификация",
+      "totpSubtitle": "Введите код из приложения аутентификатора.",
+      "totpPlaceholder": "6-значный код",
+      "totpSubmit": "Подтвердить",
+      "totpBack": "Назад"
     },
     "register": {
       "title": "Создать аккаунт",
@@ -215,12 +230,14 @@
     },
     "forgot": {
       "title": "Восстановить пароль",
-      "step1": "Шаг 1/3",
-      "step2": "Шаг 2/3",
-      "step3": "Шаг 3/3",
-      "emailDescription": "Пожалуйста, введите адрес электронной почты, для которого вы хотите восстановить пароль.",
+      "step1": "Шаг 1 из 2",
+      "step2": "Шаг 2 из 2",
+      "step3": "Шаг 2 из 2",
+      "emailDescription": "Введите email адрес, привязанный к вашему аккаунту.",
+      "emailSentTitle": "Проверьте почту",
+      "emailSentBody": "Если аккаунт с таким email существует, на него было отправлено письмо со ссылкой для сброса пароля.",
       "codeDescription": "Введите код, который мы отправили на электронный адрес",
-      "resetDescription": "Отлично, теперь вы можете создать новый пароль для пользователя",
+      "resetDescription": "Создайте новый пароль для",
       "next": "Дальше"
     }
   },
@@ -253,7 +270,14 @@
       "status": "Статус",
       "active": "Активна",
       "expired": "Истекла",
-      "startsAt": "Начало:"
+      "startsAt": "Начало:",
+      "noSubscription": "Нет активной подписки"
+    },
+    "billing": {
+      "renew": "Оформить подписку",
+      "unavailable": "Онлайн-оплата пока недоступна. Чтобы оформить или продлить подписку, напишите нам в Telegram — мы обработаем оплату вручную.",
+      "error": "Что-то пошло не так. Попробуйте ещё раз.",
+      "noSubscriptionInfo": "Чтобы активировать или продлить подписку, нажмите кнопку ниже. Оплата пока производится вручную через Telegram."
     },
     "servers": {
       "title": "Серверы",
@@ -266,6 +290,19 @@
       "online": "Онлайн",
       "offline": "Оффлайн",
       "maintenance": "Обслуживание"
+    },
+    "vpn": {
+      "regionTitle": "VPN-регион",
+      "regionDescription": "Выберите регион VPN-сервера. Введите код региона или «auto», чтобы сервер выбрал автоматически.",
+      "regionPlaceholder": "например eu-west или auto",
+      "regionSave": "Сохранить регион",
+      "regionSaved": "Регион успешно обновлён",
+      "regionRequired": "Введите код региона",
+      "recreateTitle": "Пересоздать конфигурацию",
+      "recreateDescription": "Заново создайте конфигурационные файлы VPN. Это поможет, если соединение перестало работать. Это можно делать не чаще одного раза в 2 минуты.",
+      "recreate": "Пересоздать конфиг",
+      "recreateSuccess": "Конфигурация успешно пересоздана",
+      "rateLimited": "Пожалуйста, подождите немного перед повторным созданием"
     },
     "instructions": {
       "title": "Инструкции по подключению",
@@ -287,7 +324,21 @@
       "newPassword": "Новый пароль",
       "confirmPassword": "Подтвердите новый пароль",
       "save": "Сохранить изменения",
-      "changePassword": "Изменить пароль"
+      "changePassword": "Изменить пароль",
+      "memberSince": "Участник с",
+      "passwordSaved": "Пароль успешно изменён",
+      "telegram": {
+        "title": "Telegram",
+        "description": "Привяжите аккаунт, чтобы получать уведомления и управлять подпиской через нашего Telegram-бота.",
+        "linkedStatus": "Telegram подключён",
+        "linkedAt": "Привязан",
+        "getLink": "Получить токен привязки",
+        "openBot": "Открыть в Telegram",
+        "orCode": "Или введите код из бота",
+        "codePlaceholder": "Код бота",
+        "codeSubmit": "Привязать аккаунт",
+        "linkSuccess": "Telegram-аккаунт успешно привязан"
+      }
     }
   }
 }

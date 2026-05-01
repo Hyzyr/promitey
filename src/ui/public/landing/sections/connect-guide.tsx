@@ -46,9 +46,9 @@ export const ConnectGuide = () => {
             <div
               className={cn(
                 'flex flex-col-reverse md:flex-row items-center w-full',
-                'gap-6 md:gap-10 lg:gap-14 xl:gap-18.5',
+                'gap-6 md:gap-10 lg:gap-14 xl:gap-18.5 xl:justify-between',
               )}>
-              <div className="flex shrink-0 items-center w-full md:w-auto gap-6 md:gap-8 lg:gap-10 xl:gap-13.25">
+              <div className="flex shrink-0 items-center w-full md:w-auto gap-6 md:gap-8 lg:gap-10 xl:gap-13.25 xl:justify-between">
                 <div
                   className={cn(
                     'relative flex flex-col w-full md:w-auto md:max-w-125 xl:w-176.25',

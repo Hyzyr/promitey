@@ -42,8 +42,8 @@ export const LandingFooter = () => {
   return (
     <footer className="relative w-full bg-neutral-900 pb-7.5 pt-12 md:pt-14 lg:pt-16 xl:pt-20">
       <Container className="flex flex-col gap-8 md:gap-10 lg:gap-12 xl:gap-15">
-        <div className="flex flex-col xl:flex-row gap-10 md:gap-12 lg:gap-14 xl:gap-8 items-start w-full">
-          <div className="flex flex-col gap-6 w-full xl:w-[37%] xl:max-w-96 xl:pr-6">
+        <div className="flex flex-col xl:flex-row xl:justify-between gap-10 md:gap-12 lg:gap-14 xl:gap-8 items-start w-full">
+          <div className="flex flex-col -order-1 lg:order-0 gap-6 w-full xl:w-[37%] xl:max-w-96 xl:pr-6">
             <div className="flex items-center gap-3">
               <LogoWithText size={25} />
             </div>
@@ -92,33 +92,33 @@ export const LandingFooter = () => {
             </nav>
           </div>
 
-            <div className="flex flex-col gap-6 md:gap-7 xl:gap-8 w-full xl:grow xl:max-w-92 xl:pl-2">
-              <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
-                {t('contact.title')}
-              </p>
-              <form
-                className="flex flex-col gap-4 w-full"
-                onSubmit={(e) => e.preventDefault()}>
-                <Input
-                  variant="dark"
-                  type="email"
-                  placeholder={t('contact.email')}
-                />
-                <Textarea
-                  variant="dark"
-                  placeholder={t('contact.message')}
-                  rows={4}
-                  className="h-32.75"
-                />
-                <Button
-                  type="submit"
-                  variant="orange"
-                  size="md"
-                  className="w-full md:w-40.5 xl:w-34.5">
-                  {t('contact.send')}
-                </Button>
-              </form>
-            </div>
+          <div className="flex flex-col -order-1 lg:order-0  gap-6 md:gap-7 xl:gap-8 w-full xl:grow xl:max-w-92 xl:pl-2">
+            <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+              {t('contact.title')}
+            </p>
+            <form
+              className="flex flex-col gap-4 w-full"
+              onSubmit={(e) => e.preventDefault()}>
+              <Input
+                variant="dark"
+                type="email"
+                placeholder={t('contact.email')}
+              />
+              <Textarea
+                variant="dark"
+                placeholder={t('contact.message')}
+                rows={4}
+                className="h-32.75"
+              />
+              <Button
+                type="submit"
+                variant="orange"
+                size="md"
+                className="w-full md:w-40.5 xl:w-34.5">
+                {t('contact.send')}
+              </Button>
+            </form>
+          </div>
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 pt-8 md:pt-9 xl:pt-10 w-full border-t border-neutral-600">

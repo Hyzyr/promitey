@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useScroll, useMotionValueEvent } from 'framer-motion';
 
 /**
@@ -17,26 +17,27 @@ import { useScroll, useMotionValueEvent } from 'framer-motion';
 export function useHeaderScroll() {
   const [isVisible, setIsVisible] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
+  const lastScrollY = useRef(0);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, 'change', (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
+    const previous = lastScrollY.current;
     const direction = latest > previous ? 'down' : 'up';
-    
-    // Threshold to prevent jitter on minor scroll movements
-    const SCROLL_THRESHOLD = 50;
     const scrollDifference = Math.abs(latest - previous);
+    
+    // Always update last known scroll position
+    lastScrollY.current = latest;
 
-    // Update isAtTop state
+    // Update isAtTop state (< 20px from top)
     setIsAtTop(latest < 20);
 
     // Show header when:
     // 1. At the top of the page (< 100px)
-    // 2. Scrolling up with meaningful movement (> threshold)
-    // Hide header when scrolling down past top
+    // 2. Scrolling up with meaningful movement (> 10px threshold)
+    // Hide header when scrolling down past 100px
     if (latest < 100) {
       setIsVisible(true);
-    } else if (scrollDifference > SCROLL_THRESHOLD) {
+    } else if (scrollDifference > 10) {
       setIsVisible(direction === 'up');
     }
   });

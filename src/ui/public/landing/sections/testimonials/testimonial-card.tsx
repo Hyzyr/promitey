@@ -66,10 +66,10 @@ export const TestimonialCard = ({
             <StarRating rating={rating} />
           </div>
           <div className="flex items-center gap-2 md:gap-4">
-            <p className="flex-1 font-manrope font-bold text-[18px] md:text-[18px] leading-[1.1] text-[#2b2929] whitespace-nowrap overflow-hidden text-ellipsis">
+            <strong className="flex-1 font-manrope font-bold text-[18px] md:text-[18px] leading-[1.1] text-[#2b2929] whitespace-nowrap overflow-hidden text-ellipsis">
               {name}
-            </p>
-            <div className="hidden md:block">
+            </strong>
+            <div className="hidden md:flex shrink-0 ">
               <StarRating rating={rating} />
             </div>
           </div>

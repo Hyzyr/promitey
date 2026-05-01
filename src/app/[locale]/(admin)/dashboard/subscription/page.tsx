@@ -1,17 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
-import { Button } from '@/components/ui/button';
+import { CheckoutButton } from '@/ui/dashboard/components/checkout-button';
 
 export default async function SubscriptionPage() {
   const t = await getTranslations('dashboard');
-
-  // TODO: replace with real subscription data
-  const subscription = {
-    plan: '7 days trial',
-    status: 'active',
-    startsAt: '15/04/26',
-    expiresAt: '22/04/26',
-  };
 
   return (
     <>
@@ -21,50 +13,15 @@ export default async function SubscriptionPage() {
           {t('subscription.title')}
         </h1>
 
-        <div className="mt-6 space-y-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-sm text-neutral-600">
-              {t('subscription.currentPlan')}
-            </span>
-            <span className="text-xl font-semibold text-neutral-900">
-              {subscription.plan}
-            </span>
-          </div>
+        <p className="mt-4 text-base leading-relaxed text-neutral-600">
+          {t('billing.noSubscriptionInfo')}
+        </p>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-sm text-neutral-600">
-              {t('subscription.status')}
-            </span>
-            <span className="text-lg font-medium text-green-600">
-              {t('subscription.active')}
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className="text-sm text-neutral-600">
-              {t('subscription.startsAt')}
-            </span>
-            <span className="text-lg text-neutral-900">
-              {subscription.startsAt}
-            </span>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className="text-sm text-neutral-600">
-              {t('subscription.expiresAt')}
-            </span>
-            <span className="text-lg text-neutral-900">
-              {subscription.expiresAt}
-            </span>
-          </div>
-        </div>
-
-        <div className="mt-8 flex gap-4">
-          <Button variant="orange" size="md">
-            {t('subscription.renew')}
-          </Button>
+        <div className="mt-8">
+          <CheckoutButton />
         </div>
       </div>
     </>
   );
 }
+

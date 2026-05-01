@@ -189,24 +189,39 @@
       "forgot": "Forgot password?"
     },
     "placeholders": {
-      "emailOrLogin": "Email or username",
+      "email": "Email",
+      "emailOrLogin": "Email",
       "password": "Password",
       "passwordRepeat": "Repeat password"
     },
     "errors": {
-      "emailRequired": "Enter your email or username",
+      "emailRequired": "Enter your email",
       "emailInvalid": "Invalid format",
       "passwordRequired": "Enter your password",
       "passwordMin": "At least 8 characters",
       "passwordMismatch": "Passwords don't match",
       "codeIncomplete": "Enter 6 digits",
-      "badCredentials": "Username or password is wrong, check if caps lock is on and try again"
+      "badCredentials": "Email or password is incorrect",
+      "invalidTotp": "Invalid authenticator code",
+      "invalidResetToken": "This reset link is invalid or has expired",
+      "emailTaken": "An account with this email already exists",
+      "tooManyRequests": "Too many attempts — please wait a moment and try again",
+      "generic": "Something went wrong. Please try again.",
+      "wrongPassword": "Current password is incorrect",
+      "codeRequired": "Enter the code",
+      "invalidPublicCode": "Invalid or expired code",
+      "alreadyLinked": "Account is already linked to Telegram"
     },
     "login": {
       "title": "Sign In",
       "subtitle": "Authorize to continue.",
       "submit": "Sign In",
-      "createAccount": "Create account"
+      "createAccount": "Create account",
+      "totpTitle": "Two-factor authentication",
+      "totpSubtitle": "Enter the code from your authenticator app.",
+      "totpPlaceholder": "6-digit code",
+      "totpSubmit": "Verify",
+      "totpBack": "Back"
     },
     "register": {
       "title": "Create account",
@@ -215,12 +230,14 @@
     },
     "forgot": {
       "title": "Reset password",
-      "step1": "Step 1/3",
-      "step2": "Step 2/3",
-      "step3": "Step 3/3",
-      "emailDescription": "Please enter the email address for which you want to reset the password.",
+      "step1": "Step 1 of 2",
+      "step2": "Step 2 of 2",
+      "step3": "Step 2 of 2",
+      "emailDescription": "Enter the email address associated with your account.",
+      "emailSentTitle": "Check your inbox",
+      "emailSentBody": "If an account with that email exists, a password reset link has been sent.",
       "codeDescription": "Enter the code we sent to the email",
-      "resetDescription": "Great, now you can create a new password for user",
+      "resetDescription": "Create a new password for",
       "next": "Next"
     }
   },
@@ -253,7 +270,14 @@
       "status": "Status",
       "active": "Active",
       "expired": "Expired",
-      "startsAt": "Started on:"
+      "startsAt": "Started on:",
+      "noSubscription": "No active subscription"
+    },
+    "billing": {
+      "renew": "Renew subscription",
+      "unavailable": "Online payments are not yet available. To subscribe or renew your plan, please contact us via Telegram — we will handle your payment manually.",
+      "error": "Something went wrong. Please try again.",
+      "noSubscriptionInfo": "To activate or renew a subscription, click the button below. Payments are currently processed manually via Telegram."
     },
     "servers": {
       "title": "Servers",
@@ -266,6 +290,19 @@
       "online": "Online",
       "offline": "Offline",
       "maintenance": "Maintenance"
+    },
+    "vpn": {
+      "regionTitle": "VPN Region",
+      "regionDescription": "Choose your VPN server region. Enter a region code or \"auto\" to let the server choose for you.",
+      "regionPlaceholder": "e.g. eu-west or auto",
+      "regionSave": "Save region",
+      "regionSaved": "Region updated successfully",
+      "regionRequired": "Enter a region code",
+      "recreateTitle": "Recreate Configuration",
+      "recreateDescription": "Regenerate your VPN configuration files. This can help if your connection stopped working. You can do this at most once every 2 minutes.",
+      "recreate": "Recreate config",
+      "recreateSuccess": "Configuration recreated successfully",
+      "rateLimited": "Please wait a moment before recreating again"
     },
     "instructions": {
       "title": "Connection Instructions",
@@ -287,7 +324,21 @@
       "newPassword": "New password",
       "confirmPassword": "Confirm new password",
       "save": "Save changes",
-      "changePassword": "Change Password"
+      "changePassword": "Change Password",
+      "memberSince": "Member since",
+      "passwordSaved": "Password changed successfully",
+      "telegram": {
+        "title": "Telegram",
+        "description": "Link your account to receive notifications and manage your subscription via our Telegram bot.",
+        "linkedStatus": "Telegram is connected",
+        "linkedAt": "Linked on",
+        "getLink": "Get link token",
+        "openBot": "Open in Telegram",
+        "orCode": "Or enter the code shown by the bot",
+        "codePlaceholder": "Bot code",
+        "codeSubmit": "Link account",
+        "linkSuccess": "Your Telegram account has been linked successfully"
+      }
     }
   }
 }

@@ -12,11 +12,11 @@ import {
   CreditCard,
   User,
   HelpCircle,
-  LogOut,
   X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useScrollLock } from '@/hooks/use-scroll-lock';
+import { LogoutButton } from './logout-button';
 
 const DRAWER_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
@@ -119,17 +119,8 @@ export const MobileDashboardMenu = ({
                 );
               })}
 
-              {/* Logout button — Figma: text-primary-500 (#ff6d41) */}
-              <button
-                type="button"
-                onClick={() => {
-                  /* TODO: signOut(); */
-                  onOpenChange(false);
-                }}
-                className="flex items-center gap-4 text-base text-primary-500 hover:text-primary-400 font-normal">
-                <LogOut className="h-8 w-8" strokeWidth={1.5} />
-                <span>{tNav('logout')}</span>
-              </button>
+              {/* Logout */}
+              <LogoutButton onBeforeLogout={() => onOpenChange(false)} />
             </nav>
           </motion.div>
         </div>

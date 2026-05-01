@@ -1,76 +1,55 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { redirect } from '@/i18n/navigation';
+
+import { getAccessToken } from '@/lib/session';
+import * as accountApi from '@/api/account';
+
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { ChangePasswordForm } from '@/ui/dashboard/components/change-password-form';
+import { TelegramLinkSection } from '@/ui/dashboard/components/telegram-link-section';
 
 export default async function ProfilePage() {
   const t = await getTranslations('dashboard');
+  const token = await getAccessToken();
 
-  // TODO: replace with real user data
-  const user = {
-    email: 'octava@six.music',
-    name: 'Octava Six',
-  };
+  if (!token) {
+    const locale = await getLocale();
+    redirect({ href: '/login', locale });
+  }
+
+  const user = await accountApi.getMe(token!);
 
   return (
     <>
       <Breadcrumbs>{t('breadcrumb.profile')}</Breadcrumbs>
-      <div className="w-full max-w-212.5 rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
-        <h1 className="text-[28px] font-bold text-neutral-900">
-          {t('profile.title')}
-        </h1>
-
-        <div className="mt-6 space-y-6">
-          <div>
-            <h2 className="mb-4 text-lg font-semibold text-neutral-800">
-              {t('profile.personalInfo')}
-            </h2>
-            <div className="space-y-4">
-              <Input
-                label={t('profile.email')}
-                type="email"
-                defaultValue={user.email}
-                variant="light"
-              />
-              <Input
-                label={t('profile.name')}
-                type="text"
-                defaultValue={user.name}
-                variant="light"
-              />
-            </div>
+      <div className="w-full max-w-212.5 space-y-6">
+        {/* Personal info */}
+        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+          <h1 className="text-[28px] font-bold text-neutral-900">{t('profile.title')}</h1>
+          <div className="mt-6 space-y-2">
+            <p className="text-sm text-neutral-500">{t('profile.email')}</p>
+            <p className="text-base font-medium text-neutral-900">{user.email}</p>
+            <p className="pt-1 text-sm text-neutral-400">
+              {t('profile.memberSince')}{' '}
+              {new Date(user.created_at).toLocaleDateString()}
+            </p>
           </div>
+        </section>
 
-          <div>
-            <h2 className="mb-4 text-lg font-semibold text-neutral-800">
-              {t('profile.changePassword')}
-            </h2>
-            <div className="space-y-4">
-              <Input
-                label={t('profile.currentPassword')}
-                type="password"
-                variant="light"
-              />
-              <Input
-                label={t('profile.newPassword')}
-                type="password"
-                variant="light"
-              />
-              <Input
-                label={t('profile.confirmPassword')}
-                type="password"
-                variant="light"
-              />
-            </div>
-          </div>
+        {/* Telegram linking */}
+        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+          <TelegramLinkSection
+            initialLinked={user.telegram_linked}
+            linkedAt={user.linked_at}
+          />
+        </section>
 
-          <div className="flex gap-4">
-            <Button variant="orange" size="md">
-              {t('profile.save')}
-            </Button>
-          </div>
-        </div>
+        {/* Change password */}
+        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+          <ChangePasswordForm />
+        </section>
       </div>
     </>
   );
 }
+

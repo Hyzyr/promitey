@@ -1,46 +1,21 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthLink } from './auth-link';
-
-interface RegisterFormValues {
-  identifier: string;
-  password: string;
-  passwordRepeat: string;
-}
+import { useRegister } from '@/ui/auth/hooks/use-register';
 
 export const RegisterForm = () => {
   const t = useTranslations('auth');
-
-  const schema = z
-    .object({
-      identifier: z.string().min(1, t('errors.emailRequired')),
-      password: z.string().min(8, t('errors.passwordMin')),
-      passwordRepeat: z.string().min(1, t('errors.passwordRequired')),
-    })
-    .refine((d) => d.password === d.passwordRepeat, {
-      path: ['passwordRepeat'],
-      message: t('errors.passwordMismatch'),
-    });
+  const { form, onSubmit, serverError } = useRegister();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormValues>({
-    resolver: zodResolver(schema),
-    mode: 'onSubmit',
-  });
-
-  const onSubmit = async (_values: RegisterFormValues) => {
-    // TODO: wire registration API.
-  };
+  } = form;
 
   return (
     <form
@@ -50,12 +25,12 @@ export const RegisterForm = () => {
     >
       <div className="flex w-full flex-col items-center gap-4">
         <Input
-          type="text"
-          autoComplete="username"
-          placeholder={t('placeholders.emailOrLogin')}
-          error={errors.identifier?.message}
+          type="email"
+          autoComplete="email"
+          placeholder={t('placeholders.email')}
+          error={errors.email?.message}
           hideMessages
-          {...register('identifier')}
+          {...register('email')}
         />
         <Input
           type="password"
@@ -86,6 +61,12 @@ export const RegisterForm = () => {
           {t('register.submit')}
         </Button>
       </div>
+
+      {serverError && (
+        <p className="font-montserrat w-full max-w-[324px] self-center text-center text-[16px] leading-[1.5] tracking-[0.16px] text-red-500">
+          {serverError}
+        </p>
+      )}
 
       <div className="flex w-full justify-center">
         <AuthLink href="/login">{t('links.haveAccount')}</AuthLink>

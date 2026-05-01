@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { SidebarNavItem } from './sidebar-nav-item';
 import { LanguageSwitcher } from './language-switcher';
+import { LogoutButton } from './logout-button';
 import { Logo } from '@/components/ui/logo';
 
 const NAV_ITEMS = [
@@ -73,6 +74,7 @@ export const DashboardSidebar = () => {
           label={tNav('help')}
           active={pathname.endsWith('/help')}
         />
+        <LogoutButton iconClassName="h-6 w-6" />
       </div>
     </aside>
   );

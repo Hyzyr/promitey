@@ -1,53 +1,27 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from '@/i18n/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthLink } from './auth-link';
 import { AuthStep } from './auth-step';
+import { useResetPassword } from '@/ui/auth/hooks/use-reset-password';
 
-interface ResetPasswordFormProps {
-  /** User identifier (email/login) the new password belongs to. */
-  recipient?: string;
+export interface ResetPasswordFormProps {
+  /** Reset token from URL search params. */
+  token: string;
 }
 
-interface ResetPasswordFormValues {
-  password: string;
-  passwordRepeat: string;
-}
-
-export const ResetPasswordForm = ({ recipient }: ResetPasswordFormProps) => {
+export const ResetPasswordForm = ({ token }: ResetPasswordFormProps) => {
   const t = useTranslations('auth');
-  const router = useRouter();
-
-  const schema = z
-    .object({
-      password: z.string().min(8, t('errors.passwordMin')),
-      passwordRepeat: z.string().min(1, t('errors.passwordRequired')),
-    })
-    .refine((d) => d.password === d.passwordRepeat, {
-      path: ['passwordRepeat'],
-      message: t('errors.passwordMismatch'),
-    });
+  const { form, onSubmit, serverError } = useResetPassword(token);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<ResetPasswordFormValues>({
-    resolver: zodResolver(schema),
-    mode: 'onSubmit',
-  });
-
-  const onSubmit = async (_values: ResetPasswordFormValues) => {
-    // TODO: submit new password to API.
-    router.push('/login');
-  };
+  } = form;
 
   return (
     <form
@@ -56,8 +30,7 @@ export const ResetPasswordForm = ({ recipient }: ResetPasswordFormProps) => {
       noValidate
     >
       <p className="font-montserrat w-full text-center text-[14px] leading-[1.6] text-neutral-600 lg:text-[16px]">
-        {t('forgot.resetDescription')}{' '}
-        {recipient && <span className="font-semibold">{recipient}.</span>}
+        {t('forgot.resetDescription')}
       </p>
 
       <AuthStep label={t('forgot.step3')} />
@@ -78,6 +51,10 @@ export const ResetPasswordForm = ({ recipient }: ResetPasswordFormProps) => {
         hideMessages
         {...register('passwordRepeat')}
       />
+
+      {serverError && (
+        <p className="font-roboto text-center text-[14px] text-red-500">{serverError}</p>
+      )}
 
       <div className="flex w-full justify-center pt-3">
         <Button

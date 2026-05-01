@@ -1,58 +1,49 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthLink } from './auth-link';
-
-interface LoginFormValues {
-  identifier: string;
-  password: string;
-}
+import { useLogin } from '@/ui/auth/hooks/use-login';
+import { TotpForm } from './totp-form';
 
 export const LoginForm = () => {
   const t = useTranslations('auth');
-  const [rootError, setRootError] = useState<string | null>(null);
+  const { step, passwordForm, totpForm, onPasswordSubmit, onTotpSubmit, resetToPassword, serverError } =
+    useLogin();
 
-  const schema = z.object({
-    identifier: z.string().min(1, t('errors.emailRequired')),
-    password: z.string().min(1, t('errors.passwordRequired')),
-  });
+  if (step === 'totp') {
+    return (
+      <TotpForm
+        form={totpForm}
+        onSubmit={onTotpSubmit}
+        onBack={resetToPassword}
+        serverError={serverError}
+      />
+    );
+  }
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(schema),
-    mode: 'onSubmit',
-  });
-
-  const onSubmit = async (_values: LoginFormValues) => {
-    // TODO: wire authentication API. For now, surface a sample failure to keep
-    // the visual error state reachable for UX/QA.
-    setRootError(t('errors.badCredentials'));
-  };
+  } = passwordForm;
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onPasswordSubmit)}
       className="flex w-full flex-col gap-6"
       noValidate
     >
       <div className="flex w-full flex-col items-center gap-4">
         <Input
-          type="text"
-          autoComplete="username"
-          placeholder={t('placeholders.emailOrLogin')}
-          error={errors.identifier?.message}
+          type="email"
+          autoComplete="email"
+          placeholder={t('placeholders.email')}
+          error={errors.email?.message}
           hideMessages
-          {...register('identifier')}
+          {...register('email')}
         />
         <Input
           type="password"
@@ -86,9 +77,9 @@ export const LoginForm = () => {
         </Button>
       </div>
 
-      {rootError && (
+      {serverError && (
         <p className="font-montserrat w-full max-w-[324px] self-center text-center text-[16px] leading-[1.5] tracking-[0.16px] text-red-500">
-          {rootError}
+          {serverError}
         </p>
       )}
     </form>

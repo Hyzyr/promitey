@@ -4,7 +4,7 @@ import { routing } from "@/i18n/routing";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const PUBLIC_PATHS = ["/", "/login", "/register"];
+const PUBLIC_PATHS = ["/", "/login", "/register", "/forgot-password"];
 
 function stripLocale(pathname: string): string {
   const segments = pathname.split("/");
@@ -24,7 +24,7 @@ export default function middleware(request: NextRequest) {
   );
 
   if (!isPublic) {
-    const token = request.cookies.get("auth-token");
+    const token = request.cookies.get('auth_access_token');
     if (!token) {
       const locale = request.nextUrl.pathname.split("/")[1] ?? "ru";
       const loginUrl = new URL(`/${locale}/login`, request.url);
