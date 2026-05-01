@@ -14,7 +14,6 @@ export const NavigationArrows = ({ onPrev, onNext }: NavigationArrowsProps) => {
         onClick={onPrev}
         aria-label={'Previous testimonial'}
         className={buttonClass}>
-        {/* <div className="absolute inset-0 rounded-[36px]" style={innerStyle} /> */}
         <span className="icon text-[20px] text-neutral-900">
           <LucideChevronLeft />
         </span>
@@ -23,7 +22,6 @@ export const NavigationArrows = ({ onPrev, onNext }: NavigationArrowsProps) => {
         onClick={onNext}
         aria-label={'Next testimonial'}
         className={buttonClass}>
-        {/* <div className="absolute inset-0 rounded-[36px]" style={innerStyle} /> */}
         <span className="icon text-[20px] text-neutral-900">
           <LucideChevronRight />
         </span>

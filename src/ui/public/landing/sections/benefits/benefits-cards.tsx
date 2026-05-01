@@ -21,7 +21,6 @@ import {
 } from './components';
 import { VideoCard } from '@/components/ui/video-card';
 
-// ── Images ────────────────────────────────────────────────────────────────────
 
 const imgTryItFree = '/images/benefits/arc-blured.png';
 const imgHighSpeed = '/images/benefits/ellipse-blurred.png';
@@ -29,7 +28,6 @@ const imgCustomerSupport = '/images/benefits/o-shape-blurred.png';
 const imgForYourFamily = '/images/benefits/square-blurred.png';
 const imgYourInternet = '/images/benefits/circle-blurred.png';
 
-// ── Cards ─────────────────────────────────────────────────────────────────────
 
 type CardProps = {
   isActive?: boolean;
@@ -102,7 +100,6 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       isActive={isActive}
-      // Mobile: explicit 679px height (Figma); md: span 2 cols; xl: tall card spanning 2 rows
       className="h-169.75! md:h-auto! md:col-span-2 md:row-start-1 xl:col-span-1 xl:col-start-3 xl:row-start-1 xl:row-span-2 md:px-5 md:py-6.5 xl:px-6 xl:py-8"
       mediaClassName="min-h-0"
       title={t('title')}

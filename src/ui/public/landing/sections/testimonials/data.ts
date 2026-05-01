@@ -9,8 +9,6 @@ export type Testimonial = {
   rating: number;
 };
 
-// ── Data ──────────────────────────────────────────────────────────────────────
-
 export const TESTIMONIALS: Testimonial[] = [
   {
     id: 1,
@@ -38,7 +36,6 @@ export const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-// Tripled so Embla has enough slides for a true infinite loop
 export const SLIDES = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
 
 export const AUTOPLAY_DELAY = 4000;

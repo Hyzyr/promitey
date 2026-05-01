@@ -11,6 +11,6 @@ import { HeaderDesktop } from './components/header-desktop';
  */
 export const LandingHeader = () => {
   const isMobile = useMedia('(max-width: 1023px)');
-
+  
   return isMobile ? <HeaderMobile /> : <HeaderDesktop />;
 };

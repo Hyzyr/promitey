@@ -45,13 +45,11 @@ export const HeaderDesktop = () => {
         )}
       >
         <div className="container flex items-center justify-between py-4">
-          {/* Left: Logo + Language switcher */}
           <div className="flex items-center gap-6">
             <LogoWithText />
             <LanguageSwitcher />
           </div>
 
-          {/* Right: Nav links + Login button */}
           <div className="flex items-center gap-10">
             {NAV.map(({ href, label }) => (
               <a
@@ -70,7 +68,6 @@ export const HeaderDesktop = () => {
         </div>
       </motion.header>
 
-      {/* Spacer to prevent content from hiding under fixed header */}
       <div className="h-20" aria-hidden="true" />
     </>
   );

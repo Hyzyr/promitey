@@ -1,16 +1,8 @@
 type PaginationDotsProps = {
-  /** Total number of dots (= distinct testimonials, not duplicated slides) */
   count: number;
-  /** Which dot is currently active (0-based, already mod-reduced) */
   activeIndex: number;
-  /**
-   * Changes every time the active slide changes — used as a `key` so the
-   * progress animation remounts and restarts cleanly on each transition.
-   */
   progressKey: number;
-  /** When false the CSS animation is paused (user interaction / scroll-away) */
   isAutoPlaying: boolean;
-  /** Must match the autoplay plugin delay in ms */
   autoplayDelay: number;
   onDotClick: (index: number) => void;
 };

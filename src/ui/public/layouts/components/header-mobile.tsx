@@ -26,7 +26,6 @@ export const HeaderMobile = () => {
     setMenuOpen(false);
   }, []);
 
-  // Force visible whenever the menu is open.
   const showHeader = isVisible || menuOpen;
 
   return (
@@ -52,10 +51,8 @@ export const HeaderMobile = () => {
         />
       </motion.header>
 
-      {/* Spacer roughly matching collapsed header height */}
       <div className="h-14" aria-hidden="true" />
 
-      {/* Full-screen mobile menu overlay */}
       <MobileMenu isOpen={menuOpen} onClose={handleClose} />
     </>
   );

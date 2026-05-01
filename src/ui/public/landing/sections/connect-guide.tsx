@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { useScrollSteps } from '@/hooks/use-scroll-steps';
 import { FormatText } from '@/components/ui/format-text';
+import { cn } from '@/lib/utils';
 
 export const ConnectGuide = () => {
   const t = useTranslations('landing.guide');
@@ -13,47 +14,50 @@ export const ConnectGuide = () => {
   const topPct = `${(activeStep / steps.length) * 100}%`;
 
   return (
-    // stepCount × 100vh — each step owns one full viewport of scroll on every breakpoint.
-    // Container is tall (300vh) and the inner card sticks for the entire scroll range,
-    // giving the active-step animation room to play on mobile too.
     <div
-      ref={containerRef}
       id="guide"
-      className="relative h-[300vh]">
+      ref={containerRef}
+      className="relative h-[120vh] xl:h-[240vh]">
       <div className="sticky top-0 flex h-screen items-center">
         <section
-          className="w-full overflow-hidden
-                     px-5 py-10
-                     md:px-12 md:py-16 lg:py-20
-                     xl:px-26 xl:py-22.5">
+          className={cn(
+            'w-full overflow-hidden',
+            'px-5 py-10',
+            'md:px-12 md:py-16 lg:py-20',
+            'xl:px-26 xl:py-22.5',
+          )}>
           <div
-            className="flex flex-col items-center
-                       gap-6 md:gap-12 lg:gap-16 xl:gap-20">
-            {/* Heading — mobile: 24px Manrope Bold #484747, single line per Figma */}
+            className={cn(
+              'flex flex-col items-center',
+              'gap-6 md:gap-12 lg:gap-16 xl:gap-20',
+            )}>
             <h2
-              className="font-manrope text-neutral-600 text-center
-                         font-bold xl:font-normal
-                         text-[24px] md:text-[32px] lg:text-[37px] xl:text-[40px]
-                         leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]
-                         whitespace-nowrap xl:whitespace-pre
-                         px-0 md:px-4">
+              className={cn(
+                'font-manrope text-neutral-600 text-center',
+                'font-bold xl:font-normal',
+                'text-[24px] md:text-[32px] lg:text-[37px] xl:text-[40px]',
+                'leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]',
+                'whitespace-nowrap xl:whitespace-pre',
+                'px-0 md:px-4',
+              )}>
               <FormatText text={t.raw('title')} />
             </h2>
 
-            {/* Two-column layout (mobile: image above steps via flex-col-reverse) */}
             <div
-              className="flex flex-col-reverse md:flex-row items-center w-full
-                         gap-6 md:gap-10 lg:gap-14 xl:gap-18.5">
-              {/* Steps column */}
+              className={cn(
+                'flex flex-col-reverse md:flex-row items-center w-full',
+                'gap-6 md:gap-10 lg:gap-14 xl:gap-18.5',
+              )}>
               <div className="flex shrink-0 items-center w-full md:w-auto gap-6 md:gap-8 lg:gap-10 xl:gap-13.25">
                 <div
-                  className="relative flex flex-col w-full md:w-auto md:max-w-125 xl:w-176.25
-                             pl-6 md:pl-8 lg:pl-10 xl:pl-12
-                             py-3 md:py-3.5 lg:py-4
-                             gap-9.25 md:gap-6 lg:gap-7.5 xl:gap-9.25
-                             font-manrope font-bold whitespace-pre-wrap
-                             text-[20px] md:text-[23px] lg:text-[28px] xl:text-[32px]">
-                  {/* Vertical track + active fill — 5px on mobile per Figma */}
+                  className={cn(
+                    'relative flex flex-col w-full md:w-auto md:max-w-125 xl:w-176.25',
+                    'pl-6 md:pl-8 lg:pl-10 xl:pl-12',
+                    'py-3 md:py-3.5 lg:py-4',
+                    'gap-9.25 md:gap-6 lg:gap-7.5 xl:gap-9.25',
+                    'font-manrope font-bold whitespace-pre-wrap',
+                    'text-[20px] md:text-[23px] lg:text-[28px] xl:text-[32px]',
+                  )}>
                   <div className="absolute top-0 left-0 h-full w-1.25 md:w-1.25 shrink-0">
                     <div className="absolute inset-0 rounded-sm bg-neutral-40" />
                     <motion.div
@@ -81,16 +85,17 @@ export const ConnectGuide = () => {
                 </div>
               </div>
 
-              {/* Image card — mobile uses aspect ratio (1506/858), desktop fixed sizing */}
               <div
-                className="relative w-full md:w-100 xl:w-188.25 shrink-0
-                           aspect-1506/858 md:aspect-auto
-                           md:min-h-100 xl:min-h-110
-                           md:self-stretch
-                           rounded-[16px] md:rounded-2xl xl:rounded-3xl
-                           overflow-hidden bg-[#2b2929]">
+                className={cn(
+                  'relative w-full md:w-100 xl:w-188.25 shrink-0',
+                  'aspect-1506/858 md:aspect-auto',
+                  'md:min-h-100 xl:min-h-110',
+                  'md:self-stretch',
+                  'rounded-[16px] md:rounded-2xl xl:rounded-3xl',
+                  'overflow-hidden bg-[#2b2929]',
+                )}>
                 <img
-                  src="/temp-guide-img.png"
+                  src="/images/temp-guide-img.png"
                   alt=""
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />

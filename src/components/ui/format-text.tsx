@@ -18,18 +18,25 @@ export const FormatText = ({ text, doubleBr = false }: FormatTextProps) => {
           <React.Fragment key={lineIndex}>
             {parts.map((part, i) =>
               part.startsWith('**') && part.endsWith('**') ? (
-                <b key={i}>{part.slice(2, -2)}</b>
+                <b className="font-medium" key={i}>
+                  {part.slice(2, -2)}
+                </b>
               ) : (
                 part || null
-              )
+              ),
             )}
-            {lineIndex < lines.length - 1 && (
-              doubleBr ? <><br /><br /></> : <br />
-            )}
+            {lineIndex < lines.length - 1 &&
+              (doubleBr ? (
+                <>
+                  <br />
+                  <br />
+                </>
+              ) : (
+                <br />
+              ))}
           </React.Fragment>
         );
       })}
     </>
   );
-}
-
+};

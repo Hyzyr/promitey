@@ -42,21 +42,16 @@ export const LandingFooter = () => {
   return (
     <footer className="relative w-full bg-neutral-900 pb-7.5 pt-12 md:pt-14 lg:pt-16 xl:pt-20">
       <Container className="flex flex-col gap-8 md:gap-10 lg:gap-12 xl:gap-15">
-        {/* Main columns */}
         <div className="flex flex-col xl:flex-row gap-10 md:gap-12 lg:gap-14 xl:gap-8 items-start w-full">
-          {/* Col 1 — Brand */}
           <div className="flex flex-col gap-6 w-full xl:w-[37%] xl:max-w-96 xl:pr-6">
-            {/* Logo */}
             <div className="flex items-center gap-3">
               <LogoWithText size={25} />
             </div>
 
-            {/* Tagline */}
             <p className="font-montserrat font-normal text-[15px] md:text-[16px] xl:text-[18px] leading-[1.55] tracking-[-0.36px] text-neutral-30 max-w-full xl:max-w-none">
               <FormatText text={t.raw('tagline')} />
             </p>
 
-            {/* Social icons */}
             <div className="flex flex-col gap-3 pt-4 xl:pt-6">
               <p className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] leading-[1.4] tracking-[-0.32px] text-[#bab9b9]">
                 {t('follow')}
@@ -75,7 +70,6 @@ export const LandingFooter = () => {
             </div>
           </div>
 
-          {/* Col 2 — Platform */}
           <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 w-full xl:grow xl:max-w-59.5 xl:shrink-0">
             <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               {t('platform.title')}
@@ -87,7 +81,6 @@ export const LandingFooter = () => {
             </nav>
           </div>
 
-          {/* Col 3 — Support */}
           <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 w-full xl:w-60 xl:shrink-0">
             <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               {t('support.title')}
@@ -99,7 +92,6 @@ export const LandingFooter = () => {
             </nav>
           </div>
 
-          {/* Col 4 — Contact */}
             <div className="flex flex-col gap-6 md:gap-7 xl:gap-8 w-full xl:grow xl:max-w-92 xl:pl-2">
               <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
                 {t('contact.title')}
@@ -107,20 +99,17 @@ export const LandingFooter = () => {
               <form
                 className="flex flex-col gap-4 w-full"
                 onSubmit={(e) => e.preventDefault()}>
-                {/* Email input */}
                 <Input
                   variant="dark"
                   type="email"
                   placeholder={t('contact.email')}
                 />
-                {/* Message textarea */}
                 <Textarea
                   variant="dark"
                   placeholder={t('contact.message')}
                   rows={4}
                   className="h-32.75"
                 />
-                {/* Send button */}
                 <Button
                   type="submit"
                   variant="orange"
@@ -132,7 +121,6 @@ export const LandingFooter = () => {
             </div>
         </div>
 
-        {/* Subfooter */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 pt-8 md:pt-9 xl:pt-10 w-full border-t border-neutral-600">
           <p className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] text-[#bab9b9] text-center md:text-left">
             {t('rights')}

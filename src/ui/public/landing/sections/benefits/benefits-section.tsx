@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useMedia } from '@/hooks/use-media';
 import { useScrollActiveCard } from '@/hooks/use-scroll-active-card';
+import { cn } from '@/lib/utils';
 
 type CardId =
   | 'customer-support'
@@ -20,7 +21,6 @@ type CardId =
   | 'for-your-family'
   | 'high-speed';
 
-// DOM order — must match render order below.
 const CARD_ORDER: CardId[] = [
   'your-internet',
   'customer-support',
@@ -33,10 +33,8 @@ export const BenefitsSection = () => {
   const t = useTranslations('landing.benefits');
   const tRules = useTranslations('landing.benefits.items.rules');
 
-  // Use scroll-based activation when hover is unavailable (touch / mobile).
   const isTouch = useMedia('(hover: none), (pointer: coarse)');
 
-  // Hover-driven (desktop)
   const [hoveredCard, setHoveredCard] = useState<CardId>('your-internet');
   const enter = (id: CardId) => (e: React.PointerEvent) => {
     if (e.pointerType === 'mouse') setHoveredCard(id);
@@ -45,8 +43,6 @@ export const BenefitsSection = () => {
     if (e.pointerType === 'mouse') setHoveredCard('your-internet');
   };
 
-  // Scroll-driven (mobile / touch) — picks card whose center is closest to viewport center.
-  // The hook queries for [data-benefit-card] inside containerRef; cards expose that attribute on their root.
   const { containerRef, activeIndex } = useScrollActiveCard<HTMLDivElement>(
     CARD_ORDER.length,
     { enabled: isTouch, fallbackIndex: 0 },
@@ -59,23 +55,25 @@ export const BenefitsSection = () => {
       id="benefits"
       className="w-full px-5 py-15 md:px-12 md:py-16 lg:py-20 xl:px-24 xl:py-22.5">
       <div className="flex flex-col gap-9 md:gap-7 lg:gap-8 xl:gap-9">
-        {/* Title */}
         <p
-          className="font-manrope text-neutral-600
-                     font-bold xl:font-light
-                     text-[24px] md:text-[30px] lg:text-[36px] xl:text-[40px]
-                     leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]">
+          className={cn(
+            'font-manrope text-neutral-600',
+            'font-bold xl:font-light',
+            'text-[24px] md:text-[30px] lg:text-[36px] xl:text-[40px]',
+            'leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]',
+          )}>
           {t('title')}
         </p>
 
-        {/* Cards. Each Card root carries data-benefit-card (set inside BenefitCard). */}
         <div
           ref={containerRef}
-          className="flex flex-col gap-5
-                     md:grid md:grid-cols-2 md:gap-5
-                     xl:grid-cols-3 xl:grid-rows-2"
+          className={cn(
+            'flex flex-col gap-5',
+            'md:grid md:grid-cols-2 md:gap-5',
+            'xl:grid-cols-3 xl:grid-rows-2',
+          )}
           onPointerLeave={handleGridLeave}>
-          {/* DOM order MUST match CARD_ORDER above */}
+
           <div className="contents" onPointerEnter={enter('your-internet')}>
             <YourInternetCard isActive={activeCard === 'your-internet'} />
           </div>
@@ -93,7 +91,6 @@ export const BenefitsSection = () => {
           </div>
         </div>
 
-        {/* Bottom CTA — mobile only per Figma (#ff6d41 orange) */}
         <div className="flex justify-center xl:hidden">
           <Button
             variant="orange"

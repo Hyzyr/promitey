@@ -53,14 +53,12 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
 
   const currentLocale = LOCALES.find((l) => l.value === locale) ?? LOCALES[0];
 
-  // Body scroll lock while menu open
   useEffect(() => {
     if (isOpen) lock();
     else unlock();
     return () => unlock();
   }, [isOpen, lock, unlock]);
 
-  // Auto-close on route change (skip initial mount)
   useEffect(() => {
     if (prevPathnameRef.current !== pathname) {
       prevPathnameRef.current = pathname;
@@ -68,7 +66,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
     }
   }, [pathname, isOpen, onClose]);
 
-  // Escape key closes menu
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) onClose();
@@ -93,7 +90,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-40">
-          {/* Backdrop — dark fog with subtle blur */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -104,7 +100,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             aria-hidden="true"
           />
 
-          {/* Menu panel — slides from bottom, hugs content */}
           <motion.div
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
@@ -123,7 +118,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             aria-modal="true"
             aria-label="Mobile navigation menu"
           >
-            {/* Close X — top-right inside panel, orange */}
             <button
               type="button"
               onClick={onClose}
@@ -133,7 +127,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
               <X className="h-8 w-8" strokeWidth={2} />
             </button>
 
-            {/* Language switcher pill */}
             <div className="relative">
               <button
                 type="button"
@@ -181,7 +174,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
               )}
             </div>
 
-            {/* Navigation links — Roboto Regular 18px, white */}
             {NAV.map(({ href, label }) => (
               <button
                 key={href}
@@ -193,7 +185,6 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
               </button>
             ))}
 
-            {/* Login button — orange, full-width */}
             <Button href="/login" variant="orange" size="md" className="w-full">
               {t('login')}
             </Button>
