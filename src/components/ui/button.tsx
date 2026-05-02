@@ -94,7 +94,7 @@ export const Button = ({
       );
     }
     return (
-      <Link href={href} className={baseClass} {...(props as any)}>
+      <Link href={href} className={baseClass} {...(props as Omit<React.ComponentProps<typeof Link>, 'href'>)}>
         {content}
       </Link>
     );

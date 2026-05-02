@@ -338,6 +338,38 @@
         "codePlaceholder": "Bot code",
         "codeSubmit": "Link account",
         "linkSuccess": "Your Telegram account has been linked successfully"
+      },
+      "totp": {
+        "title": "Two-Factor Authentication",
+        "description": "Protect your account with an authenticator app (Google Authenticator, Authy, etc.).",
+        "cancel": "Cancel",
+        "status": {
+          "enabled": "2FA is enabled",
+          "disabled": "2FA is not enabled"
+        },
+        "setup": {
+          "button": "Set up 2FA",
+          "title": "Scan the QR code",
+          "description": "Open your authenticator app and scan the code below.",
+          "manualEntry": "Can't scan? Enter key manually",
+          "secret": "Secret key:",
+          "codeLabel": "Enter the 6-digit code from your app",
+          "codePlaceholder": "123456",
+          "confirm": "Enable 2FA"
+        },
+        "disable": {
+          "button": "Disable 2FA",
+          "title": "Disable Two-Factor Authentication",
+          "passwordLabel": "Your current password",
+          "passwordPlaceholder": "Enter your password",
+          "codeLabel": "Authenticator code",
+          "codePlaceholder": "123456",
+          "confirm": "Disable 2FA"
+        },
+        "errors": {
+          "invalid_code": "Invalid or expired code. Please try again.",
+          "generic": "Something went wrong. Please try again."
+        }
       }
     }
   }

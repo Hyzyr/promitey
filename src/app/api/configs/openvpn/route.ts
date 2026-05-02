@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 
 import { getAccessToken } from '@/lib/session';
 import { getOpenvpnConfig } from '@/api/vpn';
 import { isApiError } from '@/api/client/api-error';
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   const token = await getAccessToken();
   if (!token) {
     return new NextResponse('Unauthorized', { status: 401 });

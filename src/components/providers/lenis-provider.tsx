@@ -1,7 +1,7 @@
 "use client";
 
 import Lenis from "lenis";
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, startTransition, useContext, useEffect, useState } from "react";
 
 type ScrollToOptions = {
   offset?: number;
@@ -26,7 +26,7 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
       smoothWheel: true,
     });
 
-    setLenis(lenisInstance);
+    startTransition(() => setLenis(lenisInstance));
 
     function raf(time: number) {
       lenisInstance.raf(time);

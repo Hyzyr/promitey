@@ -17,9 +17,9 @@ export const TestimonialCard = ({
 }: TestimonialCardProps) => {
   const t = useTranslations();
   const { photo, nameKey, roleKey, quoteKey, rating } = testimonial;
-  const name = t(nameKey as any);
-  const role = t(roleKey as any);
-  const quote = t(quoteKey as any);
+  const name = t(nameKey as Parameters<typeof t>[0]);
+  const role = t(roleKey as Parameters<typeof t>[0]);
+  const quote = t(quoteKey as Parameters<typeof t>[0]);
   const shadow =
     'shadow-[0px_19px_11.15px_rgba(0,0,0,0.06),_0px_35px_9.7px_rgba(0,0,0,0.04)]';
   return (

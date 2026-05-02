@@ -18,15 +18,28 @@ export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardP
 
   const { ref: containerRef, isVisible } = useObserver<HTMLDivElement>({ threshold: 0.2 });
 
-  // Pause when scrolled out of view
+  // Track isPlaying via native video events (external system → state)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    if (!isVisible && isPlaying) {
+    const onPlay = () => setIsPlaying(true);
+    const onPause = () => setIsPlaying(false);
+    video.addEventListener('play', onPlay);
+    video.addEventListener('pause', onPause);
+    return () => {
+      video.removeEventListener('play', onPlay);
+      video.removeEventListener('pause', onPause);
+    };
+  }, []);
+
+  // Pause when scrolled out of view — only interacts with the external system
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!isVisible) {
       video.pause();
-      setIsPlaying(false);
     }
-  }, [isVisible, isPlaying]);
+  }, [isVisible]);
 
   const handleToggle = () => {
     const video = videoRef.current;

@@ -17,13 +17,13 @@ export function useScrollActiveCard<T extends HTMLElement = HTMLDivElement>(
 ) {
   const { enabled = true, fallbackIndex = 0 } = options;
   const containerRef = useRef<T>(null);
-  const [activeIndex, setActiveIndex] = useState<number>(fallbackIndex);
+  const [scrollActiveIndex, setScrollActiveIndex] = useState<number>(0);
+
+  // When disabled, derive activeIndex directly without any effect-driven state
+  const activeIndex = enabled ? scrollActiveIndex : fallbackIndex;
 
   useEffect(() => {
-    if (!enabled) {
-      setActiveIndex(fallbackIndex);
-      return;
-    }
+    if (!enabled) return;
     const root = containerRef.current;
     if (!root) return;
 
@@ -50,7 +50,7 @@ export function useScrollActiveCard<T extends HTMLElement = HTMLDivElement>(
           bestIdx = i;
         }
       }
-      setActiveIndex(bestIdx);
+      setScrollActiveIndex(bestIdx);
     };
 
     const onScrollOrResize = () => {

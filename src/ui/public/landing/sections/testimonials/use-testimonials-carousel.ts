@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, startTransition } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 
@@ -6,12 +6,14 @@ import { useObserver } from '@/hooks/use-observer';
 import { AUTOPLAY_DELAY, IDLE_RESUME_DELAY, TESTIMONIALS } from './data';
 
 export function useTestimonialsCarousel() {
-  const autoplayPlugin = useRef(
-    Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: false }),
+  // useMemo avoids accessing .current during render (lint: react-hooks/refs)
+  const autoplayPlugin = useMemo(
+    () => Autoplay({ delay: AUTOPLAY_DELAY, stopOnInteraction: false }),
+    [],
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    autoplayPlugin.current,
+    autoplayPlugin,
   ]);
 
   const { ref: sectionRef, isVisible } = useObserver({ threshold: 0.1 });
@@ -27,9 +29,9 @@ export function useTestimonialsCarousel() {
     idleTimerRef.current = setTimeout(() => {
       userInteractedRef.current = false;
       setIsAutoPlaying(true);
-      autoplayPlugin.current.play();
+      autoplayPlugin.play();
     }, IDLE_RESUME_DELAY);
-  }, []);
+  }, [autoplayPlugin]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -41,7 +43,7 @@ export function useTestimonialsCarousel() {
 
   useEffect(() => {
     if (!emblaApi) return;
-    onSelect();
+    // Subscribe only — initial selectedIndex is 0 which matches useState(0)
     emblaApi.on('select', onSelect);
     emblaApi.on('reInit', onSelect);
     return () => {
@@ -54,9 +56,9 @@ export function useTestimonialsCarousel() {
   const handleUserInteraction = useCallback(() => {
     userInteractedRef.current = true;
     setIsAutoPlaying(false);
-    autoplayPlugin.current.stop();
+    autoplayPlugin.stop();
     scheduleIdleResume();
-  }, [scheduleIdleResume]);
+  }, [autoplayPlugin, scheduleIdleResume]);
 
   const scrollPrev = useCallback(() => {
     emblaApi?.scrollPrev();
@@ -82,13 +84,13 @@ export function useTestimonialsCarousel() {
     if (isVisible) {
       if (!userInteractedRef.current) {
         setIsAutoPlaying(true);
-        autoplayPlugin.current.play();
+        autoplayPlugin.play();
       }
     } else {
-      setIsAutoPlaying(false);
-      autoplayPlugin.current.stop();
+      startTransition(() => setIsAutoPlaying(false));
+      autoplayPlugin.stop();
     }
-  }, [isVisible, emblaApi]);
+  }, [isVisible, emblaApi, autoplayPlugin]);
 
   return {
     emblaRef,

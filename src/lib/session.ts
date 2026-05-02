@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 import type { TokenPair } from '@/api/client/api-types';
 
@@ -32,8 +32,15 @@ export async function clearAuthCookies(): Promise<void> {
   store.delete(REFRESH_COOKIE);
 }
 
-/** Read the access token. Works in server components, actions, and route handlers. */
+/**
+ * Read the access token. Works in server components, actions, and route handlers.
+ * Falls back to the x-forwarded-access-token header set by middleware after a silent refresh.
+ */
 export async function getAccessToken(): Promise<string | null> {
+  const reqHeaders = await headers();
+  const forwarded = reqHeaders.get('x-forwarded-access-token');
+  if (forwarded) return forwarded;
+
   const store = await cookies();
   return store.get(ACCESS_COOKIE)?.value ?? null;
 }

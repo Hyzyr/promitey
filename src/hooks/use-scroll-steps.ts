@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 
 /**
@@ -11,27 +11,29 @@ import { useScroll, useMotionValueEvent } from "framer-motion";
  */
 export function useScrollSteps(stepCount: number) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  const computeStep = (v: number) => {
-    if (!Number.isFinite(v)) return 0;
-    const clamped = Math.max(0, Math.min(0.9999, v));
-    return Math.min(Math.floor(clamped * stepCount), stepCount - 1);
-  };
+  const computeStep = useCallback(
+    (v: number) => {
+      if (!Number.isFinite(v)) return 0;
+      const clamped = Math.max(0, Math.min(0.9999, v));
+      return Math.min(Math.floor(clamped * stepCount), stepCount - 1);
+    },
+    [stepCount],
+  );
+
+  // Lazy initializer reads current scroll so reload-anywhere shows the correct step
+  const [activeStep, setActiveStep] = useState(() =>
+    computeStep(scrollYProgress.get()),
+  );
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     setActiveStep(computeStep(v));
   });
-
-  useEffect(() => {
-    // Sync once after mount so reload-anywhere works (incl. reload from bottom).
-    setActiveStep(computeStep(scrollYProgress.get()));
-  }, [scrollYProgress, stepCount]);
 
   return { containerRef, activeStep };
 }
