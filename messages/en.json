@@ -102,6 +102,12 @@
       "bestOffer": "Best Offer",
       "perMonth": "{value} € / mo",
       "select": "Select",
+      "confirm": {
+        "title": "Confirm Your Plan",
+        "body": "You are about to purchase:",
+        "proceed": "Proceed to Sign Up",
+        "ariaLabel": "Confirm plan selection"
+      },
       "plans": {
         "oneMonth": { "label": "ONE MONTH",    "period": "1 Month" },
         "year":     { "label": "YEAR",          "period": "12 Months" },
