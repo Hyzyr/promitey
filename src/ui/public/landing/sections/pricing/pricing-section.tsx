@@ -65,6 +65,7 @@ export const PricingSection = () => {
               period={t('plans.oneMonth.period')}
               height="md:h-107.75"
               selectLabel={t('select')}
+              href="/register"
             />
           </CardWrapper>
 
@@ -109,6 +110,7 @@ export const PricingSection = () => {
               featured
               height="md:h-125"
               selectLabel={t('select')}
+              href="/register"
             />
           </div>
           <CardWrapper>
@@ -121,6 +123,7 @@ export const PricingSection = () => {
               period={t('plans.quarter.period')}
               height="md:h-125"
               selectLabel={t('select')}
+              href="/register"
             />
           </CardWrapper>
           <CardWrapper>
@@ -133,6 +136,7 @@ export const PricingSection = () => {
               period={t('plans.halfYear.period')}
               height="md:h-125"
               selectLabel={t('select')}
+              href="/register"
             />
           </CardWrapper>
         </div>
