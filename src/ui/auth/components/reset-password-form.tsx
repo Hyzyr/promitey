@@ -9,13 +9,15 @@ import { AuthStep } from './auth-step';
 import { useResetPassword } from '@/ui/auth/hooks/use-reset-password';
 
 export interface ResetPasswordFormProps {
-  /** Reset token from URL search params. */
-  token: string;
+  /** Email address the reset code was sent to. */
+  email: string;
+  /** Verification code from the forgot-password flow. */
+  code: string;
 }
 
-export const ResetPasswordForm = ({ token }: ResetPasswordFormProps) => {
+export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
   const t = useTranslations('auth');
-  const { form, onSubmit, serverError } = useResetPassword(token);
+  const { form, onSubmit, serverError } = useResetPassword(email, code);
 
   const {
     register,

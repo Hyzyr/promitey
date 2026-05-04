@@ -14,6 +14,7 @@ export type PricingCardProps = {
   featured?: boolean;
   height?: string;
   selectLabel: string;
+  href?: string;
 };
 
 export const PricingCard = ({
@@ -27,6 +28,7 @@ export const PricingCard = ({
   featured = false,
   height,
   selectLabel,
+  href,
 }: PricingCardProps) => {
   return (
     <div
@@ -98,6 +100,7 @@ export const PricingCard = ({
       <Button
         variant={featured ? 'orange' : 'secondary'}
         size="lg"
+        href={href}
         className="hidden xl:flex w-full">
         {selectLabel}
       </Button>

@@ -81,8 +81,40 @@ export interface ForgotPasswordRequest {
 }
 
 export interface ResetPasswordRequest {
-  token: string;
+  email: string;
+  code: string;
   new_password: string;
+}
+
+// ── Verification ──────────────────────────────────────────────────────────────
+
+export interface VerificationRequired {
+  status: string;
+  code: string;
+}
+
+export interface RegisterConfirmRequest {
+  email: string;
+  code: string;
+}
+
+export interface ChangeEmailPrepareRequest {
+  new_email: string;
+}
+
+export interface ChangeEmailConfirmRequest {
+  code: string;
+}
+
+export interface PromocodeActivateRequest {
+  code: string;
+}
+
+export interface PromocodeActivateResponse {
+  status: string;
+  code: string;
+  subscription_type: string;
+  active_until: string;
 }
 
 export interface ChangePasswordRequest {

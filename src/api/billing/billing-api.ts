@@ -1,5 +1,9 @@
 import { apiFetch } from '../client/api-client';
-import type { StatusOK } from '../client/api-types';
+import type {
+  StatusOK,
+  PromocodeActivateRequest,
+  PromocodeActivateResponse,
+} from '../client/api-types';
 
 /**
  * POST /billing/checkout
@@ -10,4 +14,12 @@ import type { StatusOK } from '../client/api-types';
  */
 export async function checkout(token: string): Promise<StatusOK> {
   return apiFetch('/billing/checkout', { method: 'POST', token });
+}
+
+/** POST /promocode/activate — activate a promocode for the authenticated user */
+export async function activatePromocode(
+  data: PromocodeActivateRequest,
+  token: string,
+): Promise<PromocodeActivateResponse> {
+  return apiFetch('/promocode/activate', { method: 'POST', body: data, token });
 }

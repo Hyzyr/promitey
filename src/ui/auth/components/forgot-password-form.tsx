@@ -10,31 +10,13 @@ import { useForgotPassword } from '@/ui/auth/hooks/use-forgot-password';
 
 export const ForgotPasswordForm = () => {
   const t = useTranslations('auth');
-  const { form, onSubmit, serverError, emailSent } = useForgotPassword();
+  const { form, onSubmit, serverError } = useForgotPassword();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
-
-  if (emailSent) {
-    return (
-      <div className="flex w-full flex-col items-center gap-4 text-center">
-        <p className="font-montserrat text-[16px] font-semibold leading-[1.5] text-neutral-900">
-          {t('forgot.emailSentTitle')}
-        </p>
-        <p className="font-montserrat text-[14px] leading-[1.6] text-neutral-600 lg:text-[16px]">
-          {t('forgot.emailSentBody')}
-        </p>
-        <div className="flex w-full flex-col items-center pt-4">
-          <AuthLink href="/login" className="py-1.5">
-            {t('links.signIn')}
-          </AuthLink>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <form

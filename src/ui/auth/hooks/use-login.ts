@@ -9,6 +9,8 @@ import { useRouter } from '@/i18n/navigation';
 
 import { loginAction, loginTotpAction } from '../server/auth-actions';
 
+import { mapApiError } from '@/lib/api-error';
+
 interface PasswordValues {
   email: string;
   password: string;
@@ -31,7 +33,7 @@ export interface UseLoginReturn {
 }
 
 export function useLogin(): UseLoginReturn {
-  const t = useTranslations('auth');
+  const tErrors = useTranslations('auth.errors');
   const router = useRouter();
 
   const [step, setStep] = useState<LoginStep>('password');
@@ -39,12 +41,12 @@ export function useLogin(): UseLoginReturn {
   const [serverError, setServerError] = useState<string | null>(null);
 
   const passwordSchema = z.object({
-    email: z.string().min(1, t('errors.emailRequired')),
-    password: z.string().min(1, t('errors.passwordRequired')),
+    email: z.string().min(1, tErrors('emailRequired')),
+    password: z.string().min(1, tErrors('passwordRequired')),
   });
 
   const totpSchema = z.object({
-    code: z.string().length(6, t('errors.codeIncomplete')),
+    code: z.string().length(6, tErrors('codeIncomplete')),
   });
 
   const passwordForm = useForm<PasswordValues>({
@@ -58,12 +60,7 @@ export function useLogin(): UseLoginReturn {
   });
 
   function mapErrorCode(code: string): string {
-    const map: Record<string, string> = {
-      invalid_credentials: t('errors.badCredentials'),
-      invalid_totp: t('errors.invalidTotp'),
-      too_many_requests: t('errors.tooManyRequests'),
-    };
-    return map[code] ?? t('errors.generic');
+    return mapApiError(code, tErrors);
   }
 
   const onPasswordSubmit = async (values: PasswordValues) => {

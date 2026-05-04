@@ -1,6 +1,7 @@
 import { apiFetch } from '../client/api-client';
 import type {
   RegisterRequest,
+  RegisterConfirmRequest,
   LoginRequest,
   LoginTotpRequest,
   LoginSuccess,
@@ -9,15 +10,23 @@ import type {
   ForgotPasswordRequest,
   ResetPasswordRequest,
   ChangePasswordRequest,
+  ChangeEmailPrepareRequest,
+  ChangeEmailConfirmRequest,
   TotpSetupResponse,
   TotpEnableRequest,
   TotpDisableRequest,
   TotpStatusResponse,
+  VerificationRequired,
   StatusOK,
 } from '../client/api-types';
 
-/** POST /auth/register — create a new account */
-export async function register(data: RegisterRequest): Promise<StatusOK> {
+/** PUT /auth/register — prepare registration; triggers email verification code */
+export async function registerPrepare(data: RegisterRequest): Promise<VerificationRequired> {
+  return apiFetch('/auth/register', { method: 'PUT', body: data });
+}
+
+/** POST /auth/register — confirm registration with the emailed code */
+export async function registerConfirm(data: RegisterConfirmRequest): Promise<StatusOK> {
   return apiFetch('/auth/register', { method: 'POST', body: data });
 }
 
@@ -36,12 +45,12 @@ export async function refreshTokens(data: RefreshRequest): Promise<TokenPair> {
   return apiFetch('/auth/refresh', { method: 'POST', body: data });
 }
 
-/** POST /auth/forgot-password — request a password reset email */
-export async function forgotPassword(data: ForgotPasswordRequest): Promise<StatusOK> {
+/** POST /auth/forgot-password — request a password-reset verification code */
+export async function forgotPassword(data: ForgotPasswordRequest): Promise<VerificationRequired> {
   return apiFetch('/auth/forgot-password', { method: 'POST', body: data });
 }
 
-/** POST /auth/reset-password — set a new password via token from the reset email */
+/** POST /auth/reset-password — set a new password via email + verification code */
 export async function resetPassword(data: ResetPasswordRequest): Promise<StatusOK> {
   return apiFetch('/auth/reset-password', { method: 'POST', body: data });
 }
@@ -52,6 +61,22 @@ export async function changePassword(
   token: string,
 ): Promise<StatusOK> {
   return apiFetch('/auth/password', { method: 'PUT', body: data, token });
+}
+
+/** PUT /auth/email — prepare email change; triggers verification code to new address */
+export async function prepareEmailChange(
+  data: ChangeEmailPrepareRequest,
+  token: string,
+): Promise<VerificationRequired> {
+  return apiFetch('/auth/email', { method: 'PUT', body: data, token });
+}
+
+/** POST /auth/email — confirm email change with the verification code */
+export async function confirmEmailChange(
+  data: ChangeEmailConfirmRequest,
+  token: string,
+): Promise<StatusOK> {
+  return apiFetch('/auth/email', { method: 'POST', body: data, token });
 }
 
 /** POST /auth/totp/setup — initiate TOTP setup; returns OTP auth URL for QR */

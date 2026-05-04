@@ -1,1 +1,1 @@
-export { checkout } from './billing-api';
+export { checkout, activatePromocode } from './billing-api';

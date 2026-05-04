@@ -17,8 +17,7 @@ export async function setRegion(data: RegionRequest, token: string): Promise<Reg
   return apiFetch('/vpn/region', { method: 'PUT', body: data, token });
 }
 
-/**
- * GET /vpn/openvpn/config — download the OpenVPN .ovpn config file.
+/** GET /vpn/openvpn/config — download the OpenVPN .ovpn config file.
  *
  * Returns the raw Response for streaming; the caller is responsible for
  * piping the binary body (e.g. via a Next.js route handler proxy).
@@ -26,6 +25,20 @@ export async function setRegion(data: RegionRequest, token: string): Promise<Reg
  */
 export async function getOpenvpnConfig(token: string): Promise<Response> {
   return apiFetchBinary('/vpn/openvpn/config', { token });
+}
+
+/**
+ * GET /vpn/openvpn/config/{region} — download the OpenVPN .ovpn config for
+ * a specific region and simultaneously save that region on the account.
+ *
+ * Returns the raw Response for streaming.
+ * Requires: auth, linked Telegram, active subscription.
+ */
+export async function getOpenvpnConfigByRegion(
+  region: string,
+  token: string,
+): Promise<Response> {
+  return apiFetchBinary(`/vpn/openvpn/config/${encodeURIComponent(region)}`, { token });
 }
 
 /** GET /vpn/vless/subscription — get the VLESS subscription URL */

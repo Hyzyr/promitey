@@ -10,9 +10,10 @@ interface ResetPasswordPageProps {
 
 export default async function ResetPasswordPage({ searchParams }: ResetPasswordPageProps) {
   const params = await searchParams;
-  const token = typeof params.token === 'string' ? params.token : null;
+  const email = typeof params.email === 'string' ? params.email : null;
+  const code = typeof params.code === 'string' ? params.code : null;
 
-  if (!token) {
+  if (!email || !code) {
     const locale = await getLocale();
     redirect({ href: '/forgot-password', locale });
   }
@@ -21,8 +22,8 @@ export default async function ResetPasswordPage({ searchParams }: ResetPasswordP
 
   return (
     <AuthCard title={t('title')}>
-      {/* token is guaranteed non-null: redirect() above handles the null case */}
-      <ResetPasswordForm token={token!} />
+      {/* email and code are guaranteed non-null: redirect() above handles null cases */}
+      <ResetPasswordForm email={email!} code={code!} />
     </AuthCard>
   );
 }

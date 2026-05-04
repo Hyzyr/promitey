@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
-import { GlassButton } from '@/components/ui/glass-button';
 import { FormatText } from '@/components/ui/format-text';
 import { cn } from '@/lib/utils';
 import { useMedia } from '@/hooks/use-media';
@@ -80,6 +79,7 @@ export const HeroSection = () => {
           <Button
             variant="default"
             size="lg"
+            href="/register"
             className={cn(
               'px-8! py-4! text-[18px]! rounded-[16px]!',
               'md:px-12! md:py-4.5! md:text-[20px]!',
@@ -89,15 +89,17 @@ export const HeroSection = () => {
             {t('ctaPrimary')}
           </Button>
 
-          <GlassButton
+          <Button
+            variant="glass"
             size="md"
+            href="#guide"
             className={cn(
               'w-52! px-4! py-2! text-[18px]! rounded-[16px]! tracking-[-0.36px]',
               'md:w-auto! md:px-10! md:py-3.5!',
               'xl:px-16.5! xl:py-4.5! xl:text-[22px]! xl:rounded-lg!',
             )}>
             {t('ctaSecondary')}
-          </GlassButton>
+          </Button>
         </div>
       </div>
     </section>

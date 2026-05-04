@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl';
 
 import { linkByPublicCodeAction } from '../server/profile-actions';
 
+import { mapApiError } from '@/lib/api-error';
+
 interface LinkByCodeValues {
   public_code: string;
 }
@@ -20,12 +22,12 @@ export interface UseLinkByCodeReturn {
 }
 
 export function useLinkByCode(): UseLinkByCodeReturn {
-  const t = useTranslations('auth');
+  const tErrors = useTranslations('auth.errors');
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   const schema = z.object({
-    public_code: z.string().min(1, t('errors.codeRequired')),
+    public_code: z.string().min(1, tErrors('codeRequired')),
   });
 
   const form = useForm<LinkByCodeValues>({
@@ -34,12 +36,11 @@ export function useLinkByCode(): UseLinkByCodeReturn {
   });
 
   function mapErrorCode(code: string): string {
-    const map: Record<string, string> = {
-      invalid_code: t('errors.invalidPublicCode'),
-      already_linked: t('errors.alreadyLinked'),
-      too_many_requests: t('errors.tooManyRequests'),
-    };
-    return map[code] ?? t('errors.generic');
+    // invalid_code in this context means the public link code is invalid,
+    // not a generic OTP code — use domain-specific label.
+    return mapApiError(code, tErrors, {
+      invalid_code: tErrors('invalidPublicCode'),
+    });
   }
 
   const onSubmit = async (values: LinkByCodeValues) => {

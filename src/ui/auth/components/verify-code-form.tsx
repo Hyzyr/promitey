@@ -2,7 +2,6 @@
 
 import { useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from '@/i18n/navigation';
 
 import { Button } from '@/components/ui/button';
 import { AuthLink } from './auth-link';
@@ -11,14 +10,29 @@ import { cn } from '@/lib/utils';
 
 const CODE_LENGTH = 6;
 
-interface VerifyCodeFormProps {
+export interface VerifyCodeFormProps {
   /** Email/login the code was sent to (for the description line). */
   recipient?: string;
+  /** Step label shown above the inputs (e.g. "Step 2"). */
+  stepLabel?: string;
+  /**
+   * Called with the completed code on submit.
+   * Return `{ ok: false, message }` with an already-translated message to show it.
+   */
+  onVerify: (code: string) => Promise<{ ok: boolean; message?: string }>;
+  /** Called after a successful verification, after onVerify resolves ok:true. */
+  onSuccess?: () => void;
+  className?: string;
 }
 
-export const VerifyCodeForm = ({ recipient }: VerifyCodeFormProps) => {
+export const VerifyCodeForm = ({
+  recipient,
+  stepLabel,
+  onVerify,
+  onSuccess,
+  className,
+}: VerifyCodeFormProps) => {
   const t = useTranslations('auth');
-  const router = useRouter();
 
   const [digits, setDigits] = useState<string[]>(() =>
     Array(CODE_LENGTH).fill(''),
@@ -70,7 +84,7 @@ export const VerifyCodeForm = ({ recipient }: VerifyCodeFormProps) => {
     focusAt(Math.min(chars.length, CODE_LENGTH - 1));
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const code = digits.join('');
     if (code.length < CODE_LENGTH) {
@@ -80,8 +94,12 @@ export const VerifyCodeForm = ({ recipient }: VerifyCodeFormProps) => {
     setError(null);
     setIsSubmitting(true);
     try {
-      // TODO: verify code with API.
-      router.push('/forgot-password/reset');
+      const result = await onVerify(code);
+      if (!result.ok) {
+        setError(result.message ?? t('errors.invalidCode'));
+        return;
+      }
+      onSuccess?.();
     } finally {
       setIsSubmitting(false);
     }
@@ -89,8 +107,8 @@ export const VerifyCodeForm = ({ recipient }: VerifyCodeFormProps) => {
 
   return (
     <form
-      onSubmit={onSubmit}
-      className="flex w-full flex-col items-center gap-3"
+      onSubmit={handleSubmit}
+      className={cn('flex w-full flex-col items-center gap-3', className)}
       noValidate
     >
       <p className="font-montserrat w-full text-center text-[14px] leading-[1.6] text-neutral-600 lg:text-[16px]">
@@ -98,7 +116,7 @@ export const VerifyCodeForm = ({ recipient }: VerifyCodeFormProps) => {
         {recipient && <span className="font-semibold">{recipient}.</span>}
       </p>
 
-      <AuthStep label={t('forgot.step2')} />
+      {stepLabel && <AuthStep label={stepLabel} />}
 
       <div className="flex w-full gap-3">
         {digits.map((d, i) => (

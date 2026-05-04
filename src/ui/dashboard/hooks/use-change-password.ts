@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl';
 
 import { changePasswordAction } from '../server/profile-actions';
 
+import { mapApiError } from '@/lib/api-error';
+
 interface ChangePasswordValues {
   currentPassword: string;
   newPassword: string;
@@ -22,19 +24,19 @@ export interface UseChangePasswordReturn {
 }
 
 export function useChangePassword(): UseChangePasswordReturn {
-  const t = useTranslations('auth');
+  const tErrors = useTranslations('auth.errors');
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
   const schema = z
     .object({
-      currentPassword: z.string().min(1, t('errors.passwordRequired')),
-      newPassword: z.string().min(8, t('errors.passwordMin')),
-      confirmPassword: z.string().min(1, t('errors.passwordRequired')),
+      currentPassword: z.string().min(1, tErrors('passwordRequired')),
+      newPassword: z.string().min(8, tErrors('passwordMin')),
+      confirmPassword: z.string().min(1, tErrors('passwordRequired')),
     })
     .refine((d) => d.newPassword === d.confirmPassword, {
       path: ['confirmPassword'],
-      message: t('errors.passwordMismatch'),
+      message: tErrors('passwordMismatch'),
     });
 
   const form = useForm<ChangePasswordValues>({
@@ -43,11 +45,7 @@ export function useChangePassword(): UseChangePasswordReturn {
   });
 
   function mapErrorCode(code: string): string {
-    const map: Record<string, string> = {
-      wrong_password: t('errors.wrongPassword'),
-      too_many_requests: t('errors.tooManyRequests'),
-    };
-    return map[code] ?? t('errors.generic');
+    return mapApiError(code, tErrors);
   }
 
   const onSubmit = async (values: ChangePasswordValues) => {

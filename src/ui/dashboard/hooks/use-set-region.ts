@@ -8,6 +8,8 @@ import { useTranslations } from 'next-intl';
 
 import { setRegionAction } from '../server/vpn-actions';
 
+import { mapApiError } from '@/lib/api-error';
+
 interface SetRegionValues {
   region: string;
 }
@@ -21,7 +23,7 @@ export interface UseSetRegionReturn {
 }
 
 export function useSetRegion(initialRegion: string): UseSetRegionReturn {
-  const tAuth = useTranslations('auth');
+  const tErrors = useTranslations('auth.errors');
   const tDashboard = useTranslations('dashboard.vpn');
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -42,7 +44,7 @@ export function useSetRegion(initialRegion: string): UseSetRegionReturn {
     setSuccess(false);
     const result = await setRegionAction(values.region);
     if (!result.ok) {
-      setServerError(tAuth('errors.generic'));
+      setServerError(mapApiError(result.code, tErrors));
       return;
     }
     setCurrentRegion(result.data.region);

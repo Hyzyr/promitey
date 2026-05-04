@@ -209,6 +209,7 @@
       "generic": "Something went wrong. Please try again.",
       "wrongPassword": "Current password is incorrect",
       "codeRequired": "Enter the code",
+      "invalidCode": "Invalid or expired code",
       "invalidPublicCode": "Invalid or expired code",
       "alreadyLinked": "Account is already linked to Telegram"
     },
@@ -226,7 +227,8 @@
     "register": {
       "title": "Create account",
       "subtitle": "Create an account to get full access to Prometey",
-      "submit": "Sign In"
+      "submit": "Sign In",
+      "verifyTitle": "Verify your email"
     },
     "forgot": {
       "title": "Reset password",
@@ -271,7 +273,19 @@
       "active": "Active",
       "expired": "Expired",
       "startsAt": "Started on:",
-      "noSubscription": "No active subscription"
+      "noSubscription": "No active subscription",
+      "promocode": {
+        "codeRequired": "Enter a promo code",
+        "notFound": "Promo code not found or has expired",
+        "alreadyUsed": "This promo code has already been used",
+        "title": "Promo Code",
+        "description": "Have a promo code? Enter it below to activate your subscription.",
+        "placeholder": "Enter promo code",
+        "submit": "Apply",
+        "success": "Promo code activated!",
+        "activePlan": "Plan",
+        "activeUntil": "Active until"
+      }
     },
     "billing": {
       "renew": "Renew subscription",
@@ -327,6 +341,17 @@
       "changePassword": "Change Password",
       "memberSince": "Member since",
       "passwordSaved": "Password changed successfully",
+      "emailChange": {
+        "title": "Change Email",
+        "description": "Update the email address associated with your account. A verification code will be sent to your new email.",
+        "newEmailLabel": "New email address",
+        "submitPrepare": "Send verification code",
+        "codeSentTo": "We sent a verification code to",
+        "codeLabel": "Verification code",
+        "submitConfirm": "Confirm new email",
+        "success": "Your email address has been updated successfully",
+        "back": "Back"
+      },
       "telegram": {
         "title": "Telegram",
         "description": "Link your account to receive notifications and manage your subscription via our Telegram bot.",
