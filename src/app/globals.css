@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-@source not "../../.github";
+@source not '../../.github/**';
+
 html {
   height: 100%;
 }
@@ -139,6 +140,12 @@ body {
   --breakpoint-lgx: 72.5rem; /* 1160px (Your Custom) */
   --breakpoint-xl: 80rem; /* 1280px */
 }
+/* Define it once at the top level */
+@variant md-lgx {
+  @media (width >= 48rem) and (width < 72.5rem) {
+    @slot;
+  }
+}
 
 /* ─── Container utility ──────────────────────────────────────────────── */
 @utility container {
@@ -214,13 +221,25 @@ body {
 @utility bigcard {
   @apply relative md:col-span-2 md:row-start-1 md:px-5 md:py-6.5;
   @apply lg:h-full;
-  @apply md:max-lgx:pr-[45%]!;
+  @apply md-lgx:pr-[45%]!;
   @apply lgx:col-span-1 lgx:col-start-3 lgx:row-span-2 lgx:row-start-1;
   @apply lgx:h-full lgx:px-6 lgx:py-8;
+  @apply max-md:min-h-[80vh]!;
 
   .bigcard-media {
-    @apply md:max-lgx:absolute md:max-lgx:top-1 md:max-lgx:right-0;
-    @apply md:max-lgx:h-full md:max-lgx:w-[50%];
+    @apply md-lgx:absolute md-lgx:top-1 md-lgx:right-0;
+    @apply md-lgx:h-full md-lgx:w-[50%];
+
+    img.bgitem {
+      @apply md-lgx:right-2 md-lgx:left-[unset] md-lgx:h-full md-lgx:w-auto;
+    }
+    .video-wrapper {
+      @apply md-lgx:right-12 md-lgx:h-[80%] md-lgx:w-[unset];
+    }
+  }
+
+  p {
+    @apply md-lgx:max-w-100;
   }
 }
 
@@ -270,7 +289,7 @@ body {
   }
 }
 
-@keyframes progress-fill { 
+@keyframes progress-fill {
   from {
     width: 0%;
   }

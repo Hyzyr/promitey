@@ -33,7 +33,10 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn('md:col-start-1 md:row-start-2', 'lgx:col-start-1 lgx:row-start-1')}
+      className={cn(
+        'md:col-start-1 md:row-start-2',
+        'lgx:col-start-1 lgx:row-start-1',
+      )}
       title={t('title')}
       description={t('body')}
     >
@@ -59,7 +62,10 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn('md:col-start-2 md:row-start-2', 'lgx:col-start-2 lgx:row-start-1')}
+      className={cn(
+        'md:col-start-2 md:row-start-2',
+        'lgx:col-start-2 lgx:row-start-1',
+      )}
       title={t('title')}
       description={t('body')}
     >
@@ -90,7 +96,7 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       title={t('title')}
       description={t('body')}
       footer={
-        <div className="relative z-10 hidden lgx:flex lgx:items-center lgx:justify-end">
+        <div className="relative z-10 flex lgx:items-center mt-auto lgx:justify-end">
           <Button
             variant="default"
             size="md"
@@ -109,17 +115,17 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
         />
       </ParallaxItem>
       <ParallaxItem depth={0.15}>
-        <span className="bgitem bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[5vh]">
+        <span className="bgitem bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[5vh] md-lgx:bottom-[58%] md-lgx:left-[unset] md-lgx:right-50">
           {telegramSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.3}>
-        <span className="bgitem bottom-[72%] left-[16%] icon -rotate-3 text-[5vh]">
+        <span className="bgitem bottom-[72%] left-[16%] icon -rotate-3 text-[5vh] md-lgx:bottom-[80%] md-lgx:left-[unset] md-lgx:right-60">
           {whatsappSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <span className="bgitem bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[5vh]">
+        <span className="bgitem bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[5vh] md-lgx:bottom-[37%] md-lgx:left-[unset] md-lgx:right-65">
           {facebookSVG}
         </span>
       </ParallaxItem>
@@ -137,7 +143,10 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn('md:col-start-2 md:row-start-3', 'lgx:col-start-1 lgx:row-start-2')}
+      className={cn(
+        'md:col-start-2 md:row-start-3',
+        'lgx:col-start-1 lgx:row-start-2',
+      )}
       title={t('title')}
       description={t('body')}
     >
@@ -166,7 +175,10 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn('md:col-start-1 md:row-start-3', 'lgx:col-start-2 lgx:row-start-2')}
+      className={cn(
+        'md:col-start-1 md:row-start-3',
+        'lgx:col-start-2 lgx:row-start-2',
+      )}
       title={t('title')}
       description={t('body')}
     >

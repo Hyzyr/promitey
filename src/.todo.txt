@@ -1,0 +1,7 @@
+- fist all animations in the app should not be animated if not observed, js related animations and css (if needed). we have useObserver hook declared
+- images header and other media based components which change layout/ui/ appeareance based on media queries are shifting screen
+loading unnecessery items, especially images we should think on this to optimise web speed and shift 
+- check all dashboard pages find all radius/rounded implementations they were coded according to default tailwidn v4 parameters , but I adjusted them with custom values
+now I need you to revert them swap classnames think it should have default tailwind radius value and swap with nearest current values, for all nested components as well except 
+global reusable component they are fixed already. you can give me list of unchanged if you think I have to check
+- check if anywhere in app uses extra filters like noise blur except glass elements with glass classname give me list 

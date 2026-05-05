@@ -1,16 +1,19 @@
 {
   "meta": {
     "home": {
-      "title": "Prometey VPN — Безопасный и быстрый VPN",
-      "description": "Защитите свою приватность с Prometey VPN. Быстрый, безопасный и простой в использовании."
+      "title": "Prometey VPN — Быстрый VPN для России | VLESS + OpenVPN",
+      "description": "Высокоскоростной VPN с VLESS и OpenVPN. До 10 устройств. Бесплатный период, от €3/мес. Работает там, где другие сдаются.",
+      "keywords": "VPN, VLESS VPN, быстрый VPN, безопасный VPN, VPN для России, купить VPN, обход блокировок, VPN для 10 устройств, OpenVPN, VPN подписка",
+      "ogTitle": "Prometey VPN — Свобода в один клик",
+      "ogDescription": "Высокоскоростной VPN. До 10 устройств. Бесплатный период. VLESS + OpenVPN."
     },
     "auth": {
-      "title": "Вход — Prometey VPN",
-      "description": "Войдите в свой аккаунт Prometey VPN."
+      "title": "Войти",
+      "description": "Войдите для управления подпиской Prometey VPN и загрузки конфигурационных файлов."
     },
     "dashboard": {
-      "title": "Кабинет — Prometey VPN",
-      "description": "Управляйте подпиской и настройками Prometey VPN."
+      "title": "Кабинет",
+      "description": "Управляйте подпиской, устройствами и настройками Prometey VPN."
     }
   },
   "dev": {

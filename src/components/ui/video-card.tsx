@@ -1,4 +1,5 @@
-'use client';
+
+'use client';
 
 import { useEffect, useRef, useState, cloneElement } from 'react';
 import { playTriangleSVG, pauseBarsSVG } from '@/components/assets';
@@ -59,7 +60,7 @@ export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardP
   return (
     <div
       ref={containerRef}
-      className={cn('group absolute overflow-hidden rounded-lg aspect-3/5 shadow-2xl', className)}>
+      className={cn('video-wrapper group absolute overflow-hidden rounded-lg aspect-3/5 shadow-2xl', className)}>
       <video
         ref={videoRef}
         src={src}

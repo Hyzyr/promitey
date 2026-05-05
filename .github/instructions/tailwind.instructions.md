@@ -120,7 +120,7 @@ Tailwind v4 generates `max-*` variants automatically for each defined breakpoint
 
 ```tsx
 // Apply between md and lgx only (tablet-to-desktop range)
-<div className="md:max-lgx:absolute md:max-lgx:right-0" />
+<div className="md-lgx:absolute md-lgx:right-0" />
 
 // Apply below md only (mobile only)
 <div className="max-md:hidden" />
@@ -137,7 +137,7 @@ Tailwind v4 generates `max-*` variants automatically for each defined breakpoint
 
 ### `tablet` custom variant (md → lgx, already defined in globals.css)
 
-Defined via `@custom-variant` — equivalent to `md:max-lgx:` but semantic.
+Defined via `@custom-variant` — equivalent to `md-lgx:` but semantic.
 
 ```tsx
 // TSX — static literal string only (see §0)
@@ -1044,7 +1044,7 @@ Every `--breakpoint-*` in `@theme` gets a corresponding `max-*:` variant:
 ```tsx
 <div className="max-md:hidden" />        {/* < 48rem */}
 <div className="max-lgx:flex-col" />     {/* < 72.5rem */}
-<div className="md:max-lgx:absolute" />  {/* 48rem–72.5rem range */}
+<div className="md-lgx:absolute" />  {/* 48rem–72.5rem range */}
 ```
 
 ---
@@ -1090,7 +1090,7 @@ Only investigate the source if the error persists after a clean restart:
 |---|---|---|
 | 1 | `@variant name { @media … @slot; }` to **define** a new variant | Wrong — use `@custom-variant` (see §5) |
 | 2 | `@media (width >= var(--breakpoint-lg))` | `var()` is invalid inside `@media` conditions — use literal rem |
-| 3 | CSS variable with `/` opacity modifier inside `var()` in an arbitrary value — e.g. `bg-[var(--color-x/50)]` | `var()` does not support the `/opacity` syntax; use `rgba()` or `--alpha()` |
+| 3 | CSS variable with `/` opacity modifier inside `var()` in an arbitrary value — e.g. `bg-[var(--color-x` `/50)]` (broken here intentionally; Tailwind would scan and crash on the literal class) | `var()` does not support the `/opacity` syntax; use `rgba()` or `--alpha()` |
 | 4 | `@theme` block nested inside a selector or `@media` | `@theme` must be top-level only |
 | 5 | Empty `@utility {}` block | Some PostCSS versions reject empty at-rules |
 | 6 | Importing a `.scss`/`.sass`/`.less` file from `globals.css` | Tailwind v4 does not support preprocessors |

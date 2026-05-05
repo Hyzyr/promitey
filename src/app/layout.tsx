@@ -30,8 +30,14 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Prometey VPN",
-  description: "High-speed VPN for secure access on any device.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  title: {
+    default: 'Prometey VPN',
+    template: '%s | Prometey VPN',
+  },
+  description: 'High-speed VPN for secure access on any device.',
+  applicationName: 'Prometey VPN',
+  robots: { index: true, follow: true },
 };
 
 export default async function RootLayout({

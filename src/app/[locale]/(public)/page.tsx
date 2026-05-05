@@ -4,16 +4,18 @@ import { ConnectGuide } from "@/ui/public/landing/sections/connect-guide";
 import { TestimonialsSection } from "@/ui/public/landing/sections/testimonials/testimonials-section";
 import { PricingSection } from "@/ui/public/landing/sections/pricing";
 import { FaqSection } from "@/ui/public/landing/sections/faq";
+import { LandingJsonLd } from "@/components/seo";
 
 export default function LandingPage() {
   return (
-    <main>
+    <>
+      <LandingJsonLd />
       <HeroSection />
       <BenefitsSection />
       <ConnectGuide />
       <TestimonialsSection />
       <PricingSection />
       <FaqSection />
-    </main>
+    </>
   );
 }

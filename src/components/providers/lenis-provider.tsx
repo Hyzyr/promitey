@@ -2,6 +2,7 @@
 
 import Lenis from "lenis";
 import { createContext, startTransition, useContext, useEffect, useState } from "react";
+import { useWindowResize } from "@/hooks/use-window-resize";
 
 type ScrollToOptions = {
   offset?: number;
@@ -18,6 +19,12 @@ const LenisContext = createContext<LenisContextValue | null>(null);
 
 export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   const [lenis, setLenis] = useState<Lenis | null>(null);
+  const resizeTrigger = useWindowResize();
+
+  useEffect(() => {
+    if (!lenis) return;
+    lenis.resize();
+  }, [resizeTrigger, lenis]);
 
   useEffect(() => {
     const lenisInstance = new Lenis({
