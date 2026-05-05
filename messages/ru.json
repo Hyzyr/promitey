@@ -29,6 +29,7 @@
   "landing": {
     "header": {
       "login": "Войти",
+      "dashboard": "Кабинет",
       "menu": "Меню",
       "nav": {
         "benefits": "Преимущества",

@@ -2,6 +2,7 @@
 
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
+import { Link } from '@/i18n/navigation';
 import { MobileDashboardMenu } from './mobile-dashboard-menu';
 import { Logo } from '@/components/ui/logo';
 
@@ -11,7 +12,9 @@ export const DashboardHeader = () => {
   return (
     <>
       <header className="flex h-22 items-center justify-between bg-neutral-900 px-5 lg:hidden">
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
         <button
           type="button"
           aria-label="Open menu"

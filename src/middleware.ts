@@ -6,6 +6,7 @@ import { DEV_TEST_COOKIE } from "@/lib/dev-session";
 const intlMiddleware = createIntlMiddleware(routing);
 
 const PUBLIC_PATHS = ["/", "/login", "/register", "/forgot-password"];
+const AUTH_ONLY_PATHS = ["/login", "/register", "/forgot-password"];
 
 const COOKIE_BASE = {
   httpOnly: true,
@@ -46,6 +47,19 @@ export default async function middleware(request: NextRequest) {
   const isPublic = PUBLIC_PATHS.some(
     (p) => strippedPath === p || strippedPath.startsWith(p + "/"),
   );
+  const isAuthOnlyPath = AUTH_ONLY_PATHS.some(
+    (p) => strippedPath === p || strippedPath.startsWith(p + "/"),
+  );
+
+  // Redirect already-authenticated users away from login/register/forgot-password
+  if (isAuthOnlyPath) {
+    const accessToken = request.cookies.get("auth_access_token");
+    if (accessToken) {
+      const locale = request.nextUrl.pathname.split("/")[1] ?? "ru";
+      const dashboardUrl = new URL(`/${locale}/dashboard`, request.url);
+      return NextResponse.redirect(dashboardUrl);
+    }
+  }
 
   if (!isPublic) {
     const accessToken = request.cookies.get("auth_access_token");

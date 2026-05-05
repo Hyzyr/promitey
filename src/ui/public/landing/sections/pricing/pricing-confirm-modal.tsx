@@ -42,7 +42,7 @@ export const PricingConfirmModal = ({
       ariaLabel={t('confirm.ariaLabel')}
       closeAriaLabel={tCommon('close')}
     >
-      <p className="font-manrope text-[16px] leading-[1.5] text-neutral-300">
+      <p className="font-manrope text-[16px] leading-normal text-neutral-300">
         {t('confirm.body')}
       </p>
 

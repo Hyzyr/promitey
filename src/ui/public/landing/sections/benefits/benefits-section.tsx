@@ -12,7 +12,8 @@ import {
 import { Button } from '@/components/ui/button';
 import { useMedia } from '@/hooks/use-media';
 import { useScrollActiveCard } from '@/hooks/use-scroll-active-card';
-import { cn } from '@/lib/utils';
+import { cn, md, lgx } from '@/lib/utils';
+import { Container } from '@/components/ui/container';
 
 type CardId =
   | 'customer-support'
@@ -53,53 +54,54 @@ export const BenefitsSection = () => {
   return (
     <section
       id="benefits"
-      className="w-full px-5 py-15 md:px-12 md:py-16 lg:py-20 xl:px-24 xl:py-22.5">
-      <div className="flex flex-col gap-9 md:gap-7 lg:gap-8 xl:gap-9">
-        <p
-          className={cn(
-            'font-manrope text-neutral-600',
-            'font-bold xl:font-light',
-            'text-[24px] md:text-[30px] lg:text-[36px] xl:text-[40px]',
-            'leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]',
-          )}>
-          {t('title')}
-        </p>
+      className="w-full py-15 md:py-16 lg:py-20 xl:py-22.5">
+      <Container>
+        <div className="flex flex-col gap-9 md:gap-7 lg:gap-8 xl:gap-9">
+          <h2
+            className={cn(
+              'font-manrope text-neutral-600',
+              'font-bold xl:font-light',
+              'text-[24px] md:text-[30px] lg:text-[36px] xl:text-[40px]',
+              'leading-[1.1] tracking-[-0.48px] xl:tracking-[-0.8px]',
+            )}>
+            {t('title')}
+          </h2>
 
-        <div
-          ref={containerRef}
-          className={cn(
-            'flex flex-col gap-5',
-            'md:grid md:grid-cols-2 md:gap-5',
-            'xl:grid-cols-3 xl:grid-rows-2',
-          )}
-          onPointerLeave={handleGridLeave}>
+          <div
+            ref={containerRef}
+            className={cn(
+              'flex flex-col gap-5',
+              md('grid grid-cols-2 gap-5'),
+              lgx('grid-cols-3 grid-rows-2 gap-3'),
+            )}
+            onPointerLeave={handleGridLeave}>
+            <div className="contents" onPointerEnter={enter('your-internet')}>
+              <YourInternetCard isActive={activeCard === 'your-internet'} />
+            </div>
+            <div className="contents" onPointerEnter={enter('customer-support')}>
+              <CustomerSupportCard isActive={activeCard === 'customer-support'} />
+            </div>
+            <div className="contents" onPointerEnter={enter('try-it-free')}>
+              <TryItFreeCard isActive={activeCard === 'try-it-free'} />
+            </div>
+            <div className="contents" onPointerEnter={enter('high-speed')}>
+              <HighSpeedCard isActive={activeCard === 'high-speed'} />
+            </div>
+            <div className="contents" onPointerEnter={enter('for-your-family')}>
+              <ForYourFamilyCard isActive={activeCard === 'for-your-family'} />
+            </div>
+          </div>
 
-          <div className="contents" onPointerEnter={enter('your-internet')}>
-            <YourInternetCard isActive={activeCard === 'your-internet'} />
-          </div>
-          <div className="contents" onPointerEnter={enter('customer-support')}>
-            <CustomerSupportCard isActive={activeCard === 'customer-support'} />
-          </div>
-          <div className="contents" onPointerEnter={enter('try-it-free')}>
-            <TryItFreeCard isActive={activeCard === 'try-it-free'} />
-          </div>
-          <div className="contents" onPointerEnter={enter('high-speed')}>
-            <HighSpeedCard isActive={activeCard === 'high-speed'} />
-          </div>
-          <div className="contents" onPointerEnter={enter('for-your-family')}>
-            <ForYourFamilyCard isActive={activeCard === 'for-your-family'} />
+          <div className="flex justify-center lgx:hidden">
+            <Button
+              variant="orange"
+              size="md"
+              className="px-8! py-4! text-[18px]! rounded-[16px]! text-neutral-900!">
+              {tRules('cta')}
+            </Button>
           </div>
         </div>
-
-        <div className="flex justify-center xl:hidden">
-          <Button
-            variant="orange"
-            size="md"
-            className="px-8! py-4! text-[18px]! rounded-[16px]! text-neutral-900!">
-            {tRules('cta')}
-          </Button>
-        </div>
-      </div>
+      </Container>
     </section>
   );
 };

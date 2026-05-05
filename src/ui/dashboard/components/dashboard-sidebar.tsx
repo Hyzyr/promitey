@@ -15,6 +15,7 @@ import { SidebarNavItem } from './sidebar-nav-item';
 import { LanguageSwitcher } from './language-switcher';
 import { LogoutButton } from './logout-button';
 import { Logo } from '@/components/ui/logo';
+import { Link } from '@/i18n/navigation';
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
@@ -45,12 +46,12 @@ export const DashboardSidebar = () => {
       )}
       style={{ background: SIDEBAR_GRADIENT }}>
       {/* Logo block — Figma: 327×62, pb 16, border-bottom #f6f6f6 */}
-      <div className="flex items-center gap-5 border-b border-neutral-20 pb-4">
+      <Link href="/" className="flex items-center gap-5 border-b border-neutral-20 pb-4">
         <Logo />
         <span className="font-inter text-[28px] font-medium text-red-900">
           Prometey <span className="font-bold">VPN</span>
         </span>
-      </div>
+      </Link>
 
       {/* Primary nav — gap 16 (gap-4) */}
       <nav className="flex flex-1 flex-col gap-4">

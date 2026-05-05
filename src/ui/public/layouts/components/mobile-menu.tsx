@@ -15,6 +15,7 @@ import { cn } from '@/lib/utils';
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  isAuthenticated?: boolean;
 }
 
 const LOCALES: { value: Locale; label: string }[] = [
@@ -33,7 +34,7 @@ const LOCALES: { value: Locale; label: string }[] = [
  * - Shadow: 0px -7px 30.2px rgba(0,0,0,0.12)
  * - Slides from bottom with spring animation
  */
-export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
+export const MobileMenu = ({ isOpen, onClose, isAuthenticated = false }: MobileMenuProps) => {
   const t = useTranslations('landing.header');
   const pathname = usePathname();
   const intlPathname = useIntlPathname();
@@ -185,9 +186,15 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
               </button>
             ))}
 
-            <Button href="/login" variant="orange" size="md" className="w-full">
-              {t('login')}
-            </Button>
+            {isAuthenticated ? (
+              <Button href="/dashboard" variant="orange" size="md" className="w-full">
+                {t('dashboard')}
+              </Button>
+            ) : (
+              <Button href="/login" variant="orange" size="md" className="w-full">
+                {t('login')}
+              </Button>
+            )}
           </motion.div>
         </div>
       )}

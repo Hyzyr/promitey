@@ -48,14 +48,14 @@ export const LandingFooter = () => {
               <LogoWithText size={25} />
             </div>
 
-            <p className="font-montserrat font-normal text-[15px] md:text-[16px] xl:text-[18px] leading-[1.55] tracking-[-0.36px] text-neutral-30 max-w-full xl:max-w-none">
+            <p className="font-montserrat font-light text-[15px] md:text-[16px] xl:text-[18px] leading-[1.55] tracking-[-0.24px] text-neutral-50 max-w-full xl:max-w-none">
               <FormatText text={t.raw('tagline')} />
             </p>
 
             <div className="flex flex-col gap-3 pt-4 xl:pt-6">
-              <p className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] leading-[1.4] tracking-[-0.32px] text-[#bab9b9]">
+              <strong className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] leading-[1.4] tracking-[-0.32px] text-[#bab9b9]">
                 {t('follow')}
-              </p>
+              </strong>
               <div className="flex gap-2 md:gap-3">
                 {SOCIAL.map(({ label, icon }) => (
                   <Button
@@ -82,9 +82,9 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 w-full xl:w-60 xl:shrink-0">
-            <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <strong className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               {t('support.title')}
-            </p>
+            </strong>
             <nav className="flex flex-col gap-2 md:gap-2.5 xl:gap-3">
               {SUPPORT_LINKS.map(({ label, href }) => (
                 <FooterLink key={label} href={href} label={label} />
@@ -93,9 +93,9 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col -order-1 lg:order-0  gap-6 md:gap-7 xl:gap-8 w-full xl:grow xl:max-w-92 xl:pl-2">
-            <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <strong className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               {t('contact.title')}
-            </p>
+            </strong>
             <form
               className="flex flex-col gap-4 w-full"
               onSubmit={(e) => e.preventDefault()}>
@@ -122,9 +122,9 @@ export const LandingFooter = () => {
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 pt-8 md:pt-9 xl:pt-10 w-full border-t border-neutral-600">
-          <p className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] text-[#bab9b9] text-center md:text-left">
+          <strong className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] text-[#bab9b9] text-center md:text-left">
             {t('rights')}
-          </p>
+          </strong>
           <span className="flex items-center font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] text-[#bab9b9]">
             {t('credit')} <HyzyrLink />
           </span>

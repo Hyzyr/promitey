@@ -1,10 +1,20 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { redirect } from '@/i18n/navigation';
+
+import { getAccessToken } from '@/lib/session';
+
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
 import { CheckoutButton } from '@/ui/dashboard/components/checkout-button';
 import { PromocodeSection } from '@/ui/dashboard/components/promocode-section';
 
 export default async function SubscriptionPage() {
   const t = await getTranslations('dashboard');
+  const token = await getAccessToken();
+
+  if (!token) {
+    const locale = await getLocale();
+    redirect({ href: '/login', locale });
+  }
 
   return (
     <>

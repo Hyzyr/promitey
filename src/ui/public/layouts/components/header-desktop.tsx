@@ -2,12 +2,17 @@
 
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { useHeaderScroll } from '@/hooks/use-header-scroll';
 import { useLenis } from '@/components/providers/lenis-provider';
 import { LogoWithText } from '@/components/ui/logo';
 import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+
+export interface HeaderDesktopProps {
+  isAuthenticated?: boolean;
+}
 
 /**
  * Desktop header with scroll-based visibility.
@@ -16,7 +21,7 @@ import { cn } from '@/lib/utils';
  * - Shows shadow when not at top
  * - Smooth scroll to sections with offset
  */
-export const HeaderDesktop = () => {
+export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) => {
   const t = useTranslations('landing.header');
   const { isVisible, isAtTop } = useHeaderScroll();
   const { scrollTo } = useLenis();
@@ -46,7 +51,9 @@ export const HeaderDesktop = () => {
       >
         <div className="container flex items-center justify-between py-4">
           <div className="flex items-center gap-6">
-            <LogoWithText />
+            <Link href="/">
+              <LogoWithText />
+            </Link>
             <LanguageSwitcher />
           </div>
 
@@ -61,9 +68,15 @@ export const HeaderDesktop = () => {
                 {label}
               </a>
             ))}
-            <Button href="/login" variant="orange" size="md">
-              {t('login')}
-            </Button>
+            {isAuthenticated ? (
+              <Button href="/dashboard" variant="orange" size="md">
+                {t('dashboard')}
+              </Button>
+            ) : (
+              <Button href="/login" variant="orange" size="md">
+                {t('login')}
+              </Button>
+            )}
           </div>
         </div>
       </motion.header>

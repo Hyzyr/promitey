@@ -131,6 +131,12 @@ body {
   --container-padding-x-sm: 1.25rem; /* 20px — mobile base */
   --container-padding-x-md: 2rem; /* 32px — tablet 768px+ */
   --container-padding-x-lg: 3rem; /* 48px — large tablet/small desktop 1024px+ */
+
+  /* Explicitly define the sequence to ensure the cascade order */
+  --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-lg: 64rem; /* 1024px */
+  --breakpoint-lgx: 72.5rem; /* 1160px (Your Custom) */
+  --breakpoint-xl: 80rem; /* 1280px */
 }
 
 /* ─── Container utility ──────────────────────────────────────────────── */
@@ -153,7 +159,13 @@ body {
   }
 }
 @utility logo {
-  @apply text-[20px] h-[2em] w-auto;
+  @apply inline-flex h-[2em] w-auto text-[16px] lg:text-[18px] xl:text-[22px];
+
+  svg,
+  img {
+    height: 100%;
+    width: auto;
+  }
 }
 @utility icon {
   font-size: inherit;
@@ -181,7 +193,7 @@ body {
   border: 0.5px solid rgba(255, 255, 255, 0.25);
 }
 @utility bg {
-  @apply absolute isolate inset-0 -z-1 pointer-events-none;
+  @apply pointer-events-none absolute inset-0 isolate -z-1;
 }
 @utility bg-item {
   @apply absolute w-auto!;
@@ -191,7 +203,7 @@ body {
 @utility input {
   input,
   textarea {
-    @apply w-full rounded-md border outline-none transition-colors duration-150;
+    @apply w-full rounded-md border transition-colors duration-150 outline-none;
     @apply px-5.5 py-4.5 font-roboto text-[16px] leading-[1.4] tracking-[0.32px];
   }
   &.light {
@@ -199,11 +211,11 @@ body {
     textarea {
       @apply border-neutral-60 bg-neutral-20 text-neutral-600;
       @apply focus:border-neutral-300 focus:text-neutral-900;
-      @apply disabled:bg-neutral-30 disabled:text-neutral-60 disabled:cursor-not-allowed;
+      @apply disabled:cursor-not-allowed disabled:bg-neutral-30 disabled:text-neutral-60;
 
       &::placeholder {
         /* color: var(--color-neutral-600); */
-        @apply text-neutral-600 font-medium transition-colors duration-250 ease-in delay-120;
+        @apply font-medium text-neutral-600 transition-colors delay-120 duration-250 ease-in;
       }
       &:focus::placeholder {
         @apply text-neutral-60;
@@ -215,11 +227,11 @@ body {
     textarea {
       @apply border-neutral-700 bg-neutral-800 text-neutral-20;
       @apply focus:border-neutral-500 focus:text-neutral-0;
-      @apply disabled:bg-neutral-500 disabled:text-neutral-300 disabled:cursor-not-allowed;
-   
+      @apply disabled:cursor-not-allowed disabled:bg-neutral-500 disabled:text-neutral-300;
+
       &::placeholder {
         /* color: var(--color-neutral-600); */
-        @apply text-neutral-10 font-medium transition-colors duration-250 ease-in delay-120;
+        @apply font-medium text-neutral-10 transition-colors delay-120 duration-250 ease-in;
       }
       &:focus::placeholder {
         @apply text-neutral-300;

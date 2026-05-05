@@ -2,11 +2,16 @@
 
 import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from '@/i18n/navigation';
 import { Logo } from '@/components/ui/logo';
 import { useHeaderScroll } from '@/hooks/use-header-scroll';
 import { HamburgerButton } from './hamburger-button';
 import { MobileMenu } from './mobile-menu';
 import { cn } from '@/lib/utils';
+
+export interface HeaderMobileProps {
+  isAuthenticated?: boolean;
+}
 
 /**
  * Mobile header bar — Figma node 6529:29140.
@@ -18,7 +23,7 @@ import { cn } from '@/lib/utils';
  * - Hides on scroll-down, reveals on scroll-up (matches desktop behavior).
  * - Stays mounted while menu is open so the close X is reachable.
  */
-export const HeaderMobile = () => {
+export const HeaderMobile = ({ isAuthenticated = false }: HeaderMobileProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isVisible, isAtTop } = useHeaderScroll();
 
@@ -42,9 +47,9 @@ export const HeaderMobile = () => {
           !isAtTop && 'shadow-lg shadow-black/20',
         )}
       >
-        <div className="flex h-7 items-center text-[14px]">
+        <Link href="/" className="flex h-7 items-center text-[14px]">
           <Logo />
-        </div>
+        </Link>
         <HamburgerButton
           isOpen={menuOpen}
           onClick={() => setMenuOpen((prev) => !prev)}
@@ -53,7 +58,7 @@ export const HeaderMobile = () => {
 
       <div className="h-14" aria-hidden="true" />
 
-      <MobileMenu isOpen={menuOpen} onClose={handleClose} />
+      <MobileMenu isOpen={menuOpen} onClose={handleClose} isAuthenticated={isAuthenticated} />
     </>
   );
 };

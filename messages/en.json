@@ -29,6 +29,7 @@
   "landing": {
     "header": {
       "login": "Log in",
+      "dashboard": "Dashboard",
       "menu": "Menu",
       "nav": {
         "benefits": "Benefits",

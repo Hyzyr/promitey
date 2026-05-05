@@ -1,8 +1,18 @@
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, getLocale } from 'next-intl/server';
+import { redirect } from '@/i18n/navigation';
+
+import { getAccessToken } from '@/lib/session';
+
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
 
 export default async function InstructionsPage() {
   const t = await getTranslations('dashboard');
+  const token = await getAccessToken();
+
+  if (!token) {
+    const locale = await getLocale();
+    redirect({ href: '/login', locale });
+  }
 
   return (
     <>
