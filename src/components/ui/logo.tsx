@@ -1,27 +1,26 @@
-type LogoProps = {
+export interface LogoProps {
   size?: number;
-  href?: string;
-  onClick?: () => void;
-};
+  className?: string;
+}
 
-export const Logo = ({ href, onClick }: LogoProps) => {
+export const Logo = ({ className }: LogoProps) => {
   return (
-    <a href={href} onClick={onClick} className="logo">
+    <span className={className ?? 'logo'}>
       <img src="/logo.svg" alt="Prometey VPN Logo" className="h-full w-full" />
-    </a>
+    </span>
   );
 };
 
-export const LogoWithText = ({ href, size, onClick }: LogoProps) => {
-  const style = !size ? {} : { fontSize: size };
-  
+export const LogoWithText = ({ size, className }: LogoProps) => {
+  const style = size ? { fontSize: size } : undefined;
+
   return (
-    <a href={href} onClick={onClick} className="logo" style={style}>
+    <span className={className ?? 'logo'} style={style}>
       <img
         src="/logo-with-text.svg"
         alt="Prometey VPN Logo"
         className="h-full w-full"
       />
-    </a>
+    </span>
   );
 };

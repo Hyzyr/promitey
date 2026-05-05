@@ -1,4 +1,12 @@
 {
+  "dev": {
+    "label": "Development mode",
+    "loginButton": "Log in as test user",
+    "bannerTitle": "DEV MODE",
+    "bannerDescription": "You are signed in as the test user — API calls return fixture data",
+    "bannerLabel": "Development mode is active",
+    "exitButton": "Exit dev session"
+  },
   "common": {
     "appName": "Prometey VPN",
     "save": "Save",
@@ -179,7 +187,8 @@
   },
   "auth": {
     "header": {
-      "nav": "Features"
+      "nav": "Features",
+      "logoLabel": "Prometey VPN — home"
     },
     "footer": {
       "policy": "By signing in, you confirm your agreement with the",

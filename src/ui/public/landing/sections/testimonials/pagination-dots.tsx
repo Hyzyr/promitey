@@ -1,3 +1,5 @@
+'use client';
+
 type PaginationDotsProps = {
   count: number;
   activeIndex: number;

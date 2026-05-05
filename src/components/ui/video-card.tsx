@@ -1,3 +1,4 @@
+'use client';
 
 import { useEffect, useRef, useState, cloneElement } from 'react';
 import { playTriangleSVG, pauseBarsSVG } from '@/components/assets';

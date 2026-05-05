@@ -1,6 +1,7 @@
 import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "@/i18n/routing";
+import { DEV_TEST_COOKIE } from "@/lib/dev-session";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -48,6 +49,14 @@ export default async function middleware(request: NextRequest) {
 
   if (!isPublic) {
     const accessToken = request.cookies.get("auth_access_token");
+
+    // Dev test session bypasses real auth entirely
+    if (process.env.NODE_ENV === "development") {
+      const devCookie = request.cookies.get(DEV_TEST_COOKIE);
+      if (devCookie?.value === "1") {
+        return intlResponse;
+      }
+    }
 
     if (!accessToken) {
       const refreshToken = request.cookies.get("auth_refresh_token");

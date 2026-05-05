@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 
 import { getAccessToken } from '@/lib/session';
+import { DEV_TOKEN_SENTINEL, IS_DEV } from '@/lib/dev-session';
+import { DEV_OPENVPN_CONFIG } from '@/api/client/dev-mock';
 import { getOpenvpnConfig } from '@/api/vpn';
 import { isApiError } from '@/api/client/api-error';
 
@@ -8,6 +10,16 @@ export async function GET() {
   const token = await getAccessToken();
   if (!token) {
     return new NextResponse('Unauthorized', { status: 401 });
+  }
+
+  if (IS_DEV && token === DEV_TOKEN_SENTINEL) {
+    return new NextResponse(DEV_OPENVPN_CONFIG, {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/octet-stream',
+        'Content-Disposition': 'attachment; filename="prometey-dev.ovpn"',
+      },
+    });
   }
 
   let upstream: Response;

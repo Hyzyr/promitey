@@ -1,4 +1,12 @@
 {
+  "dev": {
+    "label": "Режим разработки",
+    "loginButton": "Войти как тестовый пользователь",
+    "bannerTitle": "DEV MODE",
+    "bannerDescription": "Вы вошли как тестовый пользователь — API возвращает фиктивные данные",
+    "bannerLabel": "Активен режим разработки",
+    "exitButton": "Выйти из dev-сессии"
+  },
   "common": {
     "appName": "Prometey VPN",
     "save": "Сохранить",
@@ -179,7 +187,8 @@
   },
   "auth": {
     "header": {
-      "nav": "Возможности"
+      "nav": "Возможности",
+      "logoLabel": "Prometey VPN — на главную"
     },
     "footer": {
       "policy": "Выполняя вход, вы подтверждаете свое согласие с",

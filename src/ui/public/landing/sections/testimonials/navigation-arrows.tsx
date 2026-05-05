@@ -1,3 +1,5 @@
+'use client';
+
 import { LucideChevronLeft, LucideChevronRight } from 'lucide-react';
 
 type NavigationArrowsProps = {

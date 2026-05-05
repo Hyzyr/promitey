@@ -14,7 +14,7 @@ export const AuthHeader = () => {
 
   return (
     <header className="absolute top-0 right-0 left-0 z-20 flex items-center justify-between px-5 py-4 backdrop-blur-[24.75px] md:px-10 lg:px-[101px] lg:py-6">
-      <Link href="/" className="inline-flex" aria-label="Prometey VPN">
+      <Link href="/" className="inline-flex" aria-label={t('logoLabel')}>
         <LogoWithText size={28} />
       </Link>
 

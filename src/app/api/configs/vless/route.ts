@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { getAccessToken } from '@/lib/session';
+import { DEV_TOKEN_SENTINEL, IS_DEV } from '@/lib/dev-session';
 import { getVlessSubscription } from '@/api/vpn';
 import { isApiError } from '@/api/client/api-error';
 
@@ -8,6 +9,13 @@ export async function GET() {
   const token = await getAccessToken();
   if (!token) {
     return new NextResponse('Unauthorized', { status: 401 });
+  }
+
+  if (IS_DEV && token === DEV_TOKEN_SENTINEL) {
+    return NextResponse.redirect(
+      'vless://dev-test-fixture@dev.local:443?type=tcp&security=tls#DEV-TEST',
+      { status: 307 },
+    );
   }
 
   let subscription_url: string;

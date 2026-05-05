@@ -1,4 +1,6 @@
 import { ApiError } from './api-error';
+import { DEV_TOKEN_SENTINEL, IS_DEV } from '@/lib/dev-session';
+import { devMockFetch, devMockFetchBinary } from './dev-mock';
 
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -56,6 +58,9 @@ async function request(path: string, options: RequestOptions = {}): Promise<Resp
 
 /** Fetch a JSON endpoint. Throws ApiError on any non-2xx response. */
 export async function apiFetch<T>(path: string, options: RequestOptions = {}): Promise<T> {
+  if (IS_DEV && options.token === DEV_TOKEN_SENTINEL) {
+    return devMockFetch<T>(path, options.method ?? 'GET');
+  }
   const response = await request(path, options);
   try {
     return (await response.json()) as T;
@@ -66,5 +71,8 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
 
 /** Fetch a binary endpoint (e.g. .ovpn download). Returns raw Response for streaming. */
 export async function apiFetchBinary(path: string, options: RequestOptions = {}): Promise<Response> {
+  if (IS_DEV && options.token === DEV_TOKEN_SENTINEL) {
+    return devMockFetchBinary(path);
+  }
   return request(path, options);
 }

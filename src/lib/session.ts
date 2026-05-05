@@ -1,5 +1,6 @@
 import { cookies, headers } from 'next/headers';
 
+import { IS_DEV, DEV_TEST_COOKIE, DEV_TOKEN_SENTINEL } from '@/lib/dev-session';
 import type { TokenPair } from '@/api/client/api-types';
 
 const ACCESS_COOKIE = 'auth_access_token';
@@ -35,13 +36,19 @@ export async function clearAuthCookies(): Promise<void> {
 /**
  * Read the access token. Works in server components, actions, and route handlers.
  * Falls back to the x-forwarded-access-token header set by middleware after a silent refresh.
+ * In development, returns DEV_TOKEN_SENTINEL when the dev test cookie is active.
  */
 export async function getAccessToken(): Promise<string | null> {
+  const store = await cookies();
+
+  if (IS_DEV && store.get(DEV_TEST_COOKIE)?.value === '1') {
+    return DEV_TOKEN_SENTINEL;
+  }
+
   const reqHeaders = await headers();
   const forwarded = reqHeaders.get('x-forwarded-access-token');
   if (forwarded) return forwarded;
 
-  const store = await cookies();
   return store.get(ACCESS_COOKIE)?.value ?? null;
 }
 
