@@ -1,4 +1,18 @@
 {
+  "meta": {
+    "home": {
+      "title": "Prometey VPN — Безопасный и быстрый VPN",
+      "description": "Защитите свою приватность с Prometey VPN. Быстрый, безопасный и простой в использовании."
+    },
+    "auth": {
+      "title": "Вход — Prometey VPN",
+      "description": "Войдите в свой аккаунт Prometey VPN."
+    },
+    "dashboard": {
+      "title": "Кабинет — Prometey VPN",
+      "description": "Управляйте подпиской и настройками Prometey VPN."
+    }
+  },
   "dev": {
     "label": "Режим разработки",
     "loginButton": "Войти как тестовый пользователь",

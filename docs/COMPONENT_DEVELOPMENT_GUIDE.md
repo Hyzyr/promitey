@@ -225,7 +225,7 @@ Open [login-form.tsx](../src/ui/auth/components/login-form.tsx) — strings like
 
 Two layers:
 1. **Design tokens** in [globals.css](../src/app/globals.css) under `@theme` — neutral 0-900, primary 50-900, yellow, orange, red, radii, container max width and breakpoint paddings.
-2. **Custom utilities** in `globals.css` — `container`, `glass`, `bg`, `bg-item`, `icon`, `input`, `logo`.
+2. **Custom utilities** in `globals.css` — `container`, `glass`, `bg`, `bgitem`, `icon`, `input`, `logo`.
 
 ### Hard rules
 

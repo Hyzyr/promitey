@@ -71,9 +71,9 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 w-full xl:grow xl:max-w-59.5 xl:shrink-0">
-            <p className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <h3 className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               {t('platform.title')}
-            </p>
+            </h3>
             <nav className="flex flex-col gap-2 md:gap-2.5 xl:gap-3">
               {PLATFORM_LINKS.map(({ label, href }) => (
                 <FooterLink key={label} href={href} label={label} />
@@ -82,9 +82,9 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 w-full xl:w-60 xl:shrink-0">
-            <strong className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <h3 className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               {t('support.title')}
-            </strong>
+            </h3>
             <nav className="flex flex-col gap-2 md:gap-2.5 xl:gap-3">
               {SUPPORT_LINKS.map(({ label, href }) => (
                 <FooterLink key={label} href={href} label={label} />
@@ -93,9 +93,9 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col -order-1 lg:order-0  gap-6 md:gap-7 xl:gap-8 w-full xl:grow xl:max-w-92 xl:pl-2">
-            <strong className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <h3 className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
               {t('contact.title')}
-            </strong>
+            </h3>
             <form
               className="flex flex-col gap-4 w-full"
               onSubmit={(e) => e.preventDefault()}>

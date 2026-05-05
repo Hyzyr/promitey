@@ -1,8 +1,23 @@
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { cookies } from 'next/headers';
 import { DashboardSidebar } from '@/ui/dashboard/components/dashboard-sidebar';
 import { DashboardHeader } from '@/ui/dashboard/components/dashboard-header';
 import { DevModeBanner } from '@/ui/dashboard/components/dev-mode-banner';
 import { DEV_TEST_COOKIE } from '@/lib/dev-session';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'meta.dashboard' });
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 export default async function AdminLayout({
   children,

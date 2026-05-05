@@ -5,6 +5,7 @@ import { triangleSVG } from '@/components/assets';
 import { cn } from '@/lib/utils';
 
 type FaqItemProps = {
+  itemId: string;
   question: string;
   answer: string;
   isOpen: boolean;
@@ -12,6 +13,7 @@ type FaqItemProps = {
 };
 
 export const FaqItemComponent = ({
+  itemId,
   question,
   answer,
   isOpen,
@@ -41,10 +43,11 @@ export const FaqItemComponent = ({
           'gap-6 md:gap-6',
           'px-4 py-3 md:p-4',
         )}
-        aria-expanded={isOpen}>
-        <p className="flex-1 font-manrope font-bold text-[18px] leading-[1.2] text-[#2b2929]">
+        aria-expanded={isOpen}
+        aria-controls={itemId}>
+        <span className="flex-1 font-manrope font-bold text-[18px] leading-[1.2] text-[#2b2929]">
           {question}
-        </p>
+        </span>
         {cloneElement(triangleSVG, {
           className:
             'shrink-0 w-[12px] h-[16px] transition-transform duration-200',
@@ -56,6 +59,8 @@ export const FaqItemComponent = ({
       </button>
 
       <div
+        id={itemId}
+        role="region"
         className="overflow-hidden transition-all duration-300 ease-in-out"
         style={{
           maxHeight: isOpen ? `${maxHeight}px` : '0px',

@@ -153,9 +153,7 @@ export const BenefitCard = ({
         onMouseLeave={onMouseLeave}
         data-benefit-card=""
         className={cn(
-          'relative isolate flex flex-col overflow-hidden min-h-[38vh] xl:h-96',
-          'rounded-[16px] border bg-neutral-20 transition-colors duration-200',
-          'px-4 py-5 md:px-5 md:py-6 lg:px-4 lgx:px-3 xl:px-4 xl:py-5',
+          'benefit-card-shell',
           isActive ? 'border-orange-400' : 'border-neutral-40',
           className,
         )}

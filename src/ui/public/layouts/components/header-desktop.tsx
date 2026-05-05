@@ -58,16 +58,18 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
           </div>
 
           <div className="flex items-center gap-10">
-            {NAV.map(({ href, label }) => (
-              <a
-                key={href}
-                href={href}
-                onClick={(e) => handleNavClick(e, href)}
-                className="font-roboto text-[18px] font-normal text-neutral-10 transition-colors hover:text-primary-500 active:text-primary-600"
-              >
-                {label}
-              </a>
-            ))}
+            <nav aria-label="Main navigation" className="flex items-center gap-10">
+              {NAV.map(({ href, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={(e) => handleNavClick(e, href)}
+                  className="font-roboto text-[18px] font-normal text-neutral-10 transition-colors hover:text-primary-500 active:text-primary-600"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
             {isAuthenticated ? (
               <Button href="/dashboard" variant="orange" size="md">
                 {t('dashboard')}
@@ -78,6 +80,7 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
               </Button>
             )}
           </div>
+
         </div>
       </motion.header>
 

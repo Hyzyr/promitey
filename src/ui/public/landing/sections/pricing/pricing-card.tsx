@@ -40,7 +40,7 @@ export const PricingCard = ({
 
   return (
     <>
-      <div
+      <article
         className={cn(
           'relative flex flex-col w-full',
           'rounded-[12px] xl:rounded-lg bg-neutral-20 overflow-hidden',
@@ -84,9 +84,9 @@ export const PricingCard = ({
             </div>
           )}
 
-          <p
+          <span
             className={cn(
-              'font-montserrat font-bold whitespace-nowrap w-full',
+              'block font-montserrat font-bold whitespace-nowrap w-full',
               'text-[56px] xl:text-[86px]',
               'leading-[0.8] xl:leading-none',
               'tracking-[-1.68px] xl:tracking-[-2.58px]',
@@ -96,7 +96,7 @@ export const PricingCard = ({
               textShadow: '0px 4px 8.4px rgba(254,243,139,0.17)',
             }}>
             {price}
-          </p>
+          </span>
         </div>
 
         <div
@@ -124,7 +124,7 @@ export const PricingCard = ({
           className="hidden xl:flex w-full">
           {selectLabel}
         </Button>
-      </div>
+      </article>
 
       {href && (
         <PricingConfirmModal

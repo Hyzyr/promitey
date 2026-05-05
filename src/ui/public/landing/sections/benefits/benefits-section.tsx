@@ -12,7 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useMedia } from '@/hooks/use-media';
 import { useScrollActiveCard } from '@/hooks/use-scroll-active-card';
-import { cn, md, lgx } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { Container } from '@/components/ui/container';
 
 type CardId =
@@ -69,11 +69,8 @@ export const BenefitsSection = () => {
 
           <div
             ref={containerRef}
-            className={cn(
-              'flex flex-col gap-5',
-              md('grid grid-cols-2 gap-5'),
-              lgx('grid-cols-3 grid-rows-2 gap-3'),
-            )}
+            // Elder (92a03bd): "flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-5 xl:grid-cols-3 xl:grid-rows-2"
+            className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-5 lgx:grid-cols-3 lgx:grid-rows-2"
             onPointerLeave={handleGridLeave}>
             <div className="contents" onPointerEnter={enter('your-internet')}>
               <YourInternetCard isActive={activeCard === 'your-internet'} />

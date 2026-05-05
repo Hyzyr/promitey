@@ -1,6 +1,21 @@
+import type { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { AuthBackground } from '@/ui/auth/components/auth-background';
 import { AuthHeader } from '@/ui/auth/components/auth-header';
 import { AuthPromo } from '@/ui/auth/components/auth-promo';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'meta.auth' });
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
 
 export default function AuthLayout({
   children,

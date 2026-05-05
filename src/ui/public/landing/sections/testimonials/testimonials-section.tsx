@@ -46,7 +46,7 @@ export const TestimonialsSection = () => {
 
       <div className="relative flex flex-col gap-8 md:gap-7 lg:gap-7.5 xl:gap-8">
         <div className="flex items-start md:items-center justify-between gap-4 min-h-10 md:h-10.5 lg:h-11 xl:h-12">
-          <p
+          <h2
             className={cn(
               'font-manrope text-neutral-600',
               'font-bold xl:font-light',
@@ -55,7 +55,7 @@ export const TestimonialsSection = () => {
               'max-w-52.5 md:max-w-none',
             )}>
             {t('title')}
-          </p>
+          </h2>
           <div className="hidden md:block shrink-0">
             <NavigationArrows onPrev={scrollPrev} onNext={scrollNext} />
           </div>

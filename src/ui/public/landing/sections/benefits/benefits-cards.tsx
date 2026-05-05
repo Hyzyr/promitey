@@ -16,7 +16,7 @@ import {
 import { facebookSVG, telegramSVG, whatsappSVG } from '@/components/assets';
 import { BenefitCard, ParallaxItem } from './components';
 import { VideoCard } from '@/components/ui/video-card';
-import { cn, md, lgx } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 const imgTryItFree = '/images/benefits/arc-blured.png';
 const imgHighSpeed = '/images/benefits/ellipse-blurred.png';
@@ -33,10 +33,7 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn(
-        md('col-start-1 row-start-2'),
-        lgx('col-start-1 row-start-1'),
-      )}
+      className={cn('md:col-start-1 md:row-start-2', 'lgx:col-start-1 lgx:row-start-1')}
       title={t('title')}
       description={t('body')}
     >
@@ -44,14 +41,14 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
         <img
           src={imgCustomerSupport}
           alt="blurred-o-shape"
-          className="bg-item right-[2%] bottom-[-4%] h-[105%]"
+          className="bgitem right-[2%] bottom-[-4%] h-[105%]"
         />
       </ParallaxItem>
       <ParallaxItem depth={0.25}>
-        <ThunderSVG className="bg-item right-[2.5%] bottom-[26%] h-[40%]" />
+        <ThunderSVG className="bgitem right-[2.5%] bottom-[26%] h-[40%]" />
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <CloackBlurred className="bg-item right-[10%] bottom-[9%] z-1 h-[70%]" />
+        <CloackBlurred className="bgitem right-[10%] bottom-[9%] z-1 h-[70%]" />
       </ParallaxItem>
     </BenefitCard>
   );
@@ -62,10 +59,7 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn(
-        md('col-start-2 row-start-2'),
-        lgx('col-start-2 row-start-1'),
-      )}
+      className={cn('md:col-start-2 md:row-start-2', 'lgx:col-start-2 lgx:row-start-1')}
       title={t('title')}
       description={t('body')}
     >
@@ -73,14 +67,14 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
         <img
           src={imgTryItFree}
           alt="blurred-arc-shape"
-          className="bg-item right-[-1%] bottom-[-3%] h-[90%]"
+          className="bgitem right-[-1%] bottom-[-3%] h-[90%]"
         />
       </ParallaxItem>
       <ParallaxItem depth={0.25}>
-        <DollarSVG className="bg-item right-[5.7%] bottom-[24.6%] h-[32%] rotate-[17.5deg]" />
+        <DollarSVG className="bgitem right-[5.7%] bottom-[24.6%] h-[32%] rotate-[17.5deg]" />
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <ZeroBlurred className="bg-item right-[13%] bottom-[15%] h-[62%]" />
+        <ZeroBlurred className="bgitem right-[13%] bottom-[15%] h-[62%]" />
       </ParallaxItem>
     </BenefitCard>
   );
@@ -91,12 +85,8 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn(
-        md('col-span-2 row-start-1 px-5 py-6.5'),
-        'lg:h-full',
-        lgx('col-span-1 col-start-3 row-span-2 row-start-1 px-6 py-8'),
-      )}
-      mediaClassName="min-h-0"
+      className="bigcard"
+      mediaClassName="bigcard-media"
       title={t('title')}
       description={t('body')}
       footer={
@@ -115,21 +105,21 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
         <img
           src={imgYourInternet}
           alt="blurred-circle-shape"
-          className="bg-item bottom-[-8%] left-[-4%] h-[78%]"
+          className="bgitem bottom-[-8%] left-[-4%] h-[78%]"
         />
       </ParallaxItem>
       <ParallaxItem depth={0.15}>
-        <span className="color-neutral-800 bg-item bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[5vh]">
+        <span className="bgitem bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[5vh]">
           {telegramSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.3}>
-        <span className="color-neutral-800 bg-item bottom-[72%] left-[16%] icon -rotate-3 text-[5vh]">
+        <span className="bgitem bottom-[72%] left-[16%] icon -rotate-3 text-[5vh]">
           {whatsappSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <span className="color-neutral-800 bg-item bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[5vh]">
+        <span className="bgitem bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[5vh]">
           {facebookSVG}
         </span>
       </ParallaxItem>
@@ -147,10 +137,7 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn(
-        md('col-start-2 row-start-3'),
-        lgx('col-start-1 row-start-2'),
-      )}
+      className={cn('md:col-start-2 md:row-start-3', 'lgx:col-start-1 lgx:row-start-2')}
       title={t('title')}
       description={t('body')}
     >
@@ -158,17 +145,17 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
         <img
           src={imgForYourFamily}
           alt="blurred-square-shape"
-          className="bg-item right-[7.5%] bottom-[-12%] h-[95%]"
+          className="bgitem right-[7.5%] bottom-[-12%] h-[95%]"
         />
       </ParallaxItem>
       <ParallaxItem depth={0.25}>
-        <LaptopSVG className="bg-item right-[11.5%] bottom-[1.5%] h-[58%] rotate-[4.8deg]" />
+        <LaptopSVG className="bgitem right-[11.5%] bottom-[1.5%] h-[58%] rotate-[4.8deg]" />
       </ParallaxItem>
       <ParallaxItem depth={0.15}>
-        <TvSVG className="bg-item right-[50%] bottom-[19.5%] h-[43%] rotate-[-17.5deg]" />
+        <TvSVG className="bgitem right-[50%] bottom-[19.5%] h-[43%] rotate-[-17.5deg]" />
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <PhoneBlurred className="bg-item right-[32%] bottom-[-1%] h-[80%] rotate-[15.5deg]" />
+        <PhoneBlurred className="bgitem right-[32%] bottom-[-1%] h-[80%] rotate-[15.5deg]" />
       </ParallaxItem>
     </BenefitCard>
   );
@@ -179,10 +166,7 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
   return (
     <BenefitCard
       isActive={isActive}
-      className={cn(
-        md('col-start-1 row-start-3'),
-        lgx('col-start-2 row-start-2'),
-      )}
+      className={cn('md:col-start-1 md:row-start-3', 'lgx:col-start-2 lgx:row-start-2')}
       title={t('title')}
       description={t('body')}
     >
@@ -190,14 +174,14 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
         <img
           src={imgHighSpeed}
           alt="blurred-ellipse-shape"
-          className="bg-item right-[2%] bottom-[4%] h-[98%]"
+          className="bgitem right-[2%] bottom-[4%] h-[98%]"
         />
       </ParallaxItem>
       <ParallaxItem depth={0.25}>
-        <RocketSVG className="bg-item right-[16.5%] bottom-[60%] h-[28%]" />
+        <RocketSVG className="bgitem right-[16.5%] bottom-[60%] h-[28%]" />
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <InfiniteBlurred className="bg-item right-[3%] bottom-[4%] h-[75%] rotate-[8.5deg]" />
+        <InfiniteBlurred className="bgitem right-[3%] bottom-[4%] h-[75%] rotate-[8.5deg]" />
       </ParallaxItem>
     </BenefitCard>
   );

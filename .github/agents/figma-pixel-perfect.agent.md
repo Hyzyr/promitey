@@ -48,7 +48,7 @@ If the user mentions a design system, also call `mcp_figma_search_design_system`
 ### 3. Reconcile with the codebase
 Before writing new code:
 - Check `src/components/ui/` and `src/ui/<route-group>/components/` for an existing component matching the Figma layer. Reuse — never recreate.
-- Read `src/app/globals.css` to confirm available tokens, custom utilities (`container`, `glass`, `bg`, `bg-item`, `icon`, `input`, `logo`), and radii.
+- Read `src/app/globals.css` to confirm available tokens, custom utilities (`container`, `glass`, `bg`, `bgitem`, `icon`, `input`, `logo`), and radii.
 - Read `.github/instructions/components.instructions.md` for naming, export, and i18n rules.
 - Read `messages/en.json` + `messages/ru.json` and append any new strings under the correct namespace.
 

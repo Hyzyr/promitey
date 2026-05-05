@@ -14,8 +14,9 @@ export const ConnectGuide = () => {
   const topPct = `${(activeStep / steps.length) * 100}%`;
 
   return (
-    <div
+    <section
       id="guide"
+      aria-label={t('title')}
       ref={containerRef}
       className="relative h-[120vh] xl:h-[240vh]">
       <div className="sticky top-0 flex h-screen items-center">
@@ -104,6 +105,6 @@ export const ConnectGuide = () => {
           </div>
         </section>
       </div>
-    </div>
+    </section>
   );
 };

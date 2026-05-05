@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@source not "../../.github";
 html {
   height: 100%;
 }
@@ -195,9 +196,32 @@ body {
 @utility bg {
   @apply pointer-events-none absolute inset-0 isolate -z-1;
 }
-@utility bg-item {
+@utility bgitem {
   @apply absolute w-auto!;
   max-width: unset;
+}
+
+@utility benefit-card-shell {
+  @apply relative isolate flex min-h-[38vh] flex-col overflow-hidden;
+  @apply rounded-[16px] border bg-neutral-20 transition-colors duration-200;
+  @apply px-4 py-5 md:px-5 md:py-6 lg:px-4 lgx:px-3 lgx:py-3 xl:px-4 xl:py-5;
+
+  /* .bgitem {
+    @apply text-neutral-800;
+  } */
+}
+
+@utility bigcard {
+  @apply relative md:col-span-2 md:row-start-1 md:px-5 md:py-6.5;
+  @apply lg:h-full;
+  @apply md:max-lgx:pr-[45%]!;
+  @apply lgx:col-span-1 lgx:col-start-3 lgx:row-span-2 lgx:row-start-1;
+  @apply lgx:h-full lgx:px-6 lgx:py-8;
+
+  .bigcard-media {
+    @apply md:max-lgx:absolute md:max-lgx:top-1 md:max-lgx:right-0;
+    @apply md:max-lgx:h-full md:max-lgx:w-[50%];
+  }
 }
 
 @utility input {
@@ -246,7 +270,7 @@ body {
   }
 }
 
-@keyframes progress-fill {
+@keyframes progress-fill { 
   from {
     width: 0%;
   }

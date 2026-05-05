@@ -1,4 +1,18 @@
 {
+  "meta": {
+    "home": {
+      "title": "Prometey VPN — Secure & Fast VPN",
+      "description": "Protect your privacy with Prometey VPN. Fast, secure, and easy to use."
+    },
+    "auth": {
+      "title": "Sign In — Prometey VPN",
+      "description": "Sign in to your Prometey VPN account."
+    },
+    "dashboard": {
+      "title": "Dashboard — Prometey VPN",
+      "description": "Manage your Prometey VPN subscription and settings."
+    }
+  },
   "dev": {
     "label": "Development mode",
     "loginButton": "Log in as test user",
