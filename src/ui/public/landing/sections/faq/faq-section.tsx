@@ -35,7 +35,7 @@ export const FaqSection = () => {
           {t('title')}
         </h2>
 
-        <div className="flex w-full max-w-full md:max-w-170 xl:w-252.5 flex-col gap-4 md:gap-5 xl:gap-6">
+        <div className="flex w-full max-w-full md:max-w-170 xl:max-w-252.5 flex-col gap-4 md:gap-5 xl:gap-6">
           {Array.from({ length: faqCount }).map((_, i) => (
             <FaqItemComponent
               key={i}

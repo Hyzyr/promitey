@@ -54,14 +54,15 @@ export const PricingCard = ({
     <>
       <article
         className={cn(
-          'relative flex flex-col w-full',
-          'rounded-[12px] xl:rounded-lg bg-neutral-20 overflow-hidden',
-          'px-3 xl:px-6 pt-5.5 xl:py-8 pb-4',
-          'gap-4 xl:gap-4',
+          'relative flex w-full flex-col',
+          'overflow-hidden rounded-[12px] bg-neutral-20 lgx:rounded-lg',
+          'px-3 pt-5.5 pb-4 md:px-6 md:py-8 lgx:px-4 lgx:py-5 xl:px-6 xl:py-8',
+          'gap-4 lgx:gap-4',
           'shadow-[0px_20px_32px_0px_rgba(0,0,0,0.06)]',
           height ?? '',
           className,
-        )}>
+        )}
+      >
         {/* Invisible tap target covers entire card on mobile/tablet only */}
         {href && (
           <button
@@ -71,63 +72,67 @@ export const PricingCard = ({
               setIsConfirmOpen(true);
             }}
             aria-label={selectLabel}
-            className="absolute inset-0 z-10 xl:hidden"
+            className="absolute inset-0 z-10 lgx:hidden"
           />
         )}
 
         <div
           className={cn(
-            'flex flex-1 flex-col items-start min-h-0',
-            'gap-4 xl:gap-6',
-          )}>
+            'flex min-h-0 flex-1 flex-col items-start',
+            'gap-4 lgx:gap-6',
+          )}
+        >
           <strong
             className={cn(
-              'font-manrope font-extrabold uppercase whitespace-nowrap text-[#2b2929]',
-              'text-[14px] xl:text-[24px]',
-              'leading-none tracking-[-0.42px] xl:tracking-[-0.72px]',
+              'font-manrope font-extrabold whitespace-nowrap text-[#2b2929] uppercase',
+              'text-[14px] md:text-[18px] lgx:text-[22px] xl:text-[24px]',
+              'leading-none tracking-[-0.42px] lgx:tracking-[-0.72px]',
             )}
-            style={{ textShadow: '0px 4px 8.4px rgba(254,243,139,0.17)' }}>
+            style={{ textShadow: '0px 4px 8.4px rgba(254,243,139,0.17)' }}
+          >
             {label}
           </strong>
 
           {originalPrice && (
-            <div className="flex relative  ">
-              <span className="col-start-1 row-start-1 font-manrope font-normal text-lg xl:text-[48px] leading-[0.9] text-neutral-50 whitespace-nowrap">
+            <div className="relative flex">
+              <span className="col-start-1 row-start-1 font-manrope text-lg leading-[0.9] font-normal whitespace-nowrap text-neutral-50 md:text-[24px] lg:text-[36px] xlx:text-[48px]">
                 {originalPrice}
               </span>
-              <div className="absolute top-[50%] row-start-1 h-0.75 w-full bg-neutral-70 rounded-sm self-start" />
+              <div className="absolute top-[50%] row-start-1 h-0.75 w-full self-start rounded-sm bg-neutral-70" />
             </div>
           )}
 
           <span
             className={cn(
-              'block font-montserrat font-bold whitespace-nowrap w-full',
-              'text-[56px] xl:text-[86px]',
-              'leading-[0.8] xl:leading-none',
-              'tracking-[-1.68px] xl:tracking-[-2.58px]',
+              'block w-full font-montserrat font-bold whitespace-nowrap',
+              'text-[56px] md:text-[64px] lgx:text-[86px]',
+              'leading-[0.8] lgx:leading-none',
+              'tracking-[-1.68px] lgx:tracking-[-2.58px]',
             )}
             style={{
               color: featured ? '#e8633b' : priceColor,
               textShadow: '0px 4px 8.4px rgba(254,243,139,0.17)',
-            }}>
+            }}
+          >
             {price}
           </span>
         </div>
 
         <div
           className={cn(
-            'flex flex-col xl:flex-row items-start xl:items-center',
-            'gap-1.5 xl:gap-0',
+            'flex flex-col items-start lgx:flex-row lgx:items-center',
+            'gap-1.5 lgx:gap-0',
             'border-t border-neutral-40',
-            'pt-2 xl:pt-4 pb-1.5 xl:pb-1.5 w-full',
-            perMonth ? 'xl:justify-between' : '',
-          )}>
+            'w-full pt-2 pb-1.5 lgx:pt-4 lgx:pb-1.5',
+            perMonth ? 'lgx:justify-between' : '',
+          )}
+        >
           {perMonth && (
-            <span className="font-manrope font-normal text-[14px] xl:text-[24px] text-neutral-600 whitespace-nowrap">
+            <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[24px]">
               {perMonth}
             </span>
           )}
-          <span className="font-manrope font-normal text-[14px] xl:text-[24px] text-neutral-600 whitespace-nowrap">
+          <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[24px]">
             {period}
           </span>
         </div>
@@ -137,7 +142,8 @@ export const PricingCard = ({
           size="lg"
           href={planHref}
           onClick={handleSelect}
-          className="hidden xl:flex w-full">
+          className="hidden w-full lgx:flex"
+        >
           {selectLabel}
         </Button>
       </article>

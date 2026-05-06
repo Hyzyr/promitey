@@ -10,11 +10,11 @@ export default function LandingPage() {
   return (
     <>
       <LandingJsonLd />
-      <HeroSection />
-      <BenefitsSection />
-      <ConnectGuide />
+       <HeroSection /> 
+       {/* <BenefitsSection /> */}
+      {/* <ConnectGuide /> */}
       <TestimonialsSection />
-      <PricingSection />
+      {/* <PricingSection /> */}
       <FaqSection />
     </>
   );

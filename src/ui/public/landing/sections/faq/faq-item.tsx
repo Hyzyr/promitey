@@ -41,11 +41,11 @@ export const FaqItemComponent = ({
         className={cn(
           'flex w-full items-center text-left',
           'gap-6 md:gap-6',
-          'px-4 py-3 md:p-4',
+          'px-4 py-3 md:p-4 xl:p-6',
         )}
         aria-expanded={isOpen}
         aria-controls={itemId}>
-        <span className="flex-1 font-manrope font-bold text-[18px] leading-[1.2] text-[#2b2929]">
+        <span className="flex-1 font-manrope font-bold text-[18px] xl:text-[22px] leading-[1.2] text-[#2b2929]">
           {question}
         </span>
         {cloneElement(triangleSVG, {
@@ -68,8 +68,8 @@ export const FaqItemComponent = ({
         }}>
         <div
           ref={contentRef}
-          className="pb-5 pt-2 px-4 md:pb-5 md:pt-2 md:px-4">
-          <p className="font-montserrat font-normal text-[16px] leading-[1.6] text-[#2b2929]">
+          className="pb-5 pt-2 px-4 md:pb-5 md:pt-2 md:px-4 xl:px-6 xl:pt-0">
+          <p className="font-montserrat font-normal text-[16px] xl:text-[18px] leading-[1.6] text-[#2b2929]">
             {answer}
           </p>
         </div>

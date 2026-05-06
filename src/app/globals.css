@@ -136,9 +136,11 @@ body {
 
   /* Explicitly define the sequence to ensure the cascade order */
   --breakpoint-md: 48rem; /* 768px */
+  --breakpoint-mdx: 54rem; /* 864px */
   --breakpoint-lg: 64rem; /* 1024px */
   --breakpoint-lgx: 72.5rem; /* 1160px (Your Custom) */
   --breakpoint-xl: 80rem; /* 1280px */
+  --breakpoint-xlx: 82rem; /* 1312px */
 }
 /* Define it once at the top level */
 @variant md-lgx {
