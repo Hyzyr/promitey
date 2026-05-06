@@ -15,6 +15,9 @@ export const PricingBg = () => {
       <img
         src={bgImage}
         alt=""
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
         className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[40%] w-[180%] h-[80%] lg:w-[125%] max-w-[unset] lg:h-auto lg:max-h-full object-fill pointer-events-none"
       />
     </div>

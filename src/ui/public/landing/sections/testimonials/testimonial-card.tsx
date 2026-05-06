@@ -47,6 +47,8 @@ export const TestimonialCard = ({
         <img
           src={photo}
           alt={name}
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full rounded-[inherit] object-cover"
         />
         <div className="absolute glass backdrop-blur-sm text-neutral-800 bottom-1 left-1 md:bottom-2 md:left-2.5 flex items-center justify-center w-5 h-5 md:w-7.5 md:h-7.5 rounded-full">

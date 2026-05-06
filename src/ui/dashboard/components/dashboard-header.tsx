@@ -11,9 +11,9 @@ export const DashboardHeader = () => {
 
   return (
     <>
-      <header className="flex h-22 items-center justify-between bg-neutral-900 px-5 lg:hidden">
+      <header className="flex h-14 items-center justify-between bg-neutral-900 px-5 lg:hidden">
         <Link href="/">
-          <Logo />
+          <Logo className="inline-flex h-7 w-auto" />
         </Link>
         <button
           type="button"

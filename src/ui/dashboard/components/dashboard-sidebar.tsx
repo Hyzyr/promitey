@@ -14,7 +14,7 @@ import {
 import { SidebarNavItem } from './sidebar-nav-item';
 import { LanguageSwitcher } from './language-switcher';
 import { LogoutButton } from './logout-button';
-import { Logo } from '@/components/ui/logo';
+import { LogoWithText } from '@/components/ui/logo';
 import { Link } from '@/i18n/navigation';
 
 const NAV_ITEMS = [
@@ -41,16 +41,13 @@ export const DashboardSidebar = () => {
       className={cn(
         'hidden lg:flex',
         'h-[calc(100vh-60px)] w-[375px] flex-col gap-8 overflow-hidden',
-        'rounded-2xl px-6 py-8',
+        'rounded-md px-6 py-8',
         'shadow-[0_11px_19.4px_rgba(0,0,0,.04),0_13px_51.2px_rgba(0,0,0,.04)]',
       )}
       style={{ background: SIDEBAR_GRADIENT }}>
       {/* Logo block — Figma: 327×62, pb 16, border-bottom #f6f6f6 */}
       <Link href="/" className="flex items-center gap-5 border-b border-neutral-20 pb-4">
-        <Logo />
-        <span className="font-inter text-[28px] font-medium text-red-900">
-          Prometey <span className="font-bold">VPN</span>
-        </span>
+        <LogoWithText className="inline-flex h-10 w-auto" />
       </Link>
 
       {/* Primary nav — gap 16 (gap-4) */}

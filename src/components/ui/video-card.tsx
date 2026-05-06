@@ -38,10 +38,26 @@ export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardP
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
+
     if (!isVisible) {
       video.pause();
+      video.removeAttribute('src');
+      video.load();
+      return;
     }
-  }, [isVisible]);
+
+    if (!autoPlay) return;
+
+    video.src = src;
+    video.muted = true;
+    const playPromise = video.play();
+
+    if (playPromise) {
+      playPromise.catch(() => {
+        setIsPlaying(false);
+      });
+    }
+  }, [autoPlay, isVisible, src]);
 
   const handleToggle = () => {
     const video = videoRef.current;
@@ -63,9 +79,10 @@ export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardP
       className={cn('video-wrapper group absolute overflow-hidden rounded-lg aspect-3/5 shadow-2xl', className)}>
       <video
         ref={videoRef}
-        src={src}
+        src={isVisible ? src : undefined}
         className="h-full! w-full! object-cover"
-        autoPlay={autoPlay}
+        autoPlay={autoPlay && isVisible}
+        preload={isVisible ? 'metadata' : 'none'}
         muted
         loop
         playsInline

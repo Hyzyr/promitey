@@ -4,6 +4,11 @@ import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import {
+  buildPricingPlanHref,
+  saveSelectedPricingPlan,
+  type PricingPlanId,
+} from '@/lib/pricing-selection';
 
 import { PricingConfirmModal } from './pricing-confirm-modal';
 
@@ -18,6 +23,7 @@ export type PricingCardProps = {
   featured?: boolean;
   height?: string;
   selectLabel: string;
+  planId: PricingPlanId;
   href?: string;
   className?: string;
 };
@@ -33,10 +39,16 @@ export const PricingCard = ({
   featured = false,
   height,
   selectLabel,
+  planId,
   href,
   className,
 }: PricingCardProps) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const planHref = href ? buildPricingPlanHref(href, planId) : undefined;
+
+  const handleSelect = () => {
+    saveSelectedPricingPlan(planId);
+  };
 
   return (
     <>
@@ -54,7 +66,10 @@ export const PricingCard = ({
         {href && (
           <button
             type="button"
-            onClick={() => setIsConfirmOpen(true)}
+            onClick={() => {
+              handleSelect();
+              setIsConfirmOpen(true);
+            }}
             aria-label={selectLabel}
             className="absolute inset-0 z-10 xl:hidden"
           />
@@ -120,7 +135,8 @@ export const PricingCard = ({
         <Button
           variant={featured ? 'orange' : 'secondary'}
           size="lg"
-          href={href}
+          href={planHref}
+          onClick={handleSelect}
           className="hidden xl:flex w-full">
           {selectLabel}
         </Button>
@@ -137,7 +153,8 @@ export const PricingCard = ({
           period={period}
           discount={discount}
           featured={featured}
-          href={href}
+          href={planHref ?? href}
+          onProceed={handleSelect}
         />
       )}
     </>

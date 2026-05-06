@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useRef } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef } from 'react';
 import {
   motion,
   useMotionValue,
@@ -8,6 +8,7 @@ import {
   animate,
   type MotionValue,
 } from 'framer-motion';
+import { useObserver } from '@/hooks/use-observer';
 import { cn } from '@/lib/utils';
 import { FormatText } from '@/components/ui/format-text';
 
@@ -83,8 +84,20 @@ export const BenefitCard = ({
   const ref = useRef<HTMLDivElement>(null);
   const rawX = useMotionValue(0);
   const rawY = useMotionValue(0);
+  const { ref: observerRef, isVisible } = useObserver<HTMLDivElement>({
+    threshold: 0.05,
+  });
+
+  const setCardRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      ref.current = node;
+      observerRef.current = node;
+    },
+    [observerRef],
+  );
 
   const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isVisible) return;
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     animate(
@@ -100,6 +113,7 @@ export const BenefitCard = ({
   };
 
   const onMouseLeave = () => {
+    if (!isVisible) return;
     animate(rawX, 0, LEAVE_SPRING);
     animate(rawY, 0, LEAVE_SPRING);
   };
@@ -108,6 +122,7 @@ export const BenefitCard = ({
     if (typeof window === 'undefined') return;
     const mq = window.matchMedia('(hover: none), (pointer: coarse)');
     if (!mq.matches) return;
+    if (!isVisible) return;
 
     const el = ref.current;
     if (!el) return;
@@ -143,12 +158,12 @@ export const BenefitCard = ({
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, [rawX, rawY]);
+  }, [isVisible, rawX, rawY]);
 
   return (
     <ParallaxContext.Provider value={{ rawX, rawY }}>
       <div
-        ref={ref}
+        ref={setCardRef}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
         data-benefit-card=""

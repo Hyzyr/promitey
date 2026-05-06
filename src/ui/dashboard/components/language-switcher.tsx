@@ -20,7 +20,7 @@ export const LanguageSwitcher = () => {
       onClick={() =>
         startTransition(() => router.replace(pathname, { locale: next }))
       }
-      className="inline-flex h-12 w-fit items-center justify-center gap-3 rounded-xl bg-neutral-800 px-4 py-3 text-lg text-white transition-colors hover:bg-neutral-700 disabled:opacity-60">
+      className="inline-flex h-12 w-fit items-center justify-center gap-3 rounded-sm bg-neutral-800 px-4 py-3 text-lg text-white transition-colors hover:bg-neutral-700 disabled:opacity-60">
       <Languages className="h-6 w-6" strokeWidth={1.75} />
       <span>
         <span className="font-bold">Language:</span>{' '}

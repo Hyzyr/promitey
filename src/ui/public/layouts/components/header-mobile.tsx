@@ -47,17 +47,14 @@ export const HeaderMobile = ({ isAuthenticated = false }: HeaderMobileProps) => 
           !isAtTop && 'shadow-lg shadow-black/20',
         )}
       >
-        <Link href="/" className="flex h-7 items-center text-[14px]">
-          <Logo />
+        <Link href="/" className="flex h-7 items-center">
+          <Logo className="inline-flex h-7 w-auto" />
         </Link>
         <HamburgerButton
           isOpen={menuOpen}
           onClick={() => setMenuOpen((prev) => !prev)}
         />
       </motion.header>
-
-      <div className="h-14" aria-hidden="true" />
-
       <MobileMenu isOpen={menuOpen} onClose={handleClose} isAuthenticated={isAuthenticated} />
     </>
   );

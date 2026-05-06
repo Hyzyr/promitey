@@ -44,6 +44,9 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
         <img
           src={imgCustomerSupport}
           alt="blurred-o-shape"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           className="bgitem right-[2%] bottom-[-4%] h-[105%]"
         />
       </ParallaxItem>
@@ -73,6 +76,9 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
         <img
           src={imgTryItFree}
           alt="blurred-arc-shape"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           className="bgitem right-[-1%] bottom-[-3%] h-[90%]"
         />
       </ParallaxItem>
@@ -111,6 +117,9 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
         <img
           src={imgYourInternet}
           alt="blurred-circle-shape"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           className="bgitem bottom-[-8%] left-[-4%] h-[78%]"
         />
       </ParallaxItem>
@@ -154,6 +163,9 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
         <img
           src={imgForYourFamily}
           alt="blurred-square-shape"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           className="bgitem right-[7.5%] bottom-[-12%] h-[95%]"
         />
       </ParallaxItem>
@@ -186,6 +198,9 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
         <img
           src={imgHighSpeed}
           alt="blurred-ellipse-shape"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           className="bgitem right-[2%] bottom-[4%] h-[98%]"
         />
       </ParallaxItem>

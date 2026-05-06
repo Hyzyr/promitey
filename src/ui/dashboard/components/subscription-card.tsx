@@ -12,7 +12,7 @@ export const SubscriptionCard = async ({
 }: SubscriptionCardProps) => {
   const t = await getTranslations('dashboard.subscription');
   return (
-    <section className="flex w-full max-w-212.5 flex-col gap-3 rounded-2xl bg-white px-5 py-4 shadow-[0_13px_61.2px_rgba(0,0,0,.07)]">
+    <section className="flex w-full max-w-212.5 flex-col gap-3 rounded-md bg-white px-5 py-4 shadow-[0_13px_61.2px_rgba(0,0,0,.07)]">
       <p className="text-lg leading-[1.6] text-neutral-800 font-roboto">
         {plan ? (
           <>
@@ -29,7 +29,7 @@ export const SubscriptionCard = async ({
         <Button
           variant="secondary"
           size="md"
-          className="rounded-xl bg-[rgba(43,41,41,0.12)] text-neutral-800">
+          className="rounded-sm bg-[rgba(43,41,41,0.12)] text-neutral-800">
           {t('renew')}
         </Button>
       </div>

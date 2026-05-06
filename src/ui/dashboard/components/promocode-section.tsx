@@ -31,7 +31,7 @@ export const PromocodeSection = ({ className }: PromocodeSectionProps) => {
       </p>
 
       {result ? (
-        <div className="rounded-xl border border-green-200 bg-green-50 px-4 py-3">
+        <div className="rounded-sm border border-green-200 bg-green-50 px-4 py-3">
           <p className="text-sm font-semibold text-green-700">
             {t('promocode.success')}
           </p>

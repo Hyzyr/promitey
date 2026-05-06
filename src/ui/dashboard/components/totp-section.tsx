@@ -31,11 +31,12 @@ export function TotpSection({ initialEnabled }: Props) {
             alt="TOTP QR Code"
             width={200}
             height={200}
-            className="rounded-lg border border-neutral-200"
+            decoding="async"
+            className="rounded-sm border border-neutral-200"
           />
         </div>
 
-        <details className="rounded-lg bg-neutral-50 px-4 py-3 text-sm">
+        <details className="rounded-sm bg-neutral-50 px-4 py-3 text-sm">
           <summary className="cursor-pointer font-medium text-neutral-700">
             {t('setup.manualEntry')}
           </summary>
@@ -56,7 +57,7 @@ export function TotpSection({ initialEnabled }: Props) {
             value={enableCode}
             onChange={(e) => setEnableCode(e.target.value.replace(/\D/g, ''))}
             placeholder={t('setup.codePlaceholder')}
-            className="w-full rounded-lg border border-neutral-200 px-4 py-2.5 text-center font-mono text-lg tracking-widest focus:border-neutral-400 focus:outline-none"
+            className="w-full rounded-sm border border-neutral-200 px-4 py-2.5 text-center font-mono text-lg tracking-widest focus:border-neutral-400 focus:outline-none"
           />
         </div>
 
@@ -69,7 +70,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={() => enable(enableCode)}
             disabled={isPending || enableCode.length < 6}
-            className="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-sm bg-neutral-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? '…' : t('setup.confirm')}
           </button>
@@ -77,7 +78,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={cancel}
             disabled={isPending}
-            className="rounded-lg border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
+            className="rounded-sm border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
           >
             {t('cancel')}
           </button>
@@ -100,7 +101,7 @@ export function TotpSection({ initialEnabled }: Props) {
             value={disablePassword}
             onChange={(e) => setDisablePassword(e.target.value)}
             placeholder={t('disable.passwordPlaceholder')}
-            className="w-full rounded-lg border border-neutral-200 px-4 py-2.5 focus:border-neutral-400 focus:outline-none"
+            className="w-full rounded-sm border border-neutral-200 px-4 py-2.5 focus:border-neutral-400 focus:outline-none"
           />
         </div>
 
@@ -115,7 +116,7 @@ export function TotpSection({ initialEnabled }: Props) {
             value={disableCode}
             onChange={(e) => setDisableCode(e.target.value.replace(/\D/g, ''))}
             placeholder={t('disable.codePlaceholder')}
-            className="w-full rounded-lg border border-neutral-200 px-4 py-2.5 text-center font-mono text-lg tracking-widest focus:border-neutral-400 focus:outline-none"
+            className="w-full rounded-sm border border-neutral-200 px-4 py-2.5 text-center font-mono text-lg tracking-widest focus:border-neutral-400 focus:outline-none"
           />
         </div>
 
@@ -128,7 +129,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={() => disable(disablePassword, disableCode)}
             disabled={isPending || !disablePassword || disableCode.length < 6}
-            className="flex-1 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-sm bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? '…' : t('disable.confirm')}
           </button>
@@ -136,7 +137,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={cancel}
             disabled={isPending}
-            className="rounded-lg border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
+            className="rounded-sm border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
           >
             {t('cancel')}
           </button>
@@ -159,7 +160,7 @@ export function TotpSection({ initialEnabled }: Props) {
           type="button"
           onClick={openDisable}
           disabled={isPending}
-          className="shrink-0 rounded-lg border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+          className="shrink-0 rounded-sm border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
         >
           {t('disable.button')}
         </button>
@@ -168,7 +169,7 @@ export function TotpSection({ initialEnabled }: Props) {
           type="button"
           onClick={openSetup}
           disabled={isPending}
-          className="shrink-0 rounded-lg bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
+          className="shrink-0 rounded-sm bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
         >
           {isPending ? '…' : t('setup.button')}
         </button>

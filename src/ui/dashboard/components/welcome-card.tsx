@@ -11,7 +11,7 @@ export const WelcomeCard = async ({ email }: WelcomeCardProps) => {
   const t = await getTranslations('dashboard.welcome');
   return (
     <section
-      className="w-full max-w-212.5 overflow-hidden rounded-2xl px-5 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]"
+      className="w-full max-w-212.5 overflow-hidden rounded-md px-5 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]"
       style={{ background: GRADIENT }}>
       <div className="flex flex-col gap-1 text-neutral-800">
         <h1

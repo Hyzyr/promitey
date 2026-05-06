@@ -10,7 +10,7 @@ export const ConfigTile = ({ logo, label, href }: ConfigTileProps) => {
   return (
     <a
       href={href}
-      className="flex h-36.5 w-42.25 flex-col items-center justify-center gap-4.5 rounded-2xl bg-white px-3 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] transition-transform hover:-translate-y-0.5 lg:h-47.75 lg:w-53.75"
+      className="flex h-36.5 w-42.25 flex-col items-center justify-center gap-4.5 rounded-md bg-white px-3 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] transition-transform hover:-translate-y-0.5 lg:h-47.75 lg:w-53.75"
       download>
       <Image
         src={logo}

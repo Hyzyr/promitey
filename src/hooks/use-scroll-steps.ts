@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
+import { useObserver } from "@/hooks/use-observer";
 
 /**
  * Tracks scroll progress through a container and maps it to discrete steps.
@@ -11,6 +12,17 @@ import { useScroll, useMotionValueEvent } from "framer-motion";
  */
 export function useScrollSteps(stepCount: number) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { ref: observerRef, isVisible } = useObserver<HTMLDivElement>({
+    threshold: 0,
+  });
+
+  const setContainerRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      observerRef.current = node;
+    },
+    [observerRef],
+  );
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -32,9 +44,9 @@ export function useScrollSteps(stepCount: number) {
   );
 
   useMotionValueEvent(scrollYProgress, "change", (v) => {
+    if (!isVisible) return;
     setActiveStep(computeStep(v));
   });
 
-  return { containerRef, activeStep };
+  return { containerRef: setContainerRef, activeStep, isVisible };
 }
-

@@ -17,6 +17,7 @@ export interface PricingConfirmModalProps {
   discount?: string;
   featured?: boolean;
   href: string;
+  onProceed: () => void;
 }
 
 export const PricingConfirmModal = ({
@@ -30,6 +31,7 @@ export const PricingConfirmModal = ({
   discount,
   featured = false,
   href,
+  onProceed,
 }: PricingConfirmModalProps) => {
   const t = useTranslations('landing.pricing');
   const tCommon = useTranslations('common');
@@ -98,6 +100,7 @@ export const PricingConfirmModal = ({
           variant="orange"
           size="md"
           href={href}
+          onClick={onProceed}
           className="w-full">
           {t('confirm.proceed')}
         </Button>

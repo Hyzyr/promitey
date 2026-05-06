@@ -34,14 +34,14 @@ export default async function ServersPage() {
     <>
       <Breadcrumbs>{t('breadcrumb.servers')}</Breadcrumbs>
       <div className="w-full max-w-212.5 space-y-6">
-        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+        <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <h1 className="mb-6 text-[28px] font-bold text-neutral-900">
             {t('servers.title')}
           </h1>
           <RegionSelector initialRegion={region} />
         </section>
 
-        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+        <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <h2 className="mb-1 text-lg font-semibold text-neutral-800">
             {t('vpn.recreateTitle')}
           </h2>

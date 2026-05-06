@@ -17,7 +17,7 @@ export default async function InstructionsPage() {
   return (
     <>
       <Breadcrumbs>{t('breadcrumb.instructions')}</Breadcrumbs>
-      <div className="w-full max-w-212.5 rounded-2xl bg-white px-5 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+      <div className="w-full max-w-212.5 rounded-md bg-white px-5 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
         <h1 className="text-[28px] font-bold text-neutral-900">
           {t('instructions.title')}
         </h1>

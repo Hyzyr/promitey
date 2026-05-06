@@ -1,15 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 
 import { loginAction, loginTotpAction } from '../server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import {
+  buildPostAuthHref,
+  resolveSelectedPricingPlan,
+  saveSelectedPricingPlan,
+} from '@/lib/pricing-selection';
 
 interface PasswordValues {
   email: string;
@@ -34,11 +40,13 @@ export interface UseLoginReturn {
 
 export function useLogin(): UseLoginReturn {
   const tErrors = useTranslations('auth.errors');
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [step, setStep] = useState<LoginStep>('password');
   const [tempToken, setTempToken] = useState('');
   const [serverError, setServerError] = useState<string | null>(null);
+  const selectedPlan = resolveSelectedPricingPlan(searchParams);
 
   const passwordSchema = z.object({
     email: z.string().min(1, tErrors('emailRequired')),
@@ -63,6 +71,14 @@ export function useLogin(): UseLoginReturn {
     return mapApiError(code, tErrors);
   }
 
+  useEffect(() => {
+    if (selectedPlan) saveSelectedPricingPlan(selectedPlan);
+  }, [selectedPlan]);
+
+  const redirectAfterAuth = () => {
+    router.replace(buildPostAuthHref(selectedPlan));
+  };
+
   const onPasswordSubmit = async (values: PasswordValues) => {
     setServerError(null);
     const result = await loginAction({ email: values.email, password: values.password });
@@ -74,7 +90,7 @@ export function useLogin(): UseLoginReturn {
       setTempToken(result.data.temp_token);
       setStep('totp');
     } else {
-      router.replace('/dashboard');
+      redirectAfterAuth();
     }
   };
 
@@ -85,7 +101,7 @@ export function useLogin(): UseLoginReturn {
       setServerError(mapErrorCode(result.code));
       return;
     }
-    router.replace('/dashboard');
+    redirectAfterAuth();
   };
 
   const resetToPassword = () => {

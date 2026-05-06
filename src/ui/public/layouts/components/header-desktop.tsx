@@ -52,7 +52,7 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
         <div className="container flex items-center justify-between py-4">
           <div className="flex items-center gap-6">
             <Link href="/">
-              <LogoWithText />
+              <LogoWithText className="inline-flex h-9 w-auto xl:h-11" />
             </Link>
             <LanguageSwitcher />
           </div>
@@ -80,11 +80,8 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
               </Button>
             )}
           </div>
-
         </div>
       </motion.header>
-
-      <div className="h-20" aria-hidden="true" />
     </>
   );
 };

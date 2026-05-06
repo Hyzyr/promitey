@@ -98,6 +98,9 @@ export const ConnectGuide = () => {
                 <img
                   src="/images/temp-guide-img.png"
                   alt=""
+                  loading="lazy"
+                  decoding="async"
+                  fetchPriority="low"
                   className="absolute inset-0 w-full h-full object-cover pointer-events-none"
                 />
               </div>

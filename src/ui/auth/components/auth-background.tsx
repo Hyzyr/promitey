@@ -43,7 +43,8 @@ export const AuthBackground = () => {
         alt=""
         width={1014}
         height={915}
-        priority
+        loading="lazy"
+        sizes="(min-width: 1024px) 1014px, 0px"
         className="absolute top-[32px] left-[82px] hidden h-[915px] w-[1014px] max-w-none object-contain lg:block"
         onError={(e) => {
           (e.currentTarget as HTMLImageElement).style.display = 'none';

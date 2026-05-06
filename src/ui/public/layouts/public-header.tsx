@@ -16,7 +16,14 @@ export interface LandingHeaderProps {
 export const LandingHeader = ({ isAuthenticated = false }: LandingHeaderProps) => {
   const isMobile = useMedia('(max-width: 1023px)');
 
-  return isMobile
-    ? <HeaderMobile isAuthenticated={isAuthenticated} />
-    : <HeaderDesktop isAuthenticated={isAuthenticated} />;
+  return (
+    <>
+      {isMobile ? (
+        <HeaderMobile isAuthenticated={isAuthenticated} />
+      ) : (
+        <HeaderDesktop isAuthenticated={isAuthenticated} />
+      )}
+      <div className="h-14 lg:h-20" aria-hidden="true" />
+    </>
+  );
 };

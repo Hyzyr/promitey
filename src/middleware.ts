@@ -2,6 +2,10 @@ import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "@/i18n/routing";
 import { DEV_TEST_COOKIE } from "@/lib/dev-session";
+import {
+  PRICING_PLAN_QUERY_PARAM,
+  normalizePricingPlanId,
+} from "@/lib/pricing-selection";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
@@ -44,6 +48,9 @@ export default async function middleware(request: NextRequest) {
   const intlResponse = intlMiddleware(request);
 
   const strippedPath = stripLocale(request.nextUrl.pathname);
+  const selectedPlan = normalizePricingPlanId(
+    request.nextUrl.searchParams.get(PRICING_PLAN_QUERY_PARAM),
+  );
   const isPublic = PUBLIC_PATHS.some(
     (p) => strippedPath === p || strippedPath.startsWith(p + "/"),
   );
@@ -56,7 +63,13 @@ export default async function middleware(request: NextRequest) {
     const accessToken = request.cookies.get("auth_access_token");
     if (accessToken) {
       const locale = request.nextUrl.pathname.split("/")[1] ?? "ru";
-      const dashboardUrl = new URL(`/${locale}/dashboard`, request.url);
+      const dashboardUrl = new URL(
+        selectedPlan ? `/${locale}/dashboard/subscription` : `/${locale}/dashboard`,
+        request.url,
+      );
+      if (selectedPlan) {
+        dashboardUrl.searchParams.set(PRICING_PLAN_QUERY_PARAM, selectedPlan);
+      }
       return NextResponse.redirect(dashboardUrl);
     }
   }
@@ -121,6 +134,9 @@ export default async function middleware(request: NextRequest) {
 
         // Refresh failed — clear stale cookies and redirect to login
         const loginUrl = new URL(`/${locale}/login`, request.url);
+        if (selectedPlan) {
+          loginUrl.searchParams.set(PRICING_PLAN_QUERY_PARAM, selectedPlan);
+        }
         const redirectResponse = NextResponse.redirect(loginUrl);
         redirectResponse.cookies.delete("auth_access_token");
         redirectResponse.cookies.delete("auth_refresh_token");
@@ -129,6 +145,9 @@ export default async function middleware(request: NextRequest) {
 
       // No tokens at all — redirect to login
       const loginUrl = new URL(`/${locale}/login`, request.url);
+      if (selectedPlan) {
+        loginUrl.searchParams.set(PRICING_PLAN_QUERY_PARAM, selectedPlan);
+      }
       return NextResponse.redirect(loginUrl);
     }
   }

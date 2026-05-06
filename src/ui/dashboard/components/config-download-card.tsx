@@ -6,7 +6,7 @@ import { Link } from '@/i18n/navigation';
 export const ConfigDownloadCard = async () => {
   const t = await getTranslations('dashboard.configs');
   return (
-    <section className="w-full max-w-212.5 rounded-2xl bg-neutral-40 px-5 py-3">
+    <section className="w-full max-w-212.5 rounded-md bg-neutral-40 px-5 py-3">
       <header className="flex items-center justify-between gap-2.5 py-2">
         <h2 className="text-lg font-bold text-neutral-800">{t('title')}</h2>
         <button

@@ -1,22 +1,10 @@
-'use client';
-
-import { useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { FormatText } from '@/components/ui/format-text';
 import { cn } from '@/lib/utils';
-import { useMedia } from '@/hooks/use-media';
 
 export const HeroSection = () => {
   const t = useTranslations('landing.hero');
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const isMobile = useMedia('(max-width: 1023px)');
-
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.5;
-    }
-  }, []);
 
   const bgClass =
     'absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[2000px] object-cover object-[center_78%] pointer-events-none';
@@ -26,12 +14,16 @@ export const HeroSection = () => {
       id="hero"
       className="relative isolate w-full min-h-170 pb-[8vh] md:min-h-205 h-[calc(100vh-56px)] xl:h-screen bg-neutral-30 flex items-center justify-center overflow-hidden">
       <div className="bg">
-        {!isMobile && (
-          <img src={'/images/main-bg.png'} alt="" className={bgClass} />
-        )}
-        {isMobile && (
-          <img src={'/images/main-bg-mobile.png'} alt="" className={bgClass} />
-        )}
+        <picture>
+          <source media="(max-width: 1023px)" srcSet="/images/main-bg-mobile.png" />
+          <img
+            src="/images/main-bg.png"
+            alt=""
+            className={bgClass}
+            fetchPriority="high"
+            decoding="async"
+          />
+        </picture>
       </div>
 
       <div

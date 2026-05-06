@@ -64,7 +64,7 @@ export const TelegramLinkSection = ({
               href={linkData.deep_link}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-[#2AABEE] px-4 py-2 text-sm font-medium text-white hover:bg-[#229ED9]"
+              className="inline-flex items-center gap-2 rounded-sm bg-[#2AABEE] px-4 py-2 text-sm font-medium text-white hover:bg-[#229ED9]"
             >
               {tProfile('telegram.openBot')}
             </a>

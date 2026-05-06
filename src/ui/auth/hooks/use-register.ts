@@ -1,15 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 
 import { registerAction } from '../server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import {
+  PRICING_PLAN_QUERY_PARAM,
+  getSelectedPricingPlanFromSearch,
+  saveSelectedPricingPlan,
+} from '@/lib/pricing-selection';
 
 interface RegisterValues {
   email: string;
@@ -25,8 +31,10 @@ export interface UseRegisterReturn {
 
 export function useRegister(): UseRegisterReturn {
   const tErrors = useTranslations('auth.errors');
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
+  const selectedPlan = getSelectedPricingPlanFromSearch(searchParams);
 
   const schema = z
     .object({
@@ -48,6 +56,10 @@ export function useRegister(): UseRegisterReturn {
     return mapApiError(code, tErrors);
   }
 
+  useEffect(() => {
+    if (selectedPlan) saveSelectedPricingPlan(selectedPlan);
+  }, [selectedPlan]);
+
   const onSubmit = async (values: RegisterValues) => {
     setServerError(null);
     const result = await registerAction({ email: values.email, password: values.password });
@@ -55,7 +67,12 @@ export function useRegister(): UseRegisterReturn {
       setServerError(mapErrorCode(result.code));
       return;
     }
-    router.push(`/register/verify?email=${encodeURIComponent(result.data.email)}`);
+    const verifyHref = `/register/verify?email=${encodeURIComponent(result.data.email)}`;
+    router.push(
+      selectedPlan
+        ? `${verifyHref}&${PRICING_PLAN_QUERY_PARAM}=${encodeURIComponent(selectedPlan)}`
+        : verifyHref,
+    );
   };
 
   return { form, onSubmit, serverError };

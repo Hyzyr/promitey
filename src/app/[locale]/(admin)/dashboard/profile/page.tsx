@@ -26,7 +26,7 @@ export default async function ProfilePage() {
       <Breadcrumbs>{t('breadcrumb.profile')}</Breadcrumbs>
       <div className="w-full max-w-212.5 space-y-6">
         {/* Personal info */}
-        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+        <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <h1 className="text-[28px] font-bold text-neutral-900">{t('profile.title')}</h1>
           <div className="mt-6 space-y-2">
             <p className="text-sm text-neutral-500">{t('profile.email')}</p>
@@ -39,12 +39,12 @@ export default async function ProfilePage() {
         </section>
 
         {/* Change email */}
-        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+        <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <EmailChangeSection />
         </section>
 
         {/* Telegram linking */}
-        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+        <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <TelegramLinkSection
             initialLinked={user.telegram_linked}
             linkedAt={user.linked_at}
@@ -52,12 +52,12 @@ export default async function ProfilePage() {
         </section>
 
         {/* Two-factor authentication */}
-        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+        <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <TotpSection initialEnabled={user.totp_enabled} />
         </section>
 
         {/* Change password */}
-        <section className="rounded-2xl bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
+        <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <ChangePasswordForm />
         </section>
       </div>

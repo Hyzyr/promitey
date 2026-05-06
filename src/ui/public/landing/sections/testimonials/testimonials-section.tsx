@@ -39,6 +39,9 @@ export const TestimonialsSection = () => {
         <img
           src={'/images/bg-blur-bottom-left.png'}
           alt=""
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
           className="absolute inset-0 h-full w-full object-contain object-bottom-left"
         />
       </div>

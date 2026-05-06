@@ -87,7 +87,7 @@ export const MobileDashboardMenu = ({
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
             className={cn(
               'absolute inset-x-0 bottom-0 flex flex-col gap-6',
-              'rounded-t-2xl bg-neutral-800 px-8 pt-8 pb-10',
+              'rounded-t-md bg-neutral-800 px-8 pt-8 pb-10',
               'shadow-[0_-7px_30.2px_rgba(0,0,0,.12)]',
             )}>
             {/* Close button — top-right, inset 16 */}
