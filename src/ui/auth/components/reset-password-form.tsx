@@ -24,6 +24,7 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
+  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
 
   return (
     <form
@@ -42,7 +43,6 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
         autoComplete="new-password"
         placeholder={t('placeholders.password')}
         error={errors.password?.message}
-        hideMessages
         {...register('password')}
       />
       <Input
@@ -50,7 +50,6 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
         autoComplete="new-password"
         placeholder={t('placeholders.passwordRepeat')}
         error={errors.passwordRepeat?.message}
-        hideMessages
         {...register('passwordRepeat')}
       />
 
@@ -65,6 +64,7 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
           size="md"
           className="w-full max-w-53.75 capitalize"
           isLoading={isSubmitting}
+          disabled={hasErrors}
         >
           {t('forgot.next')}
         </Button>

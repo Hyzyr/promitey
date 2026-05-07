@@ -54,7 +54,7 @@ export const PricingCard = ({
         className={cn(
           'relative flex w-full flex-col',
           'overflow-hidden rounded-sm bg-neutral-20 lgx:rounded-lg',
-          'px-3 pt-5.5 pb-4 md:px-6 md:py-8 lgx:px-4 lgx:py-5 xl:px-6 xl:py-8',
+          'px-4 pt-5.5 pb-4 md:px-6 md:py-8 lgx:px-4 lgx:py-5 xl:px-6 xl:py-8',
           'gap-4 lgx:gap-4',
           'shadow-[0px_20px_32px_0px_rgba(0,0,0,0.06)]',
           height ?? '',

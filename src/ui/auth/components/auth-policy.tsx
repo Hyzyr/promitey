@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import { AuthLink } from './auth-link';
 
 /**
  * Footer policy line shown below the form on the login/register cards.
@@ -9,14 +10,11 @@ export const AuthPolicy = () => {
   const t = useTranslations('auth.footer');
 
   return (
-    <p className="w-full max-w-[438px] text-center font-manrope text-[16px] leading-[1.6] tracking-[0.16px] text-neutral-600">
+    <p className="max-w-80 w-[90%] text-center font-manrope text-[14px] md:text-[16px] leading-[1.6] tracking-[0.16px] text-neutral-600">
       {t('policy')}{' '}
-      <Link
-        href="/privacy"
-        className="font-semibold text-neutral-300 underline hover:text-neutral-600"
-      >
+      <AuthLink href="/privacy" className="text-[length:inherit]!">
         {t('policyLink')}
-      </Link>
+      </AuthLink>
     </p>
   );
 };

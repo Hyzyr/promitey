@@ -17,42 +17,17 @@ import Image from 'next/image';
  */
 export const AuthBackground = () => {
   return (
-    <div aria-hidden className="bg pointer-events-none">
-      {/* Base */}
-      <div className="absolute inset-0 bg-neutral-30" />
-
-      {/* Soft tilted dark blur (matches Figma decorative shape) */}
-      <div className="absolute -bottom-[10%] -left-[5%] h-[42vh] w-[40vw] rotate-[-7deg] bg-neutral-900 opacity-[0.09] blur-[107px]" />
-
-      {/* Full-bleed background photo (optional asset) */}
-      <Image
-        src="/images/auth/bg.png"
+    <div aria-hidden className="bg pointer-events-none bg-neutral-30">
+      <img
+        src="/images/auth-bg.png"
         alt=""
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover opacity-[0.44]"
+        className="absolute h-full w-full object-cover lg:top-0 lg:left-0 lg:w-[75%]"
         onError={(e) => {
           (e.currentTarget as HTMLImageElement).style.display = 'none';
         }}
       />
 
-      {/* Left decorative blob (desktop only) */}
-      <Image
-        src="/images/auth/decoration.png"
-        alt=""
-        width={1014}
-        height={915}
-        loading="lazy"
-        sizes="(min-width: 1024px) 1014px, 0px"
-        className="absolute top-[32px] left-[82px] hidden h-[915px] w-[1014px] max-w-none object-contain lg:block"
-        onError={(e) => {
-          (e.currentTarget as HTMLImageElement).style.display = 'none';
-        }}
-      />
-
-      {/* Dark gradient right panel — desktop only */}
-      <div className="absolute top-0 right-0 hidden h-full w-[34%] max-w-[550px] bg-gradient-to-b from-neutral-900 to-[#1e1e1e] lg:block" />
+      <div className="absolute top-0 right-0 hidden h-full w-[34%] max-w-135 bg-linear-to-b from-neutral-900 to-[#1e1e1e] lg:block" />
     </div>
   );
 };

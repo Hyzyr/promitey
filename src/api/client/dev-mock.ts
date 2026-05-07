@@ -61,7 +61,20 @@ const TOTP_SETUP: TotpSetupResponse = {
 const TOTP_ENABLED: TotpStatusResponse = { status: 'ok', totp_enabled: true };
 const TOTP_DISABLED: TotpStatusResponse = { status: 'ok', totp_enabled: false };
 
-const VERIFICATION_REQUIRED: VerificationRequired = { status: 'verification_required', code: 'sent' };
+const REGISTER_VERIFICATION_REQUIRED: VerificationRequired = {
+  status: 'verification_required',
+  code: '111111',
+};
+
+const EMAIL_CHANGE_VERIFICATION_REQUIRED: VerificationRequired = {
+  status: 'verification_required',
+  code: '999999',
+};
+
+const FORGOT_PASSWORD_VERIFICATION_REQUIRED: VerificationRequired = {
+  status: 'verification_required',
+  code: '555555',
+};
 
 const PROMOCODE_ACTIVATE: PromocodeActivateResponse = {
   status: 'ok',
@@ -95,7 +108,7 @@ const ROUTES: Partial<Record<RouteKey, () => unknown>> = {
   'POST /auth/login': () => ({ ...LOGIN_SUCCESS }),
   'POST /auth/login/totp': () => ({ ...TOKEN_PAIR }),
   'POST /auth/refresh': () => ({ ...TOKEN_PAIR }),
-  'POST /auth/forgot-password': () => VERIFICATION_REQUIRED,
+  'POST /auth/forgot-password': () => ({ ...FORGOT_PASSWORD_VERIFICATION_REQUIRED }),
   'POST /auth/reset-password': () => STATUS_OK,
   'GET /me': () => ME,
   'GET /vpn/region': () => ({ ...REGION }),
@@ -105,12 +118,12 @@ const ROUTES: Partial<Record<RouteKey, () => unknown>> = {
   'POST /billing/checkout': () => { throw new ApiError('http', 501, 'billing_unavailable', 'billing_unavailable'); },
   'POST /promocode/activate': () => ({ ...PROMOCODE_ACTIVATE }),
   'PUT /auth/password': () => STATUS_OK,
-  'PUT /auth/register': () => VERIFICATION_REQUIRED,
+  'PUT /auth/register': () => ({ ...REGISTER_VERIFICATION_REQUIRED }),
   'POST /auth/register': () => STATUS_OK,
   'POST /auth/totp/setup': () => ({ ...TOTP_SETUP }),
   'POST /auth/totp/enable': () => ({ ...TOTP_ENABLED }),
   'POST /auth/totp/disable': () => ({ ...TOTP_DISABLED }),
-  'PUT /auth/email': () => VERIFICATION_REQUIRED,
+  'PUT /auth/email': () => ({ ...EMAIL_CHANGE_VERIFICATION_REQUIRED }),
   'POST /auth/email': () => STATUS_OK,
   'POST /link/site-token': () => ({ ...SITE_LINK_TOKEN }),
   'POST /link/by-public-code': () => STATUS_LINKED,

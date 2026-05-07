@@ -32,7 +32,7 @@ async function attemptRefresh(
   const apiBase = process.env.API_BASE_URL;
   if (!apiBase) return null;
   try {
-    const res = await fetch(`${apiBase}/api/v1/auth/refresh`, {
+    const res = await fetch(`${apiBase.replace(/\/$/, '')}/auth/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refresh_token: refreshToken }),

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +9,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 
 import { registerAction } from '../server/auth-actions';
+import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
@@ -39,7 +40,7 @@ export function useRegister(): UseRegisterReturn {
 
   const schema = z
     .object({
-      email: z.string().min(1, tErrors('emailRequired')),
+      email: z.string().min(1, tErrors('emailRequired')).email(tErrors('emailInvalid')),
       password: z.string().min(8, tErrors('passwordMin')),
       passwordRepeat: z.string().min(1, tErrors('passwordRequired')),
     })
@@ -51,11 +52,18 @@ export function useRegister(): UseRegisterReturn {
   const form = useForm<RegisterValues>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   function mapErrorCode(code: string): string {
     return mapApiError(code, tErrors);
   }
+
+  const clearServerError = useCallback(() => {
+    setServerError(null);
+  }, []);
+
+  useClearAuthFormErrors(form, serverError !== null, clearServerError);
 
   useEffect(() => {
     if (selectedPlan) saveSelectedPricingPlan(selectedPlan);

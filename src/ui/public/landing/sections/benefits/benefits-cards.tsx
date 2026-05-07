@@ -124,17 +124,17 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
         />
       </ParallaxItem>
       <ParallaxItem depth={0.15}>
-        <span className="bgitem bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[5vh] md-lgx:bottom-[58%] md-lgx:left-[unset] md-lgx:right-50">
+        <span className="bgitem bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[5vh] tablet:bottom-[58%] tablet:left-[unset] tablet:right-50">
           {telegramSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.3}>
-        <span className="bgitem bottom-[72%] left-[16%] icon -rotate-3 text-[5vh] md-lgx:bottom-[80%] md-lgx:left-[unset] md-lgx:right-60">
+        <span className="bgitem bottom-[72%] left-[16%] icon -rotate-3 text-[5vh] tablet:bottom-[80%] tablet:left-[unset] tablet:right-60">
           {whatsappSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <span className="bgitem bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[5vh] md-lgx:bottom-[37%] md-lgx:left-[unset] md-lgx:right-65">
+        <span className="bgitem bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[5vh] tablet:bottom-[37%] tablet:left-[unset] tablet:right-65">
           {facebookSVG}
         </span>
       </ParallaxItem>

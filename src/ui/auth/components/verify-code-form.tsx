@@ -51,6 +51,7 @@ export const VerifyCodeForm = ({
 
   const handleChange = (idx: number, raw: string) => {
     const ch = raw.replace(/\D/g, '').slice(-1);
+    setError(null);
     setDigits((prev) => {
       const next = [...prev];
       next[idx] = ch;
@@ -75,6 +76,7 @@ export const VerifyCodeForm = ({
     const text = e.clipboardData.getData('text').replace(/\D/g, '');
     if (!text) return;
     e.preventDefault();
+    setError(null);
     const chars = text.slice(0, CODE_LENGTH).split('');
     const next = Array(CODE_LENGTH).fill('');
     chars.forEach((c, i) => {
@@ -155,6 +157,7 @@ export const VerifyCodeForm = ({
           size="md"
           className="w-full max-w-53.75 capitalize"
           isLoading={isSubmitting}
+          disabled={error !== null}
         >
           {t('forgot.next')}
         </Button>

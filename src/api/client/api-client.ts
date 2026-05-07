@@ -2,6 +2,11 @@ import { ApiError } from './api-error';
 import { DEV_TOKEN_SENTINEL, IS_DEV } from '@/lib/dev-session';
 import { devMockFetch, devMockFetchBinary } from './dev-mock';
 
+type ParsedResponseBody = {
+  value: unknown;
+  text: string;
+};
+
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
   body?: unknown;
@@ -49,14 +54,10 @@ async function request(path: string, options: RequestOptions = {}): Promise<Resp
   }
 
   if (!response.ok) {
-    let code: string | undefined;
-    try {
-      const payload = (await response.json()) as { error?: string };
-      code = payload.error;
-    } catch {
-      // error body may not be JSON — leave code undefined
-    }
-    throw new ApiError('http', response.status, code ?? `HTTP ${response.status}`, code);
+    const payload = await parseResponseBody(response);
+    const code = getErrorCode(payload.value);
+    const message = getErrorMessage(payload.value) ?? code ?? `HTTP ${response.status}`;
+    throw new ApiError('http', response.status, message, code, undefined, payload.value);
   }
 
   return response;
@@ -68,11 +69,8 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
     return devMockFetch<T>(path, options.method ?? 'GET');
   }
   const response = await request(path, options);
-  try {
-    return (await response.json()) as T;
-  } catch (cause) {
-    throw new ApiError('parse', response.status, 'Failed to parse API response.', undefined, cause);
-  }
+  const payload = await parseJsonResponseBody(response);
+  return payload as T;
 }
 
 /** Fetch a binary endpoint (e.g. .ovpn download). Returns raw Response for streaming. */
@@ -84,4 +82,58 @@ export async function apiFetchBinary(path: string, options: RequestOptions = {})
     ...options,
     headers: { Accept: 'application/octet-stream', ...options.headers },
   });
+}
+
+async function parseResponseBody(response: Response): Promise<ParsedResponseBody> {
+  const text = await response.text();
+
+  if (!text) {
+    return { value: undefined, text };
+  }
+
+  try {
+    return { value: JSON.parse(text) as unknown, text };
+  } catch {
+    return { value: text, text };
+  }
+}
+
+async function parseJsonResponseBody(response: Response): Promise<unknown> {
+  const text = await response.text();
+
+  if (!text) {
+    return undefined;
+  }
+
+  try {
+    return JSON.parse(text) as unknown;
+  } catch (cause) {
+    throw new ApiError(
+      'parse',
+      response.status,
+      'Failed to parse API response.',
+      undefined,
+      cause,
+      text,
+    );
+  }
+}
+
+function getErrorCode(payload: unknown): string | undefined {
+  if (!isRecord(payload)) return undefined;
+
+  const candidates = [payload.error, payload.code, payload.error_code];
+  return candidates.find((candidate): candidate is string => typeof candidate === 'string');
+}
+
+function getErrorMessage(payload: unknown): string | undefined {
+  if (typeof payload === 'string') return payload;
+  if (!isRecord(payload)) return undefined;
+
+  const candidates = [payload.message, payload.detail, payload.description];
+  return candidates.find((candidate): candidate is string => typeof candidate === 'string');
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }

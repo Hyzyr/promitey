@@ -16,11 +16,11 @@ export interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
 
 const variantClasses: Record<Variant, string> = {
   default:
-    'bg-neutral-800 text-neutral-10 font-manrope font-semibold xl:font-bold hover:bg-neutral-700 active:bg-neutral-900',
+    'bg-neutral-800 text-neutral-10 font-manrope font-semibold xl:font-bold hover:bg-neutral-700 active:bg-neutral-900 disabled:bg-neutral-40 disabled:text-neutral-200 disabled:hover:bg-neutral-40 disabled:active:bg-neutral-40',
   orange:
-    'bg-primary-500 text-neutral-900 font-manrope font-semibold hover:bg-primary-400 active:bg-primary-600',
+    'bg-primary-500 text-neutral-900 font-manrope font-semibold hover:bg-primary-400 active:bg-primary-600 disabled:bg-neutral-40 disabled:text-neutral-200 disabled:hover:bg-neutral-40 disabled:active:bg-neutral-40',
   secondary:
-    'bg-neutral-800/12 text-neutral-800 font-manrope font-semibold shadow-[0px_4px_46px_10px_rgba(255,200,0,0.06)] hover:bg-neutral-800/20 active:bg-neutral-800/28',
+    'bg-neutral-800/12 text-neutral-800 font-manrope font-semibold shadow-[0px_4px_46px_10px_rgba(255,200,0,0.06)] hover:bg-neutral-800/20 active:bg-neutral-800/28 disabled:bg-neutral-30 disabled:text-neutral-200 disabled:shadow-none disabled:hover:bg-neutral-30 disabled:active:bg-neutral-30',
 };
 
 const sizeClasses: Record<Size, string> = {
@@ -53,7 +53,7 @@ export const Button = ({
     'flex items-center justify-center leading-[2.1] whitespace-nowrap',
     'transition duration-150 focus-visible:outline-none',
     'active:scale-[0.97]',
-    'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
+    'cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 disabled:saturate-50 disabled:active:scale-100',
     variantClasses[variant],
     sizeClasses[size],
     className,
@@ -158,7 +158,7 @@ export const GlassButton = ({
     'font-manrope font-semibold text-neutral-800',
     'transition duration-150 focus-visible:outline-none',
     'hover:brightness-[1.06] active:scale-[0.97] active:brightness-95',
-    'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
+    'cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 disabled:saturate-50 disabled:active:scale-100',
     sizeClasses[size],
     className,
   );

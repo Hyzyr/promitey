@@ -9,6 +9,7 @@ export interface ForwardedServerError {
   kind?: string;
   stack?: string;
   cause?: string;
+  payload?: unknown;
 }
 
 export type ActionResult<T = void> =
@@ -16,7 +17,10 @@ export type ActionResult<T = void> =
   | { ok: false; code: string; error?: ForwardedServerError };
 
 export function shouldForwardServerErrors(): boolean {
-  return process.env.NEXT_PUBLIC_FORWARD_SERVER_ERRORS === 'true';
+  return (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NEXT_PUBLIC_FORWARD_SERVER_ERRORS === 'true'
+  );
 }
 
 export function serializeServerError(
@@ -35,6 +39,7 @@ export function serializeServerError(
       kind: error.kind,
       stack: error.stack,
       cause: stringifyCause(error.cause),
+      payload: error.payload,
     };
   }
 

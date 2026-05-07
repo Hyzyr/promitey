@@ -1,42 +1,28 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { type LucideIcon } from 'lucide-react';
-import { useId } from 'react';
+import { Eye, EyeOff, type LucideIcon } from 'lucide-react';
+import { useId, useState } from 'react';
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Shared base props
-// ─────────────────────────────────────────────────────────────────────────────
 interface BaseFieldProps {
   label?: string;
   error?: string;
   hint?: string;
   variant?: 'light' | 'dark';
   className?: string;
-  /** Optional override for the wrapper element class. */
   wrapperClassName?: string;
-  /** Hide error/hint text region (e.g. when error is shown elsewhere). */
   hideMessages?: boolean;
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Input — accepts ALL native <input> props (RHF-friendly)
-// ─────────────────────────────────────────────────────────────────────────────
 type InputProps = BaseFieldProps &
   Omit<React.ComponentPropsWithRef<'input'>, 'className'> & {
     leftIcon?: LucideIcon;
     rightIcon?: LucideIcon;
   };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Textarea — accepts ALL native <textarea> props (RHF-friendly)
-// ─────────────────────────────────────────────────────────────────────────────
 type TextareaProps = BaseFieldProps &
   Omit<React.ComponentPropsWithRef<'textarea'>, 'className'>;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Shared styling utilities
-// ─────────────────────────────────────────────────────────────────────────────
 const getWrapperClasses = (
   error?: string,
   variant: 'light' | 'dark' = 'light',
@@ -60,9 +46,6 @@ const getIconClasses = (variant: 'light' | 'dark' = 'light') =>
     variant === 'light' ? 'text-neutral-60' : 'text-neutral-300',
   );
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Input
-// ─────────────────────────────────────────────────────────────────────────────
 export const Input = ({
   ref,
   label,
@@ -75,10 +58,14 @@ export const Input = ({
   wrapperClassName,
   hideMessages = false,
   id,
+  type,
   ...nativeProps
 }: InputProps) => {
   const generatedId = useId();
   const inputId = id ?? generatedId;
+  const isPassword = type === 'password';
+  const [showPassword, setShowPassword] = useState(false);
+  const ToggleIcon = showPassword ? EyeOff : Eye;
 
   return (
     <div className="flex w-full flex-col gap-1.5">
@@ -104,19 +91,34 @@ export const Input = ({
         <input
           id={inputId}
           ref={ref}
+          type={isPassword ? (showPassword ? 'text' : 'password') : type}
           className={cn(
             LeftIcon && 'pl-12',
-            RightIcon && 'pr-12',
+            (RightIcon || isPassword) && 'pr-12',
             className,
           )}
           {...nativeProps}
         />
 
-        {RightIcon && (
+        {isPassword ? (
+          <button
+            type="button"
+            tabIndex={-1}
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            onClick={() => setShowPassword((v) => !v)}
+            className={cn(
+              'absolute right-5.5 flex cursor-pointer items-center justify-center',
+              getIconClasses(variant),
+              'pointer-events-auto',
+            )}
+          >
+            <ToggleIcon className="h-5 w-5" />
+          </button>
+        ) : RightIcon ? (
           <RightIcon
             className={cn('absolute right-5.5', getIconClasses(variant))}
           />
-        )}
+        ) : null}
       </div>
 
       {!hideMessages && error && (
@@ -129,9 +131,6 @@ export const Input = ({
   );
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Textarea
-// ─────────────────────────────────────────────────────────────────────────────
 export const Textarea = ({
   ref,
   label,

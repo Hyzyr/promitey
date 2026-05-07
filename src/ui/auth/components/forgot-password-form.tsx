@@ -17,6 +17,7 @@ export const ForgotPasswordForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
+  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
 
   return (
     <form
@@ -35,7 +36,6 @@ export const ForgotPasswordForm = () => {
         autoComplete="email"
         placeholder={t('placeholders.email')}
         error={errors.email?.message}
-        hideMessages
         {...register('email')}
       />
 
@@ -50,6 +50,7 @@ export const ForgotPasswordForm = () => {
           size="md"
           className="w-full max-w-53.75 capitalize"
           isLoading={isSubmitting}
+          disabled={hasErrors}
         >
           {t('forgot.next')}
         </Button>

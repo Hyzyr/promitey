@@ -9,6 +9,7 @@ export class ApiError extends Error {
     message: string,
     public readonly code?: string,
     public readonly cause?: unknown,
+    public readonly payload?: unknown,
   ) {
     super(message);
   }

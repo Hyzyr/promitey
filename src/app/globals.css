@@ -140,11 +140,30 @@ body {
   --breakpoint-xl: 80rem; /* 1280px */
   --breakpoint-xlx: 82rem; /* 1312px */
 }
-@custom-variant md-lgx {
+
+/* ─── Custom variants ──────────────────────────────────────────────────── */
+@custom-variant tablet {
   @media (width >= 48rem) and (width < 72.5rem) {
     @slot;
   }
 }
+
+/* ─── Base layer (autofill, resets, etc) ─────────────────────────────── */
+@layer base {
+  /* Change the autofill background color */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px var(--color-primary-50) inset;
+    transition: background-color 500ms ease-in-out 0.2s;
+  }
+
+  /* Change the text color */
+  input:-webkit-autofill {
+    -webkit-text-fill-color: #212121 !important;
+  }
+}
+
 
 /* ─── Container utility ──────────────────────────────────────────────── */
 @utility container {
@@ -280,25 +299,25 @@ body {
 @utility bigcard {
   @apply relative md:col-span-2 md:row-start-1 md:px-5 md:py-6.5;
   @apply lg:h-full;
-  @apply md-lgx:pr-[45%]!;
+  @apply tablet:pr-[45%]!;
   @apply lgx:col-span-1 lgx:col-start-3 lgx:row-span-2 lgx:row-start-1;
   @apply lgx:h-full lgx:px-6 lgx:py-8;
   @apply max-md:min-h-[80vh]!;
 
   .bigcard-media {
-    @apply md-lgx:absolute md-lgx:top-1 md-lgx:right-0;
-    @apply md-lgx:h-full md-lgx:w-[50%];
+    @apply tablet:absolute tablet:top-1 tablet:right-0;
+    @apply tablet:h-full tablet:w-[50%];
 
     img.bgitem {
-      @apply md-lgx:right-2 md-lgx:left-[unset] md-lgx:h-full md-lgx:w-auto;
+      @apply tablet:right-2 tablet:left-[unset] tablet:h-full tablet:w-auto;
     }
     .video-wrapper {
-      @apply md-lgx:right-12 md-lgx:h-[80%] md-lgx:w-[unset];
+      @apply tablet:right-12 tablet:h-[80%] tablet:w-[unset];
     }
   }
 
   p {
-    @apply md-lgx:max-w-100;
+    @apply tablet:max-w-100;
   }
 }
 

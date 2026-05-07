@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 
 import { resetPasswordAction } from '../server/auth-actions';
+import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
@@ -41,6 +42,7 @@ export function useResetPassword(email: string, code: string): UseResetPasswordR
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   function mapErrorCode(code: string): string {
@@ -51,6 +53,12 @@ export function useResetPassword(email: string, code: string): UseResetPasswordR
       code_expired: tErrors('invalidResetToken'),
     });
   }
+
+  const clearServerError = useCallback(() => {
+    setServerError(null);
+  }, []);
+
+  useClearAuthFormErrors(form, serverError !== null, clearServerError);
 
   const onSubmit = async (values: ResetPasswordValues) => {
     setServerError(null);

@@ -10,8 +10,15 @@ import { TotpForm } from './totp-form';
 
 export const LoginForm = () => {
   const t = useTranslations('auth');
-  const { step, passwordForm, totpForm, onPasswordSubmit, onTotpSubmit, resetToPassword, serverError } =
-    useLogin();
+  const {
+    step,
+    passwordForm,
+    totpForm,
+    onPasswordSubmit,
+    onTotpSubmit,
+    resetToPassword,
+    serverError,
+  } = useLogin();
 
   if (step === 'totp') {
     return (
@@ -29,6 +36,7 @@ export const LoginForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = passwordForm;
+  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
 
   return (
     <form
@@ -42,7 +50,6 @@ export const LoginForm = () => {
           autoComplete="email"
           placeholder={t('placeholders.email')}
           error={errors.email?.message}
-          hideMessages
           {...register('email')}
         />
         <Input
@@ -50,7 +57,6 @@ export const LoginForm = () => {
           autoComplete="current-password"
           placeholder={t('placeholders.password')}
           error={errors.password?.message}
-          hideMessages
           {...register('password')}
         />
         <AuthLink href="/forgot-password">{t('links.forgot')}</AuthLink>
@@ -63,6 +69,7 @@ export const LoginForm = () => {
           size="md"
           className="w-full"
           isLoading={isSubmitting}
+          disabled={hasErrors}
         >
           {t('login.submit')}
         </Button>
@@ -78,7 +85,7 @@ export const LoginForm = () => {
       </div>
 
       {serverError && (
-        <p className="font-montserrat w-full max-w-[324px] self-center text-center text-[16px] leading-[1.5] tracking-[0.16px] text-red-500">
+        <p className="w-full max-w-80 self-center text-center font-montserrat text-[16px] leading-normal tracking-[0.16px] text-red-500">
           {serverError}
         </p>
       )}

@@ -14,7 +14,7 @@ export const DashboardPage = async () => {
 
   if (!token) {
     const locale = await getLocale();
-    redirect({ href: '/login', locale });
+    return redirect({ href: '/login', locale });
   }
 
   const user = await accountApi.getMe(token);

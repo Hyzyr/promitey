@@ -28,13 +28,13 @@ export default function AuthLayout({
       <AuthBackground />
       <AuthHeader />
 
-      <main className="relative z-10 flex flex-1 items-center justify-center px-5 pt-28 pb-16 md:px-10 lg:justify-end lg:px-27.5 lg:pt-0 lg:pb-0">
+      <main className="relative z-10 flex flex-1 items-center justify-center px-5 pt-13 md:pt-28 pb-16 lg:justify-end lg:px-15 lg:pt-0 lg:pb-0 xlx:px-27">
         {children}
       </main>
 
-      <div className="pointer-events-none absolute bottom-15.75 left-24 z-10 hidden lg:block">
+      {/* <div className="pointer-events-none absolute bottom-15.75 left-24 z-10 hidden lg:block">
         <AuthPromo />
-      </div>
+      </div> */}
     </div>
   );
 }

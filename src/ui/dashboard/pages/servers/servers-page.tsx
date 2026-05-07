@@ -16,7 +16,7 @@ export const ServersPage = async () => {
 
   if (!token) {
     const locale = await getLocale();
-    redirect({ href: '/login', locale });
+    return redirect({ href: '/login', locale });
   }
 
   let region = 'auto';

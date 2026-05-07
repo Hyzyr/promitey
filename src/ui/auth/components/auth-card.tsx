@@ -26,7 +26,7 @@ export const AuthCard = ({
   return (
     <div
       className={cn(
-        'flex w-full max-w-[558px] flex-col items-center justify-center gap-9 rounded-xl bg-white px-5 py-10 lg:min-h-[750px] lg:rounded-[36px] lg:px-[60px] lg:pt-[60px] lg:pb-[46px]',
+        'flex w-full max-w-139 flex-col items-center justify-center gap-9 rounded-xl bg-white px-5 py-10 md:rounded-2xl md:px-10 md:py-7 lg:pt-15 lg:pb-11.5 xlx:min-h-187 xlx:rounded-[36px] xlx:px-15',
         'drop-shadow-[0px_12px_12px_rgba(0,0,0,0.12),0px_32px_9px_rgba(0,0,0,0.05)] lg:drop-shadow-[0px_19px_20.65px_rgba(0,0,0,0.22),0px_49px_12.55px_rgba(0,0,0,0.12)]',
         className,
       )}
@@ -37,7 +37,7 @@ export const AuthCard = ({
             {title}
           </h1>
           {subtitle && (
-            <p className="font-manrope text-[14px] leading-[1.6] text-neutral-300 lg:text-[16px]">
+            <p className="max-w-72 w-[80%] font-manrope text-[16px] leading-[1.36] text-neutral-300 lg:text-[18px]">
               {subtitle}
             </p>
           )}

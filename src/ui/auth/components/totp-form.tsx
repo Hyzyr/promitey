@@ -21,6 +21,7 @@ export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps)
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
+  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
 
   return (
     <form
@@ -38,7 +39,6 @@ export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps)
         autoComplete="one-time-code"
         placeholder={t('login.totpPlaceholder')}
         error={errors.code?.message}
-        hideMessages
         {...register('code')}
       />
 
@@ -55,6 +55,7 @@ export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps)
           size="md"
           className="w-full"
           isLoading={isSubmitting}
+          disabled={hasErrors}
         >
           {t('login.totpSubmit')}
         </Button>

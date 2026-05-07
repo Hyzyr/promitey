@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 
 import { forgotPasswordAction } from '../server/auth-actions';
+import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
@@ -28,17 +29,24 @@ export function useForgotPassword(): UseForgotPasswordReturn {
   const [serverError, setServerError] = useState<string | null>(null);
 
   const schema = z.object({
-    email: z.string().min(1, tErrors('emailRequired')),
+    email: z.string().min(1, tErrors('emailRequired')).email(tErrors('emailInvalid')),
   });
 
   const form = useForm<ForgotPasswordValues>({
     resolver: zodResolver(schema),
     mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   function mapErrorCode(code: string): string {
     return mapApiError(code, tErrors);
   }
+
+  const clearServerError = useCallback(() => {
+    setServerError(null);
+  }, []);
+
+  useClearAuthFormErrors(form, serverError !== null, clearServerError);
 
   const onSubmit = async (values: ForgotPasswordValues) => {
     setServerError(null);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,6 +9,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 
 import { loginAction, loginTotpAction } from '../server/auth-actions';
+import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
@@ -50,7 +51,7 @@ export function useLogin(): UseLoginReturn {
   const selectedPlan = resolveSelectedPricingPlan(searchParams);
 
   const passwordSchema = z.object({
-    email: z.string().min(1, tErrors('emailRequired')),
+    email: z.string().min(1, tErrors('emailRequired')).email(tErrors('emailInvalid')),
     password: z.string().min(1, tErrors('passwordRequired')),
   });
 
@@ -61,16 +62,25 @@ export function useLogin(): UseLoginReturn {
   const passwordForm = useForm<PasswordValues>({
     resolver: zodResolver(passwordSchema),
     mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const totpForm = useForm<TotpValues>({
     resolver: zodResolver(totpSchema),
     mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   function mapErrorCode(code: string): string {
     return mapApiError(code, tErrors);
   }
+
+  const clearServerError = useCallback(() => {
+    setServerError(null);
+  }, []);
+
+  useClearAuthFormErrors(passwordForm, serverError !== null, clearServerError);
+  useClearAuthFormErrors(totpForm, serverError !== null, clearServerError);
 
   useEffect(() => {
     if (selectedPlan) saveSelectedPricingPlan(selectedPlan);

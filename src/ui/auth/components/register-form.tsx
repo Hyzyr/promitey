@@ -16,6 +16,7 @@ export const RegisterForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = form;
+  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
 
   return (
     <form
@@ -29,7 +30,6 @@ export const RegisterForm = () => {
           autoComplete="email"
           placeholder={t('placeholders.email')}
           error={errors.email?.message}
-          hideMessages
           {...register('email')}
         />
         <Input
@@ -37,7 +37,6 @@ export const RegisterForm = () => {
           autoComplete="new-password"
           placeholder={t('placeholders.password')}
           error={errors.password?.message}
-          hideMessages
           {...register('password')}
         />
         <Input
@@ -45,7 +44,6 @@ export const RegisterForm = () => {
           autoComplete="new-password"
           placeholder={t('placeholders.passwordRepeat')}
           error={errors.passwordRepeat?.message}
-          hideMessages
           {...register('passwordRepeat')}
         />
       </div>
@@ -57,13 +55,14 @@ export const RegisterForm = () => {
           size="md"
           className="w-full"
           isLoading={isSubmitting}
+          disabled={hasErrors}
         >
           {t('register.submit')}
         </Button>
       </div>
 
       {serverError && (
-        <p className="font-montserrat w-full max-w-[324px] self-center text-center text-[16px] leading-[1.5] tracking-[0.16px] text-red-500">
+        <p className="font-montserrat w-full max-w-81 self-center text-center text-[16px] leading-normal tracking-[0.16px] text-red-500">
           {serverError}
         </p>
       )}

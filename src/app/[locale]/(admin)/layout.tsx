@@ -30,19 +30,19 @@ export default async function AdminLayout({
     (await cookies()).get(DEV_TEST_COOKIE)?.value === '1';
 
   return (
-    <div className="flex min-h-screen bg-neutral-30 lg:gap-[34px] lg:p-[30px]">
+    <div className="flex min-h-screen bg-neutral-30 lg:gap-8.5 lg:p-7.5">
       <DashboardSidebar />
 
-      <div className="flex w-full flex-1 flex-col lg:max-w-[1230px]">
+      <div className="flex w-full flex-1 flex-col lg:max-w-307">
         <DashboardHeader />
+        <main className="flex flex-1 flex-col gap-8 px-5 pt-4 pb-10 lg:px-0 lg:pt-0">
+          {children}
+        </main>
         {isDevSession && (
           <div className="px-5 pt-4 lg:px-0">
             <DevModeBanner />
           </div>
         )}
-        <main className="flex flex-1 flex-col gap-8 px-5 pt-4 pb-10 lg:px-0 lg:pt-0">
-          {children}
-        </main>
       </div>
     </div>
   );
