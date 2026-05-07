@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Manrope, Roboto, Montserrat } from "next/font/google";
 import { getLocale } from "next-intl/server";
+import { getSiteMetadataBase } from '@/lib/site-url';
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -30,7 +31,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+  metadataBase: getSiteMetadataBase(),
   title: {
     default: 'Prometey VPN',
     template: '%s | Prometey VPN',

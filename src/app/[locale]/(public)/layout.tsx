@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
+import { SiteJsonLd } from '@/components/seo';
+import { getSiteUrl } from '@/lib/site-url';
 import { getAccessToken } from '@/lib/session';
 import { LandingHeader } from "@/ui/public/layouts/public-header";
 import { LandingFooter } from "@/ui/public/layouts/public-footer";
-import { SiteJsonLd } from '@/components/seo';
 
 export async function generateMetadata({
   params,
@@ -12,7 +13,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'meta.home' });
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const baseUrl = getSiteUrl();
   const pageUrl = `${baseUrl}/${locale}`;
 
   return {

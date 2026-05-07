@@ -1,9 +1,11 @@
+import { getSiteUrl } from '@/lib/site-url';
+
 interface SiteJsonLdProps {
   sameAs?: string[];
 }
 
 export const SiteJsonLd = ({ sameAs = [] }: SiteJsonLdProps) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const baseUrl = getSiteUrl();
 
   const organization = {
     '@context': 'https://schema.org',

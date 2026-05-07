@@ -1,4 +1,5 @@
 import { getLocale, getTranslations } from 'next-intl/server';
+import { getSiteUrl } from '@/lib/site-url';
 
 import { FaqJsonLd } from './faq-json-ld';
 import { ProductJsonLd } from './product-json-ld';
@@ -6,7 +7,7 @@ import { ProductJsonLd } from './product-json-ld';
 export const LandingJsonLd = async () => {
   const locale = await getLocale();
   const tFaq = await getTranslations({ locale, namespace: 'landing.faq' });
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const baseUrl = getSiteUrl();
   const registerUrl = `${baseUrl}/${locale}/register`;
 
   const rawItems = tFaq.raw('items') as Array<{ q: string; a: string }>;
