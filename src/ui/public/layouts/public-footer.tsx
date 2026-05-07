@@ -148,7 +148,11 @@ const FooterLink = ({ href, label, className }: FooterLinkProps) => {
     }
 
     event.preventDefault();
-    scrollTo(href, { offset: -100, duration: 1.2 });
+    scrollTo(href, {
+      offset: -100,
+      duration: 1.8,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+    });
   };
 
   return (

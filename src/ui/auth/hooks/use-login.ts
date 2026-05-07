@@ -11,6 +11,7 @@ import { useRouter } from '@/i18n/navigation';
 import { loginAction, loginTotpAction } from '../server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 import {
   buildPostAuthHref,
   resolveSelectedPricingPlan,
@@ -82,6 +83,7 @@ export function useLogin(): UseLoginReturn {
   const onPasswordSubmit = async (values: PasswordValues) => {
     setServerError(null);
     const result = await loginAction({ email: values.email, password: values.password });
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;
@@ -97,6 +99,7 @@ export function useLogin(): UseLoginReturn {
   const onTotpSubmit = async (values: TotpValues) => {
     setServerError(null);
     const result = await loginTotpAction({ temp_token: tempToken, code: values.code });
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;

@@ -4,7 +4,6 @@ export { ConfigTile } from './config-tile';
 export { DashboardHeader } from './dashboard-header';
 export { DashboardSidebar } from './dashboard-sidebar';
 export { EmailChangeSection } from './email-change-section';
-export { LanguageSwitcher } from './language-switcher';
 export { MobileDashboardMenu } from './mobile-dashboard-menu';
 export { PromocodeSection } from './promocode-section';
 export { SidebarNavItem } from './sidebar-nav-item';

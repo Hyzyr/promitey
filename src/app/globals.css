@@ -112,12 +112,10 @@ body {
   --color-text-muted: #6b6b6b;
 
   /* ─── Border radii ───────────────────────────────────────────────── */
-  /* Semantic aliases for component-specific radii */
   --radius-button: 9999px;
   --radius-input: 12px;
   --radius-card: 16px;
 
-  /* Tailwind v4 rounded-* scale overrides (must use --radius-* prefix) */
   --radius-sm: 12px;
   --radius-DEFAULT: 12px;
   --radius-md: 16px;
@@ -134,7 +132,6 @@ body {
   --container-padding-x-md: 2rem; /* 32px — tablet 768px+ */
   --container-padding-x-lg: 3rem; /* 48px — large tablet/small desktop 1024px+ */
 
-  /* Explicitly define the sequence to ensure the cascade order */
   --breakpoint-sm: 32rem; /* 512px */
   --breakpoint-md: 48rem; /* 768px */
   --breakpoint-mdx: 54rem; /* 864px */
@@ -143,7 +140,6 @@ body {
   --breakpoint-xl: 80rem; /* 1280px */
   --breakpoint-xlx: 82rem; /* 1312px */
 }
-/* Define it once at the top level */
 @custom-variant md-lgx {
   @media (width >= 48rem) and (width < 72.5rem) {
     @slot;
@@ -279,10 +275,6 @@ body {
   @apply relative isolate flex min-h-[38vh] flex-col overflow-hidden;
   @apply rounded-md border bg-neutral-20 transition-colors duration-200;
   @apply px-4 py-5 md:px-5 md:py-6 lg:px-4 lgx:px-3 lgx:py-3 xl:px-4 xl:py-5;
-
-  /* .bgitem {
-    @apply text-neutral-800;
-  } */
 }
 
 @utility bigcard {
@@ -324,7 +316,6 @@ body {
       @apply disabled:cursor-not-allowed disabled:bg-neutral-30 disabled:text-neutral-60;
 
       &::placeholder {
-        /* color: var(--color-neutral-600); */
         @apply font-medium text-neutral-600 transition-colors delay-120 duration-250 ease-in;
       }
       &:focus::placeholder {
@@ -340,7 +331,6 @@ body {
       @apply disabled:cursor-not-allowed disabled:bg-neutral-500 disabled:text-neutral-300;
 
       &::placeholder {
-        /* color: var(--color-neutral-600); */
         @apply font-medium text-neutral-10 transition-colors delay-120 duration-250 ease-in;
       }
       &:focus::placeholder {

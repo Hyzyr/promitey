@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import { changePasswordAction } from '../server/profile-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 interface ChangePasswordValues {
   currentPassword: string;
@@ -55,6 +56,7 @@ export function useChangePassword(): UseChangePasswordReturn {
       current_password: values.currentPassword,
       new_password: values.newPassword,
     });
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;

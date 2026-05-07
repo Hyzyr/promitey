@@ -2,13 +2,6 @@ import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { Logo, LogoWithText } from '@/components/ui/logo';
 
-/**
- * Sticky auth header. Mirrors public-header structure but minimal:
- *   - Logo only on mobile
- *   - Logo + single "Features" link on desktop
- *
- * No language switcher / no nav menu: the auth pages stay focused.
- */
 export const AuthHeader = () => {
   const t = useTranslations('auth.header');
 

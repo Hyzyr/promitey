@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import { linkByPublicCodeAction } from '../server/profile-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 interface LinkByCodeValues {
   public_code: string;
@@ -46,6 +47,7 @@ export function useLinkByCode(): UseLinkByCodeReturn {
   const onSubmit = async (values: LinkByCodeValues) => {
     setServerError(null);
     const result = await linkByPublicCodeAction({ public_code: values.public_code });
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;

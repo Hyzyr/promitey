@@ -14,13 +14,6 @@ export interface HeaderDesktopProps {
   isAuthenticated?: boolean;
 }
 
-/**
- * Desktop header with scroll-based visibility.
- * - Hides when scrolling down
- * - Reveals when scrolling up
- * - Shows shadow when not at top
- * - Smooth scroll to sections with offset
- */
 export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) => {
   const t = useTranslations('landing.header');
   const { isVisible, isAtTop } = useHeaderScroll();
@@ -35,7 +28,11 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    scrollTo(href, { offset: -100, duration: 1.2 });
+    scrollTo(href, {
+      offset: -100,
+      duration: 1.8,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+    });
   };
 
   return (

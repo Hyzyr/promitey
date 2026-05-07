@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { recreateVpnAction } from '../server/vpn-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 export interface UseRecreateVpnReturn {
   loading: boolean;
@@ -26,6 +27,7 @@ export function useRecreateVpn(): UseRecreateVpnReturn {
     setSuccess(false);
     setLoading(true);
     const result = await recreateVpnAction();
+    reportForwardedServerError(result);
     setLoading(false);
     if (!result.ok) {
       setError(mapApiError(result.code, tErrors, { rate_limited: t('rateLimited') }));

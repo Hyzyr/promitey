@@ -7,6 +7,7 @@ import {
   disableTotpAction,
   type TotpSetupData,
 } from '../server/profile-actions';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 type TotpView = 'idle' | 'setup' | 'disable';
 
@@ -29,6 +30,7 @@ export function useTotpSection(initialEnabled: boolean) {
     setError(null);
     startTransition(async () => {
       const result = await setupTotpAction();
+      reportForwardedServerError(result);
       if (result.ok) {
         setSetupData(result.data);
         setView('setup');
@@ -53,6 +55,7 @@ export function useTotpSection(initialEnabled: boolean) {
     setError(null);
     startTransition(async () => {
       const result = await enableTotpAction(code);
+      reportForwardedServerError(result);
       if (result.ok) {
         setEnabled(true);
         setView('idle');
@@ -67,6 +70,7 @@ export function useTotpSection(initialEnabled: boolean) {
     setError(null);
     startTransition(async () => {
       const result = await disableTotpAction(password, code);
+      reportForwardedServerError(result);
       if (result.ok) {
         setEnabled(false);
         setView('idle');

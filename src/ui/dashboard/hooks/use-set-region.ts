@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import { setRegionAction } from '../server/vpn-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 interface SetRegionValues {
   region: string;
@@ -43,6 +44,7 @@ export function useSetRegion(initialRegion: string): UseSetRegionReturn {
     setServerError(null);
     setSuccess(false);
     const result = await setRegionAction(values.region);
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapApiError(result.code, tErrors));
       return;

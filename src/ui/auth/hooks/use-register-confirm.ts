@@ -8,6 +8,7 @@ import { useRouter } from '@/i18n/navigation';
 import { registerConfirmAction } from '../server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 import {
   buildPricingPlanHref,
   resolveSelectedPricingPlan,
@@ -38,6 +39,7 @@ export function useRegisterConfirm(email: string): UseRegisterConfirmReturn {
     setIsSubmitting(true);
     try {
       const result = await registerConfirmAction({ email, code });
+      reportForwardedServerError(result);
       if (!result.ok) {
         return { ok: false, message: mapErrorCode(result.code) };
       }

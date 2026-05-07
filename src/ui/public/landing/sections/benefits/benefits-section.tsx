@@ -69,7 +69,6 @@ export const BenefitsSection = () => {
 
           <div
             ref={containerRef}
-            // Elder (92a03bd): "flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-5 xl:grid-cols-3 xl:grid-rows-2"
             className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-5 lgx:grid-cols-3 lgx:grid-rows-2"
             onPointerLeave={handleGridLeave}>
             <div className="contents" onPointerEnter={enter('your-internet')}>

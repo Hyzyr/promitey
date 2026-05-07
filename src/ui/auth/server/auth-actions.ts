@@ -2,12 +2,12 @@
 
 import { setAuthCookies, clearAuthCookies, getAccessToken } from '@/lib/session';
 import { isTotpChallenge } from '@/api/client/api-types';
-import { isApiError } from '@/api/client/api-error';
 import * as authApi from '@/api/auth';
-
-export type ActionResult<T = void> =
-  | { ok: true; data: T }
-  | { ok: false; code: string };
+import {
+  actionFailure,
+  unauthenticatedFailure,
+  type ActionResult,
+} from '@/lib/server-error-forwarding';
 
 export type LoginResultData =
   | { step: 'done' }
@@ -29,8 +29,7 @@ export async function loginAction(values: {
     await setAuthCookies(result);
     return { ok: true, data: { step: 'done' } };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure<LoginResultData>(e, 'loginAction');
   }
 }
 
@@ -46,8 +45,7 @@ export async function loginTotpAction(values: {
     await setAuthCookies(tokens);
     return { ok: true, data: undefined };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure(e, 'loginTotpAction');
   }
 }
 
@@ -60,8 +58,7 @@ export async function registerAction(values: {
     await authApi.registerPrepare({ email: values.email, password: values.password });
     return { ok: true, data: { step: 'verify_email', email: values.email } };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure<RegisterResultData>(e, 'registerAction');
   }
 }
 
@@ -74,8 +71,7 @@ export async function registerConfirmAction(values: {
     await authApi.registerConfirm({ email: values.email, code: values.code });
     return { ok: true, data: undefined };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure(e, 'registerConfirmAction');
   }
 }
 
@@ -92,8 +88,7 @@ export async function forgotPasswordAction(values: {
     await authApi.forgotPassword({ email: values.email });
     return { ok: true, data: { email: values.email } };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure<{ email: string }>(e, 'forgotPasswordAction');
   }
 }
 
@@ -111,8 +106,7 @@ export async function resetPasswordAction(values: {
     });
     return { ok: true, data: undefined };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure(e, 'resetPasswordAction');
   }
 }
 
@@ -121,13 +115,12 @@ export async function prepareEmailChangeAction(values: {
   new_email: string;
 }): Promise<ActionResult> {
   const token = await getAccessToken();
-  if (!token) return { ok: false, code: 'unauthenticated' };
+  if (!token) return unauthenticatedFailure('prepareEmailChangeAction');
   try {
     await authApi.prepareEmailChange({ new_email: values.new_email }, token);
     return { ok: true, data: undefined };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure(e, 'prepareEmailChangeAction');
   }
 }
 
@@ -136,12 +129,11 @@ export async function confirmEmailChangeAction(values: {
   code: string;
 }): Promise<ActionResult> {
   const token = await getAccessToken();
-  if (!token) return { ok: false, code: 'unauthenticated' };
+  if (!token) return unauthenticatedFailure('confirmEmailChangeAction');
   try {
     await authApi.confirmEmailChange({ code: values.code }, token);
     return { ok: true, data: undefined };
   } catch (e) {
-    if (isApiError(e)) return { ok: false, code: e.code ?? `http_${e.status}` };
-    return { ok: false, code: 'network' };
+    return actionFailure(e, 'confirmEmailChangeAction');
   }
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState, cloneElement } from 'react';
+import { useEffect, useRef, useState, cloneElement, startTransition } from 'react';
 import { playTriangleSVG, pauseBarsSVG } from '@/components/assets';
 import { cn } from '@/lib/utils';
 import { useObserver } from '@/hooks/use-observer';
@@ -8,23 +8,39 @@ import { useObserver } from '@/hooks/use-observer';
 export interface VideoCardProps {
   src: string;
   title: string;
-  /** Autoplay muted in background. Default: true */
   autoPlay?: boolean;
   className?: string;
 }
 
-export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardProps) => {
+export const VideoCard = ({
+  src,
+  title,
+  autoPlay = true,
+  className,
+}: VideoCardProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const userPlaybackRef = useRef(false);
+  const [isUserPlaying, setIsUserPlaying] = useState(false);
+  const [backgroundAutoplayEnabled, setBackgroundAutoplayEnabled] =
+    useState(autoPlay);
 
-  const { ref: containerRef, isVisible } = useObserver<HTMLDivElement>({ threshold: 0.2 });
+  const { ref: containerRef, isVisible } = useObserver<HTMLDivElement>({
+    threshold: 0.2,
+  });
 
-  // Track isPlaying via native video events (external system → state)
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-    const onPlay = () => setIsPlaying(true);
-    const onPause = () => setIsPlaying(false);
+    const onPlay = () => {
+      if (userPlaybackRef.current) {
+        setIsUserPlaying(true);
+      }
+    };
+    const onPause = () => {
+      if (userPlaybackRef.current) {
+        setIsUserPlaying(false);
+      }
+    };
     video.addEventListener('play', onPlay);
     video.addEventListener('pause', onPause);
     return () => {
@@ -33,42 +49,60 @@ export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardP
     };
   }, []);
 
-  // Pause when scrolled out of view — only interacts with the external system
+  useEffect(() => {
+    startTransition(() => setBackgroundAutoplayEnabled(autoPlay));
+  }, [autoPlay]);
+
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
     if (!isVisible) {
       video.pause();
-      video.removeAttribute('src');
-      video.load();
+      if (userPlaybackRef.current) {
+        userPlaybackRef.current = false;
+        setIsUserPlaying(false);
+      }
       return;
     }
 
-    if (!autoPlay) return;
+    if (!backgroundAutoplayEnabled) return;
 
-    video.src = src;
     video.muted = true;
+    video.loop = true;
     const playPromise = video.play();
 
     if (playPromise) {
       playPromise.catch(() => {
-        setIsPlaying(false);
+        setIsUserPlaying(false);
       });
     }
-  }, [autoPlay, isVisible, src]);
+  }, [backgroundAutoplayEnabled, isVisible]);
 
   const handleToggle = () => {
     const video = videoRef.current;
     if (!video) return;
-    if (isPlaying) {
+
+    setBackgroundAutoplayEnabled(false);
+
+    if (isUserPlaying) {
+      userPlaybackRef.current = false;
       video.pause();
-      setIsPlaying(false);
+      setIsUserPlaying(false);
     } else {
+      userPlaybackRef.current = true;
       video.currentTime = 0;
       video.muted = false;
-      video.play();
-      setIsPlaying(true);
+      video.loop = false;
+      const playPromise = video.play();
+      setIsUserPlaying(true);
+
+      if (playPromise) {
+        playPromise.catch(() => {
+          userPlaybackRef.current = false;
+          setIsUserPlaying(false);
+        });
+      }
     }
   };
 
@@ -78,30 +112,29 @@ export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardP
       className={cn(
         'video-wrapper gpu-layer group absolute aspect-3/5 overflow-hidden rounded-lg shadow-2xl',
         className,
-      )}>
+      )}
+    >
       <video
         ref={videoRef}
-        src={isVisible ? src : undefined}
+        src={src}
         className="gpu-layer h-full! w-full! object-cover"
-        autoPlay={autoPlay && isVisible}
-        preload={isVisible ? 'metadata' : 'none'}
+        autoPlay={backgroundAutoplayEnabled && isVisible}
+        preload="metadata"
         muted
         loop
         playsInline
         aria-label={title}
       />
 
-      {/* Gradient overlay */}
       <div
         role="presentation"
-        className="video-card-gradient absolute inset-0 flex flex-col justify-end rounded-[inherit] p-4">
-
-        {/* Play/Pause button — rests at top-right, slides to center on card hover */}
+        className="video-card-gradient absolute inset-0 flex flex-col justify-end rounded-[inherit] p-4"
+      >
         <button
           type="button"
           onClick={handleToggle}
           aria-label={title}
-          aria-pressed={isPlaying}
+          aria-pressed={isUserPlaying}
           className={cn(
             'video-toggle-motion gpu-layer absolute cursor-pointer',
             'flex items-center justify-center w-12 h-12 rounded-full bg-primary-500',
@@ -111,17 +144,17 @@ export const VideoCard = ({ src, title, autoPlay = true, className }: VideoCardP
             'hover:bg-primary-400',
             'active:bg-primary-600 active:brightness-90 active:scale-[0.92]',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
-          )}>
-          {isPlaying ? (
-            cloneElement(pauseBarsSVG, { 'aria-hidden': 'true' })
-          ) : (
-            cloneElement(playTriangleSVG, { 'aria-hidden': 'true' })
           )}
+        >
+          {isUserPlaying
+            ? cloneElement(pauseBarsSVG, { 'aria-hidden': 'true' })
+            : cloneElement(playTriangleSVG, { 'aria-hidden': 'true' })}
         </button>
 
         <span
           className="font-manrope text-[22px] leading-snug font-bold tracking-[-0.02em] text-neutral-0"
-          aria-hidden="true">
+          aria-hidden="true"
+        >
           {title}
         </span>
       </div>

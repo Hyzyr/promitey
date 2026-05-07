@@ -1,27 +1,30 @@
 'use client';
 
 import { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from '@/i18n/navigation';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard,
   Server,
   BookOpen,
+  FileCog,
   CreditCard,
   User,
   HelpCircle,
   X,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { Link } from '@/i18n/navigation';
 import { useScrollLock } from '@/hooks/use-scroll-lock';
+import { cn } from '@/lib/utils';
+
 import { LogoutButton } from './logout-button';
 
 const DRAWER_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
   { href: '/dashboard/servers', icon: Server, labelKey: 'servers' },
   { href: '/dashboard/instructions', icon: BookOpen, labelKey: 'instructions' },
+  { href: '/dashboard/configs', icon: FileCog, labelKey: 'configs' },
   {
     href: '/dashboard/subscription',
     icon: CreditCard,
@@ -44,15 +47,14 @@ export const MobileDashboardMenu = ({
   const tNav = useTranslations('nav');
   const tCommon = useTranslations('common');
   const { lock, unlock } = useScrollLock();
+  const dashboardPath = pathname.replace(/^\/(en|ru)(?=\/|$)/, '') || '/';
 
-  // Body scroll lock while menu open
   useEffect(() => {
     if (open) lock();
     else unlock();
     return () => unlock();
   }, [open, lock, unlock]);
 
-  // Escape key closes menu
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && open) onOpenChange(false);
@@ -69,17 +71,15 @@ export const MobileDashboardMenu = ({
     <AnimatePresence>
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop — Figma: rgba(32,30,30,0.6) + backdrop-blur-[4px] */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={() => onOpenChange(false)}
-            className="absolute inset-0 bg-[rgba(32,30,30,0.6)] backdrop-blur-xs"
+            className="fog-backdrop absolute inset-0"
           />
 
-          {/* Drawer panel — slides from bottom */}
           <motion.div
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
@@ -89,19 +89,24 @@ export const MobileDashboardMenu = ({
               'absolute inset-x-0 bottom-0 flex flex-col gap-6',
               'rounded-t-md bg-neutral-800 px-8 pt-8 pb-10',
               'shadow-[0_-7px_30.2px_rgba(0,0,0,.12)]',
-            )}>
-            {/* Close button — top-right, inset 16 */}
+            )}
+          >
             <button
               type="button"
               aria-label={tCommon('close')}
               onClick={() => onOpenChange(false)}
-              className="absolute right-4 top-4 text-orange-500 hover:text-orange-400">
+              className="absolute top-4 right-4 text-orange-500 hover:text-orange-400"
+            >
               <X className="h-8 w-8" />
             </button>
 
             <nav className="flex flex-col gap-4">
               {DRAWER_ITEMS.map(({ href, icon: Icon, labelKey }) => {
-                const active = pathname === href;
+                const active =
+                  href === '/dashboard'
+                    ? dashboardPath === href
+                    : dashboardPath === href ||
+                      dashboardPath.startsWith(`${href}/`);
                 return (
                   <Link
                     key={href}
@@ -112,14 +117,14 @@ export const MobileDashboardMenu = ({
                       active
                         ? 'text-neutral-20 font-medium'
                         : 'text-neutral-60 font-normal hover:text-neutral-20',
-                    )}>
+                    )}
+                  >
                     <Icon className="h-8 w-8" strokeWidth={1.5} />
                     <span>{tNav(labelKey)}</span>
                   </Link>
                 );
               })}
 
-              {/* Logout */}
               <LogoutButton onBeforeLogout={() => onOpenChange(false)} />
             </nav>
           </motion.div>

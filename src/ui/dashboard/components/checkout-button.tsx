@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { CreditCard } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 import { checkoutAction } from '../server/billing-actions';
 
@@ -21,6 +22,7 @@ export const CheckoutButton = ({ className }: CheckoutButtonProps) => {
     setLoading(true);
     setState('idle');
     const result = await checkoutAction();
+    reportForwardedServerError(result);
     setLoading(false);
     if (!result.ok) {
       setState(result.code === 'billing_unavailable' ? 'unavailable' : 'error');

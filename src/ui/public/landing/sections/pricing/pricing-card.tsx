@@ -61,7 +61,6 @@ export const PricingCard = ({
           className,
         )}
       >
-        {/* Invisible tap target covers entire card on mobile/tablet only */}
         {href && (
           <button
             type="button"

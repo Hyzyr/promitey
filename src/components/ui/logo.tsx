@@ -11,16 +11,30 @@ export const Logo = ({ className }: LogoProps) => {
   );
 };
 
-export const LogoWithText = ({ size, className }: LogoProps) => {
+export const LogoWithText = ({
+  size,
+  className,
+  dark = false,
+}: LogoProps & {
+  dark?: boolean;
+}) => {
   const style = size ? { fontSize: size } : undefined;
 
   return (
     <span className={className ?? 'logo'} style={style}>
-      <img
-        src="/logo-with-text.svg"
-        alt="Prometey VPN Logo"
-        className="h-full w-full"
-      />
+      {!dark ? (
+        <img
+          src="/logo-with-text.svg"
+          alt="Prometey VPN Logo"
+          className="h-full w-full"
+        />
+      ) : (
+        <img
+          src="/logo-with-text-dark.svg"
+          alt="Prometey VPN Logo"
+          className="h-full w-full"
+        />
+      )}
     </span>
   );
 };

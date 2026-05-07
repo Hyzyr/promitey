@@ -10,6 +10,7 @@ import { useRouter } from '@/i18n/navigation';
 import { forgotPasswordAction } from '../server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 interface ForgotPasswordValues {
   email: string;
@@ -42,6 +43,7 @@ export function useForgotPassword(): UseForgotPasswordReturn {
   const onSubmit = async (values: ForgotPasswordValues) => {
     setServerError(null);
     const result = await forgotPasswordAction({ email: values.email });
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;

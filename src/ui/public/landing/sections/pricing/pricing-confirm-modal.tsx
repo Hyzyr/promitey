@@ -48,7 +48,6 @@ export const PricingConfirmModal = ({
         {t('confirm.body')}
       </p>
 
-      {/* Plan summary card */}
       <div className="flex flex-col gap-3 rounded-sm bg-neutral-700 px-5 py-4">
         <strong
           className={cn(
@@ -96,7 +95,6 @@ export const PricingConfirmModal = ({
         </div>
       </div>
 
-      {/* Actions */}
       <div className="flex flex-col gap-3">
         <Button
           variant="orange"

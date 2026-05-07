@@ -1,0 +1,12 @@
+[x] first I have missing screens should be implemented from figma and check if any of them exists cause I belive they were there before ai updated it.
+    according to:C:\Users\hydyr\Documents\GitHub\kwork\5853388 - ilya\prometey-vpn\.github\agents\figma-pixel-perfect.agent.md
+    instructions page openVPN tab active
+    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6376-10756&t=ls80hLD5Dk6l1uQQ-11
+    instructions page vless tab active
+    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6384-12388&t=ls80hLD5Dk6l1uQQ-11
+    instructions page mobile version example
+    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6536-33344&t=ls80hLD5Dk6l1uQQ-11
+
+    configuration files, should be same component from dashboard <ConfigDownloadCard />
+    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6376-10512&t=ls80hLD5Dk6l1uQQ-11
+

@@ -12,6 +12,7 @@ import {
 } from '../../auth/server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 type EmailChangeStep = 'prepare' | 'confirm';
 
@@ -67,6 +68,7 @@ export function useEmailChange(onSuccess?: () => void): UseEmailChangeReturn {
     setIsSubmitting(true);
     try {
       const result = await prepareEmailChangeAction({ new_email: values.new_email });
+      reportForwardedServerError(result);
       if (!result.ok) {
         setServerError(mapErrorCode(result.code));
         return;
@@ -82,6 +84,7 @@ export function useEmailChange(onSuccess?: () => void): UseEmailChangeReturn {
     setIsSubmitting(true);
     try {
       const result = await confirmEmailChangeAction({ code: values.code });
+      reportForwardedServerError(result);
       if (!result.ok) {
         setServerError(mapErrorCode(result.code));
         return;

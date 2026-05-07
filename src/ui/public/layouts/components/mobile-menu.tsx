@@ -1,18 +1,15 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { useTranslations, useLocale } from 'next-intl';
-import { Languages, ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { useScrollLock } from '@/hooks/use-scroll-lock';
 import { useLenis } from '@/components/providers/lenis-provider';
-import { useRouter, usePathname as useIntlPathname } from '@/i18n/navigation';
 import { Button } from '@/components/ui/button';
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { cn } from '@/lib/utils';
-
-import type { Locale } from '@/i18n/routing';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -20,37 +17,16 @@ interface MobileMenuProps {
   isAuthenticated?: boolean;
 }
 
-const LOCALES: { value: Locale; label: string }[] = [
-  { value: 'en', label: 'En' },
-  { value: 'ru', label: 'Ru' },
-];
-
-/**
- * Full-screen mobile menu — Figma node 6529:29180.
- *
- * Pixel-perfect specs:
- * - Backdrop: bg-rgba(32,30,30,0.6) + backdrop-blur-[4px]
- * - Panel: bg #2B2929 (neutral-800), rounded-t-[16px]
- * - Padding: pt-[32px] pb-[40px] px-[32px]
- * - Gap between items: 24px
- * - Shadow: 0px -7px 30.2px rgba(0,0,0,0.12)
- * - Slides from bottom with spring animation
- */
 export const MobileMenu = ({
   isOpen,
   onClose,
   isAuthenticated = false,
 }: MobileMenuProps) => {
   const t = useTranslations('landing.header');
-  const tCommon = useTranslations('common');
   const pathname = usePathname();
-  const intlPathname = useIntlPathname();
-  const router = useRouter();
-  const locale = useLocale() as Locale;
   const { lock, unlock } = useScrollLock();
   const { scrollTo } = useLenis();
   const prevPathnameRef = useRef(pathname);
-  const [langOpen, setLangOpen] = useState(false);
 
   const NAV = [
     { href: '#benefits', label: t('nav.benefits') },
@@ -58,8 +34,6 @@ export const MobileMenu = ({
     { href: '#guide', label: t('nav.guide') },
     { href: '#faq', label: t('nav.faq') },
   ];
-
-  const currentLocale = LOCALES.find((l) => l.value === locale) ?? LOCALES[0];
 
   useEffect(() => {
     if (isOpen) lock();
@@ -85,13 +59,12 @@ export const MobileMenu = ({
   const handleNavClick = (href: string) => {
     onClose();
     setTimeout(() => {
-      scrollTo(href, { offset: -88, duration: 1.2 });
+      scrollTo(href, {
+        offset: -88,
+        duration: 1.8,
+        easing: (t) => 1 - Math.pow(1 - t, 3),
+      });
     }, 350);
-  };
-
-  const handleLocaleChange = (newLocale: Locale) => {
-    setLangOpen(false);
-    router.replace(intlPathname, { locale: newLocale });
   };
 
   return (
@@ -126,55 +99,12 @@ export const MobileMenu = ({
             aria-modal="true"
             aria-label={t('menu')}
           >
-            <div className="relative w-[80%] max-w-120">
-              <button
-                type="button"
-                onClick={() => setLangOpen((o) => !o)}
-                aria-haspopup="listbox"
-                aria-expanded={langOpen}
-                className="flex w-full items-center justify-start gap-3 rounded-sm bg-white/12 px-[.85em] py-[.75em] text-[18px] transition-colors hover:bg-white/16 sm:text-[20px]"
-              >
-                <Languages
-                  className="h-6 w-6 text-neutral-10"
-                  strokeWidth={2}
-                />
-                <span className="grow text-left font-roboto leading-none text-neutral-10">
-                  <span className="font-bold">{tCommon('language')}:</span>
-                  <span className="font-normal"> {currentLocale.label}</span>
-                </span>
-                <ChevronRight
-                  className={cn(
-                    'h-4.5 w-4.5 text-neutral-10 transition-transform',
-                    langOpen ? '-rotate-90' : 'rotate-90',
-                  )}
-                  strokeWidth={2}
-                />
-              </button>
-
-              {langOpen && (
-                <ul
-                  role="listbox"
-                  className="absolute top-full left-0 z-10 mt-2 min-w-full overflow-hidden rounded-md bg-neutral-700 shadow-lg"
-                >
-                  {LOCALES.map((l) => (
-                    <li key={l.value}>
-                      <button
-                        type="button"
-                        role="option"
-                        aria-selected={l.value === locale}
-                        onClick={() => handleLocaleChange(l.value)}
-                        className={cn(
-                          'block w-full px-4 py-3 text-left font-roboto text-[16px] text-neutral-10 transition-colors hover:bg-neutral-600',
-                          l.value === locale && 'bg-neutral-600',
-                        )}
-                      >
-                        {l.label}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
+            <LanguageSwitcher
+              variant="dark"
+              size="full"
+              className="w-[80%] max-w-120"
+              onSelect={onClose}
+            />
             <div className="flex-col flex gap-[inherit] py-2 sm:py-3">
               {NAV.map(({ href, label }) => (
                 <button

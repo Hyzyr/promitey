@@ -1,8 +1,10 @@
 import { IS_DEV } from '@/lib/dev-session';
 import { ApiError } from './api-error';
 import type {
+  LoginSuccess,
   MeResponse,
   RegionResponse,
+  TokenPair,
   VLESSSubscriptionResponse,
   StatusOK,
   StatusLinked,
@@ -34,6 +36,14 @@ const VLESS_SUBSCRIPTION: VLESSSubscriptionResponse = {
 const STATUS_OK: StatusOK = { status: 'ok' };
 
 const STATUS_LINKED: StatusLinked = { status: 'linked' };
+
+const TOKEN_PAIR: TokenPair = {
+  access_token: '__DEV_TEST_TOKEN__',
+  refresh_token: '__DEV_TEST_REFRESH_TOKEN__',
+  token_type: 'Bearer',
+};
+
+const LOGIN_SUCCESS: LoginSuccess = TOKEN_PAIR;
 
 const SITE_LINK_TOKEN: SiteLinkTokenResponse = {
   token: 'dev-site-link-token-fixture',
@@ -82,6 +92,11 @@ verb 3
 type RouteKey = `${'GET' | 'POST' | 'PUT' | 'DELETE'} ${string}`;
 
 const ROUTES: Partial<Record<RouteKey, () => unknown>> = {
+  'POST /auth/login': () => ({ ...LOGIN_SUCCESS }),
+  'POST /auth/login/totp': () => ({ ...TOKEN_PAIR }),
+  'POST /auth/refresh': () => ({ ...TOKEN_PAIR }),
+  'POST /auth/forgot-password': () => VERIFICATION_REQUIRED,
+  'POST /auth/reset-password': () => STATUS_OK,
   'GET /me': () => ME,
   'GET /vpn/region': () => ({ ...REGION }),
   'PUT /vpn/region': () => ({ ...REGION }),
@@ -120,9 +135,7 @@ export function devMockFetch<T>(path: string, method: string): T {
     return handler() as T;
   }
 
-  // Fallback: unknown endpoint in dev returns a generic ok response
-  console.warn(`[dev-mock] Unhandled route: ${key} — returning STATUS_OK`);
-  return STATUS_OK as T;
+  throw new ApiError('http', 501, `[dev-mock] Unhandled route: ${key}`, 'dev_mock_unhandled_route');
 }
 
 /** Returns a mock Response object for binary endpoints (e.g. OpenVPN config). */

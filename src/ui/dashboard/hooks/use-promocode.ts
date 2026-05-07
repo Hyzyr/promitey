@@ -9,6 +9,7 @@ import { useTranslations } from 'next-intl';
 import { activatePromocodeAction } from '../server/billing-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 import type { PromocodeActivateResponse } from '@/api/client/api-types';
 
@@ -54,6 +55,7 @@ export function usePromocode(): UsePromocodeReturn {
     setIsSubmitting(true);
     try {
       const res = await activatePromocodeAction(values.code);
+      reportForwardedServerError(res);
       if (!res.ok) {
         setServerError(mapErrorCode(res.code));
         return;

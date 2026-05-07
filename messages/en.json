@@ -285,6 +285,7 @@
       "home": "Home",
       "servers": "Servers",
       "instructions": "Instructions",
+      "configs": "Config files",
       "subscription": "Subscription",
       "profile": "Profile"
     },
@@ -294,11 +295,13 @@
       "body": "Manage access, monitor client activity and keep an eye on server health — all in one place."
     },
     "configs": {
-      "title": "Download and install a configuration file.",
+      "title": "Your configurations",
       "edit": "Edit",
       "configuration": "Configuration",
-      "howToPrompt": "Not sure how to do it?",
-      "howToCta": "Open the instructions"
+      "howToPrompt": "Not sure how to connect?",
+      "howToCta": "Go to instructions",
+      "regenerateDescription": "You can regenerate your configuration files. This will disable/block all your previous configuration files, making them inactive.",
+      "regenerateWarning": "After clicking, this operation is irreversible."
     },
     "subscription": {
       "title": "Subscription",
@@ -356,14 +359,71 @@
       "rateLimited": "Please wait a moment before recreating again"
     },
     "instructions": {
-      "title": "Connection Instructions",
-      "subtitle": "Follow these simple steps to connect your device",
-      "step": "Step",
-      "download": "Download",
-      "install": "Install",
-      "connect": "Connect",
-      "copy": "Copy",
-      "copied": "Copied!"
+      "title": "VPN connection instructions",
+      "chooseApp": "Choose which app you want to install?",
+      "sources": {
+        "title": "Official sources"
+      },
+      "stepsTitle": "Steps:",
+      "videoTitle": "Short tutorial video",
+      "videoAriaLabel": "Tutorial video placeholder",
+      "tabs": {
+        "ariaLabel": "Choose VPN client"
+      },
+      "protocols": {
+        "openvpn": {
+          "clientTitle": "OpenVPN",
+          "clientSubtitle": "Client",
+          "apps": {
+            "windows": { "title": "OpenVPN Client", "subtitle": "Download" },
+            "android": { "title": "OpenVPN Client", "subtitle": "Android" },
+            "ios": { "title": "OpenVPN Client", "subtitle": "IOS" },
+            "macos": { "title": "OpenVPN Client", "subtitle": "Mac OS" }
+          },
+          "sources": [
+            "OpenVPN Connect: https://openvpn.net/client/"
+          ],
+          "setupSteps": [
+            "Install the app",
+            "Open it",
+            "Tap \"+\"",
+            "Select \"Import\"",
+            "Upload the .ovpn file",
+            "Tap \"Connect\""
+          ]
+        },
+        "vless": {
+          "clientTitle": "v2ray",
+          "clientSubtitle": "Client",
+          "apps": {
+            "windows": { "title": "V2RayN", "subtitle": "Download" },
+            "android": { "title": "v2rayNG", "subtitle": "Android" },
+            "ios": { "title": "Shadowrocket", "subtitle": "IOS" },
+            "macos": { "title": "V2RayU", "subtitle": "Mac OS" }
+          },
+          "sources": [
+            "v2rayNG (Android): https://github.com/2dust/v2rayNG",
+            "V2RayN (Windows): https://github.com/2dust/v2rayN",
+            "V2RayU (Mac): https://github.com/yanue/V2rayU",
+            "Shadowrocket (iOS): App Store"
+          ],
+          "setupSteps": [
+            "Install and open the app",
+            "Tap \"+\" (Add)",
+            "Select:",
+            "\"Import from clipboard\" (if you have a link)",
+            "or \"Scan QR code\"",
+            "The configuration appears in the list",
+            "Tap it",
+            "Tap \"Connect\""
+          ]
+        }
+      }
+    },
+    "errorBoundary": {
+      "title": "Something went wrong",
+      "description": "The dashboard could not finish loading this view. Please try again.",
+      "retry": "Try again"
     },
     "profile": {
       "title": "Profile",

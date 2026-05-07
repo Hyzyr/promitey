@@ -10,16 +10,17 @@ export const ConfigTile = ({ logo, label, href }: ConfigTileProps) => {
   return (
     <a
       href={href}
-      className="flex h-36.5 w-42.25 flex-col items-center justify-center gap-4.5 rounded-md bg-white px-3 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] transition-transform hover:-translate-y-0.5 lg:h-47.75 lg:w-53.75"
-      download>
+      className="flex h-48.5 w-full flex-col items-center justify-center gap-4 rounded-[13px] bg-neutral-20 p-4 transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 sm:w-53.75"
+      download
+    >
       <Image
         src={logo}
         alt=""
         width={122}
         height={122}
-        className="h-20 w-20 lg:h-30.5 lg:w-30.5"
+        className="h-30.5 w-30.5"
       />
-      <span className="text-center text-sm font-roboto">{label}</span>
+      <span className="text-center text-sm font-manrope">{label}</span>
     </a>
   );
 };

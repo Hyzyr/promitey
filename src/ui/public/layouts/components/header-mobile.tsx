@@ -13,16 +13,6 @@ export interface HeaderMobileProps {
   isAuthenticated?: boolean;
 }
 
-/**
- * Mobile header bar — Figma node 6529:29140.
- *
- * Notes:
- * - Figma's 88px height reserved space for the phone status bar / notch.
- *   In the browser we hug content and rely on env(safe-area-inset-top)
- *   for iOS notch padding instead.
- * - Hides on scroll-down, reveals on scroll-up (matches desktop behavior).
- * - Stays mounted while menu is open so the close X is reachable.
- */
 export const HeaderMobile = ({ isAuthenticated = false }: HeaderMobileProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isVisible, isAtTop } = useHeaderScroll();

@@ -15,20 +15,26 @@ function getBaseUrl(): string {
   if (!url) {
     throw new Error('[api] API_BASE_URL environment variable is not set.');
   }
-  return url;
+  return url.replace(/\/$/, '');
 }
 
 async function request(path: string, options: RequestOptions = {}): Promise<Response> {
   const { method = 'GET', body, token, headers = {} } = options;
 
+  const requestHeaders: Record<string, string> = {
+    Accept: 'application/json',
+    ...headers,
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
+
+  if (body !== undefined) {
+    requestHeaders['Content-Type'] = 'application/json';
+  }
+
   const init: RequestInit = {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      ...headers,
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    },
+    headers: requestHeaders,
+    cache: token ? 'no-store' : 'default',
   };
 
   if (body !== undefined) {
@@ -74,5 +80,8 @@ export async function apiFetchBinary(path: string, options: RequestOptions = {})
   if (IS_DEV && options.token === DEV_TOKEN_SENTINEL) {
     return devMockFetchBinary(path);
   }
-  return request(path, options);
+  return request(path, {
+    ...options,
+    headers: { Accept: 'application/octet-stream', ...options.headers },
+  });
 }

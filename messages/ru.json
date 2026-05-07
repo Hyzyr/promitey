@@ -285,6 +285,7 @@
       "home": "Главная",
       "servers": "Серверы",
       "instructions": "Инструкции",
+      "configs": "Файлы конфигурации",
       "subscription": "Подписка",
       "profile": "Профиль"
     },
@@ -294,11 +295,13 @@
       "body": "Управляйте доступами, отслеживайте активность клиентов и следите за состоянием серверов в одном месте."
     },
     "configs": {
-      "title": "Загрузите и установите файл конфигурации.",
+      "title": "Ваши конфигурации",
       "edit": "Редактировать",
       "configuration": "Конфигурация",
       "howToPrompt": "Не знаете, как это сделать?",
-      "howToCta": "Перейти к инструкциям"
+      "howToCta": "Перейти к инструкциям",
+      "regenerateDescription": "Вы можете повторно сгенерировать свои конфигурационные файлы. Это отключит/заблокирует все ваши предыдущие конфигурационные файлы, сделав их неактивными.",
+      "regenerateWarning": "После нажатия эта операция необратима."
     },
     "subscription": {
       "title": "Подписка",
@@ -356,14 +359,71 @@
       "rateLimited": "Пожалуйста, подождите немного перед повторным созданием"
     },
     "instructions": {
-      "title": "Инструкции по подключению",
-      "subtitle": "Следуйте этим простым шагам, чтобы подключить устройство",
-      "step": "Шаг",
-      "download": "Скачать",
-      "install": "Установить",
-      "connect": "Подключиться",
-      "copy": "Копировать",
-      "copied": "Скопировано!"
+      "title": "Инструкции по подключению VPN",
+      "chooseApp": "Выберите, какое приложение вы хотите установить?",
+      "sources": {
+        "title": "Официальные источники"
+      },
+      "stepsTitle": "Шаги:",
+      "videoTitle": "Краткое обучающее видео",
+      "videoAriaLabel": "Заглушка обучающего видео",
+      "tabs": {
+        "ariaLabel": "Выбор VPN-клиента"
+      },
+      "protocols": {
+        "openvpn": {
+          "clientTitle": "OpenVPN",
+          "clientSubtitle": "Client",
+          "apps": {
+            "windows": { "title": "OpenVPN Client", "subtitle": "Скачать" },
+            "android": { "title": "OpenVPN Client", "subtitle": "Android" },
+            "ios": { "title": "OpenVPN Client", "subtitle": "IOS" },
+            "macos": { "title": "OpenVPN Client", "subtitle": "Mac OS" }
+          },
+          "sources": [
+            "OpenVPN Connect: https://openvpn.net/client/"
+          ],
+          "setupSteps": [
+            "Установите приложение",
+            "Откройте его",
+            "Нажмите \"+\"",
+            "Выберите \"Import\"",
+            "Загрузите .ovpn файл",
+            "Нажмите \"Connect\""
+          ]
+        },
+        "vless": {
+          "clientTitle": "v2ray",
+          "clientSubtitle": "Client",
+          "apps": {
+            "windows": { "title": "V2RayN", "subtitle": "Скачать" },
+            "android": { "title": "v2rayNG", "subtitle": "Android" },
+            "ios": { "title": "Shadowrocket", "subtitle": "IOS" },
+            "macos": { "title": "V2RayU", "subtitle": "Mac OS" }
+          },
+          "sources": [
+            "v2rayNG (Android): https://github.com/2dust/v2rayNG",
+            "V2RayN (Windows): https://github.com/2dust/v2rayN",
+            "V2RayU (Mac): https://github.com/yanue/V2rayU",
+            "Shadowrocket (iOS): App Store"
+          ],
+          "setupSteps": [
+            "Установите и откройте приложение",
+            "Нажмите \"+\" (Добавить)",
+            "Выберите:",
+            "\"Импорт из буфера обмена\" (если у вас ссылка)",
+            "или \"Сканировать QR-код\"",
+            "Конфигурация появится в списке",
+            "Нажмите на неё",
+            "Нажмите \"Подключиться\""
+          ]
+        }
+      }
+    },
+    "errorBoundary": {
+      "title": "Что-то пошло не так",
+      "description": "Панель управления не смогла загрузить этот раздел. Попробуйте ещё раз.",
+      "retry": "Повторить"
     },
     "profile": {
       "title": "Профиль",

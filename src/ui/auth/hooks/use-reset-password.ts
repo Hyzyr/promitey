@@ -10,6 +10,7 @@ import { useRouter } from '@/i18n/navigation';
 import { resetPasswordAction } from '../server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 interface ResetPasswordValues {
   password: string;
@@ -58,6 +59,7 @@ export function useResetPassword(email: string, code: string): UseResetPasswordR
       code,
       new_password: values.password,
     });
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;

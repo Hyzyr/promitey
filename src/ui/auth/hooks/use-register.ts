@@ -11,6 +11,7 @@ import { useRouter } from '@/i18n/navigation';
 import { registerAction } from '../server/auth-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 import {
   PRICING_PLAN_QUERY_PARAM,
   getSelectedPricingPlanFromSearch,
@@ -63,6 +64,7 @@ export function useRegister(): UseRegisterReturn {
   const onSubmit = async (values: RegisterValues) => {
     setServerError(null);
     const result = await registerAction({ email: values.email, password: values.password });
+    reportForwardedServerError(result);
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;

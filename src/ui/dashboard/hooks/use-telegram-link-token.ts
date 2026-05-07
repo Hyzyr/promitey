@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { getTelegramLinkTokenAction } from '../server/profile-actions';
 
 import { mapApiError } from '@/lib/api-error';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 import type { SiteLinkTokenResponse } from '@/api/client/api-types';
 
@@ -26,6 +27,7 @@ export function useTelegramLinkToken(): UseTelegramLinkTokenReturn {
     setError(null);
     setLoading(true);
     const result = await getTelegramLinkTokenAction();
+    reportForwardedServerError(result);
     setLoading(false);
     if (!result.ok) {
       setError(mapApiError(result.code, tErrors));
