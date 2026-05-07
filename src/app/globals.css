@@ -135,6 +135,7 @@ body {
   --container-padding-x-lg: 3rem; /* 48px — large tablet/small desktop 1024px+ */
 
   /* Explicitly define the sequence to ensure the cascade order */
+  --breakpoint-sm: 32rem; /* 512px */
   --breakpoint-md: 48rem; /* 768px */
   --breakpoint-mdx: 54rem; /* 864px */
   --breakpoint-lg: 64rem; /* 1024px */
@@ -143,7 +144,7 @@ body {
   --breakpoint-xlx: 82rem; /* 1312px */
 }
 /* Define it once at the top level */
-@variant md-lgx {
+@custom-variant md-lgx {
   @media (width >= 48rem) and (width < 72.5rem) {
     @slot;
   }
@@ -189,19 +190,83 @@ body {
 }
 @utility glass {
   background: linear-gradient(
-    176.11deg,
-    rgba(255, 255, 255, 0.075) 7.1%,
-    rgba(254, 243, 139, 0.135) 42.8%,
-    rgba(254, 243, 139, 0.15) 67%,
-    rgba(255, 255, 255, 0.03) 95.5%
-  );
+      160.98deg,
+      rgba(255, 255, 255, 0.075) 7.11%,
+      rgba(254, 243, 139, 0.135) 42.81%,
+      rgba(254, 243, 139, 0.15) 67.04%,
+      rgba(255, 255, 255, 0.03) 95.51%
+    ),
+    rgba(255, 255, 255, 0.01);
   box-shadow:
-    0.25em 1em 0.85em rgba(0, 0, 0, 0.05),
+    4px 11px 11px rgba(0, 0, 0, 0.05),
     inset -0.5px 0.5px 1.5px rgba(255, 255, 255, 0.77),
-    inset 0.5px -0.5px 1px rgba(0, 0, 0, 0.16),
+    inset 0.5px -0.5px 1px rgba(0, 0, 0, 0.6),
     inset 0px 4px 9.4px rgba(255, 255, 255, 0.25);
   border: 0.5px solid rgba(255, 255, 255, 0.25);
 }
+
+@utility discount-badge-glass {
+  background: linear-gradient(
+    169.87deg,
+    rgba(255, 255, 255, 0.12) 7.1%,
+    rgba(255, 109, 65, 0.24) 42.8%,
+    rgba(255, 109, 65, 0.24) 67%,
+    rgba(255, 255, 255, 0.048) 95.5%
+  );
+  backdrop-filter: blur(4.4px);
+  box-shadow:
+    4px 11px 11px 0px rgba(0, 0, 0, 0.05),
+    inset 0px -0.6px 1.3px rgba(0, 0, 0, 0.25),
+    inset 0px 7px 8.7px rgba(255, 255, 255, 0.8),
+    inset 0px -0.5px 2px 1px rgba(255, 255, 255, 0.5);
+}
+
+@utility text-glow-yellow {
+  text-shadow: 0px 4px 8.4px rgba(254, 243, 139, 0.17);
+}
+
+@utility pricing-offer-text {
+  background-image: linear-gradient(
+    182.28deg,
+    var(--color-neutral-10) 41.4%,
+    var(--color-yellow-100) 97.7%
+  );
+}
+
+@utility gpu-layer {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+@utility video-card-gradient {
+  background: linear-gradient(
+    180deg,
+    rgba(34, 34, 34, 0) 62.5%,
+    rgba(34, 34, 34, 0.015) 81.25%,
+    rgba(34, 34, 34, 0.5) 100%
+  );
+}
+
+@utility video-toggle-motion {
+  transition:
+    top 400ms cubic-bezier(0.4, 0, 0.2, 1),
+    right 400ms cubic-bezier(0.4, 0, 0.2, 1),
+    translate 400ms cubic-bezier(0.4, 0, 0.2, 1),
+    scale 480ms cubic-bezier(0.34, 1.56, 0.64, 1) 220ms,
+    background-color 150ms ease,
+    filter 150ms ease;
+}
+
+@utility fog-backdrop {
+  @apply bg-neutral-900/60 backdrop-blur-xs;
+  will-change: opacity;
+}
+
+@utility bottom-sheet-shadow {
+  box-shadow: 0px -7px 30.2px 0px rgba(0, 0, 0, 0.12);
+}
+
 @utility bg {
   @apply pointer-events-none absolute inset-0 isolate -z-1;
 }
@@ -212,7 +277,7 @@ body {
 
 @utility benefit-card-shell {
   @apply relative isolate flex min-h-[38vh] flex-col overflow-hidden;
-  @apply rounded-[16px] border bg-neutral-20 transition-colors duration-200;
+  @apply rounded-md border bg-neutral-20 transition-colors duration-200;
   @apply px-4 py-5 md:px-5 md:py-6 lg:px-4 lgx:px-3 lgx:py-3 xl:px-4 xl:py-5;
 
   /* .bgitem {

@@ -16,7 +16,6 @@ export type PricingCardProps = {
   label: string;
   originalPrice?: string;
   price: string;
-  priceColor?: string;
   discount?: string;
   perMonth?: string;
   period: string;
@@ -32,7 +31,6 @@ export const PricingCard = ({
   label,
   originalPrice,
   price,
-  priceColor = '#2b2929',
   discount,
   perMonth,
   period,
@@ -55,7 +53,7 @@ export const PricingCard = ({
       <article
         className={cn(
           'relative flex w-full flex-col',
-          'overflow-hidden rounded-[12px] bg-neutral-20 lgx:rounded-lg',
+          'overflow-hidden rounded-sm bg-neutral-20 lgx:rounded-lg',
           'px-3 pt-5.5 pb-4 md:px-6 md:py-8 lgx:px-4 lgx:py-5 xl:px-6 xl:py-8',
           'gap-4 lgx:gap-4',
           'shadow-[0px_20px_32px_0px_rgba(0,0,0,0.06)]',
@@ -84,11 +82,10 @@ export const PricingCard = ({
         >
           <strong
             className={cn(
-              'font-manrope font-extrabold whitespace-nowrap text-[#2b2929] uppercase',
+              'text-glow-yellow font-manrope font-extrabold whitespace-nowrap text-neutral-800 uppercase',
               'text-[14px] md:text-[18px] lgx:text-[22px] xl:text-[24px]',
               'leading-none tracking-[-0.42px] lgx:tracking-[-0.72px]',
             )}
-            style={{ textShadow: '0px 4px 8.4px rgba(254,243,139,0.17)' }}
           >
             {label}
           </strong>
@@ -108,11 +105,9 @@ export const PricingCard = ({
               'text-[56px] md:text-[64px] lgx:text-[86px]',
               'leading-[0.8] lgx:leading-none',
               'tracking-[-1.68px] lgx:tracking-[-2.58px]',
+              'text-glow-yellow',
+              featured ? 'text-primary-600' : 'text-neutral-800',
             )}
-            style={{
-              color: featured ? '#e8633b' : priceColor,
-              textShadow: '0px 4px 8.4px rgba(254,243,139,0.17)',
-            }}
           >
             {price}
           </span>

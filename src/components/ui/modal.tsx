@@ -18,6 +18,7 @@ export interface ModalProps {
   ariaLabel: string;
   /** aria-label for the ✕ close button — pass `t('common.close')`. */
   closeAriaLabel: string;
+  showCloseButton?: boolean;
   className?: string;
 }
 
@@ -28,6 +29,7 @@ export const Modal = ({
   children,
   ariaLabel,
   closeAriaLabel,
+  showCloseButton = false,
   className,
 }: ModalProps) => {
   const { lock, unlock } = useScrollLock();
@@ -59,11 +61,11 @@ export const Modal = ({
     : 'absolute bottom-0 left-0 right-0';
 
   const panelClass = cn(
-    'relative flex flex-col gap-6',
+    'gpu-layer relative flex flex-col gap-6',
     'bg-neutral-800',
     isDesktop
-      ? 'rounded-sm px-8 py-8 shadow-[0px_8px_40px_rgba(0,0,0,0.35)] w-full max-w-md'
-      : 'rounded-tl-2xl rounded-tr-2xl px-8 pt-8 pb-10 shadow-[0px_-7px_30.2px_0px_rgba(0,0,0,0.12)] max-h-[90vh] overflow-y-auto',
+      ? 'w-full max-w-md rounded-sm px-8 py-8 shadow-[0px_8px_40px_rgba(0,0,0,0.35)]'
+      : 'bottom-sheet-shadow max-h-[90vh] overflow-y-auto rounded-tl-2xl rounded-tr-2xl px-8 pt-8 pb-10',
     className,
   );
 
@@ -78,7 +80,7 @@ export const Modal = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[rgba(32,30,30,0.6)] backdrop-blur-xs"
+            className="fog-backdrop absolute inset-0"
             aria-hidden="true"
           />
 
@@ -94,15 +96,16 @@ export const Modal = ({
               aria-modal="true"
               aria-label={ariaLabel}
             >
-              {/* Close button */}
-              <button
-                type="button"
-                onClick={onClose}
-                aria-label={closeAriaLabel}
-                className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center text-primary-500 transition-transform active:scale-90"
-              >
-                <X className="h-7 w-7" strokeWidth={2} />
-              </button>
+              {showCloseButton && (
+                <button
+                  type="button"
+                  onClick={onClose}
+                  aria-label={closeAriaLabel}
+                  className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center text-primary-500 transition-transform active:scale-90"
+                >
+                  <X className="h-7 w-7" strokeWidth={2} />
+                </button>
+              )}
 
               {title && (
                 <h2 className="font-manrope font-bold text-[22px] leading-tight tracking-[-0.44px] text-neutral-10 pr-8">

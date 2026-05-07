@@ -48,6 +48,7 @@
       "login": "Войти",
       "dashboard": "Кабинет",
       "menu": "Меню",
+      "closeMenu": "Закрыть меню",
       "nav": {
         "benefits": "Преимущества",
         "pricing": "Тарифы",
@@ -101,6 +102,9 @@
     },
     "testimonials": {
       "title": "Что говорят наши пользователи",
+      "previousLabel": "Предыдущий отзыв",
+      "nextLabel": "Следующий отзыв",
+      "dotLabel": "Перейти к отзыву {number}",
       "items": [
         {
           "name": "Михаил С.",

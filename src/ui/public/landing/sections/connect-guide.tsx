@@ -76,17 +76,16 @@ export const ConnectGuide = () => {
                         stiffness: 120,
                         damping: 20,
                       }}
-                      className="absolute left-0 w-1.25 rounded-sm bg-[#2b2929] mdx:w-1.25"
+                      className="absolute left-0 w-1.25 rounded-sm bg-neutral-800 mdx:w-1.25"
                     />
                   </div>
                   {steps.map((text, i) => (
                     <p
                       key={i}
-                      className={
-                        activeStep === i
-                          ? 'leading-[1.3] text-[#2b2929] transition-colors duration-300'
-                          : 'leading-[1.3] text-neutral-80 transition-colors duration-300'
-                      }
+                      className={cn(
+                        'leading-[1.3] transition-colors duration-300',
+                        activeStep === i ? 'text-neutral-800' : 'text-neutral-80',
+                      )}
                     >
                       {text}
                     </p>
@@ -104,8 +103,8 @@ export const ConnectGuide = () => {
                 <div
                   className={cn(
                     'aspect-1506/858 h-auto w-full mdx:absolute mdx:top-1/2 mdx:left-0 mdx:h-full mdx:max-h-80 mdx:w-auto mdx:-translate-y-1/2',
-                    'rounded-[16px] mdx:rounded-2xl xl:rounded-3xl',
-                    'overflow-hidden bg-[#2b2929]',
+                    'rounded-md mdx:rounded-2xl xl:rounded-3xl',
+                    'overflow-hidden bg-neutral-800',
                   )}
                 >
                   <img

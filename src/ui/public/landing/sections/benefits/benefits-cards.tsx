@@ -106,7 +106,7 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
           <Button
             variant="default"
             size="md"
-            className="rounded-[16px]! px-8! py-4! text-[18px]! lgx:py-3.5!"
+            className="rounded-md! px-8! py-4! text-[18px]! lgx:py-3.5!"
           >
             {t('cta')}
           </Button>

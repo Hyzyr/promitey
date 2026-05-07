@@ -20,6 +20,7 @@ export function useTestimonialsCarousel() {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isInteractionPaused, setIsInteractionPaused] = useState(false);
 
   const userInteractedRef = useRef(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -28,10 +29,13 @@ export function useTestimonialsCarousel() {
     if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
     idleTimerRef.current = setTimeout(() => {
       userInteractedRef.current = false;
+      setIsInteractionPaused(false);
+      if (!emblaApi || !isVisible) return;
+      emblaApi.scrollNext();
       setIsAutoPlaying(true);
       autoplayPlugin.play();
     }, IDLE_RESUME_DELAY);
-  }, [autoplayPlugin]);
+  }, [autoplayPlugin, emblaApi, isVisible]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -56,6 +60,7 @@ export function useTestimonialsCarousel() {
   const handleUserInteraction = useCallback(() => {
     userInteractedRef.current = true;
     setIsAutoPlaying(false);
+    setIsInteractionPaused(true);
     autoplayPlugin.stop();
     scheduleIdleResume();
   }, [autoplayPlugin, scheduleIdleResume]);
@@ -83,14 +88,32 @@ export function useTestimonialsCarousel() {
     if (!emblaApi) return;
     if (isVisible) {
       if (!userInteractedRef.current) {
+        setIsInteractionPaused(false);
         setIsAutoPlaying(true);
         autoplayPlugin.play();
+      } else {
+        setIsAutoPlaying(false);
+        setIsInteractionPaused(true);
+        autoplayPlugin.stop();
+        scheduleIdleResume();
       }
     } else {
-      startTransition(() => setIsAutoPlaying(false));
+      if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
+      startTransition(() => {
+        setIsAutoPlaying(false);
+        setIsInteractionPaused(false);
+      });
       autoplayPlugin.stop();
     }
-  }, [isVisible, emblaApi, autoplayPlugin]);
+  }, [isVisible, emblaApi, autoplayPlugin, scheduleIdleResume]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on('pointerDown', handleUserInteraction);
+    return () => {
+      emblaApi.off('pointerDown', handleUserInteraction);
+    };
+  }, [emblaApi, handleUserInteraction]);
 
   return {
     emblaRef,
@@ -98,6 +121,8 @@ export function useTestimonialsCarousel() {
     selectedIndex,
     activeDotIndex: selectedIndex % TESTIMONIALS.length,
     isAutoPlaying,
+    isInteractionPaused,
+    isVisible,
     scrollPrev,
     scrollNext,
     scrollTo,

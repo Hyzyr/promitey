@@ -1,21 +1,35 @@
-"use client";
+'use client';
 
-import Lenis from "lenis";
-import { createContext, startTransition, useContext, useEffect, useState } from "react";
-import { useWindowResize } from "@/hooks/use-window-resize";
+import Lenis from 'lenis';
+import { createContext, startTransition, useContext, useEffect, useState } from 'react';
 
-type ScrollToOptions = {
+import { useWindowResize } from '@/hooks/use-window-resize';
+
+export type ScrollToOptions = {
   offset?: number;
   duration?: number;
   easing?: (t: number) => number;
 };
 
-type LenisContextValue = {
+export type LenisContextValue = {
   lenis: Lenis | null;
   scrollTo: (target: string | number, options?: ScrollToOptions) => void;
 };
 
 const LenisContext = createContext<LenisContextValue | null>(null);
+
+const nativeScrollTo = (target: string | number, options?: ScrollToOptions) => {
+  if (typeof target === 'number') {
+    window.scrollTo({ top: target + (options?.offset ?? 0), behavior: 'smooth' });
+    return;
+  }
+
+  const element = document.querySelector(target);
+  if (!element) return;
+
+  const top = element.getBoundingClientRect().top + window.scrollY + (options?.offset ?? 0);
+  window.scrollTo({ top, behavior: 'smooth' });
+};
 
 export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   const [lenis, setLenis] = useState<Lenis | null>(null);
@@ -49,7 +63,10 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const scrollTo = (target: string | number, options?: ScrollToOptions) => {
-    if (!lenis) return;
+    if (!lenis) {
+      nativeScrollTo(target, options);
+      return;
+    }
     lenis.scrollTo(target, options);
   };
 
@@ -60,20 +77,15 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-/**
- * Hook to access Lenis smooth scroll instance and methods.
- * Must be used within LenisProvider.
- * 
- * @example
- * const { scrollTo } = useLenis();
- * scrollTo('#section', { offset: -100, duration: 1.5 });
- */
-export function useLenis() {
+export function useLenis(): LenisContextValue {
   const context = useContext(LenisContext);
-  
-  if (!context) {
-    throw new Error('useLenis must be used within LenisProvider');
+
+  if (context) {
+    return context;
   }
-  
-  return context;
+
+  return {
+    lenis: null,
+    scrollTo: nativeScrollTo,
+  };
 }

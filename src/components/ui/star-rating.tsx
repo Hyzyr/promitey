@@ -1,12 +1,13 @@
 import { startColorfullSVG } from '@/components/assets';
+import { cn } from '@/lib/utils';
 
-type StarRatingProps = {
+export interface StarRatingProps {
   rating: number;
   maxStars?: number;
   className?: string;
   starSize?: string;
   inactiveOpacity?: number;
-};
+}
 
 export const StarRating = ({
   rating,
@@ -29,7 +30,7 @@ export const StarRating = ({
   };
 
   return (
-    <div className={`flex items-center gap-0.5 ${className}`}>
+    <div className={cn('flex items-center gap-0.5', className)}>
       {stars.map((_, index) => (
         <span
           key={index}

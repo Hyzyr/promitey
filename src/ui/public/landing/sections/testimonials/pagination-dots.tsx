@@ -1,22 +1,28 @@
 'use client';
 
-type PaginationDotsProps = {
+import { useTranslations } from 'next-intl';
+
+import { cn } from '@/lib/utils';
+
+export interface PaginationDotsProps {
   count: number;
   activeIndex: number;
   progressKey: number;
-  isAutoPlaying: boolean;
+  showProgress: boolean;
   autoplayDelay: number;
   onDotClick: (index: number) => void;
-};
+}
 
 export const PaginationDots = ({
   count,
   activeIndex,
   progressKey,
-  isAutoPlaying,
+  showProgress,
   autoplayDelay,
   onDotClick,
 }: PaginationDotsProps) => {
+  const t = useTranslations('landing.testimonials');
+
   return (
     <div className="flex gap-4 items-center">
       {Array.from({ length: count }, (_, i) => {
@@ -25,25 +31,22 @@ export const PaginationDots = ({
           <button
             key={i}
             onClick={() => onDotClick(i)}
-            aria-label={`Go to testimonial ${i + 1}`}
+            aria-label={t('dotLabel', { number: i + 1 })}
             aria-current={isActive ? 'true' : undefined}
-            className="relative overflow-hidden rounded-full cursor-pointer shrink-0 transition-[width] duration-300"
-            style={{
-              width: isActive ? '72px' : '42px',
-              height: '5px',
-              background: '#e2e2e2',
-            }}>
-            {isActive && (
+            className={cn(
+              'relative h-1.25 shrink-0 cursor-pointer overflow-hidden rounded-full transition-[width] duration-300',
+              isActive ? 'w-18' : 'w-10.5',
+              isActive && !showProgress ? 'bg-neutral-800' : 'bg-neutral-40',
+            )}>
+            {isActive && showProgress && (
               <span
                 key={progressKey}
-                className="absolute inset-y-0 left-0 rounded-full"
+                className="absolute inset-y-0 left-0 rounded-full bg-neutral-800 will-change-[width]"
                 style={{
                   animationName: 'progress-fill',
                   animationDuration: `${autoplayDelay}ms`,
                   animationTimingFunction: 'linear',
                   animationFillMode: 'forwards',
-                  animationPlayState: isAutoPlaying ? 'running' : 'paused',
-                  background: '#2b2929',
                 }}
               />
             )}
@@ -52,4 +55,4 @@ export const PaginationDots = ({
       })}
     </div>
   );
-}
+};

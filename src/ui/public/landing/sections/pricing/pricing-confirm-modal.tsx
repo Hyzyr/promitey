@@ -74,8 +74,10 @@ export const PricingConfirmModal = ({
         )}
 
         <p
-          className="font-montserrat font-bold text-[48px] leading-none tracking-[-1.68px]"
-          style={{ color: featured ? '#e8633b' : '#fbfbfb' }}>
+          className={cn(
+            'font-montserrat text-[48px] leading-none font-bold tracking-[-1.68px]',
+            featured ? 'text-primary-600' : 'text-neutral-10',
+          )}>
           {price}
         </p>
 

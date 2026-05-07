@@ -93,7 +93,7 @@ export const BenefitsSection = () => {
             <Button
               variant="orange"
               size="md"
-              className="px-8! py-4! text-[18px]! rounded-[16px]! text-neutral-900!">
+              className="rounded-md! px-8! py-4! text-[18px]! text-neutral-900!">
               {tRules('cta')}
             </Button>
           </div>

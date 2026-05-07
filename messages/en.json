@@ -48,6 +48,7 @@
       "login": "Log in",
       "dashboard": "Dashboard",
       "menu": "Menu",
+      "closeMenu": "Close menu",
       "nav": {
         "benefits": "Benefits",
         "pricing": "Pricing",
@@ -101,6 +102,9 @@
     },
     "testimonials": {
       "title": "What our users are saying",
+      "previousLabel": "Previous testimonial",
+      "nextLabel": "Next testimonial",
+      "dotLabel": "Go to testimonial {number}",
       "items": [
         {
           "name": "Mikhail S.",

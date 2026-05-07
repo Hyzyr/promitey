@@ -58,7 +58,7 @@ export const HeroSection = () => {
 
           <p
             className={cn(
-              'font-roboto font-normal text-[#2b2929] text-center',
+              'text-center font-roboto font-normal text-neutral-800',
               'text-[16px] md:text-[18px] lg:text-[21px] xl:text-[24px]',
               'leading-[1.4] tracking-[-0.32px] md:tracking-[-0.4px] xl:tracking-[-0.48px]',
               'max-w-full md:max-w-150 xl:max-w-198.5',
@@ -73,20 +73,19 @@ export const HeroSection = () => {
             size="lg"
             href="/register"
             className={cn(
-              'px-8! py-4! text-[18px]! rounded-[16px]!',
+              'rounded-md! px-8! py-4! text-[18px]! shadow-[4px_11px_5.5px_rgba(0,0,0,0.05)]',
               'md:px-12! md:py-4.5! md:text-[20px]!',
               'xl:px-16.5! xl:py-4! xl:text-[22px]! xl:rounded-lg!',
-            )}
-            style={{ boxShadow: '4px 11px 5.5px rgba(0,0,0,0.05)' }}>
+            )}>
             {t('ctaPrimary')}
           </Button>
 
           <Button
             variant="glass"
-            size="md"
+            size="sm"
             href="#guide"
             className={cn(
-              'w-52! px-4! py-2! text-[18px]! rounded-[16px]! tracking-[-0.36px]',
+              'w-52! rounded-md! px-4! py-2! text-[18px]! tracking-[-0.36px]',
               'md:w-auto! md:px-10! md:py-3.5!',
               'xl:px-16.5! xl:py-4.5! xl:text-[22px]! xl:rounded-lg!',
             )}>

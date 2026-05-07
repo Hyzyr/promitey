@@ -96,14 +96,10 @@ export const PricingSection = () => {
             >
               <strong
                 className={cn(
-                  'bg-clip-text text-center font-manrope font-bold whitespace-nowrap text-transparent lgx:font-extrabold',
+                  'pricing-offer-text bg-clip-text text-center font-manrope font-bold whitespace-nowrap text-transparent lgx:font-extrabold',
                   'text-[14px] md:text-[18px] lgx:text-[20px] xlx:text-[24px]',
                   'tracking-[0.36px] lgx:tracking-[0.56px]',
                 )}
-                style={{
-                  backgroundImage:
-                    'linear-gradient(182.28deg, rgb(251,251,251) 41.4%, rgb(254,247,177) 97.7%)',
-                }}
               >
                 {t('bestOffer')}
               </strong>
@@ -113,7 +109,6 @@ export const PricingSection = () => {
               label={t('plans.year.label')}
               originalPrice="24 €"
               price="12 €"
-              priceColor="#e8633b"
               discount="-50%"
               perMonth={t('perMonth', { value: '1' })}
               period={t('plans.year.period')}

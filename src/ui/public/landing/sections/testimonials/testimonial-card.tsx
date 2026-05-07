@@ -22,62 +22,71 @@ export const TestimonialCard = ({
   const quote = t(quoteKey as Parameters<typeof t>[0]);
   const shadow =
     'shadow-[0px_19px_11.15px_rgba(0,0,0,0.06),_0px_35px_9.7px_rgba(0,0,0,0.04)]';
+
   return (
     <div
       className={cn(
-        'relative flex shrink-0 ml-4 md:ml-4 border items-stretch md:items-center',
+        'relative ml-4 flex shrink-0 gpu-layer items-stretch border md:ml-4 md:items-center',
         'w-78.5 md:w-131.25',
         'rounded-lg md:rounded-lg',
-        'px-3 py-4 md:pl-4.5 md:pr-6 md:pb-2.5 md:pt-4.5',
+        'px-3 py-4 md:pt-4.5 md:pr-6 md:pb-2.5 md:pl-4.5',
         'gap-3 md:gap-4',
         active
-          ? 'bg-neutral-0 border-red-300 md:border-primary-400'
-          : 'bg-neutral-10 border-neutral-40',
+          ? 'border-red-300 bg-neutral-0 md:border-primary-400'
+          : 'border-neutral-40 bg-neutral-10',
         shadow,
-      )}>
-      <div
-        className="glass backdrop-blur-sm text-neutral-800 absolute
-                   -top-5.5 right-3.75 md:-top-7.75 md:right-12
-                   flex items-center justify-center rounded-full
-                   w-9 h-9 md:w-15 md:h-15">
+      )}
+    >
+      <div className="absolute -top-5.5 right-3.75 flex h-9 w-9 items-center justify-center rounded-full text-neutral-800 glass backdrop-blur-sm md:-top-7.75 md:right-12 md:h-15 md:w-15">
         <span className="icon text-[14px] md:text-[24px]">{quoteSVG}</span>
       </div>
 
-      <div className="relative shrink-0 self-end md:self-auto rounded-lg md:rounded-md w-17.5 h-19.25 md:w-42.5 md:h-47.5 overflow-hidden">
+      <div className="relative hidden h-19.25 w-17.5 shrink-0 self-end overflow-hidden rounded-lg md:flex md:h-47.5 md:w-42.5 md:self-auto md:rounded-md">
         <img
           src={photo}
           alt={name}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full rounded-[inherit] object-cover"
+          className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
         />
-        <div className="absolute glass backdrop-blur-sm text-neutral-800 bottom-1 left-1 md:bottom-2 md:left-2.5 flex items-center justify-center w-5 h-5 md:w-7.5 md:h-7.5 rounded-full">
-          <span className="icon text-neutral-60 text-[10px] md:text-[12px]">
+        <div className="absolute bottom-1 left-1 flex h-5 w-5 items-center justify-center rounded-full text-neutral-800 glass backdrop-blur-sm md:bottom-2 md:left-2.5 md:h-7.5 md:w-7.5">
+          <span className="icon text-[10px] text-neutral-60 md:text-[12px]">
             {instaSVG}
           </span>
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-4.5 md:gap-3 pt-0 md:pt-4 h-full min-w-0">
-        <p className="flex-1 font-montserrat font-normal text-[14px] md:text-[16px] leading-[1.6] text-[#6c6b6b]">
+      <div className="flex h-full min-w-0 flex-1 flex-col gap-4.5 pt-0 md:gap-3 md:pt-4">
+        <p className="flex-1 font-montserrat text-[14px] leading-[1.6] font-normal text-neutral-300 md:text-[16px]">
           {quote}
         </p>
         <div className="border-t border-neutral-40" />
-        <div className="flex flex-col gap-1.5 md:gap-1.5">
-          <div className="md:hidden">
-            <StarRating rating={rating} />
+        <div className="flex gap-3">
+          <div className="rounded-[50%] relative flex h-15 w-15 shrink-0 self-end overflow-hidden md:hidden">
+            <img
+              src={photo}
+              alt={name}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
+            />
           </div>
-          <div className="flex items-center gap-2 md:gap-4">
-            <strong className="flex-1 font-manrope font-bold text-[18px] md:text-[18px] leading-[1.1] text-[#2b2929] whitespace-nowrap overflow-hidden text-ellipsis">
-              {name}
-            </strong>
-            <div className="hidden md:flex shrink-0 ">
+          <div className="flex flex-col gap-1.5 md:gap-1.5">
+            <div className="md:hidden">
               <StarRating rating={rating} />
             </div>
+            <div className="flex items-center gap-2 md:gap-4">
+              <strong className="flex-1 overflow-hidden font-manrope text-[18px] leading-[1.1] font-bold text-ellipsis whitespace-nowrap text-neutral-800 md:text-[18px]">
+                {name}
+              </strong>
+              <div className="hidden shrink-0 md:flex">
+                <StarRating rating={rating} />
+              </div>
+            </div>
+            <p className="font-manrope text-[14px] leading-[1.1] font-medium text-neutral-600 md:text-[14px]">
+              {role}
+            </p>
           </div>
-          <p className="font-manrope font-medium text-[14px] md:text-[14px] leading-[1.1] text-neutral-600">
-            {role}
-          </p>
         </div>
       </div>
     </div>

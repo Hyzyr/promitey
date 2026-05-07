@@ -1,20 +1,23 @@
 'use client';
 
 import { LucideChevronLeft, LucideChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
-type NavigationArrowsProps = {
+export interface NavigationArrowsProps {
   onPrev: () => void;
   onNext: () => void;
-};
+}
 
 export const NavigationArrows = ({ onPrev, onNext }: NavigationArrowsProps) => {
-  const buttonClass = "glass relative flex h-12 w-12 items-center justify-center rounded-[36px] cursor-pointer transition-all duration-150 hover:brightness-110 active:scale-95 active:brightness-95";
+  const t = useTranslations('landing.testimonials');
+  const buttonClass =
+    'glass relative flex h-12 w-12 cursor-pointer items-center justify-center rounded-full transition-all duration-150 hover:brightness-110 active:scale-95 active:brightness-95';
 
   return (
     <div className="flex gap-4 md:gap-1">
       <button
         onClick={onPrev}
-        aria-label={'Previous testimonial'}
+        aria-label={t('previousLabel')}
         className={buttonClass}>
         <span className="icon text-[20px] text-neutral-900">
           <LucideChevronLeft />
@@ -22,7 +25,7 @@ export const NavigationArrows = ({ onPrev, onNext }: NavigationArrowsProps) => {
       </button>
       <button
         onClick={onNext}
-        aria-label={'Next testimonial'}
+        aria-label={t('nextLabel')}
         className={buttonClass}>
         <span className="icon text-[20px] text-neutral-900">
           <LucideChevronRight />

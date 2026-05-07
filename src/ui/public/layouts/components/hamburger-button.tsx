@@ -1,9 +1,11 @@
 'use client';
 
-import { Menu, X } from 'lucide-react';
+import { Menu } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+
 import { cn } from '@/lib/utils';
 
-interface HamburgerButtonProps {
+export interface HamburgerButtonProps {
   isOpen: boolean;
   onClick: () => void;
   className?: string;
@@ -11,14 +13,16 @@ interface HamburgerButtonProps {
 
 /**
  * Header menu toggle button — Figma node 6529:29161 (lucide/menu, 32px, orange).
- * Static menu/X icon, no morphing animation.
+ * Static menu icon, no morphing animation.
  */
 export const HamburgerButton = ({ isOpen, onClick, className }: HamburgerButtonProps) => {
+  const t = useTranslations('landing.header');
+
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label={isOpen ? 'Close menu' : 'Open menu'}
+      aria-label={isOpen ? t('closeMenu') : t('menu')}
       aria-expanded={isOpen}
       className={cn(
         'relative flex h-8 w-8 items-center justify-center text-primary-500',
@@ -27,11 +31,7 @@ export const HamburgerButton = ({ isOpen, onClick, className }: HamburgerButtonP
         className,
       )}
     >
-      {isOpen ? (
-        <X className="h-8 w-8" strokeWidth={2} />
-      ) : (
-        <Menu className="h-8 w-8" strokeWidth={2} />
-      )}
+      <Menu className="h-8 w-8" strokeWidth={2} />
     </button>
   );
 };

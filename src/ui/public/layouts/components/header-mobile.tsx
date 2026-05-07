@@ -40,7 +40,7 @@ export const HeaderMobile = ({ isAuthenticated = false }: HeaderMobileProps) => 
         animate={{ y: showHeader ? 0 : '-100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 220 }}
         className={cn(
-          'fixed left-0 right-0 top-0 z-50',
+          'gpu-layer fixed top-0 right-0 left-0 z-50',
           'flex items-center justify-between',
           'bg-neutral-900/95 backdrop-blur-[24.75px]',
           'px-5 py-3 pt-[max(0.75rem,env(safe-area-inset-top))]',

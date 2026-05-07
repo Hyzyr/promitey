@@ -6,7 +6,7 @@ export const PricingBg = () => {
     <div
       className={cn(
         'absolute inset-0',
-        'bg-neutral-900 rounded-lg xl:rounded-xl overflow-hidden',
+        'overflow-hidden rounded-lg bg-neutral-900 xl:rounded-xl',
       )}>
       <div
         className="absolute left-0 md:left-[15%] top-[10%] w-full md:w-[30%] opacity-30 h-0 circle shadow-[0px_0px_12vh_2vh_#fff]"
@@ -18,7 +18,7 @@ export const PricingBg = () => {
         loading="lazy"
         decoding="async"
         fetchPriority="low"
-        className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[40%] w-[180%] h-[80%] lg:w-[125%] max-w-[unset] lg:h-auto lg:max-h-full object-fill pointer-events-none"
+        className="gpu-layer pointer-events-none absolute bottom-0 left-1/2 h-[80%] w-[180%] max-w-[unset] -translate-x-1/2 translate-y-[40%] object-fill lg:h-auto lg:max-h-full lg:w-[125%]"
       />
     </div>
   );

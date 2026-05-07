@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
-type Size = "sm" | "md" | "lg";
+type Size = 'sm' | 'md' | 'lg';
 
-interface GlassButtonProps extends React.ComponentPropsWithRef<"button"> {
+export interface GlassButtonProps extends React.ComponentPropsWithRef<'button'> {
   size?: Size;
 }
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-6 py-3 rounded-sm text-base",
-  md: "px-8 py-4 rounded-md text-[18px]",
-  lg: "px-16.5 py-4.5 rounded-lg text-[22px]",
+  sm: 'rounded-md px-4 py-2 text-[18px] leading-[25px] tracking-[-0.02em]',
+  md: 'rounded-md px-4 py-2 text-[18px] leading-[25px] tracking-[-0.02em]',
+  lg: 'rounded-md px-4 py-2 text-[18px] leading-[25px] tracking-[-0.02em]',
 };
 
 export const GlassButton = ({
   ref,
-  size = "md",
+  size = 'md',
   className,
   children,
   ...props
@@ -25,12 +25,12 @@ export const GlassButton = ({
     <button
       ref={ref}
       className={cn(
-        "glass",
-        "flex items-center justify-center whitespace-nowrap",
-        "font-manrope font-semibold leading-[2.1] text-neutral-800",
-        "transition duration-150 focus-visible:outline-none",
-        "hover:brightness-[1.06] active:brightness-95 active:scale-[0.97]",
-        "cursor-pointer disabled:cursor-not-allowed disabled:opacity-50",
+        'glass',
+        'flex items-center justify-center whitespace-nowrap',
+        'font-manrope font-semibold text-neutral-800',
+        'transition duration-150 focus-visible:outline-none',
+        'hover:brightness-[1.06] active:scale-[0.97] active:brightness-95',
+        'cursor-pointer disabled:cursor-not-allowed disabled:opacity-50',
         sizeClasses[size],
         className,
       )}
@@ -39,4 +39,4 @@ export const GlassButton = ({
       {children}
     </button>
   );
-}
+};

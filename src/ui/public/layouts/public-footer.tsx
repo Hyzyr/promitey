@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
+import { useLenis } from '@/components/providers/lenis-provider';
 import { Input, Textarea } from '@/components/ui/input';
 import { LogoWithText } from '@/components/ui/logo';
 import { FormatText } from '@/components/ui/format-text';
@@ -53,7 +54,7 @@ export const LandingFooter = () => {
             </p>
 
             <div className="flex flex-col gap-3 pt-4 xl:pt-6">
-              <strong className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] leading-[1.4] tracking-[-0.32px] text-[#bab9b9]">
+              <strong className="font-manrope text-[14px] leading-[1.4] font-normal tracking-[-0.32px] text-neutral-60 md:text-[15px] xl:text-[16px]">
                 {t('follow')}
               </strong>
               <div className="flex gap-2 md:gap-3">
@@ -71,7 +72,7 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 w-full xl:grow xl:max-w-59.5 xl:shrink-0">
-            <h3 className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <h3 className="font-manrope text-[18px] leading-[1.4] font-normal tracking-[-0.4px] text-neutral-60 md:text-[19px] xl:text-[20px]">
               {t('platform.title')}
             </h3>
             <nav className="flex flex-col gap-2 md:gap-2.5 xl:gap-3">
@@ -82,7 +83,7 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col gap-4 md:gap-5 xl:gap-6 w-full xl:w-60 xl:shrink-0">
-            <h3 className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <h3 className="font-manrope text-[18px] leading-[1.4] font-normal tracking-[-0.4px] text-neutral-60 md:text-[19px] xl:text-[20px]">
               {t('support.title')}
             </h3>
             <nav className="flex flex-col gap-2 md:gap-2.5 xl:gap-3">
@@ -93,7 +94,7 @@ export const LandingFooter = () => {
           </div>
 
           <div className="flex flex-col -order-1 lg:order-0  gap-6 md:gap-7 xl:gap-8 w-full xl:grow xl:max-w-92 xl:pl-2">
-            <h3 className="font-manrope font-normal text-[18px] md:text-[19px] xl:text-[20px] leading-[1.4] tracking-[-0.4px] text-[#bab9b9]">
+            <h3 className="font-manrope text-[18px] leading-[1.4] font-normal tracking-[-0.4px] text-neutral-60 md:text-[19px] xl:text-[20px]">
               {t('contact.title')}
             </h3>
             <form
@@ -122,10 +123,10 @@ export const LandingFooter = () => {
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-4 pt-8 md:pt-9 xl:pt-10 w-full border-t border-neutral-600">
-          <strong className="font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] text-[#bab9b9] text-center md:text-left">
+          <strong className="text-center font-manrope text-[14px] font-normal text-neutral-60 md:text-left md:text-[15px] xl:text-[16px]">
             {t('rights')}
           </strong>
-          <span className="flex items-center font-manrope font-normal text-[14px] md:text-[15px] xl:text-[16px] text-[#bab9b9]">
+          <span className="flex items-center font-manrope text-[14px] font-normal text-neutral-60 md:text-[15px] xl:text-[16px]">
             {t('credit')} <HyzyrLink />
           </span>
         </div>
@@ -140,10 +141,21 @@ type FooterLinkProps = {
   className?: string;
 };
 const FooterLink = ({ href, label, className }: FooterLinkProps) => {
+  const { scrollTo } = useLenis();
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!href.startsWith('#')) {
+      return;
+    }
+
+    event.preventDefault();
+    scrollTo(href, { offset: -100, duration: 1.2 });
+  };
+
   return (
     <a
       key={href}
       href={href}
+      onClick={handleClick}
       className={cn(
         'font-manrope font-medium text-[16px] leading-[1.4] tracking-[-0.32px] text-neutral-20',
         'transition-colors ease-in duration-200 hover:text-neutral-50 active:text-neutral-100',

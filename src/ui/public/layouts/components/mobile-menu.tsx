@@ -4,13 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { Languages, ChevronRight, X } from 'lucide-react';
+import { Languages, ChevronRight } from 'lucide-react';
+
 import { useScrollLock } from '@/hooks/use-scroll-lock';
 import { useLenis } from '@/components/providers/lenis-provider';
 import { useRouter, usePathname as useIntlPathname } from '@/i18n/navigation';
-import type { Locale } from '@/i18n/routing';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+
+import type { Locale } from '@/i18n/routing';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -34,8 +36,13 @@ const LOCALES: { value: Locale; label: string }[] = [
  * - Shadow: 0px -7px 30.2px rgba(0,0,0,0.12)
  * - Slides from bottom with spring animation
  */
-export const MobileMenu = ({ isOpen, onClose, isAuthenticated = false }: MobileMenuProps) => {
+export const MobileMenu = ({
+  isOpen,
+  onClose,
+  isAuthenticated = false,
+}: MobileMenuProps) => {
   const t = useTranslations('landing.header');
+  const tCommon = useTranslations('common');
   const pathname = usePathname();
   const intlPathname = useIntlPathname();
   const router = useRouter();
@@ -90,14 +97,14 @@ export const MobileMenu = ({ isOpen, onClose, isAuthenticated = false }: MobileM
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-40">
+        <div className="fixed inset-0 z-50">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
             onClick={onClose}
-            className="absolute inset-0 bg-[rgba(32,30,30,0.6)] backdrop-blur-xs"
+            className="fog-backdrop absolute inset-0"
             aria-hidden="true"
           />
 
@@ -108,37 +115,31 @@ export const MobileMenu = ({ isOpen, onClose, isAuthenticated = false }: MobileM
             transition={{ type: 'spring', damping: 32, stiffness: 320 }}
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              'absolute bottom-0 left-0 right-0',
-              'flex flex-col items-start justify-center gap-6',
-              'rounded-tl-2xl rounded-tr-2xl bg-neutral-800',
-              'px-8 pt-8 pb-10',
-              'shadow-[0px_-7px_30.2px_0px_rgba(0,0,0,0.12)]',
+              'gpu-layer absolute right-0 bottom-0 left-0',
+              'flex flex-col items-start justify-center gap-6 sm:gap-8',
+              'rounded-tl-md rounded-tr-md bg-neutral-800',
+              'px-8 pt-8 pb-10 sm:px-12 sm:pt-12 sm:pb-16',
+              'bottom-sheet-shadow',
               'max-h-[90vh] overflow-y-auto',
             )}
             role="dialog"
             aria-modal="true"
-            aria-label="Mobile navigation menu"
+            aria-label={t('menu')}
           >
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close menu"
-              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center text-primary-500 transition-transform active:scale-90"
-            >
-              <X className="h-8 w-8" strokeWidth={2} />
-            </button>
-
-            <div className="relative">
+            <div className="relative w-[80%] max-w-120">
               <button
                 type="button"
                 onClick={() => setLangOpen((o) => !o)}
                 aria-haspopup="listbox"
                 aria-expanded={langOpen}
-                className="flex items-center justify-center gap-3 rounded-xl bg-white/12 px-4 py-3 transition-colors hover:bg-white/16"
+                className="flex w-full items-center justify-start gap-3 rounded-sm bg-white/12 px-[.85em] py-[.75em] text-[18px] transition-colors hover:bg-white/16 sm:text-[20px]"
               >
-                <Languages className="h-6 w-6 text-neutral-10" strokeWidth={2} />
-                <span className="font-roboto text-[18px] leading-none text-neutral-10">
-                  <span className="font-bold">Language:</span>
+                <Languages
+                  className="h-6 w-6 text-neutral-10"
+                  strokeWidth={2}
+                />
+                <span className="grow text-left font-roboto leading-none text-neutral-10">
+                  <span className="font-bold">{tCommon('language')}:</span>
                   <span className="font-normal"> {currentLocale.label}</span>
                 </span>
                 <ChevronRight
@@ -153,7 +154,7 @@ export const MobileMenu = ({ isOpen, onClose, isAuthenticated = false }: MobileM
               {langOpen && (
                 <ul
                   role="listbox"
-                  className="absolute left-0 top-full z-10 mt-2 min-w-full overflow-hidden rounded-xl bg-neutral-700 shadow-lg"
+                  className="absolute top-full left-0 z-10 mt-2 min-w-full overflow-hidden rounded-md bg-neutral-700 shadow-lg"
                 >
                   {LOCALES.map((l) => (
                     <li key={l.value}>
@@ -174,24 +175,34 @@ export const MobileMenu = ({ isOpen, onClose, isAuthenticated = false }: MobileM
                 </ul>
               )}
             </div>
-
-            {NAV.map(({ href, label }) => (
-              <button
-                key={href}
-                type="button"
-                onClick={() => handleNavClick(href)}
-                className="text-left font-roboto text-[18px] font-normal leading-none tracking-[0.36px] text-neutral-10 transition-colors hover:text-primary-500"
-              >
-                {label}
-              </button>
-            ))}
-
+            <div className="flex-col flex gap-[inherit] py-2 sm:py-3">
+              {NAV.map(({ href, label }) => (
+                <button
+                  key={href}
+                  type="button"
+                  onClick={() => handleNavClick(href)}
+                  className="text-left font-roboto text-[18px] leading-none font-normal tracking-[0.36px] text-neutral-10 transition-colors hover:text-primary-500"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
             {isAuthenticated ? (
-              <Button href="/dashboard" variant="orange" size="md" className="w-full">
+              <Button
+                href="/dashboard"
+                variant="orange"
+                size="md"
+                className="w-full"
+              >
                 {t('dashboard')}
               </Button>
             ) : (
-              <Button href="/login" variant="orange" size="md" className="w-full">
+              <Button
+                href="/login"
+                variant="orange"
+                size="md"
+                className="w-full"
+              >
                 {t('login')}
               </Button>
             )}

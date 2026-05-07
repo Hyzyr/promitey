@@ -3,21 +3,25 @@
 import React from 'react';
 import { useTranslations } from 'next-intl';
 
+import { useMedia } from '@/hooks/use-media';
+import { cn } from '@/lib/utils';
 import { AUTOPLAY_DELAY, SLIDES } from './data';
 import { NavigationArrows } from './navigation-arrows';
 import { PaginationDots } from './pagination-dots';
 import { TestimonialCard } from './testimonial-card';
 import { useTestimonialsCarousel } from './use-testimonials-carousel';
-import { cn } from '@/lib/utils';
 
 export const TestimonialsSection = () => {
   const t = useTranslations('landing.testimonials');
+  const showPagination = useMedia('(min-width: 768px)');
   const {
     emblaRef,
     sectionRef,
     selectedIndex,
     activeDotIndex,
     isAutoPlaying,
+    isInteractionPaused,
+    isVisible,
     scrollPrev,
     scrollNext,
     scrollTo,
@@ -66,10 +70,10 @@ export const TestimonialsSection = () => {
 
         <div className="pt-7 pb-10 md:pt-8 md:pb-11 xl:pt-9.25 xl:pb-12">
           <div
-            className="-my-8 py-8 md:-my-9 md:py-9 xl:-my-10 xl:py-10"
+            className="gpu-layer -my-8 py-8 md:-my-9 md:py-9 xl:-my-10 xl:py-10"
             ref={emblaRef}
           >
-            <div className="-ml-4 flex">
+            <div className="gpu-layer -ml-4 flex">
               {SLIDES.map((testimonial, i) => (
                 <TestimonialCard key={i} testimonial={testimonial} />
               ))}
@@ -77,18 +81,20 @@ export const TestimonialsSection = () => {
           </div>
         </div>
 
-        <div className="flex items-center justify-center gap-4 md:gap-0">
+        <div className="flex items-center justify-end gap-4 sm:flex-col-reverse sm:justify-center md:flex-row md:gap-0">
           <div className="md:hidden">
             <NavigationArrows onPrev={scrollPrev} onNext={scrollNext} />
           </div>
-          <PaginationDots
-            count={testimonialsCount}
-            activeIndex={activeDotIndex}
-            progressKey={selectedIndex}
-            isAutoPlaying={isAutoPlaying}
-            autoplayDelay={AUTOPLAY_DELAY}
-            onDotClick={scrollTo}
-          />
+          {showPagination && (
+            <PaginationDots
+              count={testimonialsCount}
+              activeIndex={activeDotIndex}
+              progressKey={selectedIndex}
+              showProgress={isAutoPlaying && !isInteractionPaused && isVisible}
+              autoplayDelay={AUTOPLAY_DELAY}
+              onDotClick={scrollTo}
+            />
+          )}
         </div>
       </div>
     </section>

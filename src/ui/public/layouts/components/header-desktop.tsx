@@ -45,7 +45,7 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
         animate={{ y: isVisible ? 0 : '-100%' }}
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         className={cn(
-          'fixed left-0 right-0 top-0 z-50 bg-neutral-900',
+          'gpu-layer fixed top-0 right-0 left-0 z-50 bg-neutral-900',
           !isAtTop && 'shadow-lg'
         )}
       >

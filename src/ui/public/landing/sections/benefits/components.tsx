@@ -56,7 +56,7 @@ export const ParallaxItem = ({
   const x = useTransform(rawX, (v) => d * v * depth * MAX);
   const y = useTransform(rawY, (v) => d * v * depth * MAX);
   return (
-    <motion.div style={{ x, y }} className="absolute inset-0">
+    <motion.div style={{ x, y }} className="gpu-layer absolute inset-0">
       {children}
     </motion.div>
   );
@@ -168,14 +168,14 @@ export const BenefitCard = ({
         onMouseLeave={onMouseLeave}
         data-benefit-card=""
         className={cn(
-          'benefit-card-shell',
+          'benefit-card-shell gpu-layer',
           isActive ? 'border-orange-400' : 'border-neutral-40',
           className,
         )}
       >
         <h5
           className={cn(
-            'font-manrope font-bold text-[#2b2929]',
+            'font-manrope font-bold text-neutral-800',
             'text-[24px] md:text-[26px] lgx:text-[30px] xl:text-[36px]',
             'leading-[1.2] tracking-[-0.48px] xl:leading-[1.12] xl:tracking-normal',
           )}
@@ -184,7 +184,7 @@ export const BenefitCard = ({
         </h5>
         <p
           className={cn(
-            'font-montserrat font-normal text-[#6c6b6b]',
+            'font-montserrat font-normal text-neutral-300',
             'text-[16px] md:text-[16px] lg:text-[17px] xl:text-[18px]',
             'mt-4 leading-[1.4] xl:mt-4',
           )}
