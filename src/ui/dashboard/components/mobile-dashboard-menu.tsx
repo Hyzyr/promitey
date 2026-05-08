@@ -7,11 +7,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard,
   Server,
-  BookOpen,
+  TrafficCone,
   FileCog,
   CreditCard,
   User,
-  HelpCircle,
   X,
 } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
@@ -23,7 +22,7 @@ import { LogoutButton } from './logout-button';
 const DRAWER_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
   { href: '/dashboard/servers', icon: Server, labelKey: 'servers' },
-  { href: '/dashboard/instructions', icon: BookOpen, labelKey: 'instructions' },
+  { href: '/dashboard/instructions', icon: TrafficCone, labelKey: 'instructions' },
   { href: '/dashboard/configs', icon: FileCog, labelKey: 'configs' },
   {
     href: '/dashboard/subscription',
@@ -31,7 +30,6 @@ const DRAWER_ITEMS = [
     labelKey: 'subscription',
   },
   { href: '/dashboard/profile', icon: User, labelKey: 'profile' },
-  { href: '/dashboard/help', icon: HelpCircle, labelKey: 'help' },
 ] as const;
 
 interface MobileDashboardMenuProps {

@@ -43,7 +43,7 @@ export const RegionSelector = ({ initialRegion }: RegionSelectorProps) => {
           variant="orange"
           size="md"
           isLoading={isSubmitting}
-          className="flex-shrink-0"
+          className="shrink-0"
         >
           {t('regionSave')}
         </Button>

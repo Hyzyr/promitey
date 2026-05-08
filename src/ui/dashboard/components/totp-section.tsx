@@ -1,7 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+
+import { cn } from '@/lib/utils';
+
 import { useTotpSection } from '../hooks/use-totp-section';
 
 type Props = {
@@ -26,11 +30,12 @@ export function TotpSection({ initialEnabled }: Props) {
         <p className="text-sm text-neutral-500">{t('setup.description')}</p>
 
         <div className="flex justify-center">
-          <img
+          <Image
             src={setupData.qrDataUrl}
             alt="TOTP QR Code"
             width={200}
             height={200}
+            unoptimized
             decoding="async"
             className="rounded-sm border border-neutral-200"
           />
@@ -151,7 +156,12 @@ export function TotpSection({ initialEnabled }: Props) {
       <div>
         <h2 className="text-xl font-semibold text-neutral-900">{t('title')}</h2>
         <p className="mt-1 text-sm text-neutral-500">{t('description')}</p>
-        <p className={`mt-2 text-sm font-medium ${enabled ? 'text-green-600' : 'text-neutral-400'}`}>
+        <p
+          className={cn(
+            'mt-2 text-sm font-medium',
+            enabled ? 'text-green-600' : 'text-neutral-400',
+          )}
+        >
           {enabled ? t('status.enabled') : t('status.disabled')}
         </p>
       </div>

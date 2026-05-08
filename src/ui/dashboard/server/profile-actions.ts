@@ -12,23 +12,6 @@ import {
 
 import type { SiteLinkTokenResponse, TotpStatusResponse } from '@/api/client/api-types';
 
-export async function changePasswordAction(values: {
-  current_password: string;
-  new_password: string;
-}): Promise<ActionResult> {
-  const token = await getAccessToken();
-  if (!token) return unauthenticatedFailure('changePasswordAction');
-  try {
-    await authApi.changePassword(
-      { current_password: values.current_password, new_password: values.new_password },
-      token,
-    );
-    return { ok: true, data: undefined };
-  } catch (e) {
-    return actionFailure(e, 'changePasswordAction');
-  }
-}
-
 export async function getTelegramLinkTokenAction(): Promise<ActionResult<SiteLinkTokenResponse>> {
   const token = await getAccessToken();
   if (!token) return unauthenticatedFailure<SiteLinkTokenResponse>('getTelegramLinkTokenAction');

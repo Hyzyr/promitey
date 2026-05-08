@@ -1,11 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { LogOut } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Modal } from '@/components/ui/modal';
+import { useRouter } from '@/i18n/navigation';
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
-import { useChangePassword } from '../hooks/use-change-password';
+import { logoutAction } from '@/ui/auth/server/auth-actions';
 
 export interface ChangePasswordFormProps {
   className?: string;
@@ -13,69 +17,85 @@ export interface ChangePasswordFormProps {
 
 export const ChangePasswordForm = ({ className }: ChangePasswordFormProps) => {
   const tProfile = useTranslations('dashboard.profile');
-  const { form, onSubmit, serverError, success } = useChangePassword();
+  const tCommon = useTranslations('common');
+  const router = useRouter();
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = form;
+  const handleConfirm = async () => {
+    setIsLoading(true);
+    setServerError(null);
+
+    const result = await logoutAction();
+    reportForwardedServerError(result);
+
+    if (!result.ok) {
+      setServerError(tProfile('passwordChange.error'));
+      setIsLoading(false);
+      return;
+    }
+
+    router.replace('/forgot-password');
+    router.refresh();
+  };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={className}
-      noValidate
-    >
-      <h2 className="mb-4 text-lg font-semibold text-neutral-800">
+    <div className={className}>
+      <h2 className="mb-2 text-lg font-semibold text-neutral-800">
         {tProfile('changePassword')}
       </h2>
-
-      <div className="space-y-4">
-        <Input
-          label={tProfile('currentPassword')}
-          type="password"
-          autoComplete="current-password"
-          variant="light"
-          error={errors.currentPassword?.message}
-          {...register('currentPassword')}
-        />
-        <Input
-          label={tProfile('newPassword')}
-          type="password"
-          autoComplete="new-password"
-          variant="light"
-          error={errors.newPassword?.message}
-          {...register('newPassword')}
-        />
-        <Input
-          label={tProfile('confirmPassword')}
-          type="password"
-          autoComplete="new-password"
-          variant="light"
-          error={errors.confirmPassword?.message}
-          {...register('confirmPassword')}
-        />
-      </div>
+      <p className="max-w-2xl text-sm leading-relaxed text-neutral-600">
+        {tProfile('passwordChange.description')}
+      </p>
 
       {serverError && (
         <p className="mt-3 text-sm text-red-500">{serverError}</p>
       )}
 
-      {success && (
-        <p className="mt-3 text-sm text-green-600">{tProfile('passwordSaved')}</p>
-      )}
-
       <div className="mt-4">
         <Button
-          type="submit"
+          type="button"
           variant="orange"
           size="md"
-          isLoading={isSubmitting}
+          onClick={() => setIsConfirmOpen(true)}
         >
-          {tProfile('save')}
+          {tProfile('passwordChange.start')}
         </Button>
       </div>
-    </form>
+
+      <Modal
+        isOpen={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        title={tProfile('passwordChange.confirmTitle')}
+        ariaLabel={tProfile('passwordChange.confirmAriaLabel')}
+        closeAriaLabel={tCommon('close')}
+        showCloseButton
+      >
+        <p className="font-manrope text-base leading-relaxed text-neutral-300">
+          {tProfile('passwordChange.confirmDescription')}
+        </p>
+        <div className="flex flex-col gap-3">
+          <Button
+            type="button"
+            variant="orange"
+            size="md"
+            onClick={handleConfirm}
+            isLoading={isLoading}
+            className="w-full gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            {tProfile('passwordChange.confirm')}
+          </Button>
+          <button
+            type="button"
+            onClick={() => setIsConfirmOpen(false)}
+            className="w-full rounded-md py-3 font-manrope text-base font-semibold text-neutral-300 transition-colors hover:text-neutral-10"
+          >
+            {tCommon('cancel')}
+          </button>
+        </div>
+      </Modal>
+    </div>
   );
 };
