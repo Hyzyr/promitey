@@ -1,11 +1,11 @@
 import { RegisterConfirmPage } from '@/ui/auth/pages/register-confirm-page';
 
-interface RegisterVerifyRoutePageProps {
+interface RegisterConfirmRoutePageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export default async function RegisterVerifyRoutePage({
+export default async function RegisterConfirmRoutePage({
   searchParams,
-}: RegisterVerifyRoutePageProps) {
+}: RegisterConfirmRoutePageProps) {
   return <RegisterConfirmPage searchParams={searchParams} />;
 }

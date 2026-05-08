@@ -18,9 +18,11 @@ import Image from 'next/image';
 export const AuthBackground = () => {
   return (
     <div aria-hidden className="bg pointer-events-none bg-neutral-30">
-      <img
+      <Image
         src="/images/auth-bg.png"
         alt=""
+        width={1440}
+        height={1024}
         className="absolute h-full w-full object-cover lg:top-0 lg:left-0 lg:w-[75%]"
         onError={(e) => {
           (e.currentTarget as HTMLImageElement).style.display = 'none';

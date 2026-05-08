@@ -56,7 +56,7 @@ export function useForgotPassword(): UseForgotPasswordReturn {
       setServerError(mapErrorCode(result.code));
       return;
     }
-    router.push(`/forgot-password/verify?email=${encodeURIComponent(result.data.email)}`);
+    router.push(`/forgot-password/confirm?email=${encodeURIComponent(result.data.email)}`);
   };
 
   return { form, onSubmit, serverError };

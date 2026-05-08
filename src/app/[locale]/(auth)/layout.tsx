@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { AuthBackground } from '@/ui/auth/components/auth-background';
 import { AuthHeader } from '@/ui/auth/components/auth-header';
-import { AuthPromo } from '@/ui/auth/components/auth-promo';
 
 export async function generateMetadata({
   params,

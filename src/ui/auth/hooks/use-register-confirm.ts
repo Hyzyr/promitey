@@ -18,6 +18,7 @@ import {
 export interface UseRegisterConfirmReturn {
   isSubmitting: boolean;
   onVerify: (code: string) => Promise<{ ok: boolean; message?: string }>;
+  onSuccess: () => void;
 }
 
 export function useRegisterConfirm(email: string): UseRegisterConfirmReturn {
@@ -43,12 +44,15 @@ export function useRegisterConfirm(email: string): UseRegisterConfirmReturn {
       if (!result.ok) {
         return { ok: false, message: mapErrorCode(result.code) };
       }
-      router.replace(selectedPlan ? buildPricingPlanHref('/login', selectedPlan) : '/login');
       return { ok: true };
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  return { isSubmitting, onVerify };
+  const onSuccess = () => {
+    router.replace(selectedPlan ? buildPricingPlanHref('/login', selectedPlan) : '/login');
+  };
+
+  return { isSubmitting, onVerify, onSuccess };
 }

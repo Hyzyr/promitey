@@ -77,7 +77,7 @@ export function useRegister(): UseRegisterReturn {
       setServerError(mapErrorCode(result.code));
       return;
     }
-    const verifyHref = `/register/verify?email=${encodeURIComponent(result.data.email)}`;
+    const verifyHref = `/register/confirm?email=${encodeURIComponent(result.data.email)}`;
     router.push(
       selectedPlan
         ? `${verifyHref}&${PRICING_PLAN_QUERY_PARAM}=${encodeURIComponent(selectedPlan)}`

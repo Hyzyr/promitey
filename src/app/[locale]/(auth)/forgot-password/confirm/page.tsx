@@ -1,11 +1,11 @@
 import { ForgotPasswordConfirmPage } from '@/ui/auth/pages/forgot-password-confirm-page';
 
-interface ForgotPasswordVerifyRoutePageProps {
+interface ForgotPasswordConfirmRoutePageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
-export default async function ForgotPasswordVerifyRoutePage({
+export default async function ForgotPasswordConfirmRoutePage({
   searchParams,
-}: ForgotPasswordVerifyRoutePageProps) {
+}: ForgotPasswordConfirmRoutePageProps) {
   return <ForgotPasswordConfirmPage searchParams={searchParams} />;
 }

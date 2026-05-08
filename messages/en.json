@@ -265,19 +265,31 @@
       "title": "Create account",
       "subtitle": "Create an account to get full access to Prometey",
       "submit": "Sign In",
-      "verifyTitle": "Verify your email"
+      "verifyTitle": "Verify your email",
+      "confirmSubtitle": "We sent a confirmation message to your email.",
+      "confirmDescription": "We sent you a message. Enter the confirmation code from",
+      "confirmStep": "Step 2 of 2"
     },
     "forgot": {
       "title": "Reset password",
       "step1": "Step 1 of 2",
       "step2": "Step 2 of 2",
-      "step3": "Step 2 of 2",
+      "step3": "Step 3 of 3",
       "emailDescription": "Enter the email address associated with your account.",
       "emailSentTitle": "Check your inbox",
       "emailSentBody": "If an account with that email exists, a password reset link has been sent.",
       "codeDescription": "Enter the code we sent to the email",
+      "confirmTitle": "Confirm reset code",
+      "confirmSubtitle": "We sent a password reset code to your email.",
+      "confirmDescription": "Enter the password reset code we sent to",
+      "resetTitle": "Create new password",
+      "resetSubtitle": "Choose a new password to finish resetting your account.",
       "resetDescription": "Create a new password for",
       "next": "Next"
+    },
+    "confirm": {
+      "submit": "Confirm",
+      "digitLabel": "Code digit {index}"
     }
   },
   "dashboard": {
@@ -300,6 +312,39 @@
       "configuration": "Configuration",
       "howToPrompt": "Not sure how to connect?",
       "howToCta": "Go to instructions",
+      "vless": {
+        "openAriaLabel": "Open VLESS configuration options",
+        "title": "VLESS configuration",
+        "ariaLabel": "VLESS configuration dialog",
+        "description": "Show the QR code or copy your VLESS subscription link to import it into a compatible client.",
+        "load": "Show QR and link",
+        "qrAlt": "VLESS subscription QR code",
+        "linkLabel": "Subscription link",
+        "copy": "Copy link",
+        "copied": "Copied",
+        "copyFailed": "Copy failed. Select the link and copy it manually.",
+        "open": "Open link",
+        "errors": {
+          "accessDenied": "Config is not available yet. Make sure Telegram is linked and your subscription is active.",
+          "marzban": "VLESS service is not configured on the server yet.",
+          "generic": "Could not load the VLESS configuration. Please try again."
+        }
+      },
+      "openvpn": {
+        "openAriaLabel": "Open OpenVPN download options",
+        "title": "OpenVPN configuration",
+        "ariaLabel": "OpenVPN configuration dialog",
+        "description": "Download an .ovpn profile for your saved region, or enter a region code if support gave you one.",
+        "savedTitle": "Saved or automatic region",
+        "savedDescription": "This downloads the profile for the region currently saved on your account, or lets the backend choose automatically.",
+        "downloadSaved": "Download saved profile",
+        "regionTitle": "Download by region",
+        "regionDescription": "Use this when you know the exact OpenVPN region code.",
+        "regionLabel": "Region code",
+        "regionPlaceholder": "e.g. eu-west or auto",
+        "downloadRegion": "Download region profile",
+        "listUnavailable": "The API does not provide a full server list yet, so only direct region-code download can be offered safely. Add a backend region-list endpoint to show all available OpenVPN servers here."
+      },
       "regenerateDescription": "You can regenerate your configuration files. This will disable/block all your previous configuration files, making them inactive.",
       "regenerateWarning": "After clicking, this operation is irreversible."
     },
@@ -384,12 +429,12 @@
             "OpenVPN Connect: https://openvpn.net/client/"
           ],
           "setupSteps": [
-            "Install the app",
-            "Open it",
-            "Tap \"+\"",
-            "Select \"Import\"",
-            "Upload the .ovpn file",
-            "Tap \"Connect\""
+            "Download and install OpenVPN Connect for your operating system.",
+            "Go to Config files in the dashboard and download the .ovpn profile for the location you want to use.",
+            "Open OpenVPN Connect and choose Import Profile or tap the + button.",
+            "Select File, upload the downloaded .ovpn profile, and confirm the import.",
+            "Allow the VPN profile if your device asks for permission.",
+            "Tap Connect. When the status changes to connected, your traffic is routed through Prometey VPN."
           ]
         },
         "vless": {
@@ -408,14 +453,12 @@
             "Shadowrocket (iOS): App Store"
           ],
           "setupSteps": [
-            "Install and open the app",
-            "Tap \"+\" (Add)",
-            "Select:",
-            "\"Import from clipboard\" (if you have a link)",
-            "or \"Scan QR code\"",
-            "The configuration appears in the list",
-            "Tap it",
-            "Tap \"Connect\""
+            "Download and install the recommended VLESS client for your operating system.",
+            "Go to Config files in the dashboard and copy your VLESS link, or open the QR code when it is available.",
+            "Open the client and choose Add profile, Import from clipboard, or Scan QR code.",
+            "Import the Prometey VPN configuration and save it in the app.",
+            "Select the new Prometey VPN profile in the server list.",
+            "Tap Connect. If the first connection fails, recheck that the copied link is complete and try again."
           ]
         }
       }
@@ -438,9 +481,20 @@
       "changePassword": "Change Password",
       "memberSince": "Member since",
       "passwordSaved": "Password changed successfully",
+      "passwordChange": {
+        "description": "For security, password changes continue from the auth flow after signing out of this session.",
+        "start": "Change password",
+        "confirmTitle": "Continue to password change?",
+        "confirmAriaLabel": "Confirm password change logout",
+        "confirmDescription": "You will be logged out and redirected to the password reset page. Continue only if you are ready to sign in again after changing your password.",
+        "confirm": "Log out and continue",
+        "error": "Could not start password change. Please try again."
+      },
       "emailChange": {
         "title": "Change Email",
         "description": "Update the email address associated with your account. A verification code will be sent to your new email.",
+        "confirmTitle": "Confirm new email",
+        "confirmDescription": "We sent a confirmation code to your new email address. Enter it below to finish the email change.",
         "newEmailLabel": "New email address",
         "submitPrepare": "Send verification code",
         "codeSentTo": "We sent a verification code to",

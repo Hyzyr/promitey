@@ -4,6 +4,10 @@ import { useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
+import {
+  CODE_SUCCESS_ANIMATION_MS,
+  CodeSuccessAnimation,
+} from '@/components/ui/code-success-animation';
 import { AuthLink } from './auth-link';
 import { AuthStep } from './auth-step';
 import { cn } from '@/lib/utils';
@@ -13,8 +17,12 @@ const CODE_LENGTH = 6;
 export interface VerifyCodeFormProps {
   /** Email/login the code was sent to (for the description line). */
   recipient?: string;
+  /** Description shown above the code inputs. */
+  description: string;
   /** Step label shown above the inputs (e.g. "Step 2"). */
   stepLabel?: string;
+  /** Submit button label. */
+  submitLabel: string;
   /**
    * Called with the completed code on submit.
    * Return `{ ok: false, message }` with an already-translated message to show it.
@@ -27,7 +35,9 @@ export interface VerifyCodeFormProps {
 
 export const VerifyCodeForm = ({
   recipient,
+  description,
   stepLabel,
+  submitLabel,
   onVerify,
   onSuccess,
   className,
@@ -38,6 +48,7 @@ export const VerifyCodeForm = ({
     Array(CODE_LENGTH).fill(''),
   );
   const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -101,11 +112,18 @@ export const VerifyCodeForm = ({
         setError(result.message ?? t('errors.invalidCode'));
         return;
       }
-      onSuccess?.();
+      setIsSuccess(true);
+      window.setTimeout(() => {
+        onSuccess?.();
+      }, CODE_SUCCESS_ANIMATION_MS);
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  if (isSuccess) {
+    return <CodeSuccessAnimation />;
+  }
 
   return (
     <form
@@ -114,7 +132,7 @@ export const VerifyCodeForm = ({
       noValidate
     >
       <p className="font-montserrat w-full text-center text-[14px] leading-[1.6] text-neutral-600 lg:text-[16px]">
-        {t('forgot.codeDescription')}{' '}
+        {description}{' '}
         {recipient && <span className="font-semibold">{recipient}.</span>}
       </p>
 
@@ -122,25 +140,23 @@ export const VerifyCodeForm = ({
 
       <div className="flex w-full gap-3">
         {digits.map((d, i) => (
-          <input
-            key={i}
-            ref={(el) => {
-              inputsRef.current[i] = el;
-            }}
-            type="text"
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            maxLength={1}
-            value={d}
-            onChange={(e) => handleChange(i, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(i, e)}
-            onPaste={handlePaste}
-            className={cn(
-              'min-w-0 flex-1 rounded-md border border-neutral-60 bg-transparent px-3 py-4 text-center font-roboto text-[18px] font-medium tracking-[0.32px] text-neutral-900 outline-none transition-colors',
-              'focus:border-neutral-300',
-              error && 'border-red-500',
-            )}
-          />
+          <div key={i} className={cn('input light min-w-0 flex-1', error && 'error')}>
+            <input
+              ref={(el) => {
+                inputsRef.current[i] = el;
+              }}
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              aria-label={t('confirm.digitLabel', { index: i + 1 })}
+              maxLength={1}
+              value={d}
+              onChange={(e) => handleChange(i, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(i, e)}
+              onPaste={handlePaste}
+              className="text-center text-[18px] font-medium tracking-[0.32px]"
+            />
+          </div>
         ))}
       </div>
 
@@ -159,7 +175,7 @@ export const VerifyCodeForm = ({
           isLoading={isSubmitting}
           disabled={error !== null}
         >
-          {t('forgot.next')}
+          {submitLabel}
         </Button>
       </div>
 
