@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { cn } from '@/lib/utils';
 
 export const GuidePreview = () => {
@@ -11,17 +13,17 @@ export const GuidePreview = () => {
     >
       <div
         className={cn(
-          'aspect-1506/858 h-auto w-full mdx:absolute mdx:top-1/2 mdx:left-0 mdx:h-full mdx:max-h-80 mdx:w-auto mdx:-translate-y-1/2',
+          'aspect-1506/858 h-auto w-full mdx:absolute mdx:top-1/2 mdx:left-0 mdx:h-full mdx:max-h-80  xl:max-h-120 mdx:w-auto mdx:-translate-y-1/2',
           'rounded-md mdx:rounded-2xl xl:rounded-3xl',
           'overflow-hidden bg-neutral-800',
         )}
       >
-        <img
+        <Image
           src="/images/temp-guide-img.png"
           alt=""
+          width={1506}
+          height={858}
           loading="lazy"
-          decoding="async"
-          fetchPriority="low"
           className="pointer-events-none inset-0 h-full w-full object-cover mdx:absolute"
         />
       </div>

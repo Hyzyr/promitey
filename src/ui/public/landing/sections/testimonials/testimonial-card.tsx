@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { instaSVG, quoteSVG } from '@/components/assets';
 import { StarRating } from '@/components/ui/star-rating';
@@ -42,11 +43,12 @@ export const TestimonialCard = ({
       </div>
 
       <div className="relative hidden h-19.25 w-17.5 shrink-0 self-end overflow-hidden rounded-lg md:flex md:h-47.5 md:w-42.5 md:self-auto md:rounded-md">
-        <img
+        <Image
           src={photo}
           alt={name}
+          fill
+          sizes="(min-width: 768px) 170px, 70px"
           loading="lazy"
-          decoding="async"
           className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
         />
         <div className="absolute bottom-1 left-1 flex h-5 w-5 items-center justify-center rounded-full text-neutral-800 glass backdrop-blur-sm md:bottom-2 md:left-2.5 md:h-7.5 md:w-7.5">
@@ -63,11 +65,12 @@ export const TestimonialCard = ({
         <div className="border-t border-neutral-40" />
         <div className="flex gap-3">
           <div className="rounded-[50%] relative flex h-15 w-15 shrink-0 self-end overflow-hidden md:hidden">
-            <img
+            <Image
               src={photo}
               alt={name}
+              fill
+              sizes="60px"
               loading="lazy"
-              decoding="async"
               className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
             />
           </div>

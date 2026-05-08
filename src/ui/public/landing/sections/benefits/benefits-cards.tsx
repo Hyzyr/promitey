@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import {
@@ -41,12 +42,12 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <img
+        <Image
           src={imgCustomerSupport}
           alt="blurred-o-shape"
+          width={520}
+          height={520}
           loading="lazy"
-          decoding="async"
-          fetchPriority="low"
           className="bgitem right-[2%] bottom-[-4%] h-[105%]"
         />
       </ParallaxItem>
@@ -73,12 +74,12 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <img
+        <Image
           src={imgTryItFree}
           alt="blurred-arc-shape"
+          width={520}
+          height={520}
           loading="lazy"
-          decoding="async"
-          fetchPriority="low"
           className="bgitem right-[-1%] bottom-[-3%] h-[90%]"
         />
       </ParallaxItem>
@@ -114,12 +115,12 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       }
     >
       <ParallaxItem depth={0.22} reverse>
-        <img
+        <Image
           src={imgYourInternet}
           alt="blurred-circle-shape"
+          width={640}
+          height={640}
           loading="lazy"
-          decoding="async"
-          fetchPriority="low"
           className="bgitem bottom-[-8%] left-[-4%] h-[78%]"
         />
       </ParallaxItem>
@@ -160,12 +161,12 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <img
+        <Image
           src={imgForYourFamily}
           alt="blurred-square-shape"
+          width={520}
+          height={520}
           loading="lazy"
-          decoding="async"
-          fetchPriority="low"
           className="bgitem right-[7.5%] bottom-[-12%] h-[95%]"
         />
       </ParallaxItem>
@@ -195,12 +196,12 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <img
+        <Image
           src={imgHighSpeed}
           alt="blurred-ellipse-shape"
+          width={520}
+          height={520}
           loading="lazy"
-          decoding="async"
-          fetchPriority="low"
           className="bgitem right-[2%] bottom-[4%] h-[98%]"
         />
       </ParallaxItem>
