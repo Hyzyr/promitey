@@ -5,11 +5,10 @@ import { useTranslations } from 'next-intl';
 import {
   LayoutDashboard,
   Server,
-  BookOpen,
+  TrafficCone,
   FileCog,
   CreditCard,
   User,
-  HelpCircle,
 } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { Logo, LogoWithText } from '@/components/ui/logo';
@@ -22,7 +21,7 @@ import { LogoutButton } from './logout-button';
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
   { href: '/dashboard/servers', icon: Server, labelKey: 'servers' },
-  { href: '/dashboard/instructions', icon: BookOpen, labelKey: 'instructions' },
+  { href: '/dashboard/instructions', icon: TrafficCone, labelKey: 'instructions' },
   { href: '/dashboard/configs', icon: FileCog, labelKey: 'configs' },
   {
     href: '/dashboard/subscription',
@@ -81,14 +80,8 @@ export const DashboardSidebar = () => {
         <LanguageSwitcher
           variant="dark"
           size="responsive"
-          className="lg:w-12 lgx:w-full"
+          dropdownClassName="lg:w-12 lgx:w-full"
           showTooltipOnCompact
-        />
-        <SidebarNavItem
-          href="/dashboard/help"
-          icon={HelpCircle}
-          label={tNav('help')}
-          active={dashboardPath.endsWith('/help')}
         />
         <LogoutButton
           className="group relative inline-flex items-center justify-center gap-2.5 rounded-sm text-lg font-normal lg:h-12 lg:w-12 lgx:h-auto lgx:w-auto lgx:justify-start"

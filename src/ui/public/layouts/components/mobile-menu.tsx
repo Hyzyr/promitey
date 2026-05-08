@@ -102,7 +102,7 @@ export const MobileMenu = ({
             <LanguageSwitcher
               variant="dark"
               size="full"
-              className="w-[80%] max-w-120"
+              dropdownClassName="w-[80%] max-w-120"
               onSelect={onClose}
             />
             <div className="flex-col flex gap-[inherit] py-2 sm:py-3">
