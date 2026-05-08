@@ -152,7 +152,9 @@ export function devMockFetch<T>(path: string, method: string): T {
 }
 
 /** Returns a mock Response object for binary endpoints (e.g. OpenVPN config). */
-export function devMockFetchBinary(path: string): Response {
+export function devMockFetchBinary(_path: string): Response {
+  void _path;
+
   if (!IS_DEV) {
     throw new Error('[dev-mock] devMockFetchBinary called outside of development mode.');
   }
