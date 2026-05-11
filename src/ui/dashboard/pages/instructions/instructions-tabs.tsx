@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { Download, Play } from 'lucide-react';
+import { Download } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { androidSVG, appleSVG, windowsSVG } from '@/components/assets/os-svg';
+import { VideoCard } from '@/components/ui/video-card';
 import { cn } from '@/lib/utils';
 
 import type { ReactNode } from 'react';
@@ -24,6 +25,11 @@ const protocols: Protocol[] = ['openvpn', 'vless'];
 const protocolLogos: Record<Protocol, string> = {
   openvpn: '/images/open-vpn-logo.svg',
   vless: '/images/vless-logo.svg',
+};
+
+const videoSrc: Record<Protocol, string> = {
+  openvpn: '/videos/woman-feedback-promitey.webm',
+  vless: '/videos/woman-feedback-promitey.webm',
 };
 
 const appOptions: Record<Protocol, AppOption[]> = {
@@ -204,15 +210,12 @@ export const InstructionsTabs = () => {
             <h2 className="font-manrope text-[20px] font-bold text-neutral-800 lg:text-[24px]">
               {t('videoTitle')}
             </h2>
-            <div
-              aria-label={t('videoAriaLabel')}
-              className="flex aspect-500/325 w-full items-center justify-center rounded-sm bg-neutral-40"
-            >
-              <Play
-                className="h-16 w-16 fill-neutral-600 text-neutral-600"
-                strokeWidth={1.5}
-              />
-            </div>
+            <VideoCard
+              src={videoSrc[activeProtocol]}
+              title={t('videoAriaLabel')}
+              autoPlay={false}
+              className="relative w-full aspect-500/325 rounded-sm"
+            />
           </div>
         </div>
       </div>
