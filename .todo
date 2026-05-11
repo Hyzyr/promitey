@@ -1,12 +1,48 @@
-[x] first I have missing screens should be implemented from figma and check if any of them exists cause I belive they were there before ai updated it.
-    according to:C:\Users\hydyr\Documents\GitHub\kwork\5853388 - ilya\prometey-vpn\.github\agents\figma-pixel-perfect.agent.md
-    instructions page openVPN tab active
-    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6376-10756&t=ls80hLD5Dk6l1uQQ-11
-    instructions page vless tab active
-    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6384-12388&t=ls80hLD5Dk6l1uQQ-11
-    instructions page mobile version example
-    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6536-33344&t=ls80hLD5Dk6l1uQQ-11
+[x] COMPLETED - Swagger/user-flow audit and instruction file
+	- Checked full swagger-new.json and current frontend flow step by step.
+	- Created docs/USER_FLOW_AND_CONFIG_AUDIT.md with registration, login, Telegram linking, subscription, payment, promocode, VLESS, and OpenVPN flow notes.
+	- Confirmed registration code flow is implemented with prepare + confirm pages.
+	- Confirmed selected pricing plan is preserved in frontend query/localStorage and redirects to subscription after login.
+	- Confirmed payment cannot be fully applied after registration yet because Swagger marks POST /billing/checkout as a 501 placeholder and defines no plan parameter.
+	- Confirmed free trial has no direct Swagger endpoint; current possible trial-like path is promocode activation only.
 
-    configuration files, should be same component from dashboard <ConfigDownloadCard />
-    https://www.figma.com/design/CGwoRb0tFSoEX6GfKTdabi/Prometey-VPN?node-id=6376-10512&t=ls80hLD5Dk6l1uQQ-11
+[x] COMPLETED - Config files UX
+	- Replaced direct config tiles with reusable modal-based config access UI.
+	- VLESS card now opens a popup using the existing shared Modal component.
+	- VLESS popup loads the subscription URL through a server action, generates a QR code with the existing qrcode package, supports one-click copy, and provides an open-link action.
+	- OpenVPN card now opens a matching popup with saved/default profile download and region-code download.
+	- Added /api/configs/openvpn/[region] proxy route for region-specific .ovpn downloads.
+	- Added EN/RU translations for all config popup copy and accessibility labels.
+	- Backend gap documented: Swagger still does not provide a full available OpenVPN region/server list endpoint, so the UI cannot truthfully show a complete server list yet.
 
+[x] COMPLETED - Dashboard/profile change password flow
+	- Replaced in-dashboard password-change fields with a confirmation flow.
+	- User is warned that continuing logs them out.
+	- Confirm action clears the session and redirects to the auth password reset flow at /forgot-password.
+	- Added EN/RU translations for the confirmation copy.
+
+[x] COMPLETED - Ghost files and unused pieces cleanup
+	- Removed tracked .old ghost files:
+	  - src/ui/dashboard/components/config-download-card.tsx.old
+	  - src/ui/dashboard/components/config-tile.tsx.old
+	  - src/ui/dashboard/pages/instructions/instructions-page.tsx.old
+	  - src/ui/dashboard/pages/instructions/instructions-tabs.tsx.old
+	- Removed now-unused dashboard password-change hook.
+	- Removed the now-unused direct dashboard password-change action.
+
+[x] COMPLETED - Production consistency cleanup
+	- Cleaned lint warnings from stale imports, anonymous PostCSS export, raw img tags, and a Tailwind utility warning.
+	- Replaced relevant raw images with next/image where lint required it.
+	- Verified no remaining .old file references or use-change-password references in src/.
+	- Validation completed:
+	  - npm run lint passed with 0 warnings/errors.
+	  - npx tsc --noEmit passed.
+	  - npm run build passed.
+	  - Browser smoke passed for VLESS QR/copy popup, OpenVPN popup, and password-change logout redirect.
+
+[!] BACKEND CONTRACT STILL NEEDED
+	- Real payment endpoint or checkout URL response.
+	- Checkout plan selection contract, for example a plan_id accepted by backend.
+	- Direct free-trial endpoint or documented automatic trial/promocode policy.
+	- OpenVPN region/server-list endpoint, for example GET /vpn/openvpn/regions.
+	- Optional subscription/status endpoint so UI can distinguish missing Telegram link, missing subscription, expired subscription, and backend config errors.
