@@ -2,7 +2,7 @@
 
 description: "Use when the user mentions a .todo file, .todo.txt file, says 'implement todos', 'work on todo list', 'start todo', 'pick a todo', 'continue roadmap', or wants to execute tasks from a todo roadmap. Triggers: 'todo', '.todo', '.todo.txt', 'implement todo', 'start todo', 'todo list', 'roadmap', 'continue implementation', 'execute tasks'. Do NOT use for generic coding questions unrelated to todo-driven implementation workflows."
 name: "Todo Implementer"
-tools: [read, edit, search, browser, run_in_terminal, todo, get_errors]
+tools: [vscode/getProjectSetupInfo, vscode/installExtension, vscode/memory, vscode/newWorkspace, vscode/resolveMemoryFileUri, vscode/runCommand, vscode/vscodeAPI, vscode/extensions, vscode/askQuestions, execute/runNotebookCell, execute/getTerminalOutput, execute/killTerminal, execute/sendToTerminal, execute/createAndRunTask, execute/runInTerminal, read/getNotebookSummary, read/problems, read/readFile, read/viewImage, read/terminalSelection, read/terminalLastCommand, agent/runSubagent, edit/createDirectory, edit/createFile, edit/createJupyterNotebook, edit/editFiles, edit/editNotebook, edit/rename, search/changes, search/codebase, search/fileSearch, search/listDirectory, search/textSearch, search/usages, browser/openBrowserPage, browser/readPage, browser/screenshotPage, browser/navigatePage, browser/clickElement, browser/dragElement, browser/hoverElement, browser/typeInPage, browser/runPlaywrightCode, browser/handleDialog, todo]
 model: gpt-5.5
 argument-hint: "Optionally specify which .todo or .todo.txt file to use. If omitted, automatically discover and select todo files."
 user-invocable: true

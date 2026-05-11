@@ -1,20 +1,24 @@
 # User Flow, Billing, Trial, and Config Audit
 
-This audit is based on `swagger-new.json`, `swagger-overview.md`, and the current frontend implementation.
+Last updated: May 11, 2026
+
+This audit reflects the current MVP frontend implementation after the latest merge-conflict cleanup.
 
 ## Short Answer
 
-The registration and auth code flows are implemented. Payment is not implemented by the backend Swagger contract yet. Pricing-plan selection is currently frontend-only routing state. Config download exists, VLESS has a QR/copy popup, and OpenVPN has a matching download popup with saved/default and direct region-code downloads. A full OpenVPN server list still needs backend support.
+Registration, login, confirmation codes, TOTP login, password reset, Telegram linking, VLESS config access, single OpenVPN config download, localized legal pages, sitemap, and SEO metadata are implemented on the frontend.
 
-## Swagger User Flow
+The commercial flow is still not production-complete because Swagger marks checkout as a placeholder and does not define a backend plan-selection contract. For MVP, billing and pricing actions redirect to Telegram support.
 
-### 1. Register
+## Implemented User Flow
+
+### 1. Registration
 
 Swagger defines a two-step registration flow:
 
 1. `PUT /auth/register`
-   - Sends or prepares a verification code.
-   - Response is `verification_required` and may include a development code such as `111111`.
+   - Prepares or sends a verification code.
+   - Development fixtures may return a code such as `111111`.
 
 2. `POST /auth/register`
    - Confirms registration with `{ email, code }`.
@@ -22,70 +26,66 @@ Swagger defines a two-step registration flow:
 
 Frontend status:
 
-- Implemented as `/register` then `/register/confirm`.
-- The current frontend preserves a selected pricing plan through the `plan` query parameter and local storage.
-- After confirm, the user is sent to login, not automatically subscribed.
+- Implemented as `/register` and `/register/confirm`.
+- Selected pricing plan is preserved through query/localStorage while the user moves through auth.
+- After confirmation, the user proceeds through the login/subscription path.
 
-### 2. Login
+### 2. Login and Session
 
 Swagger defines:
 
 - `POST /auth/login`
-- Optional `POST /auth/login/totp` when `two_factor_required` is returned.
-- `POST /auth/refresh` for token refresh.
+- Optional `POST /auth/login/totp`
+- `POST /auth/refresh`
 
 Frontend status:
 
-- Login is implemented.
+- Email/password login is implemented.
 - TOTP challenge flow is implemented.
 - Secure cookie session handling and refresh middleware exist.
-- If a pricing plan was selected, login redirects to `/dashboard/subscription?plan=<plan>`.
+- Post-auth redirect can carry the selected plan to the dashboard subscription page.
 
-### 3. Link Telegram
+### 3. Telegram Linking
 
-Swagger requires Telegram linking for VPN config operations:
+Swagger defines:
 
 - `POST /link/site-token`
 - `POST /link/by-public-code`
 
 Frontend status:
 
-- Profile has Telegram linking UI.
-- This is required before region/config endpoints can work for a real account.
+- Profile page includes Telegram linking UI.
+- Telegram linking remains important for real VPN config access.
 
-### 4. Activate Subscription or Trial
+### 4. Subscription and Billing
 
 Swagger exposes:
 
-- `POST /promocode/activate`
 - `POST /billing/checkout`
+- `POST /promocode/activate`
 
-Important details:
+Current backend limitation:
 
-- `POST /billing/checkout` is explicitly marked as a placeholder and returns `501`.
-- Swagger does not define a `plan` parameter for checkout.
-- Swagger does not define a direct `start free trial` endpoint.
-- Free trial is only indirectly supported if the backend issues a promocode that activates a trial-like subscription.
+- `POST /billing/checkout` is a placeholder in Swagger.
+- Swagger does not define a plan id parameter for checkout.
+- Swagger does not define a direct free-trial endpoint.
 
-Frontend status:
+Current frontend MVP behavior:
 
-- Promocode activation is implemented on the subscription page.
-- Checkout button exists but correctly shows a billing unavailable state because the backend returns `501`.
-- Selected pricing plan is currently not applied to backend payment because the backend has no real checkout contract and no plan id input.
+- Pricing buttons redirect to Telegram billing support.
+- Dashboard billing renew action redirects to Telegram billing support.
+- Centralized billing URL comes from `EXTERNAL_LINKS.telegramBilling` with environment fallback support.
+- Promocode UI is not part of the visible MVP subscription screen.
 
-Conclusion:
+Production requirement:
 
-- After registration, payment is not actually applied.
-- The selected pricing plan is only remembered in frontend navigation/local storage.
-- A user can only become active through an existing promocode flow, assuming the backend has valid promocodes.
+- Backend should return a real checkout URL or payment intent.
+- Backend should accept or infer a selected plan id.
+- Free trial should be implemented as an endpoint, automatic policy, or documented promocode flow.
 
 ## Config Files Flow
 
-Swagger defines config access as authenticated and subscription-gated:
-
-- User must be logged in.
-- Telegram must be linked.
-- Subscription must be active.
+Config access is authenticated and subscription-gated by the backend.
 
 ### VLESS
 
@@ -93,7 +93,7 @@ Swagger endpoint:
 
 - `GET /vpn/vless/subscription`
 
-Returns:
+Expected response:
 
 ```json
 {
@@ -103,20 +103,12 @@ Returns:
 
 Frontend status:
 
-- API wrapper exists.
-- `/api/configs/vless` exists as an open-link fallback.
-- The dashboard config card opens a modal.
-- The modal loads `subscription_url` through a server action.
-- The modal shows a QR code generated with the existing `qrcode` package.
-- The modal provides copy-to-clipboard and open-link actions.
-
-Implemented UX:
-
-- Config card opens a modal.
-- Modal loads `subscription_url` through a server action.
-- Modal shows QR code generated with the existing `qrcode` package.
-- Modal provides copy-to-clipboard and open-link actions.
-- Modal handles `403` as no active subscription or Telegram not linked, and `503` as Marzban not configured.
+- Dashboard config card opens a VLESS modal.
+- The modal automatically loads the subscription URL through a server action.
+- The modal displays a QR code generated with the existing `qrcode` package.
+- The modal displays the subscription link and a small in-card copy button.
+- Large copy/open-link actions have been removed for the MVP design.
+- Errors are mapped for access denied, Marzban/config service problems, and generic failure.
 
 ### OpenVPN
 
@@ -127,72 +119,70 @@ Swagger endpoints:
 
 Frontend status:
 
-- Default OpenVPN download exists through `/api/configs/openvpn`.
-- API wrapper for region-specific download exists.
-- The dashboard config card opens a matching modal.
-- The modal offers saved/default profile download.
-- The modal offers direct region-code download.
-- `/api/configs/openvpn/[region]` proxies `/vpn/openvpn/config/{region}`.
-- Swagger does not expose an endpoint to list available OpenVPN regions.
+- MVP UI exposes only the account OpenVPN profile download.
+- Region-specific UI and copy are hidden until the backend contract is confirmed.
+- The hidden regional API support should not be surfaced to users until a region list or product decision exists.
 
-Implemented UX:
+Production requirement:
 
-- Config card opens a modal.
-- Modal offers saved/default OpenVPN profile download.
-- Modal offers a direct region-code field and download action.
-- API proxy route `/api/configs/openvpn/[region]` is implemented.
-- Backend should add a list endpoint such as `GET /vpn/openvpn/regions` or include region options in `GET /vpn/region` before the UI can show a complete server list.
+- If regional OpenVPN returns, backend should provide a region/server list endpoint such as `GET /vpn/openvpn/regions`.
 
-Current blocker:
+## Dashboard MVP Navigation
 
-- The frontend cannot truthfully show a complete available-server list because `swagger-new.json` does not define a region-list endpoint.
+Visible dashboard pages:
 
-## Profile Change Password
+- Dashboard
+- Instructions
+- Configs
+- Subscription
+- Profile
 
-Swagger endpoint:
+Hidden page behavior:
 
-- `PUT /auth/password`
+- Servers is removed from active desktop and mobile dashboard navigation.
+- `/dashboard/servers` returns 404 for MVP.
+- Old server page code is preserved under a hidden path for future reference, not active routing.
 
-Frontend status:
+## Legal and SEO Flow
 
-- Current dashboard profile page changes password inside the active session.
-- It now asks for confirmation first.
-- It warns that the user will be logged out.
-- It clears the session and navigates to the auth password reset flow at `/forgot-password`.
+Implemented:
 
-Implemented UX:
+- `/legal/privacy`
+- `/legal/terms`
+- `/legal/refund`
+- `/legal/aup`
+- `/legal/report`
 
-- Profile change-password action is a confirmation modal.
-- Confirmation text warns that continuing logs the user out.
-- On confirm, the app logs out and sends the user to `/forgot-password`.
+SEO status:
+
+- Legal pages include localized metadata, canonical URLs, hreflang alternates, Open Graph, and Twitter metadata.
+- Sitemap includes localized public and legal routes.
+- Open Graph metadata uses `/images/og-image-promitey.png`.
 
 ## Production Readiness Gaps
 
-These items should be handled before calling the flow production-ready:
+1. Real billing checkout contract.
+   - Add checkout URL/payment response.
+   - Add selected plan id support.
 
-1. Add a real billing contract.
-   - Checkout needs a real success response or payment URL.
-   - Checkout should accept or resolve a plan id.
+2. Free trial contract.
+   - Add a direct trial endpoint, automatic registration policy, or documented promocode flow.
 
-2. Decide the free-trial contract.
-   - Either automatic trial after registration, or a clearly documented trial promocode flow.
-   - If automatic, add a backend endpoint or registration response that activates it.
+3. Subscription/status endpoint.
+   - Distinguish missing Telegram link, missing subscription, expired subscription, backend config error, and service unavailable.
 
-3. Complete backend support for full config UX.
-   - VLESS QR/copy popup is implemented.
-   - OpenVPN saved/custom-region popup is implemented.
-   - Region-list endpoint or shared region list from backend is still needed.
+4. Optional OpenVPN region list.
+   - Needed only if regional downloads return to the UI.
 
-4. Improve subscription state visibility.
-   - The UI should clearly show whether the account has active subscription, no Telegram link, or missing config access.
+5. Contact/support form endpoint.
+   - Current MVP should rely on Telegram unless a backend contact flow is added.
 
-5. Profile password flow is implemented.
-   - Confirmation modal and logout-to-auth flow are in place.
-
-6. Ghost files are removed from the worktree.
-   - `.old` files were deleted so their removals are visible in git status.
-   - Changes are intentionally not committed by the assistant.
+6. Final validation.
+   - Run `npm run lint`.
+   - Run `npx tsc --noEmit`.
+   - Run `npm run build`.
+   - Smoke test auth, config modals, legal routes, sitemap, robots, and responsive header layouts.
 
 ## Current Verdict
 
-The app handles registration, login, confirmation codes, Telegram linking, promocode activation, VLESS QR/copy access, and OpenVPN saved/region downloads. It does not yet fully handle the commercial flow after registration because payment is a backend placeholder and frontend plan selection is not sent to a real checkout API. A complete OpenVPN server list also remains backend-blocked because Swagger does not expose available regions.
+The frontend is ready for an MVP where payment and support are handled through Telegram. It is not yet ready for automatic production billing activation until the backend checkout, plan selection, free trial, and subscription status contracts are finalized.

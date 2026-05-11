@@ -73,16 +73,13 @@ const appOptions: Record<Protocol, AppOption[]> = {
   ],
 };
 
-
 export const InstructionsTabs = () => {
   const t = useTranslations('dashboard.instructions');
   const [activeProtocol, setActiveProtocol] = useState<Protocol>('openvpn');
   const activeApps = appOptions[activeProtocol];
 
   return (
-    <section
-      className="flex w-full flex-col gap-8 rounded-md px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] lg:bg-neutral-0 max-lg:rounded-none max-lg:bg-transparent max-lg:px-0 max-lg:py-0 max-lg:shadow-none lg:min-h-215"
-    >
+    <section className="flex w-full flex-col gap-8 rounded-md px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] lg:min-h-215 lg:bg-neutral-0 max-lg:rounded-none max-lg:bg-transparent max-lg:px-0 max-lg:py-0 max-lg:shadow-none">
       <h1 className="font-manrope text-[24px] leading-[1.2] font-bold text-neutral-800 max-lg:max-w-82 max-lg:leading-normal">
         {t('title')}
       </h1>
@@ -99,6 +96,7 @@ export const InstructionsTabs = () => {
           >
             {protocols.map((protocol) => {
               const selected = activeProtocol === protocol;
+
               return (
                 <button
                   key={protocol}
@@ -148,19 +146,19 @@ export const InstructionsTabs = () => {
                     {icon}
                   </span>
                   <span className="flex min-w-0 flex-1 flex-col gap-1.5 font-manrope">
-                    <strong className="text-[18px] leading-normal text-neutral-600 group-hover:text-neutral-900 transition-colors">
+                    <strong className="text-[18px] leading-normal text-neutral-600 transition-colors group-hover:text-neutral-900">
                       {t(`protocols.${activeProtocol}.apps.${key}.title`)}
                     </strong>
                     <span
                       className={cn(
                         'text-base leading-[1.1] font-medium',
-                        'text-neutral-300 group-hover:text-neutral-600 transition-colors',
+                        'text-neutral-300 transition-colors group-hover:text-neutral-600',
                       )}
                     >
                       {t(`protocols.${activeProtocol}.apps.${key}.subtitle`)}
                     </span>
                   </span>
-                  <Download className="h-7 w-7 shrink-0 opacity-0  group-hover:opacity-100 text-neutral-900 transition-opacity duration-450 ease-in-out" />
+                  <Download className="h-7 w-7 shrink-0 text-neutral-900 opacity-0 transition-opacity duration-450 ease-in-out group-hover:opacity-100" />
                 </>
               );
 

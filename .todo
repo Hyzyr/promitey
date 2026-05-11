@@ -1,3 +1,38 @@
+[x] COMPLETED - Swagger/user-flow audit and instruction file
+	- Checked swagger-new.json, swagger-overview.md, and frontend flows.
+	- Created docs/USER_FLOW_AND_CONFIG_AUDIT.md with registration, login, Telegram linking, subscription, payment, promocode, VLESS, and OpenVPN notes.
+	- Confirmed registration, confirmation code, login, TOTP login, forgot/reset password, and logout flows are implemented.
+	- Confirmed pricing plan selection is frontend state only until backend checkout supports plan IDs.
+	- Confirmed payment cannot be fully applied through Swagger because POST /billing/checkout is still a placeholder.
+	- Confirmed free trial still needs a backend contract or documented promocode policy.
+
+[x] COMPLETED - Config files MVP UX
+	- VLESS card now opens a modal and directly loads the subscription URL.
+	- VLESS modal shows QR code plus subscription link with a small in-card copy button.
+	- Removed the big copy/open-link actions from VLESS modal.
+	- OpenVPN modal now exposes only the account profile download for MVP.
+	- Removed regional OpenVPN UI/text until the backend region contract is confirmed.
+	- Shared modal wrapper now behaves consistently with the menu on mobile/tablet.
+
+[x] COMPLETED - Dashboard/profile MVP cleanup
+	- Dashboard nav exposes MVP pages only: dashboard, instructions, configs, subscription, profile.
+	- /dashboard/servers is hidden from navigation and returns 404.
+	- Password change is routed through the auth reset flow after logout confirmation.
+	- Profile MVP keeps Telegram linking and password reset access visible.
+
+[x] COMPLETED - Legal, links, billing fallback, and SEO
+	- Added localized legal routes: /legal/privacy, /legal/terms, /legal/refund, /legal/aup, /legal/report.
+	- Centralized public external links and SEO asset constants.
+	- Billing CTAs currently redirect to Telegram as an MVP fallback.
+	- Footer social/legal links use centralized constants.
+	- Sitemap includes localized landing and legal pages with alternates.
+	- OG/Twitter metadata uses public/images/og-image-promitey.png.
+
+[x] COMPLETED - Responsive/header and benefits cleanup
+	- Header desktop state is tighter at the first desktop breakpoint before scaling up at lgx/xl.
+	- Header nav accessibility label is localized.
+	- Benefits tablet big-card styles use valid Tailwind/CSS without custom variants.
+
 [!] BACKEND CONTRACT STILL NEEDED
 	- Real payment endpoint or checkout URL response.
 	- Checkout plan selection contract, for example a plan_id accepted by backend.
@@ -5,34 +40,8 @@
 	- OpenVPN region/server-list endpoint, for example GET /vpn/openvpn/regions.
 	- Optional subscription/status endpoint so UI can distinguish missing Telegram link, missing subscription, expired subscription, and backend config errors.
 
----------------------------
-[x] vless card instead of asking should show your vless code. it should directly show
-    qrcode with link and copy button should be small inside link card 
-    remove big two button copy and open link. and close button should be primary it is not visible in dark popup
-[x] menu popup and config file popups seems to not using same wrapper elemeent, on tablet 
-    view menu looks fine while config popups open from side/ not full widths also viredly showing scroll bar , use wrapper of menu to fix it everything at once, border, width, scroll.
-[x] remove for now regional download option may be it is only one file not sure yet, so 
-    hide this functionality and text related, make close button visible primary
-
-[x] in the start of this file you can see previouse inspectations summary for dashboard now 
-    I want you inspect one more time I hidded some pages and some sections 
-    for mvp version I want to check all button and links everything functional and work for real production. give me list of what works and what should be done and what should be done
-
-    Works now:
-    - Desktop and mobile dashboard navigation expose the same MVP pages: dashboard, instructions, configs, subscription, profile.
-    - Pricing cards preserve selected plan in URL/localStorage and send users through register/login to dashboard subscription.
-    - Auth flows are wired to backend endpoints: register, email verification, login, TOTP login, forgot/reset password, logout.
-    - Dashboard configs are wired: VLESS loads QR/link from backend, OpenVPN downloads the single account config, VPN regeneration calls backend.
-    - Profile MVP actions are wired: Telegram linking and change-password reset flow.
-    - Landing section anchors work for benefits, pricing, guide, and FAQ.
-
-    Should be done before production:
-    - Implement real billing checkout response/redirect and plan_id contract; frontend currently redirects billing CTAs to Telegram as an MVP fallback.
-    - Add or document free-trial activation policy; landing promises a trial but no direct endpoint is available.
-    - Add subscription/status endpoint so UI can show precise states instead of generic config-access errors.
-    - [x] Add legal/content routes under /legal/privacy, /legal/terms, /legal/refund, /legal/aup, and /legal/report.
-    - Wire footer contact form to a real endpoint/email flow, or hide it for MVP.
-    - [x] Add configurable social URLs for footer social buttons with Telegram fallbacks.
-    - [x] Decide whether /dashboard/servers should redirect/404 for MVP; it is hidden from nav and now returns 404.
-
-    
+[!] BEFORE PRODUCTION
+	- Replace Telegram billing fallback with real checkout once backend contract is ready.
+	- Verify production env values for NEXT_PUBLIC_SITE_URL and social/support links.
+	- Run final npm run lint, npx tsc --noEmit, and npm run build after merge resolution.
+	- Smoke test auth, dashboard config modals, legal pages, sitemap, robots, and mobile/tablet header layouts.
