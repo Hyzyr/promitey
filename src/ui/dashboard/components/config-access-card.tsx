@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { Copy, Download, Link as LinkIcon } from 'lucide-react';
 
@@ -38,9 +38,53 @@ export const ConfigAccessCard = ({ className }: ConfigAccessCardProps) => {
   const t = useTranslations('dashboard.configs');
   const tCommon = useTranslations('common');
   const [activeModal, setActiveModal] = useState<ActiveModal>(null);
+  const [vlessConfig, setVlessConfig] = useState<VlessConfigData | null>(null);
+  const [isVlessLoading, setIsVlessLoading] = useState(false);
+  const [vlessErrorKey, setVlessErrorKey] = useState<VlessErrorKey | null>(null);
+  const [vlessCopyState, setVlessCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const vlessRequestIdRef = useRef(0);
 
   const openModal = (modal: ActiveModal) => {
     setActiveModal(modal);
+  };
+
+  const openVlessModal = () => {
+    const requestId = vlessRequestIdRef.current + 1;
+    vlessRequestIdRef.current = requestId;
+
+    setActiveModal('vless');
+    setIsVlessLoading(true);
+    setVlessErrorKey(null);
+    setVlessCopyState('idle');
+    setVlessConfig(null);
+
+    getVlessConfigAction()
+      .then((result) => {
+        reportForwardedServerError(result);
+        if (vlessRequestIdRef.current !== requestId) return;
+
+        setIsVlessLoading(false);
+
+        if (!result.ok) {
+          setVlessErrorKey(mapVlessErrorCode(result.code));
+          return;
+        }
+
+        setVlessConfig(result.data);
+      })
+      .catch(() => {
+        if (vlessRequestIdRef.current !== requestId) return;
+        setIsVlessLoading(false);
+        setVlessErrorKey('generic');
+      });
+  };
+
+  const closeVlessModal = () => {
+    vlessRequestIdRef.current += 1;
+    setActiveModal(null);
+    setVlessErrorKey(null);
+    setVlessCopyState('idle');
+    setIsVlessLoading(false);
   };
 
   return (
@@ -68,7 +112,7 @@ export const ConfigAccessCard = ({ className }: ConfigAccessCardProps) => {
 
       <div className="flex flex-col gap-4 sm:flex-row">
         <ConfigTile
-          onClick={() => openModal('vless')}
+          onClick={openVlessModal}
           ariaLabel={t('vless.openAriaLabel')}
           logo="/images/vless-logo.svg"
           label={
@@ -93,8 +137,13 @@ export const ConfigAccessCard = ({ className }: ConfigAccessCardProps) => {
 
       <VlessConfigModal
         isOpen={activeModal === 'vless'}
-        onClose={() => setActiveModal(null)}
+        onClose={closeVlessModal}
         closeAriaLabel={tCommon('close')}
+        config={vlessConfig}
+        isLoading={isVlessLoading}
+        errorKey={vlessErrorKey}
+        copyState={vlessCopyState}
+        setCopyState={setVlessCopyState}
       />
       <OpenvpnConfigModal
         isOpen={activeModal === 'openvpn'}
@@ -111,54 +160,29 @@ interface ConfigModalProps {
   closeAriaLabel: string;
 }
 
-const VlessConfigModal = ({ isOpen, onClose, closeAriaLabel }: ConfigModalProps) => {
+interface VlessConfigModalProps extends ConfigModalProps {
+  config: VlessConfigData | null;
+  isLoading: boolean;
+  errorKey: VlessErrorKey | null;
+  copyState: 'idle' | 'copied' | 'failed';
+  setCopyState: (copyState: 'idle' | 'copied' | 'failed') => void;
+}
+
+const VlessConfigModal = ({
+  isOpen,
+  onClose,
+  closeAriaLabel,
+  config,
+  isLoading,
+  errorKey,
+  copyState,
+  setCopyState,
+}: VlessConfigModalProps) => {
   const t = useTranslations('dashboard.configs.vless');
   const tCommon = useTranslations('common');
-  const [config, setConfig] = useState<VlessConfigData | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorKey, setErrorKey] = useState<VlessErrorKey | null>(null);
-  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    let isActive = true;
-
-    setIsLoading(true);
-    setErrorKey(null);
-    setCopyState('idle');
-    setConfig(null);
-
-    getVlessConfigAction()
-      .then((result) => {
-        reportForwardedServerError(result);
-        if (!isActive) return;
-
-        setIsLoading(false);
-
-        if (!result.ok) {
-          setErrorKey(mapVlessErrorCode(result.code));
-          return;
-        }
-
-        setConfig(result.data);
-      })
-      .catch(() => {
-        if (!isActive) return;
-        setIsLoading(false);
-        setErrorKey('generic');
-      });
-
-    return () => {
-      isActive = false;
-    };
-  }, [isOpen]);
 
   const close = () => {
     onClose();
-    setErrorKey(null);
-    setCopyState('idle');
-    setIsLoading(false);
   };
 
   const copyUrl = async () => {

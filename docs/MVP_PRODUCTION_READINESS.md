@@ -100,5 +100,4 @@ Smoke test these paths manually:
 
 - The frontend is ready for MVP support-driven billing, but not for automatic payment activation.
 - Legal text is professional placeholder copy and should still receive owner/legal review.
-- The old unused `src/ui/dashboard/components/sidebar.tsx` still exists but is not imported by the active admin layout.
 - Build, lint, and TypeScript checks must be run in the terminal after the merge is fully resolved.
