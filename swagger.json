@@ -25,10 +25,9 @@
   ],
   "paths": {
     "/auth/register": {
-      "post": {
+      "put": {
         "tags": ["auth"],
-        "summary": "Регистрация",
-        "description": "Создаёт web_accounts (email + bcrypt-пароль). Telegram не привязан.",
+        "summary": "Подготовить регистрацию",
         "parameters": [
           {
             "name": "body",
@@ -38,11 +37,20 @@
           }
         ],
         "responses": {
-          "201": {
-            "description": "Создано",
-            "schema": { "$ref": "#/definitions/StatusOK" }
-          },
+          "200": { "description": "Требуется код подтверждения", "schema": { "$ref": "#/definitions/VerificationRequired" } },
           "400": { "description": "Невалидные данные", "schema": { "$ref": "#/definitions/ErrorBody" } },
+          "409": { "description": "Email уже занят", "schema": { "$ref": "#/definitions/ErrorBody" } }
+        }
+      },
+      "post": {
+        "tags": ["auth"],
+        "summary": "Подтвердить регистрацию",
+        "parameters": [
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/RegisterConfirmRequest" } }
+        ],
+        "responses": {
+          "201": { "description": "Создано", "schema": { "$ref": "#/definitions/StatusOK" } },
+          "400": { "description": "Неверный код или нет pending регистрации", "schema": { "$ref": "#/definitions/ErrorBody" } },
           "409": { "description": "Email уже занят", "schema": { "$ref": "#/definitions/ErrorBody" } }
         }
       }
@@ -50,8 +58,7 @@
     "/auth/login": {
       "post": {
         "tags": ["auth"],
-        "summary": "Вход (шаг 1: пароль)",
-        "description": "Если у аккаунта **не** включён TOTP — в ответе сразу `access_token` и `refresh_token`. Если TOTP включён — вместо них приходит `two_factor_required: true`, поле `temp_token` (короткоживущий JWT, ~5 мин) и `expires_in`; дальше вызывайте **POST /auth/login/totp** с кодом из приложения.",
+        "summary": "Вход",
         "parameters": [
           {
             "name": "body",
@@ -62,7 +69,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Либо **TokenPair** (доступ и обновление), либо **TotpChallengeResponse** — только запрос второго фактора; пары токенов в этом ответе нет.",
+            "description": "Токены (Bearer), либо при включённом TOTP — объект TotpChallenge (см. схему LoginSuccess)",
             "schema": { "$ref": "#/definitions/LoginSuccess" }
           },
           "401": { "description": "Неверные учётные данные", "schema": { "$ref": "#/definitions/ErrorBody" } }
@@ -72,8 +79,8 @@
     "/auth/login/totp": {
       "post": {
         "tags": ["auth"],
-        "summary": "Вход (шаг 2: TOTP)",
-        "description": "Вызывается **только** после успешного **POST /auth/login**, когда в ответе было `two_factor_required: true`. В теле передаёте `temp_token` из того ответа и текущий **6-значный код** из Google Authenticator (или совместимого приложения). Успех — обычный **TokenPair** (`access_token`, `refresh_token`). Пароль снова не отправляется.",
+        "summary": "Второй шаг входа (код из приложения-аутентификатора)",
+        "description": "После POST /auth/login, если включён TOTP, приходит temp_token; сюда передаётся код.",
         "parameters": [
           {
             "name": "body",
@@ -109,8 +116,7 @@
     "/auth/forgot-password": {
       "post": {
         "tags": ["auth"],
-        "summary": "Забыли пароль",
-        "description": "Если email зарегистрирован, в лог сервера пишется заглушка «письма» со ссылкой (настройте API_WEB_BASE_URL). Ответ всегда 200, чтобы не светить наличие аккаунта.",
+        "summary": "Запросить код для сброса пароля",
         "parameters": [
           {
             "name": "body",
@@ -120,7 +126,7 @@
           }
         ],
         "responses": {
-          "200": { "description": "Ок (независимо от того, найден ли email)", "schema": { "$ref": "#/definitions/StatusOK" } },
+          "200": { "description": "Требуется код подтверждения", "schema": { "$ref": "#/definitions/VerificationRequired" } },
           "400": { "description": "Невалидные данные", "schema": { "$ref": "#/definitions/ErrorBody" } }
         }
       }
@@ -128,8 +134,7 @@
     "/auth/reset-password": {
       "post": {
         "tags": ["auth"],
-        "summary": "Новый пароль по токену из письма",
-        "description": "Токен одноразовый, срок ~1 ч. После сброса 2FA (TOTP) отключается — нужно включить заново.",
+        "summary": "Сбросить пароль по коду",
         "parameters": [
           {
             "name": "body",
@@ -140,7 +145,33 @@
         ],
         "responses": {
           "200": { "description": "Пароль обновлён", "schema": { "$ref": "#/definitions/StatusOK" } },
-          "400": { "description": "Невалидный/просроченный токен или слабый пароль", "schema": { "$ref": "#/definitions/ErrorBody" } }
+          "400": { "description": "Невалидные данные или код", "schema": { "$ref": "#/definitions/ErrorBody" } }
+        }
+      }
+    },
+    "/auth/email": {
+      "put": {
+        "tags": ["auth"],
+        "summary": "Подготовить смену email",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/ChangeEmailPrepareRequest" } }
+        ],
+        "responses": {
+          "200": { "description": "Требуется код подтверждения", "schema": { "$ref": "#/definitions/VerificationRequired" } },
+          "400": { "description": "Невалидные данные", "schema": { "$ref": "#/definitions/ErrorBody" } }
+        }
+      },
+      "post": {
+        "tags": ["auth"],
+        "summary": "Подтвердить смену email",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/ChangeEmailConfirmRequest" } }
+        ],
+        "responses": {
+          "200": { "description": "Ок", "schema": { "$ref": "#/definitions/StatusOK" } },
+          "400": { "description": "Невалидный код или нет pending запроса", "schema": { "$ref": "#/definitions/ErrorBody" } }
         }
       }
     },
@@ -275,24 +306,6 @@
           "403": { "description": "Telegram не привязан / бан", "schema": { "$ref": "#/definitions/ErrorBody" } },
           "401": { "description": "Не авторизован", "schema": { "$ref": "#/definitions/ErrorBody" } }
         }
-      },
-      "put": {
-        "tags": ["vpn"],
-        "summary": "Установить регион",
-        "security": [{ "Bearer": [] }],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": { "$ref": "#/definitions/RegionRequest" }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Сохранено", "schema": { "$ref": "#/definitions/RegionResponse" } },
-          "403": { "description": "Telegram не привязан", "schema": { "$ref": "#/definitions/ErrorBody" } },
-          "401": { "description": "Не авторизован", "schema": { "$ref": "#/definitions/ErrorBody" } }
-        }
       }
     },
     "/vpn/openvpn/config": {
@@ -307,6 +320,38 @@
           "403": { "description": "Нет подписки / не привязан Telegram", "schema": { "$ref": "#/definitions/ErrorBody" } },
           "401": { "description": "Не авторизован", "schema": { "$ref": "#/definitions/ErrorBody" } },
           "500": { "description": "Ошибка генерации", "schema": { "$ref": "#/definitions/ErrorBody" } }
+        }
+      }
+    },
+    "/vpn/openvpn/config/{region}": {
+      "get": {
+        "tags": ["vpn"],
+        "summary": "Скачать OpenVPN .ovpn и сохранить регион",
+        "security": [{ "Bearer": [] }],
+        "produces": ["application/x-openvpn-profile"],
+        "parameters": [
+          { "name": "region", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "200": { "description": "Файл конфигурации" },
+          "403": { "description": "Нет подписки", "schema": { "$ref": "#/definitions/ErrorBody" } },
+          "401": { "description": "Не авторизован", "schema": { "$ref": "#/definitions/ErrorBody" } }
+        }
+      }
+    },
+    "/promocode/activate": {
+      "post": {
+        "tags": ["billing"],
+        "summary": "Активировать промокод",
+        "security": [{ "Bearer": [] }],
+        "parameters": [
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/PromocodeActivateRequest" } }
+        ],
+        "responses": {
+          "200": { "description": "Промокод активирован", "schema": { "$ref": "#/definitions/PromocodeActivateResponse" } },
+          "400": { "description": "Ошибка валидации или код истек", "schema": { "$ref": "#/definitions/ErrorBody" } },
+          "404": { "description": "Код не найден", "schema": { "$ref": "#/definitions/ErrorBody" } },
+          "409": { "description": "Пробный код уже использован", "schema": { "$ref": "#/definitions/ErrorBody" } }
         }
       }
     },
@@ -371,6 +416,13 @@
         "status": { "type": "string", "example": "ok" }
       }
     },
+    "VerificationRequired": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "example": "verification_required" },
+        "code": { "type": "string", "example": "111111" }
+      }
+    },
     "StatusLinked": {
       "type": "object",
       "properties": {
@@ -385,6 +437,14 @@
         "password": { "type": "string", "minLength": 8 }
       }
     },
+    "RegisterConfirmRequest": {
+      "type": "object",
+      "required": ["email", "code"],
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "code": { "type": "string" }
+      }
+    },
     "LoginRequest": {
       "type": "object",
       "required": ["email", "password"],
@@ -397,21 +457,21 @@
       "type": "object",
       "required": ["temp_token", "code"],
       "properties": {
-        "temp_token": { "type": "string", "description": "Значение поля `temp_token` из ответа POST /auth/login (JWT, claim typ=totp_challenge)" },
-        "code": { "type": "string", "description": "Одноразовый 6-значный код из приложения (окно ~30 с)" }
+        "temp_token": { "type": "string", "description": "JWT из ответа /auth/login при two_factor_required" },
+        "code": { "type": "string", "description": "6-значный TOTP" }
       }
     },
     "TotpChallengeResponse": {
       "type": "object",
       "properties": {
-        "two_factor_required": { "type": "boolean", "example": true, "description": "Всегда true в этом сценарии" },
-        "temp_token": { "type": "string", "description": "Промежуточный JWT для POST /auth/login/totp (не путать с access_token)" },
-        "token_type": { "type": "string", "example": "TotpChallenge", "description": "Игнорируйте при разборе; ориентируйтесь на наличие two_factor_required" },
-        "expires_in": { "type": "integer", "description": "Рекомендуемый TTL temp_token в секундах (сервер: 300)" }
+        "two_factor_required": { "type": "boolean", "example": true },
+        "temp_token": { "type": "string" },
+        "token_type": { "type": "string", "example": "TotpChallenge" },
+        "expires_in": { "type": "integer", "description": "Секунд жизни temp_token" }
       }
     },
     "LoginSuccess": {
-      "description": "Один из двух вариантов: **TokenPair** — полный вход; **TotpChallengeResponse** — нужен второй запрос /auth/login/totp.",
+      "description": "Либо TokenPair, либо TotpChallengeResponse",
       "type": "object"
     },
     "TotpSetupResponse": {
@@ -460,10 +520,25 @@
     },
     "ResetPasswordRequest": {
       "type": "object",
-      "required": ["token", "new_password"],
+      "required": ["email", "code", "new_password"],
       "properties": {
-        "token": { "type": "string", "description": "Токен из ссылки сброса" },
+        "email": { "type": "string", "format": "email" },
+        "code": { "type": "string" },
         "new_password": { "type": "string", "minLength": 8 }
+      }
+    },
+    "ChangeEmailPrepareRequest": {
+      "type": "object",
+      "required": ["new_email"],
+      "properties": {
+        "new_email": { "type": "string", "format": "email" }
+      }
+    },
+    "ChangeEmailConfirmRequest": {
+      "type": "object",
+      "required": ["code"],
+      "properties": {
+        "code": { "type": "string" }
       }
     },
     "ChangePasswordRequest": {
@@ -516,11 +591,20 @@
         "region": { "type": "string", "description": "Код региона (whitelist как в боте) или auto" }
       }
     },
-    "RegionRequest": {
+    "PromocodeActivateRequest": {
       "type": "object",
-      "required": ["region"],
+      "required": ["code"],
       "properties": {
-        "region": { "type": "string" }
+        "code": { "type": "string" }
+      }
+    },
+    "PromocodeActivateResponse": {
+      "type": "object",
+      "properties": {
+        "status": { "type": "string", "example": "activated" },
+        "code": { "type": "string" },
+        "subscription_type": { "type": "string" },
+        "active_until": { "type": "string", "format": "date-time" }
       }
     },
     "VLESSSubscriptionResponse": {
