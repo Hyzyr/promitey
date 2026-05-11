@@ -14,7 +14,9 @@ export interface HeaderDesktopProps {
   isAuthenticated?: boolean;
 }
 
-export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) => {
+export const HeaderDesktop = ({
+  isAuthenticated = false,
+}: HeaderDesktopProps) => {
   const t = useTranslations('landing.header');
   const { isVisible, isAtTop } = useHeaderScroll();
   const { scrollTo } = useLenis();
@@ -26,8 +28,11 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
     { href: '#faq', label: t('nav.faq') },
   ];
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
+  const handleNavClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    event.preventDefault();
     scrollTo(href, {
       offset: -100,
       duration: 1.8,
@@ -43,25 +48,28 @@ export const HeaderDesktop = ({ isAuthenticated = false }: HeaderDesktopProps) =
         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         className={cn(
           'gpu-layer fixed top-0 right-0 left-0 z-50 bg-neutral-900',
-          !isAtTop && 'shadow-lg'
+          !isAtTop && 'shadow-lg',
         )}
       >
         <div className="container flex items-center justify-between py-4">
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 lgx:gap-6">
             <Link href="/">
-              <LogoWithText className="inline-flex h-9 w-auto xl:h-11" />
+              <LogoWithText className="inline-flex h-8 w-auto lgx:h-9 xl:h-11" />
             </Link>
             <LanguageSwitcher />
           </div>
 
-          <div className="flex items-center gap-10">
-            <nav aria-label="Main navigation" className="flex items-center gap-10">
+          <div className="flex items-center gap-4 lgx:gap-8 xl:gap-10">
+            <nav
+              aria-label={t('navLabel')}
+              className="flex items-center gap-4 lgx:gap-8 xl:gap-10"
+            >
               {NAV.map(({ href, label }) => (
                 <a
                   key={href}
                   href={href}
-                  onClick={(e) => handleNavClick(e, href)}
-                  className="font-roboto text-[18px] font-normal text-neutral-10 transition-colors hover:text-primary-500 active:text-primary-600"
+                  onClick={(event) => handleNavClick(event, href)}
+                  className="font-roboto text-[15px] font-normal text-neutral-10 transition-colors hover:text-primary-500 active:text-primary-600 lgx:text-[17px] xl:text-[18px]"
                 >
                   {label}
                 </a>

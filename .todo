@@ -1,48 +1,38 @@
-[x] COMPLETED - Swagger/user-flow audit and instruction file
-	- Checked full swagger-new.json and current frontend flow step by step.
-	- Created docs/USER_FLOW_AND_CONFIG_AUDIT.md with registration, login, Telegram linking, subscription, payment, promocode, VLESS, and OpenVPN flow notes.
-	- Confirmed registration code flow is implemented with prepare + confirm pages.
-	- Confirmed selected pricing plan is preserved in frontend query/localStorage and redirects to subscription after login.
-	- Confirmed payment cannot be fully applied after registration yet because Swagger marks POST /billing/checkout as a 501 placeholder and defines no plan parameter.
-	- Confirmed free trial has no direct Swagger endpoint; current possible trial-like path is promocode activation only.
-
-[x] COMPLETED - Config files UX
-	- Replaced direct config tiles with reusable modal-based config access UI.
-	- VLESS card now opens a popup using the existing shared Modal component.
-	- VLESS popup loads the subscription URL through a server action, generates a QR code with the existing qrcode package, supports one-click copy, and provides an open-link action.
-	- OpenVPN card now opens a matching popup with saved/default profile download and region-code download.
-	- Added /api/configs/openvpn/[region] proxy route for region-specific .ovpn downloads.
-	- Added EN/RU translations for all config popup copy and accessibility labels.
-	- Backend gap documented: Swagger still does not provide a full available OpenVPN region/server list endpoint, so the UI cannot truthfully show a complete server list yet.
-
-[x] COMPLETED - Dashboard/profile change password flow
-	- Replaced in-dashboard password-change fields with a confirmation flow.
-	- User is warned that continuing logs them out.
-	- Confirm action clears the session and redirects to the auth password reset flow at /forgot-password.
-	- Added EN/RU translations for the confirmation copy.
-
-[x] COMPLETED - Ghost files and unused pieces cleanup
-	- Removed tracked .old ghost files:
-	  - src/ui/dashboard/components/config-download-card.tsx.old
-	  - src/ui/dashboard/components/config-tile.tsx.old
-	  - src/ui/dashboard/pages/instructions/instructions-page.tsx.old
-	  - src/ui/dashboard/pages/instructions/instructions-tabs.tsx.old
-	- Removed now-unused dashboard password-change hook.
-	- Removed the now-unused direct dashboard password-change action.
-
-[x] COMPLETED - Production consistency cleanup
-	- Cleaned lint warnings from stale imports, anonymous PostCSS export, raw img tags, and a Tailwind utility warning.
-	- Replaced relevant raw images with next/image where lint required it.
-	- Verified no remaining .old file references or use-change-password references in src/.
-	- Validation completed:
-	  - npm run lint passed with 0 warnings/errors.
-	  - npx tsc --noEmit passed.
-	  - npm run build passed.
-	  - Browser smoke passed for VLESS QR/copy popup, OpenVPN popup, and password-change logout redirect.
-
 [!] BACKEND CONTRACT STILL NEEDED
 	- Real payment endpoint or checkout URL response.
 	- Checkout plan selection contract, for example a plan_id accepted by backend.
 	- Direct free-trial endpoint or documented automatic trial/promocode policy.
 	- OpenVPN region/server-list endpoint, for example GET /vpn/openvpn/regions.
 	- Optional subscription/status endpoint so UI can distinguish missing Telegram link, missing subscription, expired subscription, and backend config errors.
+
+---------------------------
+[x] vless card instead of asking should show your vless code. it should directly show
+    qrcode with link and copy button should be small inside link card 
+    remove big two button copy and open link. and close button should be primary it is not visible in dark popup
+[x] menu popup and config file popups seems to not using same wrapper elemeent, on tablet 
+    view menu looks fine while config popups open from side/ not full widths also viredly showing scroll bar , use wrapper of menu to fix it everything at once, border, width, scroll.
+[x] remove for now regional download option may be it is only one file not sure yet, so 
+    hide this functionality and text related, make close button visible primary
+
+[x] in the start of this file you can see previouse inspectations summary for dashboard now 
+    I want you inspect one more time I hidded some pages and some sections 
+    for mvp version I want to check all button and links everything functional and work for real production. give me list of what works and what should be done and what should be done
+
+    Works now:
+    - Desktop and mobile dashboard navigation expose the same MVP pages: dashboard, instructions, configs, subscription, profile.
+    - Pricing cards preserve selected plan in URL/localStorage and send users through register/login to dashboard subscription.
+    - Auth flows are wired to backend endpoints: register, email verification, login, TOTP login, forgot/reset password, logout.
+    - Dashboard configs are wired: VLESS loads QR/link from backend, OpenVPN downloads the single account config, VPN regeneration calls backend.
+    - Profile MVP actions are wired: Telegram linking and change-password reset flow.
+    - Landing section anchors work for benefits, pricing, guide, and FAQ.
+
+    Should be done before production:
+    - Implement real billing checkout response/redirect and plan_id contract; frontend currently redirects billing CTAs to Telegram as an MVP fallback.
+    - Add or document free-trial activation policy; landing promises a trial but no direct endpoint is available.
+    - Add subscription/status endpoint so UI can show precise states instead of generic config-access errors.
+    - [x] Add legal/content routes under /legal/privacy, /legal/terms, /legal/refund, /legal/aup, and /legal/report.
+    - Wire footer contact form to a real endpoint/email flow, or hide it for MVP.
+    - [x] Add configurable social URLs for footer social buttons with Telegram fallbacks.
+    - [x] Decide whether /dashboard/servers should redirect/404 for MVP; it is hidden from nav and now returns 404.
+
+    

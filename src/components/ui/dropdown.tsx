@@ -63,7 +63,7 @@ export const Dropdown = ({
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          'w-full focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60',
+          'flex w-full focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-60',
           triggerClassName,
         )}
       >

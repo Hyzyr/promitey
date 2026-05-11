@@ -13,13 +13,14 @@ import {
   twitterSVG,
   telegramSVG,
 } from '@/components/assets/social-media-svgs';
+import { EXTERNAL_LINKS, LEGAL_ROUTES } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 const SOCIAL = [
-  { label: 'Instagram', icon: instaSVG },
-  { label: 'YouTube', icon: youtubeSVG },
-  { label: 'TikTok', icon: twitterSVG },
-  { label: 'Telegram', icon: telegramSVG },
+  { label: 'Instagram', icon: instaSVG, href: EXTERNAL_LINKS.social.instagram },
+  { label: 'YouTube', icon: youtubeSVG, href: EXTERNAL_LINKS.social.youtube },
+  { label: 'TikTok', icon: twitterSVG, href: EXTERNAL_LINKS.social.tiktok },
+  { label: 'Telegram', icon: telegramSVG, href: EXTERNAL_LINKS.social.telegram },
 ];
 
 export const LandingFooter = () => {
@@ -34,11 +35,11 @@ export const LandingFooter = () => {
   ];
 
   const SUPPORT_LINKS = [
-    { label: t('support.links.privacy'), href: '/privacy' },
-    { label: t('support.links.terms'), href: '/terms' },
-    { label: t('support.links.refund'), href: '/refund' },
-    { label: t('support.links.aup'), href: '/aup' },
-    { label: t('support.links.report'), href: '/report' },
+    { label: t('support.links.privacy'), href: LEGAL_ROUTES.privacy },
+    { label: t('support.links.terms'), href: LEGAL_ROUTES.terms },
+    { label: t('support.links.refund'), href: LEGAL_ROUTES.refund },
+    { label: t('support.links.aup'), href: LEGAL_ROUTES.aup },
+    { label: t('support.links.report'), href: LEGAL_ROUTES.report },
   ];
   return (
     <footer className="relative w-full bg-neutral-900 pb-7.5 pt-12 md:pt-14 lg:pt-16 xl:pt-20">
@@ -58,9 +59,10 @@ export const LandingFooter = () => {
                 {t('follow')}
               </strong>
               <div className="flex gap-2 md:gap-3">
-                {SOCIAL.map(({ label, icon }) => (
+                {SOCIAL.map(({ label, icon, href }) => (
                   <Button
                     key={label}
+                    href={href}
                     aria-label={label}
                     size="sm"
                     className="p-2 md:p-2.5 bg-neutral-600 h-11 w-11">
@@ -173,7 +175,7 @@ const FooterLink = ({ href, label, className }: FooterLinkProps) => {
 const HyzyrLink = () => {
   return (
     <a
-      href="https://hyzyr.com"
+      href={EXTERNAL_LINKS.credit}
       target="_blank"
       rel="noopener noreferrer"
       className="inline-flex px-2 text-neutral-20 hover:text-neutral-50 active:text-neutral-100 transition-colors duration-200 ">

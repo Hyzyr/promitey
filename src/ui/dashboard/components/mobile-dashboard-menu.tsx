@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard,
-  Server,
   TrafficCone,
   FileCog,
   CreditCard,
@@ -21,7 +20,6 @@ import { LogoutButton } from './logout-button';
 
 const DRAWER_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
-  { href: '/dashboard/servers', icon: Server, labelKey: 'servers' },
   { href: '/dashboard/instructions', icon: TrafficCone, labelKey: 'instructions' },
   { href: '/dashboard/configs', icon: FileCog, labelKey: 'configs' },
   {

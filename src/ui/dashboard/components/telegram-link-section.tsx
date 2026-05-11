@@ -48,7 +48,7 @@ export const TelegramLinkSection = ({
 
       {isLinked ? (
         <div className="flex items-center gap-2 text-green-600">
-          <CheckCircle className="h-5 w-5 flex-shrink-0" />
+          <CheckCircle className="h-5 w-5 shrink-0" />
           <span className="text-sm font-medium">{tProfile('telegram.linkedStatus')}</span>
           {linkedAt && (
             <span className="ml-1 text-sm text-neutral-500">
@@ -104,7 +104,7 @@ export const TelegramLinkSection = ({
                 variant="orange"
                 size="md"
                 isLoading={isSubmitting}
-                className="flex-shrink-0"
+                className="shrink-0"
               >
                 {tProfile('telegram.codeSubmit')}
               </Button>

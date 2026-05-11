@@ -141,13 +141,6 @@ body {
   --breakpoint-xlx: 82rem; /* 1312px */
 }
 
-/* ─── Custom variants ──────────────────────────────────────────────────── */
-@custom-variant tablet {
-  @media (width >= 48rem) and (width < 72.5rem) {
-    @slot;
-  }
-}
-
 /* ─── Base layer (autofill, resets, etc) ─────────────────────────────── */
 @layer base {
   /* Change the autofill background color */
@@ -299,25 +292,37 @@ body {
 @utility bigcard {
   @apply relative md:col-span-2 md:row-start-1 md:px-5 md:py-6.5;
   @apply lg:h-full;
-  @apply tablet:pr-[45%]!;
   @apply lgx:col-span-1 lgx:col-start-3 lgx:row-span-2 lgx:row-start-1;
   @apply lgx:h-full lgx:px-6 lgx:py-8;
   @apply max-md:min-h-[80vh]!;
 
-  .bigcard-media {
-    @apply tablet:absolute tablet:top-1 tablet:right-0;
-    @apply tablet:h-full tablet:w-[50%];
+  @media (width >= 48rem) and (width < 72.5rem) {
+    padding-right: 45% !important;
 
-    img.bgitem {
-      @apply tablet:right-2 tablet:left-[unset] tablet:h-full tablet:w-auto;
+    .bigcard-media {
+      position: absolute;
+      top: 0.25rem;
+      right: 0;
+      height: 100%;
+      width: 50%;
     }
-    .video-wrapper {
-      @apply tablet:right-12 tablet:h-[80%] tablet:w-[unset];
-    }
-  }
 
-  p {
-    @apply tablet:max-w-100;
+    .bigcard-media img.bgitem {
+      right: 0.5rem;
+      left: unset;
+      height: 100%;
+      width: auto;
+    }
+
+    .bigcard-media .video-wrapper {
+      right: 3rem;
+      height: 80%;
+      width: unset;
+    }
+
+    p {
+      max-width: 25rem;
+    }
   }
 }
 

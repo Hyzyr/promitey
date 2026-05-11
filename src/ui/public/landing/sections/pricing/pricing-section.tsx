@@ -3,6 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/container';
 import { PricingCard } from './pricing-card';
+import { EXTERNAL_LINKS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { PricingBg } from './pricing-bg';
 
@@ -72,7 +73,7 @@ export const PricingSection = () => {
               height="md:min-h-65 lgx:min-h-90 lgx:min-h-105"
               selectLabel={t('select')}
               planId="one-month"
-              href="/register"
+              href={EXTERNAL_LINKS.telegramBilling}
             />
           </CardWrapper>
 
@@ -116,7 +117,7 @@ export const PricingSection = () => {
               height="md:min-h-80 lgx:min-h-110 lgx:min-h-125 "
               selectLabel={t('select')}
               planId="year"
-              href="/register"
+              href={EXTERNAL_LINKS.telegramBilling}
             />
           </div>
           <CardWrapper>
@@ -130,7 +131,7 @@ export const PricingSection = () => {
               height="md:min-h-80 lgx:min-h-110 lgx:min-h-125 "
               selectLabel={t('select')}
               planId="quarter"
-              href="/register"
+              href={EXTERNAL_LINKS.telegramBilling}
             />
           </CardWrapper>
           <CardWrapper>
@@ -144,7 +145,7 @@ export const PricingSection = () => {
               height="md:min-h-80 lgx:min-h-110 lgx:min-h-125 "
               selectLabel={t('select')}
               planId="half-year"
-              href="/register"
+              href={EXTERNAL_LINKS.telegramBilling}
             />
           </CardWrapper>
         </div>

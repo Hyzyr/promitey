@@ -42,8 +42,8 @@ const LightTrigger = ({
 }: TriggerProps) => (
   <div
     className={cn(
-      'group relative inline-flex items-center justify-center gap-2.5 rounded-sm text-lg transition-colors',
-      'lg:h-12 lg:w-12 lgx:h-auto lgx:w-auto lgx:justify-start',
+      'group relative w-full inline-flex items-center justify-center gap-2.5 rounded-sm text-lg transition-colors',
+      'lg:h-12 lg:w-12 lgx:h-auto lgx:w-auto mr-auto lgx:justify-start',
       'text-neutral-600 hover:text-neutral-900',
       isPending && 'opacity-60',
       className,
@@ -80,8 +80,8 @@ const ResponsiveTrigger = ({
 }: TriggerProps) => (
   <div
     className={cn(
-      'group relative inline-flex items-center justify-center gap-2.5 rounded-sm bg-neutral-800 text-lg text-neutral-10 transition-colors hover:bg-neutral-700',
-      'lg:h-12 lg:w-12 lgx:h-auto lgx:w-auto lgx:justify-start lgx:px-4 lgx:py-3',
+      'group relative w-full inline-flex items-center justify-center gap-2.5 rounded-sm bg-neutral-800 text-lg text-neutral-10 transition-colors hover:bg-neutral-700',
+      'lg:h-12 lg:w-12 lgx:h-auto lgx:w-auto mr-auto lgx:justify-start lgx:px-4 lgx:py-3',
       isPending && 'opacity-60',
       className,
     )}
@@ -144,7 +144,7 @@ const CompactTrigger = ({
 }: TriggerProps) => (
   <div
     className={cn(
-      'flex items-center gap-1 rounded-sm bg-neutral-800 p-2 transition-colors hover:bg-neutral-700',
+      'flex items-center  w-full gap-1 rounded-sm bg-neutral-800 p-2 transition-colors hover:bg-neutral-700',
       isPending && 'opacity-60',
       className,
     )}

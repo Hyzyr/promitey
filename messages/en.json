@@ -2,10 +2,11 @@
   "meta": {
     "home": {
       "title": "Prometey VPN — Fast & Secure VPN | VLESS + OpenVPN",
-      "description": "High-speed VPN using VLESS & OpenVPN. Connect up to 10 devices. Free trial, plans from €3/mo. Works where others fail.",
+      "description": "High-speed VPN subscription using VLESS and OpenVPN. Connect up to 10 devices, start with a free trial, and stay online where others fail.",
       "keywords": "VPN, VLESS VPN, fast VPN, secure VPN, private VPN, VPN subscription, bypass restrictions, 10 devices VPN, OpenVPN, free trial VPN",
       "ogTitle": "Prometey VPN — Your Freedom in One Click",
-      "ogDescription": "High-speed VPN. Up to 10 devices. Free trial. VLESS + OpenVPN."
+      "ogDescription": "High-speed VPN with VLESS and OpenVPN. Up to 10 devices, free trial, and stable access where others fail.",
+      "ogImageAlt": "Prometey VPN preview image"
     },
     "auth": {
       "title": "Sign In",
@@ -32,6 +33,156 @@
     "close": "Close",
     "language": "Language"
   },
+  "legal": {
+    "eyebrow": "Legal information",
+    "updatedLabel": "Last updated",
+    "updatedValue": "May 11, 2026",
+    "pages": {
+      "privacy": {
+        "title": "Privacy Policy",
+        "description": "How Prometey VPN collects, uses, stores, and protects account, payment, support, and service data.",
+        "sections": [
+          {
+            "title": "What we collect",
+            "body": [
+              "We collect the account information needed to create and protect your profile, such as email address, authentication data, Telegram link status, and service settings.",
+              "When payment integrations are enabled, payment processing may be handled by a third-party provider. Prometey VPN should only store the minimum billing status data required to activate or renew access."
+            ]
+          },
+          {
+            "title": "How we use data",
+            "body": [
+              "We use data to authenticate users, issue VPN configuration files, provide support, prevent abuse, process subscriptions, and keep the service stable.",
+              "Operational logs may be used to diagnose backend errors, security events, and service availability problems."
+            ]
+          },
+          {
+            "title": "Retention and security",
+            "body": [
+              "We keep account and service data only while it is needed for the purposes described here or required by law.",
+              "Access to administrative systems should be restricted, audited, and protected with secure credentials."
+            ]
+          },
+          {
+            "title": "Contact",
+            "body": [
+              "For privacy questions, data access requests, or account deletion requests, contact support through the official Telegram channel listed on this site."
+            ]
+          }
+        ]
+      },
+      "terms": {
+        "title": "Terms of Service",
+        "description": "The rules for using Prometey VPN, managing your account, and accessing VPN configuration files.",
+        "sections": [
+          {
+            "title": "Service access",
+            "body": [
+              "Prometey VPN provides access to VPN configuration files and related account tools after registration and, where applicable, subscription activation.",
+              "You are responsible for keeping your account credentials secure and for any activity performed through your account."
+            ]
+          },
+          {
+            "title": "Acceptable use",
+            "body": [
+              "You must use the service lawfully and must not use Prometey VPN to attack systems, distribute malware, send spam, commit fraud, or violate the rights of others.",
+              "We may restrict or suspend access when usage creates security, legal, or operational risk."
+            ]
+          },
+          {
+            "title": "Subscriptions",
+            "body": [
+              "Subscription pricing, duration, and renewal details are shown before purchase or communicated through the official support channel.",
+              "Until the payment backend is finalized, checkout may be handled manually through Telegram support."
+            ]
+          },
+          {
+            "title": "Changes",
+            "body": [
+              "We may update these terms as the product, backend contracts, or legal requirements change. Continued use of the service means you accept the updated terms."
+            ]
+          }
+        ]
+      },
+      "refund": {
+        "title": "Refund Policy",
+        "description": "When refunds may be available and how to request support for payment or access problems.",
+        "sections": [
+          {
+            "title": "Refund requests",
+            "body": [
+              "If you paid for access and cannot use the service because of a verified service-side issue, contact support with your account email and payment details.",
+              "Refund eligibility depends on the payment method, the subscription period, and whether VPN access was already issued and used."
+            ]
+          },
+          {
+            "title": "Non-refundable cases",
+            "body": [
+              "Refunds may be refused for abuse, violation of the acceptable use policy, chargeback fraud, or requests made after a substantial part of the subscription period has passed.",
+              "Temporary third-party network blocks, local device issues, or unsupported client apps may require troubleshooting before a refund decision."
+            ]
+          },
+          {
+            "title": "How to request",
+            "body": [
+              "Send your request through the official Telegram support channel. Include your account email, payment date, plan, and a short description of the problem."
+            ]
+          }
+        ]
+      },
+      "aup": {
+        "title": "Acceptable Use Policy",
+        "description": "The usage rules that keep Prometey VPN safe, reliable, and available for legitimate customers.",
+        "sections": [
+          {
+            "title": "Prohibited activity",
+            "body": [
+              "Do not use Prometey VPN for spam, phishing, malware, credential theft, denial-of-service attacks, harassment, illegal marketplaces, or unauthorized access to networks and accounts.",
+              "Do not resell, share, or automate access in a way that overloads the service or bypasses subscription limits."
+            ]
+          },
+          {
+            "title": "Network protection",
+            "body": [
+              "We may apply technical limits, rotate configuration files, or suspend access to protect infrastructure, customers, and partners.",
+              "Security incidents may be investigated using account metadata, support records, and service-side diagnostics."
+            ]
+          },
+          {
+            "title": "Enforcement",
+            "body": [
+              "Violations can lead to warnings, configuration regeneration, suspension, termination, or refusal of future service."
+            ]
+          }
+        ]
+      },
+      "report": {
+        "title": "Report a Problem",
+        "description": "How to contact support about connection issues, billing questions, account access, or abuse reports.",
+        "sections": [
+          {
+            "title": "Support requests",
+            "body": [
+              "For connection issues, include your device, VPN client app, protocol, approximate time of failure, and any error message shown by the client.",
+              "For billing or account issues, include your account email and the plan or payment details available to you."
+            ]
+          },
+          {
+            "title": "Abuse reports",
+            "body": [
+              "If you believe Prometey VPN infrastructure is being abused, contact support with timestamps, IP addresses or domains involved, logs if available, and a clear description of the incident."
+            ]
+          },
+          {
+            "title": "Where to write",
+            "body": [
+              "Use the official Telegram support link from this site. It is currently the primary contact channel for MVP support and billing."
+            ]
+          }
+        ]
+      }
+    }
+  },
   "nav": {
     "dashboard": "Dashboard",
     "instructions": "Instructions",
@@ -49,6 +200,7 @@
       "dashboard": "Dashboard",
       "menu": "Menu",
       "closeMenu": "Close menu",
+      "navLabel": "Main navigation",
       "nav": {
         "benefits": "Benefits",
         "pricing": "Pricing",
@@ -135,7 +287,7 @@
       "confirm": {
         "title": "Confirm Your Plan",
         "body": "You are about to purchase:",
-        "proceed": "Proceed to Sign Up",
+        "proceed": "Continue in Telegram",
         "ariaLabel": "Confirm plan selection"
       },
       "plans": {
@@ -316,11 +468,12 @@
         "openAriaLabel": "Open VLESS configuration options",
         "title": "VLESS configuration",
         "ariaLabel": "VLESS configuration dialog",
-        "description": "Show the QR code or copy your VLESS subscription link to import it into a compatible client.",
+        "description": "Use this QR code or subscription link to import VLESS into a compatible client.",
+        "loading": "Loading configuration",
         "load": "Show QR and link",
         "qrAlt": "VLESS subscription QR code",
         "linkLabel": "Subscription link",
-        "copy": "Copy link",
+        "copy": "Copy",
         "copied": "Copied",
         "copyFailed": "Copy failed. Select the link and copy it manually.",
         "open": "Open link",
@@ -334,10 +487,10 @@
         "openAriaLabel": "Open OpenVPN download options",
         "title": "OpenVPN configuration",
         "ariaLabel": "OpenVPN configuration dialog",
-        "description": "Download an .ovpn profile for your saved region, or enter a region code if support gave you one.",
-        "savedTitle": "Saved or automatic region",
-        "savedDescription": "This downloads the profile for the region currently saved on your account, or lets the backend choose automatically.",
-        "downloadSaved": "Download saved profile",
+        "description": "Download the OpenVPN profile currently available for your account.",
+        "savedTitle": "OpenVPN profile",
+        "savedDescription": "This downloads the .ovpn file generated for your account.",
+        "downloadSaved": "Download profile",
         "regionTitle": "Download by region",
         "regionDescription": "Use this when you know the exact OpenVPN region code.",
         "regionLabel": "Region code",

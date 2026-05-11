@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import {
   LayoutDashboard,
-  Server,
   TrafficCone,
   FileCog,
   CreditCard,
@@ -20,14 +19,19 @@ import { LogoutButton } from './logout-button';
 
 const NAV_ITEMS = [
   { href: '/dashboard', icon: LayoutDashboard, labelKey: 'dashboard' },
-  { href: '/dashboard/servers', icon: Server, labelKey: 'servers' },
-  { href: '/dashboard/instructions', icon: TrafficCone, labelKey: 'instructions' },
+  {
+    href: '/dashboard/instructions',
+    icon: TrafficCone,
+    labelKey: 'instructions',
+  },
   { href: '/dashboard/configs', icon: FileCog, labelKey: 'configs' },
   {
     href: '/dashboard/subscription',
     icon: CreditCard,
     labelKey: 'subscription',
   },
+] as const;
+const EXTRA_ITEMS = [
   { href: '/dashboard/profile', icon: User, labelKey: 'profile' },
 ] as const;
 
@@ -43,9 +47,9 @@ export const DashboardSidebar = () => {
   return (
     <aside
       className={cn(
-        'hidden lg:flex',
-        'h-[calc(100vh-60px)] w-24 flex-col gap-8 overflow-visible',
-        'rounded-md px-6 py-8 lgx:w-72 xlx:w-93.75',
+        'sticky top-2 hidden self-start lg:flex',
+        'min-h-[calc(100vh-60px)] w-24 flex-col gap-8 overflow-visible',
+        'rounded-md px-6 py-6 lgx:w-72 xlx:w-93.75 xlx:py-8',
         'shadow-[0_11px_19.4px_rgba(0,0,0,.04),0_13px_51.2px_rgba(0,0,0,.04)]',
       )}
       style={{ background: SIDEBAR_GRADIENT }}
@@ -76,13 +80,25 @@ export const DashboardSidebar = () => {
         ))}
       </nav>
 
-      <div className="flex flex-col gap-4 border-t border-neutral-20 py-5">
+      <div className="align-start flex flex-col gap-4 border-t border-neutral-20 py-5">
         <LanguageSwitcher
           variant="dark"
           size="responsive"
           dropdownClassName="lg:w-12 lgx:w-full"
           showTooltipOnCompact
         />
+        {EXTRA_ITEMS.map((item) => (
+          <SidebarNavItem
+            key={item.href}
+            href={item.href}
+            icon={item.icon}
+            label={tNav(item.labelKey)}
+            active={
+              dashboardPath === item.href ||
+              dashboardPath.startsWith(`${item.href}/`)
+            }
+          />
+        ))}
         <LogoutButton
           className="group relative inline-flex items-center justify-center gap-2.5 rounded-sm text-lg font-normal lg:h-12 lg:w-12 lgx:h-auto lgx:w-auto lgx:justify-start"
           iconClassName="h-8 w-8"

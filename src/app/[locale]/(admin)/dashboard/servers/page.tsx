@@ -1,7 +1,7 @@
-import { ServersPage } from '@/ui/dashboard/pages/servers/servers-page';
+import { notFound } from 'next/navigation';
 
 export default async function ServersRoutePage() {
-  return <ServersPage />;
+  notFound();
 }
 
 

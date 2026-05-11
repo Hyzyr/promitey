@@ -73,8 +73,6 @@ const appOptions: Record<Protocol, AppOption[]> = {
   ],
 };
 
-const cardBackground =
-  'linear-gradient(180deg, rgba(255,255,255,.2) 0%, rgba(255,252,230,.2) 30.769%, rgba(254,233,232,.2) 100%), #ffffff';
 
 export const InstructionsTabs = () => {
   const t = useTranslations('dashboard.instructions');
@@ -83,10 +81,9 @@ export const InstructionsTabs = () => {
 
   return (
     <section
-      className="flex w-full flex-col gap-8 rounded-md px-5 py-4 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] max-lg:rounded-none max-lg:bg-transparent max-lg:px-0 max-lg:py-0 max-lg:shadow-none lg:min-h-215"
-      style={{ background: cardBackground }}
+      className="flex w-full flex-col gap-8 rounded-md px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] lg:bg-neutral-0 max-lg:rounded-none max-lg:bg-transparent max-lg:px-0 max-lg:py-0 max-lg:shadow-none lg:min-h-215"
     >
-      <h1 className="font-manrope text-[24px] font-bold leading-[1.2] text-neutral-800 max-lg:max-w-82 max-lg:leading-normal">
+      <h1 className="font-manrope text-[24px] leading-[1.2] font-bold text-neutral-800 max-lg:max-w-82 max-lg:leading-normal">
         {t('title')}
       </h1>
 
@@ -115,7 +112,7 @@ export const InstructionsTabs = () => {
                     'flex min-w-0 items-center gap-4 rounded-[13px] border py-2 pr-4 pl-2 text-left transition duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 active:scale-[0.98] lg:w-52.5',
                     'max-lg:flex-1 max-lg:gap-3 max-lg:pr-3',
                     selected
-                      ? 'border-neutral-600 bg-neutral-300 text-neutral-10 shadow-[0_8px_18px_rgba(0,0,0,.08)]'
+                      ? 'border-neutral-500 bg-neutral-400 text-neutral-10 shadow-[0_8px_18px_rgba(0,0,0,.08)]'
                       : 'border-neutral-30 bg-neutral-10 text-neutral-900 hover:-translate-y-0.5 hover:border-neutral-50 hover:bg-neutral-20',
                   )}
                 >
@@ -147,23 +144,23 @@ export const InstructionsTabs = () => {
             {activeApps.map(({ key, icon, href }) => {
               const content = (
                 <>
-                  <span className="icon h-10 w-10 shrink-0 text-neutral-600 transition-colors group-hover:text-neutral-900 lg:h-16.25 lg:w-16.25">
+                  <span className="icon h-10 w-10 shrink-0 text-neutral-800 transition-colors group-hover:text-neutral-900 lg:h-16.25 lg:w-16.25">
                     {icon}
                   </span>
                   <span className="flex min-w-0 flex-1 flex-col gap-1.5 font-manrope">
-                    <strong className="text-[18px] leading-normal text-neutral-900">
+                    <strong className="text-[18px] leading-normal text-neutral-600 group-hover:text-neutral-900 transition-colors">
                       {t(`protocols.${activeProtocol}.apps.${key}.title`)}
                     </strong>
                     <span
                       className={cn(
-                        'text-base font-medium leading-[1.1]',
-                        'text-neutral-300 group-hover:text-neutral-600',
+                        'text-base leading-[1.1] font-medium',
+                        'text-neutral-300 group-hover:text-neutral-600 transition-colors',
                       )}
                     >
                       {t(`protocols.${activeProtocol}.apps.${key}.subtitle`)}
                     </span>
                   </span>
-                  <Download className="h-8 w-8 shrink-0 text-neutral-600 transition-colors group-hover:text-neutral-900" />
+                  <Download className="h-7 w-7 shrink-0 opacity-0  group-hover:opacity-100 text-neutral-900 transition-opacity duration-450 ease-in-out" />
                 </>
               );
 
@@ -173,7 +170,7 @@ export const InstructionsTabs = () => {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex min-h-18.5 min-w-62.5 items-center gap-4 rounded-[13px] bg-neutral-20 px-4 py-3 text-neutral-900 transition duration-150 hover:-translate-y-0.5 hover:bg-neutral-30 active:scale-[0.98] active:bg-neutral-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 lg:min-h-25 lg:py-4 lg:pr-8"
+                  className="group flex min-h-18.5 min-w-62.5 items-center gap-4 rounded-[13px] bg-neutral-20 px-4 py-3 text-neutral-900 transition duration-150 hover:-translate-y-0.5 hover:bg-neutral-30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500 active:scale-[0.98] active:bg-neutral-40 lg:min-h-25 lg:py-4 lg:pr-8"
                 >
                   {content}
                 </a>
@@ -182,7 +179,7 @@ export const InstructionsTabs = () => {
           </div>
 
           <div className="font-montserrat text-base text-neutral-600 lg:w-131.75">
-            <p className="font-medium leading-[1.6]">{t('sources.title')}</p>
+            <p className="leading-[1.6] font-medium">{t('sources.title')}</p>
             <ul className="list-disc pl-6 leading-[1.6]">
               {t
                 .raw(`protocols.${activeProtocol}.sources`)

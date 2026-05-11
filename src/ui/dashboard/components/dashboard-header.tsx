@@ -1,12 +1,16 @@
 'use client';
 
-import { Menu } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from '@/i18n/navigation';
-import { MobileDashboardMenu } from './mobile-dashboard-menu';
+import { useTranslations } from 'next-intl';
+import { Menu } from 'lucide-react';
+
 import { Logo } from '@/components/ui/logo';
+import { Link } from '@/i18n/navigation';
+
+import { MobileDashboardMenu } from './mobile-dashboard-menu';
 
 export const DashboardHeader = () => {
+  const tNav = useTranslations('nav');
   const [open, setOpen] = useState(false);
 
   return (
@@ -17,7 +21,7 @@ export const DashboardHeader = () => {
         </Link>
         <button
           type="button"
-          aria-label="Open menu"
+          aria-label={tNav('menu')}
           onClick={() => setOpen(true)}
           className="text-orange-500 hover:text-orange-400">
           <Menu className="h-8 w-8" strokeWidth={2} />

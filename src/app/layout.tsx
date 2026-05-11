@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Manrope, Roboto, Montserrat } from "next/font/google";
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { getSiteMetadataBase } from '@/lib/site-url';
 import { Providers } from "./providers";
 import "./globals.css";
@@ -30,16 +30,23 @@ const montserrat = Montserrat({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: getSiteMetadataBase(),
-  title: {
-    default: 'Prometey VPN',
-    template: '%s | Prometey VPN',
-  },
-  description: 'High-speed VPN for secure access on any device.',
-  applicationName: 'Prometey VPN',
-  robots: { index: true, follow: true },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  const tCommon = await getTranslations({ locale, namespace: 'common' });
+  const tHomeMeta = await getTranslations({ locale, namespace: 'meta.home' });
+  const appName = tCommon('appName');
+
+  return {
+    metadataBase: getSiteMetadataBase(),
+    title: {
+      default: appName,
+      template: `%s | ${appName}`,
+    },
+    description: tHomeMeta('description'),
+    applicationName: appName,
+    robots: { index: true, follow: true },
+  };
+}
 
 export default async function RootLayout({
   children,

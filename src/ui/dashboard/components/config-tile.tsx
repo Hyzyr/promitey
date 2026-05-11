@@ -36,7 +36,7 @@ export const ConfigTile = ({
         height={122}
         className="h-30.5 w-30.5"
       />
-      <span className="text-center text-sm font-manrope">{label}</span>
+      <span className="text-center text-sm font-manrope text-neutral-600">{label}</span>
     </button>
   );
 };

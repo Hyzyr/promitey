@@ -11,12 +11,9 @@ import { cn } from '@/lib/utils';
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  /** Translated heading rendered at the top of the panel. */
   title?: string;
   children: React.ReactNode;
-  /** aria-label for the dialog element (screen-reader description). */
   ariaLabel: string;
-  /** aria-label for the ✕ close button — pass `t('common.close')`. */
   closeAriaLabel: string;
   showCloseButton?: boolean;
   className?: string;
@@ -61,11 +58,11 @@ export const Modal = ({
     : 'absolute bottom-0 left-0 right-0';
 
   const panelClass = cn(
-    'gpu-layer relative flex flex-col gap-6',
+    'gpu-layer relative flex w-full flex-col gap-6',
     'bg-neutral-800',
     isDesktop
       ? 'w-full max-w-md rounded-sm px-8 py-8 shadow-[0px_8px_40px_rgba(0,0,0,0.35)]'
-      : 'bottom-sheet-shadow max-h-[90vh] overflow-y-auto rounded-tl-2xl rounded-tr-2xl px-8 pt-8 pb-10',
+      : 'bottom-sheet-shadow max-h-[calc(100dvh-72px)] overflow-y-auto rounded-t-md px-8 pt-8 pb-10 shadow-[0_-7px_30.2px_rgba(0,0,0,.12)]',
     className,
   );
 
@@ -73,7 +70,6 @@ export const Modal = ({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50">
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

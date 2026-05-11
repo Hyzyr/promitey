@@ -1,5 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
+import { EXTERNAL_LINKS } from '@/lib/constants';
 
 interface SubscriptionCardProps {
   plan?: string;
@@ -29,6 +30,7 @@ export const SubscriptionCard = async ({
         <Button
           variant="secondary"
           size="md"
+          href={EXTERNAL_LINKS.telegramBilling}
           className="rounded-sm bg-[rgba(43,41,41,0.12)] text-neutral-800">
           {t('renew')}
         </Button>

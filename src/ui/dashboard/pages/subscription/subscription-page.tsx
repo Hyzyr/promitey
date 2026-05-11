@@ -4,7 +4,6 @@ import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/lib/session';
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
 import { CheckoutButton } from '@/ui/dashboard/components/checkout-button';
-import { PromocodeSection } from '@/ui/dashboard/components/promocode-section';
 
 export const SubscriptionPage = async () => {
   const t = await getTranslations('dashboard');
@@ -31,10 +30,6 @@ export const SubscriptionPage = async () => {
           <div className="mt-8">
             <CheckoutButton />
           </div>
-        </div>
-
-        <div className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
-          <PromocodeSection />
         </div>
       </div>
     </>

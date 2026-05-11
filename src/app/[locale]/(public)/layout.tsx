@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { SiteJsonLd } from '@/components/seo';
+import { SEO_ASSETS } from '@/lib/constants';
 import { getSiteUrl } from '@/lib/site-url';
 import { getAccessToken } from '@/lib/session';
 import { LandingHeader } from "@/ui/public/layouts/public-header";
@@ -13,8 +14,11 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'meta.home' });
+  const tCommon = await getTranslations({ locale, namespace: 'common' });
   const baseUrl = getSiteUrl();
   const pageUrl = `${baseUrl}/${locale}`;
+  const ogImageUrl = `${baseUrl}${SEO_ASSETS.openGraphImage}`;
+  const appName = tCommon('appName');
 
   return {
     title: { absolute: t('title') },
@@ -25,14 +29,14 @@ export async function generateMetadata({
       title: t('ogTitle'),
       description: t('ogDescription'),
       url: pageUrl,
-      siteName: 'Prometey VPN',
+      siteName: appName,
       locale: locale === 'ru' ? 'ru_RU' : 'en_US',
       images: [
         {
-          url: `${baseUrl}/opengraph-image.png`,
-          width: 1200,
-          height: 630,
-          alt: 'Prometey VPN',
+          url: ogImageUrl,
+          width: SEO_ASSETS.openGraphImageWidth,
+          height: SEO_ASSETS.openGraphImageHeight,
+          alt: t('ogImageAlt'),
         },
       ],
     },
@@ -40,7 +44,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: t('ogTitle'),
       description: t('ogDescription'),
-      images: [`${baseUrl}/opengraph-image.png`],
+      images: [ogImageUrl],
     },
     alternates: {
       canonical: pageUrl,
