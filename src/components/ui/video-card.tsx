@@ -10,6 +10,7 @@ export interface VideoCardProps {
   title: string;
   autoPlay?: boolean;
   className?: string;
+  playingClassName?: string;
 }
 
 export const VideoCard = ({
@@ -17,6 +18,7 @@ export const VideoCard = ({
   title,
   autoPlay = true,
   className,
+  playingClassName,
 }: VideoCardProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPlaybackRef = useRef(false);
@@ -109,9 +111,11 @@ export const VideoCard = ({
   return (
     <div
       ref={containerRef}
+      data-playing={isUserPlaying ? 'true' : 'false'}
       className={cn(
         'video-wrapper gpu-layer group absolute aspect-3/5 overflow-hidden rounded-lg shadow-2xl',
         className,
+        isUserPlaying && playingClassName,
       )}
     >
       <video

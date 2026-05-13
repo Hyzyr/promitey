@@ -139,6 +139,7 @@ body {
   --breakpoint-lgx: 72.5rem; /* 1160px (Your Custom) */
   --breakpoint-xl: 80rem; /* 1280px */
   --breakpoint-xlx: 82rem; /* 1312px */
+  --breakpoint-xxl: 96rem; /* 1535px */
 }
 
 /* ─── Base layer (autofill, resets, etc) ─────────────────────────────── */
@@ -156,7 +157,6 @@ body {
     -webkit-text-fill-color: #212121 !important;
   }
 }
-
 
 /* ─── Container utility ──────────────────────────────────────────────── */
 @utility container {
@@ -197,7 +197,8 @@ body {
   }
 }
 @utility glass {
-  background: linear-gradient(
+  background:
+    linear-gradient(
       160.98deg,
       rgba(255, 255, 255, 0.075) 7.11%,
       rgba(254, 243, 139, 0.135) 42.81%,
@@ -206,11 +207,21 @@ body {
     ),
     rgba(255, 255, 255, 0.01);
   box-shadow:
-    4px 11px 11px rgba(0, 0, 0, 0.05),
-    inset -0.5px 0.5px 1.5px rgba(255, 255, 255, 0.77),
-    inset 0.5px -0.5px 1px rgba(0, 0, 0, 0.6),
-    inset 0px 4px 9.4px rgba(255, 255, 255, 0.25);
-  border: 0.5px solid rgba(255, 255, 255, 0.25);
+    4px 11px 11px rgba(0, 0, 0, 0.08),
+    1px 1px 1.2px rgba(120, 100, 100, 0.35),
+    inset 0.5px -0.5px 1.8px rgba(0, 0, 0, 0.25),
+    inset 0 4px 9.4px rgba(235, 255, 255, 0.3),
+    inset 0.8px -0.8px 2px rgba(235, 255, 255, 1),
+    inset 0 -0.5px 1px rgba(235, 255, 255, 0.6);
+}
+@utility smooth {
+  @apply transition-all duration-350 ease-out;
+}
+@utility smooth-in {
+  @apply transition-all duration-350 ease-in;
+}
+@utility smooth {
+  @apply transition-all duration-350 ease-out;
 }
 
 @utility discount-badge-glass {
@@ -284,9 +295,21 @@ body {
 }
 
 @utility benefit-card-shell {
-  @apply relative isolate flex min-h-[38vh] flex-col overflow-hidden;
+  @apply relative isolate flex h-[min(38vh,460px)] flex-col overflow-hidden;
   @apply rounded-md border bg-neutral-20 transition-colors duration-200;
-  @apply px-4 py-5 md:px-5 md:py-6 lg:px-4 lgx:px-3 lgx:py-3 xl:px-4 xl:py-5;
+  @apply px-4 py-5 md:px-5 md:py-6 lg:px-4 lgx:px-3 lgx:py-3 xl:px-4 xl:py-5 xxl:p-7;
+
+  .benefit-card-media {
+    @apply max-h-75;
+  }
+
+  &.bigcard {
+    @apply h-full;
+
+    .benefit-card-media {
+      @apply max-h-[unset]!;
+    }
+  }
 }
 
 @utility bigcard {

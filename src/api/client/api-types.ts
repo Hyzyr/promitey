@@ -117,6 +117,12 @@ export interface PromocodeActivateResponse {
   active_until: string;
 }
 
+export interface CurrentSubscriptionResponse {
+  status: string;
+  subscription_type: string;
+  end_date: string;
+}
+
 export interface ChangePasswordRequest {
   current_password: string;
   new_password: string;
@@ -133,6 +139,7 @@ export interface MeResponse {
   linked_at?: string;
   totp_enabled: boolean;
   totp_enabled_at?: string;
+  usedTrial?: boolean;
 }
 
 export interface SiteLinkTokenResponse {

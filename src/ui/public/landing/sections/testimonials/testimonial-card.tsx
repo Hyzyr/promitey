@@ -28,7 +28,7 @@ export const TestimonialCard = ({
     <div
       className={cn(
         'relative ml-4 flex shrink-0 gpu-layer items-stretch border md:ml-4 md:items-center',
-        'w-78.5 md:w-131.25',
+        'w-[calc(100vw-40px)] max-w-78.5 md:w-131.25 md:max-w-none',
         'rounded-lg md:rounded-lg',
         'px-3 py-4 md:pt-4.5 md:pr-6 md:pb-2.5 md:pl-4.5',
         'gap-3 md:gap-4',

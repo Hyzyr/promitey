@@ -7,6 +7,7 @@ import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
 import { ConfigDownloadCard } from '@/ui/dashboard/components/config-download-card';
 import { SubscriptionCard } from '@/ui/dashboard/components/subscription-card';
 import { WelcomeCard } from '@/ui/dashboard/components/welcome-card';
+import { getCurrentSubscriptionOrNull } from '@/ui/dashboard/server/subscription-data';
 
 export const DashboardPage = async () => {
   const t = await getTranslations('dashboard');
@@ -17,14 +18,17 @@ export const DashboardPage = async () => {
     return redirect({ href: '/login', locale });
   }
 
-  const user = await accountApi.getMe(token);
+  const [user, subscription] = await Promise.all([
+    accountApi.getMe(token),
+    getCurrentSubscriptionOrNull(token),
+  ]);
 
   return (
     <>
       <Breadcrumbs>{t('breadcrumb.home')}</Breadcrumbs>
       <WelcomeCard email={user.email} />
       <ConfigDownloadCard />
-      <SubscriptionCard />
+      <SubscriptionCard subscription={subscription} />
     </>
   );
 };

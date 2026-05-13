@@ -23,13 +23,13 @@ export const AuthBackground = () => {
         alt=""
         width={1440}
         height={1024}
-        className="absolute h-full w-full object-cover lg:top-0 lg:left-0 lg:w-[75%]"
+        className="absolute h-full w-full object-cover lg:top-0 lg:left-0 lg:w-[75%] lg:w-[max(75%,calc(100%-540px))]"
         onError={(e) => {
           (e.currentTarget as HTMLImageElement).style.display = 'none';
         }}
       />
 
-      <div className="absolute top-0 right-0 hidden h-full w-[34%] max-w-135 bg-linear-to-b from-neutral-900 to-[#1e1e1e] lg:block" />
+      <div className="absolute top-0 right-0 hidden h-full w-[32%] w-[min(32%,540px)] bg-linear-to-b from-neutral-900 to-[#1e1e1e] lg:block" />
     </div>
   );
 };

@@ -12,7 +12,7 @@ export function useTestimonialsCarousel() {
     [],
   );
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center', loop: true }, [
     autoplayPlugin,
   ]);
 

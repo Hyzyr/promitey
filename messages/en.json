@@ -416,7 +416,7 @@
     "register": {
       "title": "Create account",
       "subtitle": "Create an account to get full access to Prometey",
-      "submit": "Sign In",
+      "submit": "Create account",
       "verifyTitle": "Verify your email",
       "confirmSubtitle": "We sent a confirmation message to your email.",
       "confirmDescription": "We sent you a message. Enter the confirmation code from",
@@ -511,9 +511,12 @@
       "active": "Active",
       "expired": "Expired",
       "startsAt": "Started on:",
-      "noSubscription": "No active subscription",
+      "noSubscription": "No subscription yet",
+      "noSubscriptionDescription": "Choose a plan or activate a promo code to get access.",
       "promocode": {
         "codeRequired": "Enter a promo code",
+        "codeTooLong": "Promo code must be 64 characters or fewer",
+        "codeInvalid": "Use only letters, numbers, dots, underscores, pluses, and hyphens",
         "notFound": "Promo code not found or has expired",
         "alreadyUsed": "This promo code has already been used",
         "title": "Promo Code",

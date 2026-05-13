@@ -27,6 +27,7 @@ export type {
   ChangePasswordRequest,
   PromocodeActivateRequest,
   PromocodeActivateResponse,
+  CurrentSubscriptionResponse,
   MeResponse,
   SiteLinkTokenResponse,
   LinkByPublicCodeRequest,

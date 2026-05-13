@@ -22,6 +22,7 @@ export const RegisterConfirmForm = ({ email }: RegisterConfirmFormProps) => {
       submitLabel={t('confirm.submit')}
       onVerify={onVerify}
       onSuccess={onSuccess}
+      showSuccessAnimation={false}
     />
   );
 };

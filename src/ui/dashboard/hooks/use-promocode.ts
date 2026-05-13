@@ -6,12 +6,14 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 
-import { activatePromocodeAction } from '../server/billing-actions';
-
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
+import { activatePromocodeAction } from '../server/billing-actions';
+
 import type { PromocodeActivateResponse } from '@/api/client/api-types';
+
+const PROMOCODE_PATTERN = /^[A-Za-z0-9._+-]+$/;
 
 interface PromocodeValues {
   code: string;
@@ -33,7 +35,12 @@ export function usePromocode(): UsePromocodeReturn {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const schema = z.object({
-    code: z.string().min(1, t('promocode.codeRequired')),
+    code: z
+      .string()
+      .trim()
+      .min(1, t('promocode.codeRequired'))
+      .max(64, t('promocode.codeTooLong'))
+      .regex(PROMOCODE_PATTERN, t('promocode.codeInvalid')),
   });
 
   const form = useForm<PromocodeValues>({

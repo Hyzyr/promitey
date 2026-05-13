@@ -25,6 +25,7 @@ export type PricingCardProps = {
   planId: PricingPlanId;
   href?: string;
   className?: string;
+  reserveMissingMeta?: boolean;
 };
 
 export const PricingCard = ({
@@ -40,6 +41,7 @@ export const PricingCard = ({
   planId,
   href,
   className,
+  reserveMissingMeta = false,
 }: PricingCardProps) => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const planHref = href ? buildPricingPlanHref(href, planId) : undefined;
@@ -98,6 +100,15 @@ export const PricingCard = ({
             </div>
           )}
 
+          {!originalPrice && reserveMissingMeta && (
+            <div className="relative flex opacity-0" aria-hidden="true">
+              <span className="col-start-1 row-start-1 font-manrope text-lg leading-[0.9] font-normal whitespace-nowrap text-neutral-50 md:text-[24px] lg:text-[36px] xlx:text-[48px]">
+                0 €
+              </span>
+              <div className="absolute top-[50%] row-start-1 h-0.75 w-full self-start rounded-sm bg-neutral-70" />
+            </div>
+          )}
+
           <span
             className={cn(
               'block w-full font-montserrat font-bold whitespace-nowrap',
@@ -118,12 +129,20 @@ export const PricingCard = ({
             'gap-1.5 lgx:gap-0',
             'border-t border-neutral-40',
             'w-full pt-2 pb-1.5 lgx:pt-4 lgx:pb-1.5',
-            perMonth ? 'lgx:justify-between' : '',
+            perMonth || reserveMissingMeta ? 'lgx:justify-between' : '',
           )}
         >
           {perMonth && (
             <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[24px]">
               {perMonth}
+            </span>
+          )}
+          {!perMonth && reserveMissingMeta && (
+            <span
+              className="font-manrope text-[14px] font-normal whitespace-nowrap text-neutral-600 opacity-0 md:text-[20px] lg:text-[18px] lgx:text-[24px]"
+              aria-hidden="true"
+            >
+              0 € / mo
             </span>
           )}
           <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[24px]">

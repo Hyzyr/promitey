@@ -1,9 +1,10 @@
 'use client';
 
-import Lenis from 'lenis';
 import { createContext, startTransition, useContext, useEffect, useState } from 'react';
 
 import { useWindowResize } from '@/hooks/use-window-resize';
+
+import type Lenis from 'lenis';
 
 export type ScrollToOptions = {
   offset?: number;
@@ -17,6 +18,8 @@ export type LenisContextValue = {
 };
 
 const LenisContext = createContext<LenisContextValue | null>(null);
+
+const isSmoothScrollEnabled = process.env.NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL === 'true';
 
 const nativeScrollTo = (target: string | number, options?: ScrollToOptions) => {
   if (typeof target === 'number') {
@@ -32,6 +35,24 @@ const nativeScrollTo = (target: string | number, options?: ScrollToOptions) => {
 };
 
 export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
+  const [shouldEnableLenis, setShouldEnableLenis] = useState(false);
+
+  useEffect(() => {
+    setShouldEnableLenis(isSmoothScrollEnabled && !prefersNativeScroll());
+  }, []);
+
+  if (!shouldEnableLenis) {
+    return (
+      <LenisContext.Provider value={{ lenis: null, scrollTo: nativeScrollTo }}>
+        {children}
+      </LenisContext.Provider>
+    );
+  }
+
+  return <ActiveLenisProvider>{children}</ActiveLenisProvider>;
+};
+
+const ActiveLenisProvider = ({ children }: { children: React.ReactNode }) => {
   const [lenis, setLenis] = useState<Lenis | null>(null);
   const resizeTrigger = useWindowResize();
 
@@ -41,24 +62,47 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
   }, [resizeTrigger, lenis]);
 
   useEffect(() => {
-    const lenisInstance = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
+    let isMounted = true;
+    let rafId = 0;
+    let lenisInstance: Lenis | null = null;
 
-    startTransition(() => setLenis(lenisInstance));
+    const setupLenis = async () => {
+      const { default: LenisConstructor } = await import('lenis');
 
-    function raf(time: number) {
-      lenisInstance.raf(time);
-      requestAnimationFrame(raf);
-    }
+      if (!isMounted) return;
 
-    const rafId = requestAnimationFrame(raf);
+      lenisInstance = new LenisConstructor({
+        autoResize: true,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        gestureOrientation: 'vertical',
+        overscroll: true,
+        smoothWheel: true,
+        syncTouch: false,
+      });
+
+      startTransition(() => setLenis(lenisInstance));
+
+      const raf = (time: number) => {
+        if (!lenisInstance) return;
+
+        lenisInstance.raf(time);
+        rafId = requestAnimationFrame(raf);
+      };
+
+      rafId = requestAnimationFrame(raf);
+    };
+
+    void setupLenis();
 
     return () => {
-      cancelAnimationFrame(rafId);
-      lenisInstance.destroy();
+      isMounted = false;
+
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+
+      lenisInstance?.destroy();
     };
   }, []);
 
@@ -67,6 +111,7 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
       nativeScrollTo(target, options);
       return;
     }
+
     lenis.scrollTo(target, options);
   };
 
@@ -76,6 +121,23 @@ export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
     </LenisContext.Provider>
   );
 };
+
+function prefersNativeScroll(): boolean {
+  if (typeof navigator === 'undefined') return true;
+
+  const userAgent = navigator.userAgent;
+  const platform = navigator.platform;
+  const vendor = navigator.vendor;
+  const isIOS =
+    /iPad|iPhone|iPod/.test(userAgent) ||
+    (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAppleSafari =
+    vendor.includes('Apple') &&
+    /Safari/.test(userAgent) &&
+    !/Chrome|CriOS|FxiOS|Edg|OPR/.test(userAgent);
+
+  return isIOS || isAppleSafari;
+}
 
 export function useLenis(): LenisContextValue {
   const context = useContext(LenisContext);

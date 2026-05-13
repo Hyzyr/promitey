@@ -7,8 +7,15 @@ import { EXTERNAL_LINKS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import { PricingBg } from './pricing-bg';
 
+const MATCH_ONE_MONTH_CARD_SIZE = true;
+const STANDARD_CARD_HEIGHT = 'md:min-h-80 lgx:min-h-110 lgx:min-h-125';
+const COMPACT_ONE_MONTH_CARD_HEIGHT = 'md:min-h-65 lgx:min-h-90 lgx:min-h-105';
+
 export const PricingSection = () => {
   const t = useTranslations('landing.pricing');
+  const oneMonthCardHeight = MATCH_ONE_MONTH_CARD_SIZE
+    ? STANDARD_CARD_HEIGHT
+    : COMPACT_ONE_MONTH_CARD_HEIGHT;
 
   return (
     <section
@@ -23,7 +30,7 @@ export const PricingSection = () => {
         className={cn(
           'relative flex flex-col items-center',
           'gap-20 xl:gap-20',
-          'xl:min-h-screen xl:justify-center',
+          'xl:min-h-[min(100vh,900px)] xl:justify-center',
         )}
       >
         <div
@@ -70,7 +77,8 @@ export const PricingSection = () => {
               label={t('plans.oneMonth.label')}
               price="3 €"
               period={t('plans.oneMonth.period')}
-              height="md:min-h-65 lgx:min-h-90 lgx:min-h-105"
+              height={oneMonthCardHeight}
+              reserveMissingMeta={MATCH_ONE_MONTH_CARD_SIZE}
               selectLabel={t('select')}
               planId="one-month"
               href={EXTERNAL_LINKS.telegramBilling}
@@ -114,7 +122,7 @@ export const PricingSection = () => {
               perMonth={t('perMonth', { value: '1' })}
               period={t('plans.year.period')}
               featured
-              height="md:min-h-80 lgx:min-h-110 lgx:min-h-125 "
+              height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}
               planId="year"
               href={EXTERNAL_LINKS.telegramBilling}
@@ -128,7 +136,7 @@ export const PricingSection = () => {
               discount="-16.6%"
               perMonth={t('perMonth', { value: '1.66' })}
               period={t('plans.quarter.period')}
-              height="md:min-h-80 lgx:min-h-110 lgx:min-h-125 "
+              height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}
               planId="quarter"
               href={EXTERNAL_LINKS.telegramBilling}
@@ -142,7 +150,7 @@ export const PricingSection = () => {
               discount="-33.3%"
               perMonth={t('perMonth', { value: '1.33' })}
               period={t('plans.halfYear.period')}
-              height="md:min-h-80 lgx:min-h-110 lgx:min-h-125 "
+              height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}
               planId="half-year"
               href={EXTERNAL_LINKS.telegramBilling}

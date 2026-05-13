@@ -1,1 +1,1 @@
-export { checkout, activatePromocode } from './billing-api';
+export { checkout, activatePromocode, getCurrentSubscription } from './billing-api';

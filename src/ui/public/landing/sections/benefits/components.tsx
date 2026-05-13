@@ -193,7 +193,7 @@ export const BenefitCard = ({
         </p>
         <div
           className={cn(
-            'relative isolate -z-1 -mb-6 min-h-40 flex-1',
+            'benefit-card-media relative isolate -z-1 -mb-6 min-h-40 flex-1',
             mediaClassName,
           )}
         >

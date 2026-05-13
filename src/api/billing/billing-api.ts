@@ -3,6 +3,7 @@ import type {
   StatusOK,
   PromocodeActivateRequest,
   PromocodeActivateResponse,
+  CurrentSubscriptionResponse,
 } from '../client/api-types';
 
 /**
@@ -22,4 +23,11 @@ export async function activatePromocode(
   token: string,
 ): Promise<PromocodeActivateResponse> {
   return apiFetch('/promocode/activate', { method: 'POST', body: data, token });
+}
+
+/** GET /subscription/current - read the current active subscription */
+export async function getCurrentSubscription(
+  token: string,
+): Promise<CurrentSubscriptionResponse> {
+  return apiFetch('/subscription/current', { token });
 }

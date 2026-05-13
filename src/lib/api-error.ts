@@ -29,6 +29,7 @@
 const AUTH_ERROR_MAP: Record<string, string> = {
   // Credentials — login returns `invalid_credentials`; keep alias just in case
   invalid_credentials: 'badCredentials',
+  'invalid credentials': 'badCredentials',
   bad_credentials: 'badCredentials',
   // Registration — register returns `user_already_exists`; keep alias just in case
   user_already_exists: 'emailTaken',

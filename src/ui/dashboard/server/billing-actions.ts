@@ -32,7 +32,7 @@ export async function activatePromocodeAction(
   if (!token) return unauthenticatedFailure<PromocodeActivateResponse>('activatePromocodeAction');
 
   try {
-    const data = await billingApi.activatePromocode({ code }, token);
+    const data = await billingApi.activatePromocode({ code: code.trim() }, token);
     return { ok: true, data };
   } catch (e) {
     if (isApiError(e)) {

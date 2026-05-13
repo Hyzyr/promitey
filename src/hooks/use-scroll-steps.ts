@@ -1,6 +1,7 @@
-import { useCallback, useRef, useState } from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
-import { useObserver } from "@/hooks/use-observer";
+import { useCallback, useRef, useState } from 'react';
+import { useMotionValueEvent, useScroll, useSpring } from 'framer-motion';
+
+import { useObserver } from '@/hooks/use-observer';
 
 /**
  * Tracks scroll progress through a container and maps it to discrete steps.
@@ -26,7 +27,12 @@ export function useScrollSteps(stepCount: number) {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"],
+    offset: ['start start', 'end end'],
+  });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 85,
+    damping: 26,
+    mass: 0.7,
   });
 
   const computeStep = useCallback(
@@ -43,7 +49,7 @@ export function useScrollSteps(stepCount: number) {
     computeStep(scrollYProgress.get()),
   );
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
+  useMotionValueEvent(smoothProgress, 'change', (v) => {
     if (!isVisible) return;
     setActiveStep(computeStep(v));
   });

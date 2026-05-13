@@ -11,13 +11,6 @@ export const AuthHeader = () => {
         <Logo className="inline-flex h-7 w-auto lg:hidden" />
         <LogoWithText dark className="hidden h-9 w-auto lg:inline-flex" />
       </Link>
-
-      <Link
-        href="/#benefits"
-        className="hidden font-montserrat text-[18px] text-neutral-200 transition-colors hover:text-neutral-900 lg:inline-block"
-      >
-        {t('nav')}
-      </Link>
     </header>
   );
 };

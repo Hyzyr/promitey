@@ -30,6 +30,7 @@ export interface VerifyCodeFormProps {
   onVerify: (code: string) => Promise<{ ok: boolean; message?: string }>;
   /** Called after a successful verification, after onVerify resolves ok:true. */
   onSuccess?: () => void;
+  showSuccessAnimation?: boolean;
   className?: string;
 }
 
@@ -40,6 +41,7 @@ export const VerifyCodeForm = ({
   submitLabel,
   onVerify,
   onSuccess,
+  showSuccessAnimation = true,
   className,
 }: VerifyCodeFormProps) => {
   const t = useTranslations('auth');
@@ -112,6 +114,12 @@ export const VerifyCodeForm = ({
         setError(result.message ?? t('errors.invalidCode'));
         return;
       }
+
+      if (!showSuccessAnimation) {
+        onSuccess?.();
+        return;
+      }
+
       setIsSuccess(true);
       window.setTimeout(() => {
         onSuccess?.();

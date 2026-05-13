@@ -27,7 +27,7 @@ export const GuideSteps = ({
           <motion.div
             animate={{ top: topPct }}
             style={{ height: `${100 / steps.length}%` }}
-            transition={{ type: 'spring', stiffness: 120, damping: 20 }}
+            transition={{ type: 'spring', stiffness: 90, damping: 24, mass: 0.9 }}
             className="absolute left-0 w-1.25 rounded-sm bg-neutral-800 mdx:w-1.25"
           />
         </div>

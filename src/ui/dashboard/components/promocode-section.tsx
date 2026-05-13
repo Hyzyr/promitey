@@ -48,11 +48,14 @@ export const PromocodeSection = ({ className }: PromocodeSectionProps) => {
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-          <div className="flex items-start gap-3">
+          <div className="flex flex-col items-stretch gap-3 sm:flex-row sm:items-start">
             <div className="flex-1">
               <Input
                 placeholder={t('promocode.placeholder')}
                 variant="light"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
                 error={errors.code?.message}
                 {...register('code')}
               />

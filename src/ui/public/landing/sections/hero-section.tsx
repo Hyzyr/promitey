@@ -7,7 +7,7 @@ export const HeroSection = () => {
   const t = useTranslations('landing.hero');
 
   const bgClass =
-    'absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-[2000px] object-cover object-[center_78%] pointer-events-none';
+    'absolute top-0 left-1/2 -translate-x-1/2 w-full h-full  object-cover object-[center_78%] pointer-events-none';
 
   return (
     <section

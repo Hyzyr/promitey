@@ -1,6 +1,7 @@
 'use server';
 
 import { setAuthCookies, clearAuthCookies, getAccessToken } from '@/lib/session';
+import { isApiError } from '@/api/client/api-error';
 import { isTotpChallenge } from '@/api/client/api-types';
 import * as authApi from '@/api/auth';
 import {
@@ -29,6 +30,10 @@ export async function loginAction(values: {
     await setAuthCookies(result);
     return { ok: true, data: { step: 'done' } };
   } catch (e) {
+    if (isApiError(e) && e.status === 401) {
+      return { ok: false, code: e.code ?? 'invalid_credentials' };
+    }
+
     return actionFailure<LoginResultData>(e, 'loginAction');
   }
 }

@@ -7,7 +7,7 @@ export const GuidePreview = () => {
     <div
       className={cn(
         'relative flex w-full shrink-0 mdx:w-auto mdx:grow xl:w-188.25',
-        'mdx:min-h-88 lg:min-h-92 lgx:min-h-96 xl:min-h-102',
+        'mdx:min-h-88 lg:min-h-92 lgx:min-h-96 xl:min-h-102 xxl:min-h-[55vh]',
         'mdx:self-stretch',
       )}
     >

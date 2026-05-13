@@ -13,6 +13,7 @@ import type {
   TotpStatusResponse,
   VerificationRequired,
   PromocodeActivateResponse,
+  CurrentSubscriptionResponse,
 } from './api-types';
 
 // ── Fixture data ──────────────────────────────────────────────────────────────
@@ -25,6 +26,7 @@ const ME: MeResponse = {
   telegram_id: 123456789,
   linked_at: '2025-01-15T00:00:00Z',
   totp_enabled: false,
+  usedTrial: false,
 };
 
 const REGION: RegionResponse = { region: 'eu-west' };
@@ -83,6 +85,12 @@ const PROMOCODE_ACTIVATE: PromocodeActivateResponse = {
   active_until: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
 };
 
+const CURRENT_SUBSCRIPTION: CurrentSubscriptionResponse = {
+  status: 'active',
+  subscription_type: 'Pro',
+  end_date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
+};
+
 export const DEV_OPENVPN_CONFIG = `# DEV MODE — sample OpenVPN config (not a real key)
 client
 dev tun
@@ -117,6 +125,7 @@ const ROUTES: Partial<Record<RouteKey, () => unknown>> = {
   'POST /vpn/recreate': () => STATUS_OK,
   'POST /billing/checkout': () => { throw new ApiError('http', 501, 'billing_unavailable', 'billing_unavailable'); },
   'POST /promocode/activate': () => ({ ...PROMOCODE_ACTIVATE }),
+  'GET /subscription/current': () => ({ ...CURRENT_SUBSCRIPTION }),
   'PUT /auth/password': () => STATUS_OK,
   'PUT /auth/register': () => ({ ...REGISTER_VERIFICATION_REQUIRED }),
   'POST /auth/register': () => STATUS_OK,

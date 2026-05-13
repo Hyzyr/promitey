@@ -103,7 +103,7 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       title={t('title')}
       description={t('body')}
       footer={
-        <div className="relative z-10 flex lgx:items-center mt-auto lgx:justify-end">
+        <div className="relative z-10 mt-auto flex lgx:items-center lgx:justify-end">
           <Button
             variant="default"
             size="md"
@@ -125,24 +125,25 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
         />
       </ParallaxItem>
       <ParallaxItem depth={0.15}>
-        <span className="bgitem bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[5vh] md:max-lgx:bottom-[58%] md:max-lgx:left-[unset] md:max-lgx:right-50">
+        <span className="bgitem bottom-[63%] left-[35%] icon rotate-[-3.5deg] text-[min(5vh,54px)] md:max-lgx:right-50 md:max-lgx:bottom-[58%] md:max-lgx:left-[unset]">
           {telegramSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.3}>
-        <span className="bgitem bottom-[72%] left-[16%] icon -rotate-3 text-[5vh] md:max-lgx:bottom-[80%] md:max-lgx:left-[unset] md:max-lgx:right-60">
+        <span className="bgitem bottom-[72%] left-[16%] icon -rotate-3 text-[min(5vh,54px)] md:max-lgx:right-60 md:max-lgx:bottom-[80%] md:max-lgx:left-[unset]">
           {whatsappSVG}
         </span>
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
-        <span className="bgitem bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[5vh] md:max-lgx:bottom-[37%] md:max-lgx:left-[unset] md:max-lgx:right-65">
+        <span className="bgitem bottom-[52%] left-[22%] icon rotate-[-2.5deg] text-[min(5vh,54px)] md:max-lgx:right-65 md:max-lgx:bottom-[37%] md:max-lgx:left-[unset]">
           {facebookSVG}
         </span>
       </ParallaxItem>
       <VideoCard
         src="/videos/woman-feedback-promitey.webm"
         title="#feedback"
-        className="right-[2.5%] bottom-[12%] h-auto w-[40%] rotate-[6.18deg] transition-all will-change-auto hover:w-[45%] hover:rotate-0"
+        className="right-[2.5%] bottom-[12%] h-auto w-[44%] rotate-[6.18deg] transition-all will-change-auto hover:w-[48%] hover:rotate-0 max-md:right-[1rem] max-md:bottom-[10%] max-md:w-[50%]"
+        playingClassName="w-[50%] rotate-0 max-md:w-[58%]"
       />
     </BenefitCard>
   );
@@ -171,10 +172,10 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
         />
       </ParallaxItem>
       <ParallaxItem depth={0.25}>
-        <LaptopSVG className="bgitem right-[11.5%] bottom-[1.5%] h-[58%] rotate-[4.8deg]" />
+        <LaptopSVG className="bgitem right-[11.5%] bottom-[1.5%] xxl:right-[5.5%] h-[min(58%,140px)] rotate-[4.8deg]" />
       </ParallaxItem>
       <ParallaxItem depth={0.15}>
-        <TvSVG className="bgitem right-[50%] bottom-[19.5%] h-[43%] rotate-[-17.5deg]" />
+        <TvSVG className="bgitem right-[50%] xxl:right-[58%] bottom-[19.5%] h-[min(43%,110px)] rotate-[-17.5deg]" />
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
         <PhoneBlurred className="bgitem right-[32%] bottom-[-1%] h-[80%] rotate-[15.5deg]" />
