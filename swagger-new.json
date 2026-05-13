@@ -1,0 +1,1353 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "VPN Bot HTTP API",
+    "description": "API сайта: регистрация, сброс/смена пароля (письма на почту пока только логируются), привязка Telegram ↔ аккаунт сайта. OpenVPN/VLESS — при привязанном Telegram и активной подписке в текущей модели (та же БД, что у бота).",
+    "version": "1.0.0"
+  },
+  "basePath": "/api/v1",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Формат: Bearer <access_token> (выдаётся в POST /auth/login и /auth/refresh)"
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Регистрация, JWT, пароль"
+    },
+    {
+      "name": "account",
+      "description": "Профиль и привязка Telegram"
+    },
+    {
+      "name": "vpn",
+      "description": "Регион, конфиги VPN (нужны привязка Telegram и активная подписка там, где указано)"
+    },
+    {
+      "name": "billing",
+      "description": "Оплата (заглушка)"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "put": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Подготовить регистрацию",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Требуется код подтверждения",
+            "schema": {
+              "$ref": "#/definitions/VerificationRequired"
+            }
+          },
+          "400": {
+            "description": "Невалидные данные",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "409": {
+            "description": "Email уже занят",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Подтвердить регистрацию",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegisterConfirmRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Создано",
+            "schema": {
+              "$ref": "#/definitions/StatusOK"
+            }
+          },
+          "400": {
+            "description": "Неверный код или нет pending регистрации",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "409": {
+            "description": "Email уже занят",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Вход",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Токены (Bearer), либо при включённом TOTP — объект TotpChallenge (см. схему LoginSuccess)",
+            "schema": {
+              "$ref": "#/definitions/LoginSuccess"
+            }
+          },
+          "401": {
+            "description": "Неверные учётные данные",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/login/totp": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Второй шаг входа (код из приложения-аутентификатора)",
+        "description": "После POST /auth/login, если включён TOTP, приходит temp_token; сюда передаётся код.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginTotpRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Токены",
+            "schema": {
+              "$ref": "#/definitions/TokenPair"
+            }
+          },
+          "401": {
+            "description": "Неверный temp_token или код",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Обновление пары токенов",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RefreshRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Новые токены",
+            "schema": {
+              "$ref": "#/definitions/TokenPair"
+            }
+          },
+          "401": {
+            "description": "Невалидный refresh",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/forgot-password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Запросить код для сброса пароля",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ForgotPasswordRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Требуется код подтверждения",
+            "schema": {
+              "$ref": "#/definitions/VerificationRequired"
+            }
+          },
+          "400": {
+            "description": "Невалидные данные",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/reset-password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Сбросить пароль по коду",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ResetPasswordRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Пароль обновлён",
+            "schema": {
+              "$ref": "#/definitions/StatusOK"
+            }
+          },
+          "400": {
+            "description": "Невалидные данные или код",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/email": {
+      "put": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Подготовить смену email",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangeEmailPrepareRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Требуется код подтверждения",
+            "schema": {
+              "$ref": "#/definitions/VerificationRequired"
+            }
+          },
+          "400": {
+            "description": "Невалидные данные",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Подтвердить смену email",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangeEmailConfirmRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ок",
+            "schema": {
+              "$ref": "#/definitions/StatusOK"
+            }
+          },
+          "400": {
+            "description": "Невалидный код или нет pending запроса",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/password": {
+      "put": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Сменить пароль (в сессии)",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChangePasswordRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ок",
+            "schema": {
+              "$ref": "#/definitions/StatusOK"
+            }
+          },
+          "400": {
+            "description": "Невалидные данные",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Неверный текущий пароль или нет Bearer",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/totp/setup": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Начать привязку TOTP (Google Authenticator и т.п.)",
+        "description": "Сохраняет ожидающий секрет; далее POST /auth/totp/enable с кодом из приложения.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "otpauth URL для QR",
+            "schema": {
+              "$ref": "#/definitions/TotpSetupResponse"
+            }
+          },
+          "400": {
+            "description": "TOTP уже включён",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/totp/enable": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Подтвердить и включить TOTP",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TotpEnableRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TOTP включён",
+            "schema": {
+              "$ref": "#/definitions/TotpStatusResponse"
+            }
+          },
+          "400": {
+            "description": "Нет pending setup / уже включён",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Неверный код",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/auth/totp/disable": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Отключить TOTP",
+        "description": "Нужны пароль и текущий одноразовый код.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TotpDisableRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TOTP отключён",
+            "schema": {
+              "$ref": "#/definitions/TotpStatusResponse"
+            }
+          },
+          "400": {
+            "description": "TOTP не был включён",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Неверный пароль или код",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Текущий пользователь",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Профиль",
+            "schema": {
+              "$ref": "#/definitions/MeResponse"
+            }
+          },
+          "401": {
+            "description": "Нет/просрочен токен",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "404": {
+            "description": "Аккаунт не найден",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/link/site-token": {
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Токен привязки сайт → Telegram",
+        "description": "Одноразовый токен (~15 мин) и deep_link вида https://t.me/Bot?start=link_<token>. Открыть в Telegram, бот привяжет web_accounts к telegram_id.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Токен выдан",
+            "schema": {
+              "$ref": "#/definitions/SiteLinkTokenResponse"
+            }
+          },
+          "400": {
+            "description": "Уже привязан и т.п.",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/link/by-public-code": {
+      "post": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Привязка бот → сайт",
+        "description": "Ввести public_code из главного меню бота (две буквы + id).",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LinkByPublicCodeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Привязано",
+            "schema": {
+              "$ref": "#/definitions/StatusLinked"
+            }
+          },
+          "400": {
+            "description": "Неверный код / конфликт",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/vpn/region": {
+      "get": {
+        "tags": [
+          "vpn"
+        ],
+        "summary": "Текущий регион OpenVPN",
+        "description": "Нужны Bearer и привязанный Telegram. Подписка не обязательна для чтения.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Регион",
+            "schema": {
+              "$ref": "#/definitions/RegionResponse"
+            }
+          },
+          "403": {
+            "description": "Telegram не привязан / бан",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/vpn/openvpn/config": {
+      "get": {
+        "tags": [
+          "vpn"
+        ],
+        "summary": "Скачать OpenVPN .ovpn",
+        "description": "Bearer + привязанный Telegram + **активная подписка**. Ответ: бинарное тело файла, Content-Type application/x-openvpn-profile.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "produces": [
+          "application/x-openvpn-profile"
+        ],
+        "responses": {
+          "200": {
+            "description": "Файл конфигурации"
+          },
+          "403": {
+            "description": "Нет подписки / не привязан Telegram",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "500": {
+            "description": "Ошибка генерации",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/vpn/openvpn/config/{region}": {
+      "get": {
+        "tags": [
+          "vpn"
+        ],
+        "summary": "Скачать OpenVPN .ovpn и сохранить регион",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "produces": [
+          "application/x-openvpn-profile"
+        ],
+        "parameters": [
+          {
+            "name": "region",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Файл конфигурации"
+          },
+          "403": {
+            "description": "Нет подписки",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        },
+        "description": "Скачать OpenVPN-конфиг c выбором региона. Допустимые country codes: auto, fr, uk, pl, us, iq, ru, de, nl."
+      }
+    },
+    "/promocode/activate": {
+      "post": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Активировать промокод",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PromocodeActivateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Промокод активирован",
+            "schema": {
+              "$ref": "#/definitions/PromocodeActivateResponse"
+            }
+          },
+          "400": {
+            "description": "Ошибка валидации или код истек",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "404": {
+            "description": "Код не найден",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "409": {
+            "description": "Пробный код уже использован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/vpn/vless/subscription": {
+      "get": {
+        "tags": [
+          "vpn"
+        ],
+        "summary": "VLESS subscription URL (Marzban)",
+        "description": "Bearer + привязанный Telegram + **активная подписка**. На сервере должен быть настроен Marzban.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ссылка",
+            "schema": {
+              "$ref": "#/definitions/VLESSSubscriptionResponse"
+            }
+          },
+          "403": {
+            "description": "Нет подписки",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "503": {
+            "description": "Marzban не настроен",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/vpn/recreate": {
+      "post": {
+        "tags": [
+          "vpn"
+        ],
+        "summary": "Перевыпуск OpenVPN + VLESS",
+        "description": "Тот же сценарий, что «пересоздать конфиг» в боте. Rate limit ~2 мин на аккаунт. Тело опционально: {\"region\":\"...\"}.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RecreateRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ок",
+            "schema": {
+              "$ref": "#/definitions/StatusOK"
+            }
+          },
+          "429": {
+            "description": "Слишком часто",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "403": {
+            "description": "Нет подписки",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/billing/checkout": {
+      "post": {
+        "tags": [
+          "billing"
+        ],
+        "summary": "Оплата (заглушка)",
+        "description": "Пока не реализовано — 501.",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "501": {
+            "description": "Платёжка не подключена",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          },
+          "401": {
+            "description": "Не авторизован",
+            "schema": {
+              "$ref": "#/definitions/ErrorBody"
+            }
+          }
+        }
+      }
+    },
+    "/subscription/current": {
+      "get": {
+        "summary": "Current active subscription",
+        "description": "Проверка текущей активной подписки. Для Tribute-подписок end_date возвращается как текст: Subscription managed by Tribute/Подписка управляется Tribute.",
+        "tags": [
+          "VPN"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CurrentSubscriptionResponse"
+            }
+          },
+          "404": {
+            "description": "No active subscription"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ErrorBody": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "Краткий код или текст ошибки"
+        }
+      }
+    },
+    "StatusOK": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "ok"
+        }
+      }
+    },
+    "VerificationRequired": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "verification_required"
+        },
+        "code": {
+          "type": "string",
+          "example": "111111"
+        }
+      }
+    },
+    "StatusLinked": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "linked"
+        }
+      }
+    },
+    "RegisterRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "password": {
+          "type": "string",
+          "minLength": 8
+        }
+      }
+    },
+    "RegisterConfirmRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "code"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "LoginTotpRequest": {
+      "type": "object",
+      "required": [
+        "temp_token",
+        "code"
+      ],
+      "properties": {
+        "temp_token": {
+          "type": "string",
+          "description": "JWT из ответа /auth/login при two_factor_required"
+        },
+        "code": {
+          "type": "string",
+          "description": "6-значный TOTP"
+        }
+      }
+    },
+    "TotpChallengeResponse": {
+      "type": "object",
+      "properties": {
+        "two_factor_required": {
+          "type": "boolean",
+          "example": true
+        },
+        "temp_token": {
+          "type": "string"
+        },
+        "token_type": {
+          "type": "string",
+          "example": "TotpChallenge"
+        },
+        "expires_in": {
+          "type": "integer",
+          "description": "Секунд жизни temp_token"
+        }
+      }
+    },
+    "LoginSuccess": {
+      "description": "Либо TokenPair, либо TotpChallengeResponse",
+      "type": "object"
+    },
+    "TotpSetupResponse": {
+      "type": "object",
+      "properties": {
+        "otpauth_url": {
+          "type": "string"
+        },
+        "issuer": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string",
+          "description": "Обычно email"
+        }
+      }
+    },
+    "TotpEnableRequest": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "TotpDisableRequest": {
+      "type": "object",
+      "required": [
+        "password",
+        "code"
+      ],
+      "properties": {
+        "password": {
+          "type": "string"
+        },
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "TotpStatusResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "ok"
+        },
+        "totp_enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "RefreshRequest": {
+      "type": "object",
+      "required": [
+        "refresh_token"
+      ],
+      "properties": {
+        "refresh_token": {
+          "type": "string"
+        }
+      }
+    },
+    "ForgotPasswordRequest": {
+      "type": "object",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "ResetPasswordRequest": {
+      "type": "object",
+      "required": [
+        "email",
+        "code",
+        "new_password"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "code": {
+          "type": "string"
+        },
+        "new_password": {
+          "type": "string",
+          "minLength": 8
+        }
+      }
+    },
+    "ChangeEmailPrepareRequest": {
+      "type": "object",
+      "required": [
+        "new_email"
+      ],
+      "properties": {
+        "new_email": {
+          "type": "string",
+          "format": "email"
+        }
+      }
+    },
+    "ChangeEmailConfirmRequest": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "ChangePasswordRequest": {
+      "type": "object",
+      "required": [
+        "current_password",
+        "new_password"
+      ],
+      "properties": {
+        "current_password": {
+          "type": "string"
+        },
+        "new_password": {
+          "type": "string",
+          "minLength": 8
+        }
+      }
+    },
+    "TokenPair": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string"
+        },
+        "refresh_token": {
+          "type": "string"
+        },
+        "token_type": {
+          "type": "string",
+          "example": "Bearer"
+        }
+      }
+    },
+    "MeResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "email": {
+          "type": "string"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "telegram_linked": {
+          "type": "boolean"
+        },
+        "telegram_id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "linked_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "totp_enabled": {
+          "type": "boolean"
+        },
+        "totp_enabled_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "usedTrial": {
+          "type": "boolean"
+        }
+      }
+    },
+    "SiteLinkTokenResponse": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "expires_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "deep_link": {
+          "type": "string",
+          "description": "Пусто, если не задан TELEGRAM_BOT_USERNAME"
+        }
+      }
+    },
+    "LinkByPublicCodeRequest": {
+      "type": "object",
+      "required": [
+        "public_code"
+      ],
+      "properties": {
+        "public_code": {
+          "type": "string",
+          "description": "Код из меню бота"
+        }
+      }
+    },
+    "RegionResponse": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string",
+          "description": "Код региона (whitelist как в боте) или auto"
+        }
+      }
+    },
+    "PromocodeActivateRequest": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        }
+      }
+    },
+    "PromocodeActivateResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "activated"
+        },
+        "code": {
+          "type": "string"
+        },
+        "subscription_type": {
+          "type": "string"
+        },
+        "active_until": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "VLESSSubscriptionResponse": {
+      "type": "object",
+      "properties": {
+        "subscription_url": {
+          "type": "string"
+        }
+      }
+    },
+    "RecreateRequest": {
+      "type": "object",
+      "properties": {
+        "region": {
+          "type": "string",
+          "description": "Опционально, иначе берётся из профиля"
+        }
+      }
+    },
+    "CurrentSubscriptionResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "subscription_type": {
+          "type": "string"
+        },
+        "end_date": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

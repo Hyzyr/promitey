@@ -44,11 +44,9 @@ export const ProfilePage = async () => {
             linkedAt={user.linked_at}
           />
         </section>
-
         <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <TotpSection initialEnabled={user.totp_enabled} />
         </section>
-
         <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
           <ChangePasswordForm />
         </section>

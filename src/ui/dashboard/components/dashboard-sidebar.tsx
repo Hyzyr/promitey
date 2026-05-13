@@ -30,8 +30,6 @@ const NAV_ITEMS = [
     icon: CreditCard,
     labelKey: 'subscription',
   },
-] as const;
-const EXTRA_ITEMS = [
   { href: '/dashboard/profile', icon: User, labelKey: 'profile' },
 ] as const;
 
@@ -87,18 +85,6 @@ export const DashboardSidebar = () => {
           dropdownClassName="lg:w-12 lgx:w-full"
           showTooltipOnCompact
         />
-        {EXTRA_ITEMS.map((item) => (
-          <SidebarNavItem
-            key={item.href}
-            href={item.href}
-            icon={item.icon}
-            label={tNav(item.labelKey)}
-            active={
-              dashboardPath === item.href ||
-              dashboardPath.startsWith(`${item.href}/`)
-            }
-          />
-        ))}
         <LogoutButton
           className="group relative inline-flex items-center justify-center gap-2.5 rounded-sm text-lg font-normal lg:h-12 lg:w-12 lgx:h-auto lgx:w-auto lgx:justify-start"
           iconClassName="h-8 w-8"

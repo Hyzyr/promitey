@@ -1,47 +1,16 @@
-[x] COMPLETED - Swagger/user-flow audit and instruction file
-	- Checked swagger-new.json, swagger-overview.md, and frontend flows.
-	- Created docs/USER_FLOW_AND_CONFIG_AUDIT.md with registration, login, Telegram linking, subscription, payment, promocode, VLESS, and OpenVPN notes.
-	- Confirmed registration, confirmation code, login, TOTP login, forgot/reset password, and logout flows are implemented.
-	- Confirmed pricing plan selection is frontend state only until backend checkout supports plan IDs.
-	- Confirmed payment cannot be fully applied through Swagger because POST /billing/checkout is still a placeholder.
-	- Confirmed free trial still needs a backend contract or documented promocode policy.
-
-[x] COMPLETED - Config files MVP UX
-	- VLESS card now opens a modal and directly loads the subscription URL.
-	- VLESS modal shows QR code plus subscription link with a small in-card copy button.
-	- Removed the big copy/open-link actions from VLESS modal.
-	- OpenVPN modal now exposes only the account profile download for MVP.
-	- Removed regional OpenVPN UI/text until the backend region contract is confirmed.
-	- Shared modal wrapper now behaves consistently with the menu on mobile/tablet.
-
-[x] COMPLETED - Dashboard/profile MVP cleanup
-	- Dashboard nav exposes MVP pages only: dashboard, instructions, configs, subscription, profile.
-	- /dashboard/servers is hidden from navigation and returns 404.
-	- Password change is routed through the auth reset flow after logout confirmation.
-	- Profile MVP keeps Telegram linking and password reset access visible.
-
-[x] COMPLETED - Legal, links, billing fallback, and SEO
-	- Added localized legal routes: /legal/privacy, /legal/terms, /legal/refund, /legal/aup, /legal/report.
-	- Centralized public external links and SEO asset constants.
-	- Billing CTAs currently redirect to Telegram as an MVP fallback.
-	- Footer social/legal links use centralized constants.
-	- Sitemap includes localized landing and legal pages with alternates.
-	- OG/Twitter metadata uses public/images/og-image-promitey.png.
-
-[x] COMPLETED - Responsive/header and benefits cleanup
-	- Header desktop state is tighter at the first desktop breakpoint before scaling up at lgx/xl.
-	- Header nav accessibility label is localized.
-	- Benefits tablet big-card styles use valid Tailwind/CSS without custom variants.
-
-[!] BACKEND CONTRACT STILL NEEDED
-	- Real payment endpoint or checkout URL response.
-	- Checkout plan selection contract, for example a plan_id accepted by backend.
-	- Direct free-trial endpoint or documented automatic trial/promocode policy.
-	- OpenVPN region/server-list endpoint, for example GET /vpn/openvpn/regions.
-	- Optional subscription/status endpoint so UI can distinguish missing Telegram link, missing subscription, expired subscription, and backend config errors.
-
-[!] BEFORE PRODUCTION
-	- Replace Telegram billing fallback with real checkout once backend contract is ready.
-	- Verify production env values for NEXT_PUBLIC_SITE_URL and social/support links.
-	- Run final npm run lint, npx tsc --noEmit, and npm run build after merge resolution.
-	- Smoke test auth, dashboard config modals, legal pages, sitemap, robots, and mobile/tablet header layouts.
+[-] 	hey first we need to plan how to make lenis smooth scroll only work if there is a env variable saying we need smooth scroll, 
+		it rises question from me, will it still load the lenis plugin and make humble for performance? 
+[-] 	we need plan on new swagger.json update check what is updated from previouse swagger and plan for implemeting it properly.
+		client says:
+		заодно нужно прикрутить TOTP, в апи доке есть
+		POST /auth/totp/setup
+		POST /auth/totp/enable
+		POST /auth/totp/disable
+		tell  me what is TOTP? and is it all ready for it to be implemented? 
+		---- 
+		client also want to add promocode input, we have it in app already just uncomment it and check swagger docs if it works properly with new update
+		разрешённые символы: A-Z a-z 0-9 . _ + -
+		длина: 1..64
+		whitespace вокруг trim
+		add this validation to promocode input.
+		

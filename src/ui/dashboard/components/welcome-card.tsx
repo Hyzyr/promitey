@@ -20,14 +20,13 @@ export const WelcomeCard = async ({ email }: WelcomeCardProps) => {
         />
         <p className="text-xl">
           {t('signedInAs')}{' '}
-          <a
-            href={`mailto:${email}`}
+          <span
             className="font-semibold text-orange-500 underline">
             {email}
-          </a>
+          </span>
         </p>
       </div>
-      <p className="mt-3 max-w-[527px] text-base leading-[1.6] text-neutral-600">
+      <p className="mt-3 max-w-131 text-base leading-[1.6] text-neutral-600">
         {t('body')}
       </p>
     </section>

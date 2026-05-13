@@ -59,11 +59,11 @@ export async function getVlessConfigAction(): Promise<ActionResult<VlessConfigDa
     return { ok: true, data: { subscriptionUrl, qrDataUrl } };
   } catch (e) {
     if (isApiError(e)) {
-      if (e.status === 403) {
-        return actionFailure<VlessConfigData>(e, 'getVlessConfigAction', 'config_access_denied');
+      if (e.status === 401 || e.status === 403 || e.status === 404) {
+        return { ok: false, code: 'config_access_denied' };
       }
       if (e.status === 503) {
-        return actionFailure<VlessConfigData>(e, 'getVlessConfigAction', 'marzban_unavailable');
+        return { ok: false, code: 'marzban_unavailable' };
       }
     }
 
