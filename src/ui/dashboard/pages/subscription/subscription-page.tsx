@@ -14,7 +14,7 @@ export const SubscriptionPage = async () => {
 
   if (!token) {
     const locale = await getLocale();
-    redirect({ href: '/login', locale });
+    return redirect({ href: '/login', locale });
   }
 
   const subscription = await getCurrentSubscriptionOrNull(token);
