@@ -1,6 +1,12 @@
 'use client';
 
-import { createContext, startTransition, useContext, useEffect, useState } from 'react';
+import {
+  createContext,
+  startTransition,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { useWindowResize } from '@/hooks/use-window-resize';
 
@@ -19,25 +25,44 @@ export type LenisContextValue = {
 
 const LenisContext = createContext<LenisContextValue | null>(null);
 
-const isSmoothScrollEnabled = process.env.NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL === 'true';
+const isSmoothScrollEnabled =
+  process.env.NEXT_PUBLIC_ENABLE_SMOOTH_SCROLL === 'true';
 
 const nativeScrollTo = (target: string | number, options?: ScrollToOptions) => {
   if (typeof target === 'number') {
-    window.scrollTo({ top: target + (options?.offset ?? 0), behavior: 'smooth' });
+    window.scrollTo({
+      top: target + (options?.offset ?? 0),
+      behavior: 'smooth',
+    });
     return;
   }
 
   const element = document.querySelector(target);
   if (!element) return;
 
-  const top = element.getBoundingClientRect().top + window.scrollY + (options?.offset ?? 0);
+  const top =
+    element.getBoundingClientRect().top +
+    window.scrollY +
+    (options?.offset ?? 0);
   window.scrollTo({ top, behavior: 'smooth' });
 };
 
-export const LenisProvider = ({ children }: { children: React.ReactNode }) => {
-  const [shouldEnableLenis, setShouldEnableLenis] = useState(false);
+export const LenisProvider = ({
+  shouldEnableLenis: initialShouldEnableLenis,
+  children,
+}: {
+  shouldEnableLenis: boolean;
+  children: React.ReactNode;
+}) => {
+  const [shouldEnableLenis, setShouldEnableLenis] = useState(
+    initialShouldEnableLenis,
+  );
 
   useEffect(() => {
+    if (!initialShouldEnableLenis) {
+      document.body.style.scrollBehavior = 'smooth';
+      return;
+    }
     setShouldEnableLenis(isSmoothScrollEnabled && !prefersNativeScroll());
   }, []);
 

@@ -16,7 +16,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <LenisProvider>{children}</LenisProvider>
+      <LenisProvider shouldEnableLenis={false}>{children}</LenisProvider>
     </QueryClientProvider>
   );
 }
