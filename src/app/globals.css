@@ -131,6 +131,7 @@ body {
   --container-padding-x-md: 2rem; /* 32px — tablet 768px+ */
   --container-padding-x-lg: 3rem; /* 48px — large tablet/small desktop 1024px+ */
 
+  --breakpoint-xsm: 25rem; /* 400px */
   --breakpoint-sm: 32rem; /* 512px */
   --breakpoint-md: 48rem; /* 768px */
   --breakpoint-mdx: 54rem; /* 864px */

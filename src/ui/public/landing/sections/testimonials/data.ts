@@ -38,5 +38,5 @@ export const TESTIMONIALS: Testimonial[] = [
 
 export const SLIDES = [...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS];
 
-export const AUTOPLAY_DELAY = 4000;
+export const AUTOPLAY_DELAY = 6000;
 export const IDLE_RESUME_DELAY = 5000;

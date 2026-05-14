@@ -1,11 +1,13 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+
 import { Container } from '@/components/ui/container';
-import { PricingCard } from './pricing-card';
 import { EXTERNAL_LINKS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
+
 import { PricingBg } from './pricing-bg';
+import { PricingCard } from './pricing-card';
 
 const MATCH_ONE_MONTH_CARD_SIZE = true;
 const STANDARD_CARD_HEIGHT = 'md:min-h-80 lgx:min-h-110 lgx:min-h-125';
@@ -81,7 +83,7 @@ export const PricingSection = () => {
               reserveMissingMeta={MATCH_ONE_MONTH_CARD_SIZE}
               selectLabel={t('select')}
               planId="one-month"
-              href={EXTERNAL_LINKS.telegramBilling}
+              href={EXTERNAL_LINKS.telegramBot}
             />
           </CardWrapper>
 
@@ -125,7 +127,7 @@ export const PricingSection = () => {
               height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}
               planId="year"
-              href={EXTERNAL_LINKS.telegramBilling}
+              href={EXTERNAL_LINKS.telegramBot}
             />
           </div>
           <CardWrapper>
@@ -139,7 +141,7 @@ export const PricingSection = () => {
               height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}
               planId="quarter"
-              href={EXTERNAL_LINKS.telegramBilling}
+              href={EXTERNAL_LINKS.telegramBot}
             />
           </CardWrapper>
           <CardWrapper>
@@ -153,7 +155,7 @@ export const PricingSection = () => {
               height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}
               planId="half-year"
-              href={EXTERNAL_LINKS.telegramBilling}
+              href={EXTERNAL_LINKS.telegramBot}
             />
           </CardWrapper>
         </div>

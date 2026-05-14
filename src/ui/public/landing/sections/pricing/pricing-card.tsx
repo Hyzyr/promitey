@@ -112,7 +112,7 @@ export const PricingCard = ({
           <span
             className={cn(
               'block w-full font-montserrat font-bold whitespace-nowrap',
-              'text-[56px] md:text-[64px] lgx:text-[86px]',
+              'text-[48px] xxs:text-[56px] md:text-[64px] lgx:text-[86px]',
               'leading-[0.8] lgx:leading-none',
               'tracking-[-1.68px] lgx:tracking-[-2.58px]',
               'text-glow-yellow',

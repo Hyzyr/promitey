@@ -26,7 +26,7 @@ export const ConnectGuide = () => {
       id="guide"
       aria-label={t('title')}
       ref={containerRef}
-      className="relative h-[180vh] md:h-[200vh] xl:h-[240vh]"
+      className="relative h-[180vh] md:h-[200vh] lg:h-[230vh] xl:h-[260vh]"
     >
       <Container className="pb-5vh sticky top-0 flex h-screen items-center">
         <div

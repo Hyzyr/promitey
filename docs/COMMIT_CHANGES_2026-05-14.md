@@ -7,7 +7,7 @@
 - Добавлен proxy-route для скачивания OpenVPN конфигурации по региону: `/api/configs/openvpn/[region]`.
 - Добавлена активация промокодов через `/promocode/activate`, включая пробный промокод `TRIAL7DAY`.
 - Добавлен общий delayed refresh для успешных dashboard-мутаций: пробный период, промокод, пересоздание VPN, смена региона, привязка Telegram через public code, включение/отключение TOTP.
-- Проверено: backend checkout `/billing/checkout` по Swagger пока является заглушкой `501`, поэтому in-app renew не реализован и UI ведет пользователя в Telegram billing.
+- Проверено: backend checkout `/billing/checkout` по Swagger пока является заглушкой `501`, поэтому in-app renew не реализован и UI ведет пользователя в Telegram bot.
 
 ## Регистрация и вход
 
@@ -24,7 +24,7 @@
 - Убрано дублирование карточек подписки на странице `/dashboard/subscription`.
 - Trial-кнопка показывается там, где у пользователя `usedTrial === false`.
 - После успешной активации trial или промокода UI обновляется с небольшой задержкой, чтобы пользователь успел увидеть success-сообщение.
-- Renew-кнопки оставлены как переход в Telegram billing, потому что backend checkout еще не реализован.
+- Renew-кнопки оставлены как переход в Telegram bot, потому что backend checkout еще не реализован.
 
 ## Dashboard UI
 
@@ -99,6 +99,6 @@
 ## Что важно помнить
 
 - Реальный backend renew/checkout отсутствует: Swagger прямо описывает `/billing/checkout` как `501` заглушку.
-- Renew сейчас работает только как переход в Telegram billing.
+- Renew сейчас работает только как переход в Telegram bot.
 - Полный список OpenVPN серверов backend пока не отдает отдельным endpoint, поэтому UI использует известные country codes из Swagger.
 - Для окончательной визуальной проверки все еще желательно пройти iPhone/iPad/macOS Safari, потому что часть задач касалась scroll/touch поведения.

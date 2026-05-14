@@ -25,7 +25,7 @@ The hidden Servers page is not part of MVP navigation and `/dashboard/servers` r
 - Header navigation accessibility label is localized.
 - Benefits big card tablet styling uses valid Tailwind/CSS without custom variants.
 - Footer legal and social links use centralized constants.
-- Pricing CTAs currently redirect to Telegram billing support as the MVP payment fallback.
+- Pricing CTAs currently redirect to the Telegram bot as the MVP payment fallback.
 
 ### Legal and SEO
 
@@ -54,7 +54,7 @@ The hidden Servers page is not part of MVP navigation and `/dashboard/servers` r
 ### Centralized Configuration
 
 - Public external links are centralized in `src/lib/constants.ts`.
-- Telegram billing/social fallbacks are configurable through public environment variables.
+- Telegram bot/social fallbacks are configurable through public environment variables.
 - SEO image path and dimensions are centralized in `SEO_ASSETS`.
 - Legal slugs and legal route helpers are centralized.
 
@@ -71,7 +71,7 @@ These items block a full production commercial flow:
 
 ## MVP Fallbacks In Use
 
-- Billing and pricing CTAs redirect to Telegram support instead of calling the placeholder checkout endpoint.
+- Billing and pricing CTAs redirect to the Telegram bot instead of calling the placeholder checkout endpoint.
 - OpenVPN region-specific download UI is hidden.
 - Servers page is hidden and returns 404.
 - Footer support is Telegram-first until a contact form backend exists.

@@ -19,7 +19,7 @@ export const CheckoutButton = ({ className }: CheckoutButtonProps) => {
         type="button"
         variant="orange"
         size="md"
-        onClick={() => window.location.assign(EXTERNAL_LINKS.telegramBilling)}
+        onClick={() => window.location.assign(EXTERNAL_LINKS.telegramBot)}
         className="gap-2"
       >
         <CreditCard className="h-4 w-4" />

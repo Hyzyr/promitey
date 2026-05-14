@@ -74,7 +74,7 @@ export const TestimonialsSection = () => {
             className="gpu-layer -my-8 py-8 md:-my-9 md:py-9 xl:-my-10 xl:py-10"
             ref={emblaRef}
           >
-            <div className="gpu-layer -ml-4 flex">
+            <div className="gpu-layer xsm:-ml-4 flex">
               {SLIDES.map((testimonial, i) => (
                 <TestimonialCard key={i} testimonial={testimonial} />
               ))}

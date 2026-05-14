@@ -10,11 +10,11 @@ export const ROUTES = {
   settings: "/settings",
 } as const;
 
-const fallbackTelegramBillingUrl = 'https://t.me/prometey_vpn_support';
+const fallbackTelegramBotUrl = 'https://t.me/PrometeyVPNbot';
 const fallbackTelegramSocialUrl = 'https://t.me/prometey_vpn';
 
 const publicEnv = {
-  telegramBillingUrl: process.env.NEXT_PUBLIC_TELEGRAM_BILLING_URL,
+  telegramBotUrl: process.env.NEXT_PUBLIC_TELEGRAM_BOT_URL,
   telegramSocialUrl: process.env.NEXT_PUBLIC_TELEGRAM_SOCIAL_URL,
   instagramUrl: process.env.NEXT_PUBLIC_INSTAGRAM_URL,
   youtubeUrl: process.env.NEXT_PUBLIC_YOUTUBE_URL,
@@ -26,8 +26,10 @@ const withFallback = (value: string | undefined, fallback: string) => {
   return normalizedValue || fallback;
 };
 
+const telegramBotUrl = withFallback(publicEnv.telegramBotUrl, fallbackTelegramBotUrl);
+
 export const EXTERNAL_LINKS = {
-  telegramBilling: withFallback(publicEnv.telegramBillingUrl, fallbackTelegramBillingUrl),
+  telegramBot: telegramBotUrl,
   social: {
     telegram: withFallback(publicEnv.telegramSocialUrl, fallbackTelegramSocialUrl),
     instagram: withFallback(publicEnv.instagramUrl, fallbackTelegramSocialUrl),

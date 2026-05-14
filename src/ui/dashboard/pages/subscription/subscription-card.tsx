@@ -87,7 +87,7 @@ export const SubscriptionCard = async ({
             <Button
               variant="secondary"
               size="md"
-              href={EXTERNAL_LINKS.telegramBilling}
+              href={EXTERNAL_LINKS.telegramBot}
               className="rounded-sm bg-neutral-800/12 text-neutral-800"
             >
               {t('renew')}

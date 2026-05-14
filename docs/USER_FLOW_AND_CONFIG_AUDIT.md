@@ -72,9 +72,9 @@ Current backend limitation:
 
 Current frontend MVP behavior:
 
-- Pricing buttons redirect to Telegram billing support.
-- Dashboard billing renew action redirects to Telegram billing support.
-- Centralized billing URL comes from `EXTERNAL_LINKS.telegramBilling` with environment fallback support.
+- Pricing buttons redirect to the Telegram bot.
+- Dashboard billing renew action redirects to the Telegram bot.
+- Centralized bot URL comes from `EXTERNAL_LINKS.telegramBot` with `NEXT_PUBLIC_TELEGRAM_BOT_URL` fallback support.
 - Promocode UI is not part of the visible MVP subscription screen.
 
 Production requirement:

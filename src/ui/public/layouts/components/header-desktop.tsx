@@ -34,7 +34,7 @@ export const HeaderDesktop = ({
   ) => {
     event.preventDefault();
     scrollTo(href, {
-      offset: -100,
+      offset: -5,
       duration: 1.8,
       easing: (t) => 1 - Math.pow(1 - t, 3),
     });
