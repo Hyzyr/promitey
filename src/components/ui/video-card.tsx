@@ -1,6 +1,12 @@
 'use client';
 
-import { useEffect, useRef, useState, cloneElement, startTransition } from 'react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  cloneElement,
+  startTransition,
+} from 'react';
 import { playTriangleSVG, pauseBarsSVG } from '@/components/assets';
 import { cn } from '@/lib/utils';
 import { useObserver } from '@/hooks/use-observer';
@@ -124,7 +130,7 @@ export const VideoCard = ({
       ref={containerRef}
       data-playing={isUserPlaying ? 'true' : 'false'}
       className={cn(
-        'video-wrapper gpu-layer group absolute aspect-3/5 overflow-hidden rounded-lg shadow-2xl',
+        'video-wrapper group absolute aspect-3/5 gpu-layer overflow-hidden rounded-lg shadow-2xl',
         className,
         isUserPlaying && playingClassName,
       )}
@@ -132,7 +138,7 @@ export const VideoCard = ({
       <video
         ref={videoRef}
         src={src}
-        className="gpu-layer h-full! w-full! object-cover"
+        className="h-full! w-full! gpu-layer object-cover"
         autoPlay={backgroundAutoplayEnabled && isVisible}
         preload="metadata"
         poster={poster}
@@ -144,7 +150,7 @@ export const VideoCard = ({
 
       <div
         role="presentation"
-        className="video-card-gradient absolute inset-0 flex flex-col justify-end rounded-[inherit] p-4"
+        className="absolute inset-0 flex flex-col justify-end rounded-[inherit] p-4 video-card-gradient"
       >
         <button
           type="button"
@@ -152,14 +158,14 @@ export const VideoCard = ({
           aria-label={title}
           aria-pressed={isUserPlaying}
           className={cn(
-            'video-toggle-motion gpu-layer absolute cursor-pointer',
-            'flex items-center justify-center w-12 h-12 rounded-full bg-primary-500',
+            'absolute gpu-layer cursor-pointer video-toggle-motion',
+            'flex h-12 w-12 items-center justify-center rounded-full bg-primary-500',
             'top-1 right-1 translate-x-0 translate-y-0 scale-[0.8]',
             'group-hover:top-1/2 group-hover:right-1/2',
             'group-hover:translate-x-1/2 group-hover:-translate-y-1/2 group-hover:scale-[1.6]',
             'hover:bg-primary-400',
-            'active:bg-primary-600 active:brightness-90 active:scale-[0.92]',
-            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+            'active:scale-[0.92] active:bg-primary-600 active:brightness-90',
+            'focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-none',
             buttonClassName,
           )}
         >
