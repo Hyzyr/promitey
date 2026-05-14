@@ -1,13 +1,16 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+
+import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+
 import {
   setupTotpAction,
   enableTotpAction,
   disableTotpAction,
   type TotpSetupData,
 } from '../server/profile-actions';
-import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+import { useDelayedRefresh } from './use-delayed-refresh';
 
 type TotpView = 'idle' | 'setup' | 'disable';
 
@@ -20,6 +23,7 @@ export type TotpSectionState = {
 };
 
 export function useTotpSection(initialEnabled: boolean) {
+  const refreshAfterDelay = useDelayedRefresh();
   const [isPending, startTransition] = useTransition();
   const [view, setView] = useState<TotpView>('idle');
   const [enabled, setEnabled] = useState(initialEnabled);
@@ -60,6 +64,7 @@ export function useTotpSection(initialEnabled: boolean) {
         setEnabled(true);
         setView('idle');
         setSetupData(null);
+        void refreshAfterDelay();
       } else {
         setError(result.code);
       }
@@ -74,6 +79,7 @@ export function useTotpSection(initialEnabled: boolean) {
       if (result.ok) {
         setEnabled(false);
         setView('idle');
+        void refreshAfterDelay();
       } else {
         setError(result.code);
       }

@@ -31,7 +31,7 @@ export const RecreateVpnButton = ({ className }: RecreateVpnButtonProps) => {
 
       {success && (
         <p className="mt-2 flex items-center gap-1.5 text-sm text-green-600">
-          <CheckCircle className="h-4 w-4 flex-shrink-0" />
+          <CheckCircle className="h-4 w-4 shrink-0" />
           {t('recreateSuccess')}
         </p>
       )}

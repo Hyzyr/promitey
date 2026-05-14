@@ -168,7 +168,7 @@ export const BenefitCard = ({
         onMouseLeave={onMouseLeave}
         data-benefit-card=""
         className={cn(
-          'benefit-card-shell gpu-layer',
+          'benefit-card-shell gpu-layer min-h-92 ',
           isActive ? 'border-orange-400' : 'border-neutral-40',
           className,
         )}

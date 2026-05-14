@@ -6,10 +6,11 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 
-import { setRegionAction } from '../server/vpn-actions';
-
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+
+import { setRegionAction } from '../server/vpn-actions';
+import { useDelayedRefresh } from './use-delayed-refresh';
 
 interface SetRegionValues {
   region: string;
@@ -26,6 +27,7 @@ export interface UseSetRegionReturn {
 export function useSetRegion(initialRegion: string): UseSetRegionReturn {
   const tErrors = useTranslations('auth.errors');
   const tDashboard = useTranslations('dashboard.vpn');
+  const refreshAfterDelay = useDelayedRefresh();
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [currentRegion, setCurrentRegion] = useState(initialRegion);
@@ -51,6 +53,7 @@ export function useSetRegion(initialRegion: string): UseSetRegionReturn {
     }
     setCurrentRegion(result.data.region);
     setSuccess(true);
+    void refreshAfterDelay();
   };
 
   return { form, onSubmit, serverError, success, currentRegion };

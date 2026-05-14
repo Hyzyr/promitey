@@ -42,7 +42,7 @@ export const ChangePasswordForm = ({ className }: ChangePasswordFormProps) => {
 
   return (
     <div className={className}>
-      <h2 className="mb-2 text-lg font-semibold text-neutral-800">
+      <h2 className="mb-2 text-[24px] font-medium text-neutral-800">
         {tProfile('changePassword')}
       </h2>
       <p className="max-w-2xl text-sm leading-relaxed text-neutral-600">

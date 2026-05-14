@@ -5,7 +5,11 @@ import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 
-import { registerConfirmAction } from '../server/auth-actions';
+import { loginAction, registerConfirmAction } from '../server/auth-actions';
+import {
+  clearRegistrationCredentials,
+  getRegistrationCredentials,
+} from '../registration-session';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
@@ -50,7 +54,26 @@ export function useRegisterConfirm(email: string): UseRegisterConfirmReturn {
     }
   };
 
-  const onSuccess = () => {
+  const onSuccess = async () => {
+    const credentials = getRegistrationCredentials(email);
+
+    if (!credentials) {
+      router.replace(selectedPlan ? buildPricingPlanHref('/login', selectedPlan) : '/login');
+      return;
+    }
+
+    const loginResult = await loginAction({
+      email: credentials.email,
+      password: credentials.password,
+    });
+    clearRegistrationCredentials();
+    reportForwardedServerError(loginResult);
+
+    if (loginResult.ok && loginResult.data.step === 'done') {
+      router.replace('/dashboard');
+      return;
+    }
+
     router.replace(selectedPlan ? buildPricingPlanHref('/login', selectedPlan) : '/login');
   };
 

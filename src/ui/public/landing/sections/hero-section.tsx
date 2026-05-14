@@ -64,7 +64,7 @@ export const HeroSection = () => {
 
           <p
             className={cn(
-              'text-center font-roboto font-normal text-neutral-800',
+              'text-center font-manrope font-normal text-neutral-800',
               'text-[16px] md:text-[18px] lg:text-[21px] xl:text-[24px]',
               'leading-[1.4] tracking-[-0.32px] md:tracking-[-0.4px] xl:tracking-[-0.48px]',
               'max-w-full md:max-w-150 xl:max-w-198.5',

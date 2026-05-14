@@ -24,7 +24,7 @@ export const ProfilePage = async () => {
       <Breadcrumbs>{t('breadcrumb.profile')}</Breadcrumbs>
       <div className="w-full max-w-212.5 space-y-6">
         <section className="rounded-md bg-white px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)]">
-          <h1 className="text-[28px] font-bold text-neutral-900">
+          <h1 className="text-[28px] font-medium text-neutral-900">
             {t('profile.title')}
           </h1>
           <div className="mt-6 space-y-2">

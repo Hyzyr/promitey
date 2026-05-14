@@ -11,6 +11,9 @@ export interface VideoCardProps {
   autoPlay?: boolean;
   className?: string;
   playingClassName?: string;
+  buttonClassName?: string;
+  poster?: string;
+  onPlayClick?: () => void;
 }
 
 export const VideoCard = ({
@@ -19,6 +22,9 @@ export const VideoCard = ({
   autoPlay = true,
   className,
   playingClassName,
+  buttonClassName,
+  poster,
+  onPlayClick,
 }: VideoCardProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const userPlaybackRef = useRef(false);
@@ -82,6 +88,11 @@ export const VideoCard = ({
   }, [backgroundAutoplayEnabled, isVisible]);
 
   const handleToggle = () => {
+    if (onPlayClick) {
+      onPlayClick();
+      return;
+    }
+
     const video = videoRef.current;
     if (!video) return;
 
@@ -124,6 +135,7 @@ export const VideoCard = ({
         className="gpu-layer h-full! w-full! object-cover"
         autoPlay={backgroundAutoplayEnabled && isVisible}
         preload="metadata"
+        poster={poster}
         muted
         loop
         playsInline
@@ -148,6 +160,7 @@ export const VideoCard = ({
             'hover:bg-primary-400',
             'active:bg-primary-600 active:brightness-90 active:scale-[0.92]',
             'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent',
+            buttonClassName,
           )}
         >
           {isUserPlaying

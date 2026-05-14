@@ -116,10 +116,10 @@ export const PricingSection = () => {
 
             <PricingCard
               label={t('plans.year.label')}
-              originalPrice="24 €"
-              price="12 €"
-              discount="-50%"
-              perMonth={t('perMonth', { value: '1' })}
+              originalPrice="36 €"
+              price="16 €"
+              discount="-55.56%"
+              perMonth={t('perMonth', { value: '1.33' })}
               period={t('plans.year.period')}
               featured
               height={STANDARD_CARD_HEIGHT}
@@ -131,10 +131,10 @@ export const PricingSection = () => {
           <CardWrapper>
             <PricingCard
               label={t('plans.quarter.label')}
-              originalPrice="6 €"
-              price="5 €"
-              discount="-16.6%"
-              perMonth={t('perMonth', { value: '1.66' })}
+              originalPrice="9 €"
+              price="7.5 €"
+              discount="-16.67%"
+              perMonth={t('perMonth', { value: '2.50' })}
               period={t('plans.quarter.period')}
               height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}
@@ -145,10 +145,10 @@ export const PricingSection = () => {
           <CardWrapper>
             <PricingCard
               label={t('plans.halfYear.label')}
-              originalPrice="12 €"
-              price="8 €"
-              discount="-33.3%"
-              perMonth={t('perMonth', { value: '1.33' })}
+              originalPrice="18 €"
+              price="12 €"
+              discount="-33.33%"
+              perMonth={t('perMonth', { value: '2.00' })}
               period={t('plans.halfYear.period')}
               height={STANDARD_CARD_HEIGHT}
               selectLabel={t('select')}

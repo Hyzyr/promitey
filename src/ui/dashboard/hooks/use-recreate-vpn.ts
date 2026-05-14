@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
-import { recreateVpnAction } from '../server/vpn-actions';
-
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+
+import { recreateVpnAction } from '../server/vpn-actions';
+import { useDelayedRefresh } from './use-delayed-refresh';
 
 export interface UseRecreateVpnReturn {
   loading: boolean;
@@ -18,6 +19,7 @@ export interface UseRecreateVpnReturn {
 export function useRecreateVpn(): UseRecreateVpnReturn {
   const t = useTranslations('dashboard.vpn');
   const tErrors = useTranslations('auth.errors');
+  const refreshAfterDelay = useDelayedRefresh();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -26,14 +28,21 @@ export function useRecreateVpn(): UseRecreateVpnReturn {
     setError(null);
     setSuccess(false);
     setLoading(true);
-    const result = await recreateVpnAction();
-    reportForwardedServerError(result);
-    setLoading(false);
-    if (!result.ok) {
-      setError(mapApiError(result.code, tErrors, { rate_limited: t('rateLimited') }));
-      return;
+    try {
+      const result = await recreateVpnAction();
+      reportForwardedServerError(result);
+      if (!result.ok) {
+        setError(mapApiError(result.code, tErrors, { rate_limited: t('rateLimited') }));
+        return;
+      }
+      setSuccess(true);
+      setLoading(false);
+      await refreshAfterDelay();
+    } catch {
+      setError(tErrors('generic'));
+    } finally {
+      setLoading(false);
     }
-    setSuccess(true);
   };
 
   return { loading, success, error, onRecreate };

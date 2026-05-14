@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Copy, Download, Link as LinkIcon } from 'lucide-react';
+import { Copy, Download, Globe2, Link as LinkIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal';
@@ -26,6 +26,18 @@ const orangeAnchorClass = cn(
   anchorButtonClass,
   'bg-primary-500 text-neutral-900 hover:bg-primary-400 active:bg-primary-600',
 );
+
+const openvpnRegions = [
+  { code: 'auto', flagCode: null },
+  { code: 'fr', flagCode: 'fr' },
+  { code: 'uk', flagCode: 'gb' },
+  { code: 'pl', flagCode: 'pl' },
+  { code: 'us', flagCode: 'us' },
+  { code: 'iq', flagCode: 'iq' },
+  { code: 'ru', flagCode: 'ru' },
+  { code: 'de', flagCode: 'de' },
+  { code: 'nl', flagCode: 'nl' },
+];
 
 type ActiveModal = 'vless' | 'openvpn' | null;
 type VlessErrorKey = 'accessDenied' | 'marzban' | 'generic';
@@ -96,7 +108,7 @@ export const ConfigAccessCard = ({ className }: ConfigAccessCardProps) => {
       style={{ background: cardBackground }}
     >
       <header className="flex flex-col gap-3">
-        <h2 className="font-manrope text-[24px] leading-[1.2] font-bold text-neutral-800">
+        <h2 className="text-[24px] font-medium text-neutral-800">
           {t('title')}
         </h2>
         <p className="font-manrope text-base text-neutral-800">
@@ -289,25 +301,41 @@ const OpenvpnConfigModal = ({ isOpen, onClose, closeAriaLabel }: ConfigModalProp
       showCloseButton
       className="max-w-xl"
     >
-      <p className="font-manrope text-base leading-relaxed text-neutral-300">
-        {t('description')}
-      </p>
-
       <div className="flex flex-col gap-3 rounded-sm bg-neutral-700 px-4 py-4">
         <h3 className="font-manrope text-base font-semibold text-neutral-10">
-          {t('savedTitle')}
+          {t('regionTitle')}
         </h3>
         <p className="text-sm leading-relaxed text-neutral-300">
-          {t('savedDescription')}
+          {t('regionDescription')}
         </p>
-        <a
-          href="/api/configs/openvpn"
-          download
-          className={orangeAnchorClass}
-        >
-          <Download className="h-4 w-4" />
-          {t('downloadSaved')}
-        </a>
+        <div className="flex flex-col gap-2">
+          {openvpnRegions.map((region) => (
+            <a
+              key={region.code}
+              href={`/api/configs/openvpn/${region.code}`}
+              download
+              className="inline-flex items-center gap-3 rounded-sm bg-neutral-10 px-3 py-2.5 font-manrope text-sm font-semibold text-neutral-900 transition hover:bg-primary-500 active:scale-[0.97]"
+            >
+              {region.flagCode ? (
+                <img
+                  src={`https://flagcdn.com/w40/${region.flagCode}.png`}
+                  alt=""
+                  width={24}
+                  height={18}
+                  loading="lazy"
+                  className="h-4.5 w-6 rounded-xs object-cover"
+                />
+              ) : (
+                <Globe2 className="h-5 w-6 shrink-0" />
+              )}
+              <span className="flex min-w-0 flex-1 items-center justify-between gap-3">
+                <span>{t(`countries.${region.code}`)}</span>
+                <span className="text-xs uppercase text-neutral-400">{region.code}</span>
+              </span>
+              <Download className="h-4 w-4 shrink-0" />
+            </a>
+          ))}
+        </div>
       </div>
 
       <Button

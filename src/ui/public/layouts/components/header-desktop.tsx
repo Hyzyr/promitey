@@ -69,7 +69,7 @@ export const HeaderDesktop = ({
                   key={href}
                   href={href}
                   onClick={(event) => handleNavClick(event, href)}
-                  className="font-roboto text-[15px] font-normal text-neutral-10 transition-colors hover:text-primary-500 active:text-primary-600 lgx:text-[17px] xl:text-[18px]"
+                  className="font-manrope text-[15px] font-normal text-neutral-10 transition-colors hover:text-primary-500 active:text-primary-600 lgx:text-[17px] xl:text-[18px]"
                 >
                   {label}
                 </a>

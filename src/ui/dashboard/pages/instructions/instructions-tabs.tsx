@@ -6,6 +6,7 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { androidSVG, appleSVG, windowsSVG } from '@/components/assets/os-svg';
+import { Modal } from '@/components/ui/modal';
 import { VideoCard } from '@/components/ui/video-card';
 import { cn } from '@/lib/utils';
 
@@ -20,6 +21,10 @@ interface AppOption {
   href: string;
 }
 
+export interface InstructionsTabsProps {
+  className?: string;
+}
+
 const protocols: Protocol[] = ['openvpn', 'vless'];
 
 const protocolLogos: Record<Protocol, string> = {
@@ -31,6 +36,8 @@ const videoSrc: Record<Protocol, string> = {
   openvpn: '/videos/woman-feedback-promitey.webm',
   vless: '/videos/woman-feedback-promitey.webm',
 };
+
+const videoPoster = '/images/feedback-video-poster.png';
 
 const appOptions: Record<Protocol, AppOption[]> = {
   openvpn: [
@@ -79,14 +86,21 @@ const appOptions: Record<Protocol, AppOption[]> = {
   ],
 };
 
-export const InstructionsTabs = () => {
+export const InstructionsTabs = ({ className }: InstructionsTabsProps) => {
   const t = useTranslations('dashboard.instructions');
+  const tCommon = useTranslations('common');
   const [activeProtocol, setActiveProtocol] = useState<Protocol>('openvpn');
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const activeApps = appOptions[activeProtocol];
 
   return (
-    <section className="flex w-full flex-col gap-8 rounded-md px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] lg:min-h-215 lg:bg-neutral-0 max-lg:rounded-none max-lg:bg-transparent max-lg:px-0 max-lg:py-0 max-lg:shadow-none">
-      <h1 className="font-manrope text-[24px] leading-[1.2] font-bold text-neutral-800 max-lg:max-w-82 max-lg:leading-normal">
+    <section
+      className={cn(
+        'flex w-full flex-col gap-8 rounded-md px-5 py-6 shadow-[0_13px_51.2px_rgba(0,0,0,.04)] lg:min-h-215 lg:bg-neutral-0 max-lg:rounded-none max-lg:bg-transparent max-lg:px-0 max-lg:py-0 max-lg:shadow-none',
+        className,
+      )}
+    >
+      <h1 className="text-[24px] font-medium text-neutral-800 max-lg:max-w-82">
         {t('title')}
       </h1>
 
@@ -194,7 +208,7 @@ export const InstructionsTabs = () => {
           </div>
 
           <div className="flex flex-col gap-3">
-            <h2 className="font-manrope text-[20px] font-bold text-neutral-800 lg:text-[24px]">
+            <h2 className="text-[24px] font-medium text-neutral-800">
               {t('stepsTitle')}
             </h2>
             <ul className="list-disc pl-6 font-manrope text-base leading-[1.6] text-neutral-600">
@@ -207,18 +221,40 @@ export const InstructionsTabs = () => {
           </div>
 
           <div className="flex w-full flex-col gap-3 lg:w-125">
-            <h2 className="font-manrope text-[20px] font-bold text-neutral-800 lg:text-[24px]">
+            <h2 className="text-[24px] font-medium text-neutral-800">
               {t('videoTitle')}
             </h2>
             <VideoCard
               src={videoSrc[activeProtocol]}
               title={t('videoAriaLabel')}
               autoPlay={false}
+              poster={videoPoster}
+              onPlayClick={() => setIsVideoModalOpen(true)}
+              buttonClassName="top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 scale-100 group-hover:top-1/2 group-hover:right-1/2 group-hover:translate-x-1/2 group-hover:-translate-y-1/2 group-hover:scale-100"
               className="relative w-full aspect-500/325 rounded-sm"
             />
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        title={t('videoTitle')}
+        ariaLabel={t('videoAriaLabel')}
+        closeAriaLabel={tCommon('close')}
+        showCloseButton
+        className="max-w-250"
+      >
+        <video
+          src={videoSrc[activeProtocol]}
+          poster={videoPoster}
+          controls
+          autoPlay
+          playsInline
+          className="aspect-video w-full rounded-sm bg-neutral-900 object-cover"
+        />
+      </Modal>
     </section>
   );
 };

@@ -6,10 +6,11 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
 
-import { linkByPublicCodeAction } from '../server/profile-actions';
-
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+
+import { linkByPublicCodeAction } from '../server/profile-actions';
+import { useDelayedRefresh } from './use-delayed-refresh';
 
 interface LinkByCodeValues {
   public_code: string;
@@ -24,6 +25,7 @@ export interface UseLinkByCodeReturn {
 
 export function useLinkByCode(): UseLinkByCodeReturn {
   const tErrors = useTranslations('auth.errors');
+  const refreshAfterDelay = useDelayedRefresh();
   const [serverError, setServerError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
@@ -53,6 +55,8 @@ export function useLinkByCode(): UseLinkByCodeReturn {
       return;
     }
     setSuccess(true);
+    form.reset();
+    void refreshAfterDelay();
   };
 
   return { form, onSubmit, serverError, success };

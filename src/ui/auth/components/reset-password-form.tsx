@@ -54,7 +54,7 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
       />
 
       {serverError && (
-        <p className="font-roboto text-center text-[14px] text-red-500">{serverError}</p>
+        <p className="font-manrope text-center text-[14px] text-red-500">{serverError}</p>
       )}
 
       <div className="flex w-full justify-center pt-3">

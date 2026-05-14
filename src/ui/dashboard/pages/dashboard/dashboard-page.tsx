@@ -28,7 +28,7 @@ export const DashboardPage = async () => {
       <Breadcrumbs>{t('breadcrumb.home')}</Breadcrumbs>
       <WelcomeCard email={user.email} />
       <ConfigDownloadCard />
-      <SubscriptionCard subscription={subscription} />
+      <SubscriptionCard subscription={subscription} usedTrial={user.usedTrial} />
     </>
   );
 };

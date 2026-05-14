@@ -10,6 +10,12 @@ import { GuideSteps } from './guide-steps';
 import { GuideTitle } from './guide-title';
 import { Container } from '@/components/ui/container';
 
+const guideImages = [
+  '/images/guide/item01.png',
+  '/images/guide/item02.png',
+  '/images/guide/item03.png',
+];
+
 export const ConnectGuide = () => {
   const t = useTranslations('landing.guide');
   const steps = [t('steps.0'), t('steps.1'), t('steps.2')];
@@ -38,7 +44,7 @@ export const ConnectGuide = () => {
             )}
           >
             <GuideSteps steps={steps} activeStep={activeStep} />
-            <GuidePreview />
+            <GuidePreview images={guideImages} activeStep={activeStep} />
           </div>
         </div>
       </Container>

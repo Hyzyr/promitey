@@ -2,7 +2,13 @@ import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 
-export const GuidePreview = () => {
+export const GuidePreview = ({
+  images,
+  activeStep,
+}: {
+  images: string[];
+  activeStep: number;
+}) => {
   return (
     <div
       className={cn(
@@ -13,19 +19,25 @@ export const GuidePreview = () => {
     >
       <div
         className={cn(
-          'aspect-1506/858 h-auto w-full mdx:absolute mdx:top-1/2 mdx:left-0 mdx:h-full mdx:max-h-80  xl:max-h-120 mdx:w-auto mdx:-translate-y-1/2',
+          'relative aspect-1506/858 h-auto w-full mdx:absolute mdx:top-1/2 mdx:left-0 mdx:h-full mdx:max-h-80 mdx:w-auto mdx:-translate-y-1/2 xl:max-h-120',
           'rounded-md mdx:rounded-2xl xl:rounded-3xl',
           'overflow-hidden bg-neutral-800',
         )}
       >
-        <Image
-          src="/images/temp-guide-img.png"
-          alt=""
-          width={1506}
-          height={858}
-          loading="lazy"
-          className="pointer-events-none inset-0 h-full w-full object-cover mdx:absolute"
-        />
+        {images.map((image, index) => (
+          <img
+            key={image}
+            src={image}
+            alt={'guide-instruction-' + (index + 1)}
+            width={1506}
+            height={858}
+            loading={'eager'}
+            className={cn(
+              'pointer-events-none absolute inset-0 h-full w-full object-cover smooth',
+              activeStep === index ? 'opacity-100 scale-100 delay-75' : 'opacity-0 scale-105 duration-200',
+            )}
+          />
+        ))}
       </div>
     </div>
   );

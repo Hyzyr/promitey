@@ -23,7 +23,7 @@ export const RegionSelector = ({ initialRegion }: RegionSelectorProps) => {
 
   return (
     <div>
-      <h2 className="mb-1 text-lg font-semibold text-neutral-800">{t('regionTitle')}</h2>
+      <h2 className="mb-1 text-[24px] font-medium text-neutral-800">{t('regionTitle')}</h2>
       <p className="mb-4 text-sm leading-relaxed text-neutral-600">{t('regionDescription')}</p>
 
       <form

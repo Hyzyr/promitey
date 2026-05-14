@@ -10,6 +10,7 @@ import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 import { activatePromocodeAction } from '../server/billing-actions';
+import { useDelayedRefresh } from './use-delayed-refresh';
 
 import type { PromocodeActivateResponse } from '@/api/client/api-types';
 
@@ -30,6 +31,7 @@ export interface UsePromocodeReturn {
 export function usePromocode(): UsePromocodeReturn {
   const t = useTranslations('dashboard.subscription');
   const tErrors = useTranslations('auth.errors');
+  const refreshAfterDelay = useDelayedRefresh();
   const [result, setResult] = useState<PromocodeActivateResponse | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -69,6 +71,8 @@ export function usePromocode(): UsePromocodeReturn {
       }
       setResult(res.data);
       form.reset();
+      setIsSubmitting(false);
+      await refreshAfterDelay();
     } finally {
       setIsSubmitting(false);
     }

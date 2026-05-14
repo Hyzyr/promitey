@@ -20,10 +20,14 @@ import { useCallback, useEffect, useRef } from 'react';
  */
 export function useScrollLock() {
   const scrollPositionRef = useRef<number>(0);
+  const isLockedRef = useRef(false);
 
   const lock = useCallback(() => {
+    if (isLockedRef.current) return;
+
     // Store current scroll position
     scrollPositionRef.current = window.scrollY;
+    isLockedRef.current = true;
 
     // Apply scroll lock styles to body
     document.body.style.overflow = 'hidden';
@@ -33,6 +37,8 @@ export function useScrollLock() {
   }, []);
 
   const unlock = useCallback(() => {
+    if (!isLockedRef.current) return;
+
     // Remove scroll lock styles
     document.body.style.removeProperty('overflow');
     document.body.style.removeProperty('position');
@@ -41,11 +47,13 @@ export function useScrollLock() {
 
     // Restore scroll position
     window.scrollTo(0, scrollPositionRef.current);
+    isLockedRef.current = false;
   }, []);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
+      isLockedRef.current = false;
       // Ensure scroll is unlocked when component unmounts
       document.body.style.removeProperty('overflow');
       document.body.style.removeProperty('position');

@@ -30,13 +30,13 @@ const getWrapperClasses = (
 
 const getLabelClasses = (variant: 'light' | 'dark' = 'light') =>
   cn(
-    'font-roboto text-sm font-medium',
+    'font-manrope text-sm font-medium',
     variant === 'light' ? 'text-neutral-600' : 'text-neutral-20',
   );
 
 const getHintClasses = (variant: 'light' | 'dark' = 'light') =>
   cn(
-    'font-roboto text-xs',
+    'font-manrope text-xs',
     variant === 'light' ? 'text-neutral-300' : 'text-neutral-60',
   );
 
@@ -122,7 +122,7 @@ export const Input = ({
       </div>
 
       {!hideMessages && error && (
-        <p className="font-roboto text-xs text-red-600">{error}</p>
+        <p className="font-manrope text-xs text-red-600">{error}</p>
       )}
       {!hideMessages && hint && !error && (
         <p className={getHintClasses(variant)}>{hint}</p>
@@ -172,7 +172,7 @@ export const Textarea = ({
       </div>
 
       {!hideMessages && error && (
-        <p className="font-roboto text-xs text-red-600">{error}</p>
+        <p className="font-manrope text-xs text-red-600">{error}</p>
       )}
       {!hideMessages && hint && !error && (
         <p className={getHintClasses(variant)}>{hint}</p>

@@ -90,7 +90,7 @@ export const Dropdown = ({
               }}
               role="menuitem"
               className={cn(
-                'w-full px-4 py-2.5 text-left font-roboto text-base text-neutral-10 transition-colors hover:bg-white/10 focus-visible:outline-none',
+                'w-full px-4 py-2.5 text-left font-manrope text-base text-neutral-10 transition-colors hover:bg-white/10 focus-visible:outline-none',
                 itemClassName,
               )}
             >

@@ -14,19 +14,35 @@ type Props = {
 
 export function TotpSection({ initialEnabled }: Props) {
   const t = useTranslations('dashboard.profile.totp');
-  const { view, enabled, isPending, error, setupData, openSetup, openDisable, cancel, enable, disable } =
-    useTotpSection(initialEnabled);
+  const {
+    view,
+    enabled,
+    isPending,
+    error,
+    setupData,
+    openSetup,
+    openDisable,
+    cancel,
+    enable,
+    disable,
+  } = useTotpSection(initialEnabled);
 
   const [enableCode, setEnableCode] = useState('');
   const [disablePassword, setDisablePassword] = useState('');
   const [disableCode, setDisableCode] = useState('');
 
-  const errorKey = error ? (error === 'invalid_code' ? 'errors.invalid_code' : 'errors.generic') : null;
+  const errorKey = error
+    ? error === 'invalid_code'
+      ? 'errors.invalid_code'
+      : 'errors.generic'
+    : null;
 
   if (view === 'setup' && setupData) {
     return (
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-neutral-900">{t('setup.title')}</h2>
+        <h2 className="text-[24px] font-medium text-neutral-800">
+          {t('setup.title')}
+        </h2>
         <p className="text-sm text-neutral-500">{t('setup.description')}</p>
 
         <div className="flex justify-center">
@@ -46,7 +62,7 @@ export function TotpSection({ initialEnabled }: Props) {
             {t('setup.manualEntry')}
           </summary>
           <p className="mt-2 text-neutral-500">{t('setup.secret')}</p>
-          <p className="mt-1 break-all font-mono text-sm font-bold tracking-wider text-neutral-900">
+          <p className="mt-1 font-mono text-sm font-bold tracking-wider break-all text-neutral-900">
             {setupData.secret}
           </p>
         </details>
@@ -67,7 +83,9 @@ export function TotpSection({ initialEnabled }: Props) {
         </div>
 
         {errorKey && (
-          <p className="text-sm text-red-600">{t(errorKey as Parameters<typeof t>[0])}</p>
+          <p className="text-sm text-red-600">
+            {t(errorKey as Parameters<typeof t>[0])}
+          </p>
         )}
 
         <div className="flex gap-3">
@@ -75,7 +93,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={() => enable(enableCode)}
             disabled={isPending || enableCode.length < 6}
-            className="flex-1 rounded-sm bg-neutral-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-sm bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? '…' : t('setup.confirm')}
           </button>
@@ -83,7 +101,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={cancel}
             disabled={isPending}
-            className="rounded-sm border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
+            className="rounded-sm border border-neutral-200 px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
           >
             {t('cancel')}
           </button>
@@ -95,7 +113,9 @@ export function TotpSection({ initialEnabled }: Props) {
   if (view === 'disable') {
     return (
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold text-neutral-900">{t('disable.title')}</h2>
+        <h2 className="text-[24px] font-medium text-neutral-800">
+          {t('disable.title')}
+        </h2>
 
         <div className="space-y-2">
           <label className="block text-sm font-medium text-neutral-700">
@@ -126,7 +146,9 @@ export function TotpSection({ initialEnabled }: Props) {
         </div>
 
         {errorKey && (
-          <p className="text-sm text-red-600">{t(errorKey as Parameters<typeof t>[0])}</p>
+          <p className="text-sm text-red-600">
+            {t(errorKey as Parameters<typeof t>[0])}
+          </p>
         )}
 
         <div className="flex gap-3">
@@ -134,7 +156,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={() => disable(disablePassword, disableCode)}
             disabled={isPending || !disablePassword || disableCode.length < 6}
-            className="flex-1 rounded-sm bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex-1 rounded-sm bg-red-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? '…' : t('disable.confirm')}
           </button>
@@ -142,7 +164,7 @@ export function TotpSection({ initialEnabled }: Props) {
             type="button"
             onClick={cancel}
             disabled={isPending}
-            className="rounded-sm border border-neutral-200 px-4 py-2.5 text-sm font-semibold text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
+            className="rounded-sm border border-neutral-200 px-4 py-2.5 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50 disabled:opacity-50"
           >
             {t('cancel')}
           </button>
@@ -154,7 +176,9 @@ export function TotpSection({ initialEnabled }: Props) {
   return (
     <div className="flex items-start justify-between gap-4">
       <div>
-        <h2 className="text-xl font-semibold text-neutral-900">{t('title')}</h2>
+        <h2 className="text-[24px] font-medium text-neutral-800">
+          {t('title')}
+        </h2>
         <p className="mt-1 text-sm text-neutral-500">{t('description')}</p>
         <p
           className={cn(
@@ -170,7 +194,7 @@ export function TotpSection({ initialEnabled }: Props) {
           type="button"
           onClick={openDisable}
           disabled={isPending}
-          className="shrink-0 rounded-sm border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+          className="shrink-0 rounded-sm border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50"
         >
           {t('disable.button')}
         </button>
@@ -179,7 +203,7 @@ export function TotpSection({ initialEnabled }: Props) {
           type="button"
           onClick={openSetup}
           disabled={isPending}
-          className="shrink-0 rounded-sm bg-neutral-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-700 disabled:opacity-50"
+          className="shrink-0 rounded-sm bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-700 disabled:opacity-50"
         >
           {isPending ? '…' : t('setup.button')}
         </button>

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Manrope, Roboto, Montserrat } from "next/font/google";
+import { Inter, Manrope, Montserrat } from "next/font/google";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getSiteMetadataBase } from '@/lib/site-url';
 import { Providers } from "./providers";
@@ -14,13 +14,6 @@ const inter = Inter({
 const manrope = Manrope({
   subsets: ["latin", "cyrillic"],
   variable: "--font-manrope",
-  display: "swap",
-});
-
-const roboto = Roboto({
-  subsets: ["latin", "cyrillic"],
-  weight: ["400", "500", "700"],
-  variable: "--font-roboto",
   display: "swap",
 });
 
@@ -55,9 +48,10 @@ export default async function RootLayout({
 }) {
   const locale = await getLocale();
   return (
-    <html lang={locale} className={`${inter.variable} ${manrope.variable} ${roboto.variable} ${montserrat.variable}`}>
+    <html lang={locale} className={`${inter.variable} ${manrope.variable} ${montserrat.variable}`}>
       <body className="antialiased">
         <Providers>{children}</Providers>
+        <div className="relative z-10" id="popups" />
       </body>
     </html>
   );

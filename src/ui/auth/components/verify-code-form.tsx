@@ -169,7 +169,7 @@ export const VerifyCodeForm = ({
       </div>
 
       {error && (
-        <p className="font-roboto text-center text-[14px] text-red-500">
+        <p className="font-manrope text-center text-[14px] text-red-500">
           {error}
         </p>
       )}

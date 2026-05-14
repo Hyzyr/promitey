@@ -492,11 +492,22 @@
         "savedDescription": "This downloads the .ovpn file generated for your account.",
         "downloadSaved": "Download profile",
         "regionTitle": "Download by region",
-        "regionDescription": "Use this when you know the exact OpenVPN region code.",
+        "regionDescription": "Download a profile for a specific available region.",
         "regionLabel": "Region code",
         "regionPlaceholder": "e.g. eu-west or auto",
         "downloadRegion": "Download region profile",
-        "listUnavailable": "The API does not provide a full server list yet, so only direct region-code download can be offered safely. Add a backend region-list endpoint to show all available OpenVPN servers here."
+        "listUnavailable": "The API does not provide a full server list yet, so only direct region-code download can be offered safely. Add a backend region-list endpoint to show all available OpenVPN servers here.",
+        "countries": {
+          "auto": "Automatic selection",
+          "fr": "France",
+          "uk": "United Kingdom",
+          "pl": "Poland",
+          "us": "United States",
+          "iq": "Iraq",
+          "ru": "Russia",
+          "de": "Germany",
+          "nl": "Netherlands"
+        }
       },
       "regenerateDescription": "You can regenerate your configuration files. This will disable/block all your previous configuration files, making them inactive.",
       "regenerateWarning": "After clicking, this operation is irreversible."
@@ -526,6 +537,14 @@
         "success": "Promo code activated!",
         "activePlan": "Plan",
         "activeUntil": "Active until"
+      },
+      "trial": {
+        "button": "Try 7-day trial",
+        "success": "Trial activated. Your subscription status is refreshing.",
+        "alreadyUsed": "The trial period has already been used.",
+        "unavailable": "Trial activation is not available right now.",
+        "unauthenticated": "Please sign in again to activate the trial.",
+        "error": "Could not activate the trial. Please try again."
       }
     },
     "billing": {
@@ -664,7 +683,7 @@
         "description": "Link your account to receive notifications and manage your subscription via our Telegram bot.",
         "linkedStatus": "Telegram is connected",
         "linkedAt": "Linked on",
-        "getLink": "Get link token",
+        "getLink": "Link account",
         "openBot": "Open in Telegram",
         "orCode": "Or enter the code shown by the bot",
         "codePlaceholder": "Bot code",

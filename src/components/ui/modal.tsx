@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 
@@ -31,6 +32,11 @@ export const Modal = ({
 }: ModalProps) => {
   const { lock, unlock } = useScrollLock();
   const isDesktop = useMedia('(min-width: 1280px)');
+  const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalRoot(document.getElementById('popups'));
+  }, []);
 
   useEffect(() => {
     if (isOpen) lock();
@@ -66,7 +72,7 @@ export const Modal = ({
     className,
   );
 
-  return (
+  const modal = (
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50">
@@ -116,4 +122,8 @@ export const Modal = ({
       )}
     </AnimatePresence>
   );
+
+  if (!portalRoot) return null;
+
+  return createPortal(modal, portalRoot);
 };

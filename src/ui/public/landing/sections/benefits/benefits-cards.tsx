@@ -142,7 +142,8 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
       <VideoCard
         src="/videos/woman-feedback-promitey.webm"
         title="#feedback"
-        className="right-[2.5%] bottom-[12%] h-auto w-[44%] rotate-[6.18deg] transition-all will-change-auto hover:w-[48%] hover:rotate-0 max-md:right-[1rem] max-md:bottom-[10%] max-md:w-[50%]"
+        poster="/images/feedback-video-poster.png"
+        className="right-[2.5%] bottom-[12%] h-auto w-[44%] rotate-[6.18deg] transition-all will-change-auto hover:w-[48%] hover:rotate-0 max-md:right-4 max-md:bottom-[10%] max-md:w-[50%]"
         playingClassName="w-[50%] rotate-0 max-md:w-[58%]"
       />
     </BenefitCard>
@@ -172,10 +173,10 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
         />
       </ParallaxItem>
       <ParallaxItem depth={0.25}>
-        <LaptopSVG className="bgitem right-[11.5%] bottom-[1.5%] xxl:right-[5.5%] h-[min(58%,140px)] rotate-[4.8deg]" />
+        <LaptopSVG className="bgitem right-[5.5%] bottom-[1.5%] h-[min(58%,140px)] rotate-[4.8deg] md:right-[11.5%] xxl:right-[5.5%]" />
       </ParallaxItem>
       <ParallaxItem depth={0.15}>
-        <TvSVG className="bgitem right-[50%] xxl:right-[58%] bottom-[19.5%] h-[min(43%,110px)] rotate-[-17.5deg]" />
+        <TvSVG className="bgitem right-[58%] bottom-[19.5%] h-[min(43%,110px)] rotate-[-17.5deg] md:right-[50%] xxl:right-[58%]" />
       </ParallaxItem>
       <ParallaxItem depth={0.45}>
         <PhoneBlurred className="bgitem right-[32%] bottom-[-1%] h-[80%] rotate-[15.5deg]" />

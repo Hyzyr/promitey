@@ -121,7 +121,7 @@ const FullTrigger = ({
     )}
   >
     <Languages className="h-6 w-6 text-neutral-10" strokeWidth={2} />
-    <span className="grow text-left font-roboto leading-none text-neutral-10">
+    <span className="grow text-left font-manrope leading-none text-neutral-10">
       <span className="font-bold">{languageLabel}:</span>
       <span className="font-normal"> {currentLabel}</span>
     </span>
@@ -152,7 +152,7 @@ const CompactTrigger = ({
     <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white/12">
       <Globe className="h-4 w-4 text-neutral-10" strokeWidth={2} />
     </div>
-    <span className="font-roboto text-[18px] text-neutral-10">{currentLabel}</span>
+    <span className="font-manrope text-[18px] text-neutral-10">{currentLabel}</span>
     <ChevronRight
       className={cn(
         'h-4.5 w-4.5 text-neutral-10 transition-transform',

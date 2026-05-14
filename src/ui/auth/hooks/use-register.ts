@@ -10,6 +10,7 @@ import { useRouter } from '@/i18n/navigation';
 
 import { registerAction } from '../server/auth-actions';
 import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
+import { saveRegistrationCredentials } from '../registration-session';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
@@ -77,6 +78,7 @@ export function useRegister(): UseRegisterReturn {
       setServerError(mapErrorCode(result.code));
       return;
     }
+    saveRegistrationCredentials(result.data.email, values.password);
     const verifyHref = `/register/confirm?email=${encodeURIComponent(result.data.email)}`;
     router.push(
       selectedPlan

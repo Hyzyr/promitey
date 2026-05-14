@@ -111,7 +111,7 @@ export const MobileMenu = ({
                   key={href}
                   type="button"
                   onClick={() => handleNavClick(href)}
-                  className="text-left font-roboto text-[18px] leading-none font-normal tracking-[0.36px] text-neutral-10 transition-colors hover:text-primary-500"
+                  className="text-left font-manrope text-[18px] leading-none font-normal tracking-[0.36px] text-neutral-10 transition-colors hover:text-primary-500"
                 >
                   {label}
                 </button>

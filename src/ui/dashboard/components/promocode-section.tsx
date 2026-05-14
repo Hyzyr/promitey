@@ -23,7 +23,7 @@ export const PromocodeSection = ({ className }: PromocodeSectionProps) => {
 
   return (
     <div className={className}>
-      <h2 className="mb-2 text-lg font-semibold text-neutral-800">
+      <h2 className="mb-2 text-[24px] font-medium text-neutral-800">
         {t('promocode.title')}
       </h2>
       <p className="mb-4 text-sm text-neutral-500">
