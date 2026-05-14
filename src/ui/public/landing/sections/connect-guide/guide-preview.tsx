@@ -34,7 +34,7 @@ export const GuidePreview = ({
             loading={'eager'}
             className={cn(
               'pointer-events-none absolute inset-0 h-full w-full object-cover smooth',
-              activeStep === index ? 'opacity-100 scale-100 delay-75' : 'opacity-0 scale-105 duration-200',
+              activeStep === index ? 'opacity-100 scale-100 duration-500 delay-75' : 'opacity-0  translate-y-[5%] scale-110 duration-250',
             )}
           />
         ))}
