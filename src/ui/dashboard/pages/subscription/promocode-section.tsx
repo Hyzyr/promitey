@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { usePromocode } from '../hooks/use-promocode';
+import { usePromocode } from '@/ui/dashboard/hooks/use-promocode';
 
 export interface PromocodeSectionProps {
   className?: string;

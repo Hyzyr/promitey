@@ -10,9 +10,9 @@ import { Modal } from '@/components/ui/modal';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+import { getVlessConfigAction, type VlessConfigData } from '@/ui/dashboard/server/vpn-actions';
 
 import { ConfigTile } from './config-tile';
-import { getVlessConfigAction, type VlessConfigData } from '../server/vpn-actions';
 
 const cardBackground =
   'linear-gradient(180deg, rgba(255,255,255,.2) 0%, rgba(255,252,230,.2) 30.769%, rgba(254,233,232,.2) 100%), #ffffff';

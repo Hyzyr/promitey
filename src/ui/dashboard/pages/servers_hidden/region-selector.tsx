@@ -4,8 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-
-import { useSetRegion } from '../hooks/use-set-region';
+import { useSetRegion } from '@/ui/dashboard/hooks/use-set-region';
 
 export interface RegionSelectorProps {
   initialRegion: string;

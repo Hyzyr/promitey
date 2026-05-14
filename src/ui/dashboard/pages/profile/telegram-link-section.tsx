@@ -4,8 +4,7 @@ import { CheckCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-
-import { useTelegramLinkToken } from '../hooks/use-telegram-link-token';
+import { useTelegramLinkToken } from '@/ui/dashboard/hooks/use-telegram-link-token';
 
 export interface TelegramLinkSectionProps {
   initialLinked: boolean;

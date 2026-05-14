@@ -7,8 +7,9 @@ import { redirect } from '@/i18n/navigation';
 import { getAccessToken } from '@/lib/session';
 import { serializeServerError, type ForwardedServerError } from '@/lib/server-error-forwarding';
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
-import { RecreateVpnButton } from '@/ui/dashboard/components/recreate-vpn-button';
-import { RegionSelector } from '@/ui/dashboard/components/region-selector';
+import { RecreateVpnButton } from '@/ui/dashboard/pages/configs/recreate-vpn-button';
+
+import { RegionSelector } from './region-selector';
 
 export const ServersPage = async () => {
   const t = await getTranslations('dashboard');

@@ -1,7 +1,8 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import { redirect } from '@/i18n/navigation';
-import { EmailChangeConfirmForm } from '@/ui/dashboard/components/email-change-confirm-form';
+
+import { EmailChangeConfirmForm } from './email-change-confirm-form';
 
 interface EmailChangeConfirmPageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;

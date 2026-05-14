@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useEmailChange } from '../hooks/use-email-change';
+import { useEmailChange } from '@/ui/dashboard/hooks/use-email-change';
 
 export interface EmailChangeSectionProps {
   className?: string;

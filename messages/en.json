@@ -702,6 +702,7 @@
           "button": "Set up 2FA",
           "title": "Scan the QR code",
           "description": "Open your authenticator app and scan the code below.",
+          "qrAlt": "Authenticator app QR code",
           "manualEntry": "Can't scan? Enter key manually",
           "secret": "Secret key:",
           "codeLabel": "Enter the 6-digit code from your app",

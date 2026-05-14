@@ -5,9 +5,8 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useDelayedRefresh } from '@/ui/dashboard/hooks/use-delayed-refresh';
 import { activatePromocodeAction } from '@/ui/dashboard/server/billing-actions';
-
-import { useDelayedRefresh } from '../hooks/use-delayed-refresh';
 
 const TRIAL_PROMOCODE = 'TRIAL7DAY';
 

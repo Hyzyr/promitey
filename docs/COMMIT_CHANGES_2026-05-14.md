@@ -34,6 +34,13 @@
 - Исправлен импорт `TrialActivationButton` в карточке подписки на локальный импорт, чтобы TypeScript/VS Code корректно резолвили модуль.
 - Исправлена строка действий в карточке подписки: `align-center` заменен на корректный `items-center`.
 - Убраны raw/лишние styling-значения там, где можно использовать Tailwind token utilities.
+- Page-specific dashboard sections вынесены из `src/ui/dashboard/components/` в связанные route folders:
+  - subscription widgets: `src/ui/dashboard/pages/subscription/`;
+  - profile sections: `src/ui/dashboard/pages/profile/`;
+  - configs/VPN widgets: `src/ui/dashboard/pages/configs/`;
+  - hidden servers region selector: `src/ui/dashboard/pages/servers_hidden/`;
+  - dashboard welcome card: `src/ui/dashboard/pages/dashboard/`.
+- В `src/ui/dashboard/components/` оставлены только layout/shared dashboard-компоненты: breadcrumbs, sidebar/header, mobile menu, nav item, logout/dev banner.
 
 ## Модальные окна
 

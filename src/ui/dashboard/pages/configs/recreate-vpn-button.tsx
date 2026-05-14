@@ -4,8 +4,7 @@ import { CheckCircle, RefreshCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-
-import { useRecreateVpn } from '../hooks/use-recreate-vpn';
+import { useRecreateVpn } from '@/ui/dashboard/hooks/use-recreate-vpn';
 
 export interface RecreateVpnButtonProps {
   className?: string;

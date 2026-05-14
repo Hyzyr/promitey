@@ -1,11 +1,5 @@
 export { Breadcrumbs } from './breadcrumbs';
-export { ConfigDownloadCard } from './config-download-card';
-export { ConfigTile } from './config-tile';
 export { DashboardHeader } from './dashboard-header';
 export { DashboardSidebar } from './dashboard-sidebar';
-export { EmailChangeSection } from './email-change-section';
 export { MobileDashboardMenu } from './mobile-dashboard-menu';
-export { PromocodeSection } from './promocode-section';
 export { SidebarNavItem } from './sidebar-nav-item';
-export { SubscriptionCard } from './subscription-card';
-export { WelcomeCard } from './welcome-card';

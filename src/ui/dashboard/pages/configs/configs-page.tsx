@@ -3,8 +3,9 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { getAccessToken } from '@/lib/session';
 import { redirect } from '@/i18n/navigation';
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
-import { ConfigDownloadCard } from '@/ui/dashboard/components/config-download-card';
-import { RecreateVpnButton } from '@/ui/dashboard/components/recreate-vpn-button';
+
+import { ConfigDownloadCard } from './config-download-card';
+import { RecreateVpnButton } from './recreate-vpn-button';
 
 const cardBackground =
   'linear-gradient(180deg, rgba(255,255,255,.2) 0%, rgba(255,252,230,.2) 30.769%, rgba(254,233,232,.2) 100%), #ffffff';
