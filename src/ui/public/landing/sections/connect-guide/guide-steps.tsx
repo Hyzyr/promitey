@@ -5,9 +5,11 @@ import { cn } from '@/lib/utils';
 export const GuideSteps = ({
   steps,
   activeStep,
+  onStepChange,
 }: {
   steps: string[];
   activeStep: number;
+  onStepChange: (step: number) => void;
 }) => {
   const topPct = `${(activeStep / steps.length) * 100}%`;
 
@@ -33,15 +35,20 @@ export const GuideSteps = ({
         </div>
 
         {steps.map((text, index) => (
-          <p
+          <button
             key={text}
+            type="button"
+            aria-current={activeStep === index ? 'step' : undefined}
+            onClick={() => onStepChange(index)}
+            onMouseEnter={() => onStepChange(index)}
             className={cn(
-              'leading-[1.3] transition-colors duration-300',
+              'cursor-pointer rounded-sm text-left leading-[1.3] transition-colors duration-300 outline-none',
+              'focus-visible:ring-2 focus-visible:ring-neutral-800 focus-visible:ring-offset-4 focus-visible:ring-offset-white',
               activeStep === index ? 'text-neutral-800' : 'text-neutral-80',
             )}
           >
             {text}
-          </p>
+          </button>
         ))}
       </div>
     </div>
