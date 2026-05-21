@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Prometey VPN — Fast & Secure VPN | VLESS + OpenVPN",
+    "description": "High-speed VPN subscription using VLESS and OpenVPN. Connect up to 10 devices, start with a free trial, and stay online where others fail.",
+    "keywords": "VPN, VLESS VPN, fast VPN, secure VPN, private VPN, VPN subscription, bypass restrictions, 10 devices VPN, OpenVPN, free trial VPN",
+    "ogTitle": "Prometey VPN — Your Freedom in One Click",
+    "ogDescription": "High-speed VPN with VLESS and OpenVPN. Up to 10 devices, free trial, and stable access where others fail.",
+    "ogImageAlt": "Prometey VPN preview image"
+  },
+  "auth": {
+    "title": "Sign In",
+    "description": "Sign in to manage your Prometey VPN subscription and download configuration files."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Manage your Prometey VPN subscription, devices, and settings."
+  }
+}

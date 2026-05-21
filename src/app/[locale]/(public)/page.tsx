@@ -5,13 +5,16 @@ import { ConnectGuide } from '@/ui/public/landing/sections/connect-guide';
 import { TestimonialsSection } from '@/ui/public/landing/sections/testimonials/testimonials-section';
 import { PricingSection } from '@/ui/public/landing/sections/pricing';
 import { FaqSection } from '@/ui/public/landing/sections/faq';
+import { getAccessToken } from '@/lib/session';
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  const isAuthenticated = !!(await getAccessToken());
+
   return (
     <>
       <LandingJsonLd />
       <HeroSection />
-      <BenefitsSection />
+      <BenefitsSection isAuthenticated={isAuthenticated} />
       <ConnectGuide />
       <TestimonialsSection /> 
       <PricingSection />

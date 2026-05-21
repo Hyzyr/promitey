@@ -2,10 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { useScrollLock } from '@/hooks/use-scroll-lock';
+import { usePathname } from '@/i18n/navigation';
 import { useLenis } from '@/components/providers/lenis-provider';
 import { Button } from '@/components/ui/button';
 import { LanguageSwitcher } from '@/components/ui/language-switcher';
@@ -23,10 +23,12 @@ export const MobileMenu = ({
   isAuthenticated = false,
 }: MobileMenuProps) => {
   const t = useTranslations('landing.header');
+  const locale = useLocale();
   const pathname = usePathname();
   const { lock, unlock } = useScrollLock();
   const { scrollTo } = useLenis();
   const prevPathnameRef = useRef(pathname);
+  const isLandingPage = pathname === '/' || pathname === `/${locale}`;
 
   const NAV = [
     { href: '#benefits', label: t('nav.benefits') },
@@ -58,6 +60,12 @@ export const MobileMenu = ({
 
   const handleNavClick = (href: string) => {
     onClose();
+
+    if (!isLandingPage) {
+      window.location.assign(`/${locale}/${href}`);
+      return;
+    }
+
     setTimeout(() => {
       scrollTo(href, {
         offset: -88,

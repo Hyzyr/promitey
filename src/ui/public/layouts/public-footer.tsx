@@ -1,9 +1,10 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { useLenis } from '@/components/providers/lenis-provider';
+import { usePathname } from '@/i18n/navigation';
 import { Input, Textarea } from '@/components/ui/input';
 import { LogoWithText } from '@/components/ui/logo';
 import { FormatText } from '@/components/ui/format-text';
@@ -143,9 +144,17 @@ type FooterLinkProps = {
   className?: string;
 };
 const FooterLink = ({ href, label, className }: FooterLinkProps) => {
+  const locale = useLocale();
+  const pathname = usePathname();
   const { scrollTo } = useLenis();
+  const isLandingPage = pathname === '/' || pathname === `/${locale}`;
+
   const handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!href.startsWith('#')) {
+      return;
+    }
+
+    if (!isLandingPage) {
       return;
     }
 
@@ -160,7 +169,7 @@ const FooterLink = ({ href, label, className }: FooterLinkProps) => {
   return (
     <a
       key={href}
-      href={href}
+      href={href.startsWith('#') && !isLandingPage ? `/${locale}/${href}` : href}
       onClick={handleClick}
       className={cn(
         'font-manrope font-medium text-[16px] leading-[1.4] tracking-[-0.32px] text-neutral-20',

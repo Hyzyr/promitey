@@ -81,13 +81,13 @@ const FORGOT_PASSWORD_VERIFICATION_REQUIRED: VerificationRequired = {
 const PROMOCODE_ACTIVATE: PromocodeActivateResponse = {
   status: 'ok',
   code: 'DEV-CODE',
-  subscription_type: 'Pro',
+  subscription_type: 'activation_code',
   active_until: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
 };
 
 const CURRENT_SUBSCRIPTION: CurrentSubscriptionResponse = {
   status: 'active',
-  subscription_type: 'Pro',
+  subscription_type: 'stars',
   end_date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
 };
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 
@@ -38,16 +38,19 @@ export interface UseLoginReturn {
   onTotpSubmit: (values: TotpValues) => Promise<void>;
   resetToPassword: () => void;
   serverError: string | null;
+  isRedirecting: boolean;
 }
 
 export function useLogin(): UseLoginReturn {
   const tErrors = useTranslations('auth.errors');
+  const locale = useLocale();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const [step, setStep] = useState<LoginStep>('password');
   const [tempToken, setTempToken] = useState('');
   const [serverError, setServerError] = useState<string | null>(null);
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const selectedPlan = resolveSelectedPricingPlan(searchParams);
 
   const passwordSchema = z.object({
@@ -87,7 +90,15 @@ export function useLogin(): UseLoginReturn {
   }, [selectedPlan]);
 
   const redirectAfterAuth = () => {
-    router.replace(buildPostAuthHref(selectedPlan));
+    const href = buildPostAuthHref(selectedPlan);
+
+    setIsRedirecting(true);
+    router.replace(href);
+    router.refresh();
+
+    window.setTimeout(() => {
+      window.location.assign(`/${locale}${href}`);
+    }, 1200);
   };
 
   const onPasswordSubmit = async (values: PasswordValues) => {
@@ -132,5 +143,6 @@ export function useLogin(): UseLoginReturn {
     onTotpSubmit,
     resetToPassword,
     serverError,
+    isRedirecting,
   };
 }

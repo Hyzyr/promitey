@@ -30,7 +30,11 @@ const CARD_ORDER: CardId[] = [
   'for-your-family',
 ];
 
-export const BenefitsSection = () => {
+export interface BenefitsSectionProps {
+  isAuthenticated?: boolean;
+}
+
+export const BenefitsSection = ({ isAuthenticated = false }: BenefitsSectionProps) => {
   const t = useTranslations('landing.benefits');
   const tRules = useTranslations('landing.benefits.items.rules');
 
@@ -50,6 +54,7 @@ export const BenefitsSection = () => {
   );
 
   const activeCard: CardId = isTouch ? CARD_ORDER[activeIndex] : hoveredCard;
+  const trialHref = isAuthenticated ? '/dashboard' : '/login';
 
   return (
     <section
@@ -72,7 +77,10 @@ export const BenefitsSection = () => {
             className="flex flex-col gap-5 md:grid md:grid-cols-2 md:gap-5 lgx:grid-cols-3 lgx:grid-rows-2"
             onPointerLeave={handleGridLeave}>
             <div className="contents" onPointerEnter={enter('your-internet')}>
-              <YourInternetCard isActive={activeCard === 'your-internet'} />
+              <YourInternetCard
+                isActive={activeCard === 'your-internet'}
+                ctaHref={trialHref}
+              />
             </div>
             <div className="contents" onPointerEnter={enter('customer-support')}>
               <CustomerSupportCard isActive={activeCard === 'customer-support'} />
@@ -92,6 +100,7 @@ export const BenefitsSection = () => {
             <Button
               variant="orange"
               size="md"
+              href={trialHref}
               className="rounded-md! px-8! py-4! text-[18px]! text-neutral-900!">
               {tRules('cta')}
             </Button>

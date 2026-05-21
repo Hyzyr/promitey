@@ -50,7 +50,7 @@ export const Button = ({
 }: ButtonProps) => {
   const { scrollTo } = useLenis();
   const baseClass = cn(
-    'flex items-center justify-center leading-[2.1] whitespace-nowrap',
+    'inline-flex items-center justify-center leading-[2.1] whitespace-nowrap',
     'transition duration-150 focus-visible:outline-none',
     'active:scale-[0.97]',
     'cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 disabled:saturate-50 disabled:active:scale-100',
@@ -154,7 +154,7 @@ export const GlassButton = ({
 }: GlassButtonProps) => {
   const { scrollTo } = useLenis();
   const baseClass = cn(
-    'glass flex items-center justify-center whitespace-nowrap',
+    'glass inline-flex items-center justify-center whitespace-nowrap',
     'font-manrope font-semibold text-neutral-800',
     'transition duration-150 focus-visible:outline-none',
     'hover:brightness-[1.06] active:scale-[0.97] active:brightness-95',

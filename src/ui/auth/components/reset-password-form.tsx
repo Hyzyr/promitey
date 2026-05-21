@@ -6,25 +6,31 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthLink } from './auth-link';
 import { AuthStep } from './auth-step';
+import { PasswordRequirements } from './password-requirements';
 import { useResetPassword } from '@/ui/auth/hooks/use-reset-password';
 
 export interface ResetPasswordFormProps {
   /** Email address the reset code was sent to. */
   email: string;
-  /** Verification code from the forgot-password flow. */
-  code: string;
+  /** Optional verification code from a deep link or existing reset route. */
+  initialCode?: string;
 }
 
-export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
+export const ResetPasswordForm = ({
+  email,
+  initialCode = '',
+}: ResetPasswordFormProps) => {
   const t = useTranslations('auth');
-  const { form, onSubmit, serverError } = useResetPassword(email, code);
+  const { form, onSubmit, serverError } = useResetPassword(email, initialCode);
 
   const {
     register,
+    watch,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = form;
-  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
+  const password = watch('password') ?? '';
+  const isSubmitDisabled = !isValid || serverError !== null;
 
   return (
     <form
@@ -33,8 +39,21 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
       noValidate
     >
       <p className="font-montserrat w-full text-center text-[14px] leading-[1.6] text-neutral-600 lg:text-[16px]">
-        {t('forgot.resetDescription')}
+        {t('forgot.codeDescription')}{' '}
+        <span className="font-semibold">{email}.</span>
       </p>
+
+      <AuthStep label={t('forgot.step2')} />
+
+      <Input
+        type="text"
+        inputMode="numeric"
+        autoComplete="one-time-code"
+        placeholder={t('forgot.codePlaceholder')}
+        maxLength={6}
+        error={errors.code?.message}
+        {...register('code')}
+      />
 
       <AuthStep label={t('forgot.step3')} />
 
@@ -45,6 +64,7 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
         error={errors.password?.message}
         {...register('password')}
       />
+      <PasswordRequirements password={password} />
       <Input
         type="password"
         autoComplete="new-password"
@@ -64,9 +84,9 @@ export const ResetPasswordForm = ({ email, code }: ResetPasswordFormProps) => {
           size="md"
           className="w-full max-w-53.75 capitalize"
           isLoading={isSubmitting}
-          disabled={hasErrors}
+          disabled={isSubmitDisabled}
         >
-          {t('forgot.next')}
+          {t('forgot.submit')}
         </Button>
       </div>
 

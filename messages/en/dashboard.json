@@ -1,0 +1,310 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "servers": "Servers",
+    "instructions": "Instructions",
+    "configs": "Config files",
+    "subscription": "Subscription",
+    "profile": "Profile"
+  },
+  "welcome": {
+    "title": "Welcome to the <strong>Prometey VPN</strong> dashboard",
+    "signedInAs": "Signed in as",
+    "body": "Manage your subscription, download VPN configs, update security settings, and find connection instructions in one place."
+  },
+  "configs": {
+    "title": "Your configurations",
+    "edit": "Edit",
+    "configuration": "Configuration",
+    "howToPrompt": "Not sure how to connect?",
+    "howToCta": "Go to instructions",
+    "vless": {
+      "openAriaLabel": "Open VLESS configuration options",
+      "title": "VLESS configuration",
+      "ariaLabel": "VLESS configuration dialog",
+      "description": "Use this QR code or subscription link to import VLESS into a compatible client.",
+      "loading": "Loading configuration",
+      "load": "Show QR and link",
+      "qrAlt": "VLESS subscription QR code",
+      "linkLabel": "Subscription link",
+      "copy": "Copy",
+      "copied": "Copied",
+      "copyFailed": "Copy failed. Select the link and copy it manually.",
+      "open": "Open link",
+      "errors": {
+        "accessDenied": "Config is not available yet. Make sure Telegram is linked and your subscription is active.",
+        "marzban": "VLESS service is not configured on the server yet.",
+        "generic": "Could not load the VLESS configuration. Please try again."
+      }
+    },
+    "openvpn": {
+      "openAriaLabel": "Open OpenVPN download options",
+      "title": "OpenVPN configuration",
+      "ariaLabel": "OpenVPN configuration dialog",
+      "description": "Download the OpenVPN profile currently available for your account.",
+      "savedTitle": "OpenVPN profile",
+      "savedDescription": "This downloads the .ovpn file generated for your account.",
+      "downloadSaved": "Download profile",
+      "regionTitle": "Download by region",
+      "regionDescription": "Download a profile for a specific available region.",
+      "regionLabel": "Region code",
+      "regionPlaceholder": "e.g. eu-west or auto",
+      "downloadRegion": "Download region profile",
+      "listUnavailable": "The API does not provide a full server list yet, so only direct region-code download can be offered safely. Add a backend region-list endpoint to show all available OpenVPN servers here.",
+      "countries": {
+        "auto": "Automatic selection",
+        "fr": "France",
+        "uk": "United Kingdom",
+        "pl": "Poland",
+        "us": "United States",
+        "iq": "Iraq",
+        "ru": "Russia",
+        "de": "Germany",
+        "nl": "Netherlands"
+      }
+    },
+    "regenerateDescription": "You can regenerate your configuration files. This will disable/block all your previous configuration files, making them inactive.",
+    "regenerateWarning": "After clicking, this operation is irreversible."
+  },
+  "subscription": {
+    "title": "Subscription",
+    "currentPlan": "Your current plan is",
+    "expiresAt": "Your subscription expires on:",
+    "renew": "Renew subscription",
+    "manage": "Manage Subscription",
+    "status": "Status",
+    "active": "Active",
+    "expired": "Expired",
+    "startsAt": "Started on:",
+    "types": {
+      "tribute": "Telegram Tribute",
+      "stars": "Telegram Stars",
+      "activationCode": "Activation code"
+    },
+    "noSubscription": "No subscription yet",
+    "noSubscriptionDescription": "Choose a plan or activate a promo code to get access.",
+    "promocode": {
+      "codeRequired": "Enter a promo code",
+      "codeTooLong": "Promo code must be 64 characters or fewer",
+      "codeInvalid": "Use only letters, numbers, dots, underscores, pluses, and hyphens",
+      "notFound": "Promo code not found or has expired",
+      "alreadyUsed": "This promo code has already been used",
+      "title": "Promo Code",
+      "description": "Have a promo code? Enter it below to activate your subscription.",
+      "placeholder": "Enter promo code",
+      "submit": "Apply",
+      "success": "Promo code activated!",
+      "activePlan": "Plan",
+      "activeUntil": "Active until"
+    },
+    "trial": {
+      "button": "Activate trial",
+      "success": "Trial activated. Your subscription status is refreshing.",
+      "alreadyUsed": "The trial period has already been used.",
+      "unavailable": "Trial activation is not available right now.",
+      "unauthenticated": "Please sign in again to activate the trial.",
+      "error": "Could not activate the trial. Please try again."
+    }
+  },
+  "billing": {
+    "renew": "Renew subscription",
+    "unavailable": "Online payments are not yet available. To subscribe or renew your plan, please contact us via Telegram — we will handle your payment manually.",
+    "error": "We could not open the checkout flow. Please try again.",
+    "noSubscriptionInfo": "To activate or renew a subscription, click the button below. Payments are currently processed manually via Telegram."
+  },
+  "servers": {
+    "title": "Servers",
+    "location": "Location",
+    "status": "Status",
+    "load": "Load",
+    "ping": "Ping",
+    "connect": "Connect",
+    "connected": "Connected",
+    "online": "Online",
+    "offline": "Offline",
+    "maintenance": "Maintenance"
+  },
+  "vpn": {
+    "regionTitle": "VPN Region",
+    "regionDescription": "Choose your VPN server region. Enter a region code or \"auto\" to let the server choose for you.",
+    "regionPlaceholder": "e.g. eu-west or auto",
+    "regionSave": "Save region",
+    "regionSaved": "Region updated successfully",
+    "regionRequired": "Enter a region code",
+    "recreateTitle": "Recreate Configuration",
+    "recreateDescription": "Regenerate your VPN configuration files. This can help if your connection stopped working. You can do this at most once every 2 minutes.",
+    "recreate": "Recreate config",
+    "recreateSuccess": "Configuration recreated successfully",
+    "rateLimited": "Please wait a moment before recreating again"
+  },
+  "instructions": {
+    "title": "VPN connection instructions",
+    "chooseApp": "Choose which app you want to install?",
+    "sources": {
+      "title": "Official sources"
+    },
+    "stepsTitle": "Steps:",
+    "videoTitle": "Short tutorial video",
+    "videoAriaLabel": "Tutorial video placeholder",
+    "tabs": {
+      "ariaLabel": "Choose VPN client"
+    },
+    "protocols": {
+      "openvpn": {
+        "clientTitle": "OpenVPN",
+        "clientSubtitle": "Client",
+        "apps": {
+          "windows": {
+            "title": "OpenVPN Client",
+            "subtitle": "Download"
+          },
+          "android": {
+            "title": "OpenVPN Client",
+            "subtitle": "Android"
+          },
+          "ios": {
+            "title": "OpenVPN Client",
+            "subtitle": "IOS"
+          },
+          "macos": {
+            "title": "OpenVPN Client",
+            "subtitle": "Mac OS"
+          }
+        },
+        "sources": [
+          "OpenVPN Connect: https://openvpn.net/client/"
+        ],
+        "setupSteps": [
+          "Download and install OpenVPN Connect for your operating system.",
+          "Go to Config files in the dashboard and download the .ovpn profile for the location you want to use.",
+          "Open OpenVPN Connect and choose Import Profile or tap the + button.",
+          "Select File, upload the downloaded .ovpn profile, and confirm the import.",
+          "Allow the VPN profile if your device asks for permission.",
+          "Tap Connect. When the status changes to connected, your traffic is routed through Prometey VPN."
+        ]
+      },
+      "vless": {
+        "clientTitle": "v2ray",
+        "clientSubtitle": "Client",
+        "apps": {
+          "windows": {
+            "title": "V2RayN",
+            "subtitle": "Download"
+          },
+          "android": {
+            "title": "v2rayNG",
+            "subtitle": "Android"
+          },
+          "ios": {
+            "title": "Shadowrocket",
+            "subtitle": "IOS"
+          },
+          "macos": {
+            "title": "V2RayU",
+            "subtitle": "Mac OS"
+          }
+        },
+        "sources": [
+          "v2rayNG (Android): https://github.com/2dust/v2rayNG",
+          "V2RayN (Windows): https://github.com/2dust/v2rayN",
+          "V2RayU (Mac): https://github.com/yanue/V2rayU",
+          "Shadowrocket (iOS): App Store"
+        ],
+        "setupSteps": [
+          "Download and install the recommended VLESS client for your operating system.",
+          "Go to Config files in the dashboard and copy your VLESS link, or open the QR code when it is available.",
+          "Open the client and choose Add profile, Import from clipboard, or Scan QR code.",
+          "Import the Prometey VPN configuration and save it in the app.",
+          "Select the new Prometey VPN profile in the server list.",
+          "Tap Connect. If the first connection fails, recheck that the copied link is complete and try again."
+        ]
+      }
+    }
+  },
+  "errorBoundary": {
+    "title": "We could not load this page",
+    "description": "Refresh the page or try again in a moment.",
+    "retry": "Try again"
+  },
+  "profile": {
+    "title": "Profile",
+    "personalInfo": "Personal Information",
+    "email": "Email",
+    "name": "Name",
+    "password": "Password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "save": "Save changes",
+    "changePassword": "Change Password",
+    "memberSince": "Member since",
+    "passwordSaved": "Password changed successfully",
+    "passwordChange": {
+      "description": "For security, password changes continue from the auth flow after signing out of this session.",
+      "start": "Change password",
+      "confirmTitle": "Continue to password change?",
+      "confirmAriaLabel": "Confirm password change logout",
+      "confirmDescription": "You will be logged out and redirected to the password reset page. Continue only if you are ready to sign in again after changing your password.",
+      "confirm": "Log out and continue",
+      "error": "We could not start password reset. Please try again."
+    },
+    "emailChange": {
+      "title": "Change Email",
+      "description": "Update the email address associated with your account. A verification code will be sent to your new email.",
+      "confirmTitle": "Confirm new email",
+      "confirmDescription": "We sent a confirmation code to your new email address. Enter it below to finish the email change.",
+      "newEmailLabel": "New email address",
+      "submitPrepare": "Send verification code",
+      "codeSentTo": "We sent a verification code to",
+      "codeLabel": "Verification code",
+      "submitConfirm": "Confirm new email",
+      "success": "Your email address has been updated successfully",
+      "back": "Back"
+    },
+    "telegram": {
+      "title": "Telegram",
+      "description": "Link your account to receive notifications and manage your subscription via our Telegram bot.",
+      "linkedStatus": "Telegram is connected",
+      "linkedAt": "Linked on",
+      "getLink": "Link account",
+      "openBot": "Open in Telegram",
+      "orCode": "Or enter the code shown by the bot",
+      "codePlaceholder": "Bot code",
+      "codeSubmit": "Link account",
+      "linkSuccess": "Your Telegram account has been linked successfully"
+    },
+    "totp": {
+      "title": "Two-Factor Authentication",
+      "description": "Protect your account with an authenticator app (Google Authenticator, Authy, etc.).",
+      "cancel": "Cancel",
+      "status": {
+        "enabled": "2FA is enabled",
+        "disabled": "2FA is not enabled"
+      },
+      "setup": {
+        "button": "Set up 2FA",
+        "title": "Scan the QR code",
+        "description": "Open your authenticator app and scan the code below.",
+        "qrAlt": "Authenticator app QR code",
+        "manualEntry": "Can't scan? Enter key manually",
+        "secret": "Secret key:",
+        "codeLabel": "Enter the 6-digit code from your app",
+        "codePlaceholder": "123456",
+        "confirm": "Enable 2FA"
+      },
+      "disable": {
+        "button": "Disable 2FA",
+        "title": "Disable Two-Factor Authentication",
+        "passwordLabel": "Your current password",
+        "passwordPlaceholder": "Enter your password",
+        "codeLabel": "Authenticator code",
+        "codePlaceholder": "123456",
+        "confirm": "Disable 2FA"
+      },
+      "errors": {
+        "invalid_code": "Invalid or expired code. Please try again.",
+        "generic": "We could not update two-factor authentication. Please try again."
+      }
+    }
+  }
+}

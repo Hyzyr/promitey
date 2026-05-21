@@ -1,0 +1,18 @@
+{
+  "home": {
+    "title": "Prometey VPN — Быстрый VPN для России | VLESS + OpenVPN",
+    "description": "Быстрый VPN для России с VLESS и OpenVPN. До 10 устройств, бесплатный период и стабильный доступ там, где другие сдаются.",
+    "keywords": "VPN, VLESS VPN, быстрый VPN, безопасный VPN, VPN для России, купить VPN, обход блокировок, VPN для 10 устройств, OpenVPN, VPN подписка",
+    "ogTitle": "Prometey VPN — Свобода в один клик",
+    "ogDescription": "Быстрый VPN с VLESS и OpenVPN. До 10 устройств, бесплатный период и стабильный доступ там, где другие сдаются.",
+    "ogImageAlt": "Превью Prometey VPN"
+  },
+  "auth": {
+    "title": "Войти",
+    "description": "Войдите для управления подпиской Prometey VPN и загрузки конфигурационных файлов."
+  },
+  "dashboard": {
+    "title": "Кабинет",
+    "description": "Управляйте подпиской, устройствами и настройками Prometey VPN."
+  }
+}

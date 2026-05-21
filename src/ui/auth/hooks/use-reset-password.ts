@@ -14,6 +14,7 @@ import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
 interface ResetPasswordValues {
+  code: string;
   password: string;
   passwordRepeat: string;
 }
@@ -24,14 +25,26 @@ export interface UseResetPasswordReturn {
   serverError: string | null;
 }
 
-export function useResetPassword(email: string, code: string): UseResetPasswordReturn {
+export function useResetPassword(
+  email: string,
+  initialCode = '',
+): UseResetPasswordReturn {
   const tErrors = useTranslations('auth.errors');
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
 
   const schema = z
     .object({
-      password: z.string().min(8, tErrors('passwordMin')),
+      code: z
+        .string()
+        .min(1, tErrors('codeRequired'))
+        .regex(/^\d{6}$/, tErrors('codeIncomplete')),
+      password: z
+        .string()
+        .min(10, tErrors('passwordMin'))
+        .regex(/[A-Z]/, tErrors('passwordUppercase'))
+        .regex(/[a-z]/, tErrors('passwordLowercase'))
+        .regex(/\d/, tErrors('passwordNumber')),
       passwordRepeat: z.string().min(1, tErrors('passwordRequired')),
     })
     .refine((d) => d.password === d.passwordRepeat, {
@@ -41,14 +54,17 @@ export function useResetPassword(email: string, code: string): UseResetPasswordR
 
   const form = useForm<ResetPasswordValues>({
     resolver: zodResolver(schema),
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: {
+      code: initialCode,
+    },
   });
 
-  function mapErrorCode(code: string): string {
+  function mapErrorCode(errorCode: string): string {
     // invalid_code / code_expired for password-reset mean the reset link expired,
     // not a generic "invalid code" — use domain-specific override.
-    return mapApiError(code, tErrors, {
+    return mapApiError(errorCode, tErrors, {
       invalid_code: tErrors('invalidResetToken'),
       code_expired: tErrors('invalidResetToken'),
     });
@@ -64,12 +80,18 @@ export function useResetPassword(email: string, code: string): UseResetPasswordR
     setServerError(null);
     const result = await resetPasswordAction({
       email,
-      code,
+      code: values.code,
       new_password: values.password,
     });
     reportForwardedServerError(result);
     if (!result.ok) {
-      setServerError(mapErrorCode(result.code));
+      const message = mapErrorCode(result.code);
+
+      if (result.code === 'invalid_code' || result.code === 'code_expired') {
+        form.setError('code', { type: 'server', message });
+      }
+
+      setServerError(message);
       return;
     }
     router.replace('/login');

@@ -7,7 +7,7 @@ export const ForgotPasswordPage = async () => {
   const t = await getTranslations('auth.forgot');
 
   return (
-    <AuthCard title={t('title')} subtitle={t('emailDescription')}>
+    <AuthCard title={t('title')}>
       <ForgotPasswordForm />
     </AuthCard>
   );

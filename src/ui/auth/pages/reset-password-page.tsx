@@ -13,7 +13,7 @@ export const ResetPasswordPage = async ({ searchParams }: ResetPasswordPageProps
   const email = typeof params.email === 'string' ? params.email : null;
   const code = typeof params.code === 'string' ? params.code : null;
 
-  if (!email || !code) {
+  if (!email) {
     const locale = await getLocale();
     return redirect({ href: '/forgot-password', locale });
   }
@@ -22,7 +22,7 @@ export const ResetPasswordPage = async ({ searchParams }: ResetPasswordPageProps
 
   return (
     <AuthCard title={t('resetTitle')} subtitle={t('resetSubtitle')}>
-      <ResetPasswordForm email={email} code={code} />
+      <ResetPasswordForm email={email} initialCode={code ?? ''} />
     </AuthCard>
   );
 };

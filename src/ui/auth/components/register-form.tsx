@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthLink } from './auth-link';
+import { PasswordRequirements } from './password-requirements';
 import { useRegister } from '@/ui/auth/hooks/use-register';
 
 export const RegisterForm = () => {
@@ -13,10 +14,12 @@ export const RegisterForm = () => {
 
   const {
     register,
+    watch,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = form;
-  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
+  const password = watch('password') ?? '';
+  const isSubmitDisabled = !isValid || serverError !== null;
 
   return (
     <form
@@ -39,6 +42,7 @@ export const RegisterForm = () => {
           error={errors.password?.message}
           {...register('password')}
         />
+        <PasswordRequirements password={password} />
         <Input
           type="password"
           autoComplete="new-password"
@@ -55,7 +59,7 @@ export const RegisterForm = () => {
           size="md"
           className="w-full"
           isLoading={isSubmitting}
-          disabled={hasErrors}
+          disabled={isSubmitDisabled}
         >
           {t('register.submit')}
         </Button>

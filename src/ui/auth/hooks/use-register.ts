@@ -42,7 +42,12 @@ export function useRegister(): UseRegisterReturn {
   const schema = z
     .object({
       email: z.string().min(1, tErrors('emailRequired')).email(tErrors('emailInvalid')),
-      password: z.string().min(8, tErrors('passwordMin')),
+      password: z
+        .string()
+        .min(10, tErrors('passwordMin'))
+        .regex(/[A-Z]/, tErrors('passwordUppercase'))
+        .regex(/[a-z]/, tErrors('passwordLowercase'))
+        .regex(/\d/, tErrors('passwordNumber')),
       passwordRepeat: z.string().min(1, tErrors('passwordRequired')),
     })
     .refine((d) => d.password === d.passwordRepeat, {
@@ -52,8 +57,8 @@ export function useRegister(): UseRegisterReturn {
 
   const form = useForm<RegisterValues>({
     resolver: zodResolver(schema),
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
   });
 
   function mapErrorCode(code: string): string {

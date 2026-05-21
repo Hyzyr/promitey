@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePromocode } from '@/ui/dashboard/hooks/use-promocode';
 
+import type { SubscriptionType } from '@/api/client/api-types';
+
 export interface PromocodeSectionProps {
   className?: string;
 }
@@ -37,14 +39,18 @@ export const PromocodeSection = ({ className }: PromocodeSectionProps) => {
           </p>
           <p className="mt-1 text-sm text-green-600">
             {t('promocode.activePlan')}:{' '}
-            <span className="font-medium">{result.subscription_type}</span>
-          </p>
-          <p className="text-sm text-green-600">
-            {t('promocode.activeUntil')}:{' '}
             <span className="font-medium">
-              {new Date(result.active_until).toLocaleDateString()}
+              {getSubscriptionTypeLabel(result.subscription_type, t)}
             </span>
           </p>
+          {shouldShowSubscriptionEndDate(result.subscription_type) && (
+            <p className="text-sm text-green-600">
+              {t('promocode.activeUntil')}:{' '}
+              <span className="font-medium">
+                {new Date(result.active_until).toLocaleDateString()}
+              </span>
+            </p>
+          )}
         </div>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -79,3 +85,20 @@ export const PromocodeSection = ({ className }: PromocodeSectionProps) => {
     </div>
   );
 };
+
+function shouldShowSubscriptionEndDate(type: SubscriptionType): boolean {
+  return type !== 'tribute';
+}
+
+function getSubscriptionTypeLabel(
+  type: SubscriptionType,
+  t: ReturnType<typeof useTranslations<'dashboard.subscription'>>,
+): string {
+  const labels: Record<SubscriptionType, string> = {
+    tribute: t('types.tribute'),
+    stars: t('types.stars'),
+    activation_code: t('types.activationCode'),
+  };
+
+  return labels[type];
+}

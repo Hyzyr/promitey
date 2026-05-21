@@ -6,7 +6,10 @@ import { cn } from '@/lib/utils';
 
 import { TrialActivationButton } from './trial-activation-button';
 
-import type { CurrentSubscriptionResponse } from '@/api/client/api-types';
+import type {
+  CurrentSubscriptionResponse,
+  SubscriptionType,
+} from '@/api/client/api-types';
 
 export interface SubscriptionCardProps {
   subscription: CurrentSubscriptionResponse | null;
@@ -28,9 +31,15 @@ export const SubscriptionCard = async ({
   const formattedEndDate = subscription
     ? formatSubscriptionEndDate(subscription.end_date, locale)
     : null;
+  const subscriptionTypeLabel = subscription
+    ? getSubscriptionTypeLabel(subscription.subscription_type, t)
+    : null;
   const statusLabel = subscription
     ? getSubscriptionStatusLabel(subscription.status, t)
     : null;
+  const showEndDate = subscription
+    ? shouldShowSubscriptionEndDate(subscription.subscription_type)
+    : false;
   const showTrial = usedTrial === false && showTrialButton;
 
   return (
@@ -58,15 +67,17 @@ export const SubscriptionCard = async ({
             <p>
               {t('currentPlan')}{' '}
               <span className="font-medium text-neutral-800">
-                &quot;{subscription.subscription_type}&quot;
+                {subscriptionTypeLabel}
               </span>
             </p>
-            <p>
-              {t('expiresAt')}{' '}
-              <span className="font-medium text-neutral-900">
-                {formattedEndDate}
-              </span>
-            </p>
+            {showEndDate && formattedEndDate && (
+              <p>
+                {t('expiresAt')}{' '}
+                <span className="font-medium text-neutral-900">
+                  {formattedEndDate}
+                </span>
+              </p>
+            )}
           </div>
         ) : (
           <div className="mt-3 space-y-1 font-manrope">
@@ -80,7 +91,7 @@ export const SubscriptionCard = async ({
         )}
       </div>
       {(showRenewButton || showTrial) && (
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex flex-wrap items-center justify-start gap-3">
           {showTrial && <TrialActivationButton />}
 
           {showRenewButton && (
@@ -98,6 +109,23 @@ export const SubscriptionCard = async ({
     </section>
   );
 };
+
+function shouldShowSubscriptionEndDate(type: SubscriptionType): boolean {
+  return type !== 'tribute';
+}
+
+function getSubscriptionTypeLabel(
+  type: SubscriptionType,
+  t: Awaited<ReturnType<typeof getTranslations>>,
+): string {
+  const labels: Record<SubscriptionType, string> = {
+    tribute: t('types.tribute'),
+    stars: t('types.stars'),
+    activation_code: t('types.activationCode'),
+  };
+
+  return labels[type];
+}
 
 function formatSubscriptionEndDate(endDate: string, locale: string): string {
   const timestamp = Date.parse(endDate);

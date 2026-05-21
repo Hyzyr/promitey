@@ -1,8 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link, usePathname } from '@/i18n/navigation';
 import { useHeaderScroll } from '@/hooks/use-header-scroll';
 import { useLenis } from '@/components/providers/lenis-provider';
 import { LogoWithText } from '@/components/ui/logo';
@@ -18,8 +18,11 @@ export const HeaderDesktop = ({
   isAuthenticated = false,
 }: HeaderDesktopProps) => {
   const t = useTranslations('landing.header');
+  const locale = useLocale();
+  const pathname = usePathname();
   const { isVisible, isAtTop } = useHeaderScroll();
   const { scrollTo } = useLenis();
+  const isLandingPage = pathname === '/' || pathname === `/${locale}`;
 
   const NAV = [
     { href: '#benefits', label: t('nav.benefits') },
@@ -32,6 +35,10 @@ export const HeaderDesktop = ({
     event: React.MouseEvent<HTMLAnchorElement>,
     href: string,
   ) => {
+    if (!isLandingPage) {
+      return;
+    }
+
     event.preventDefault();
     scrollTo(href, {
       offset: -5,
@@ -67,7 +74,7 @@ export const HeaderDesktop = ({
               {NAV.map(({ href, label }) => (
                 <a
                   key={href}
-                  href={href}
+                  href={isLandingPage ? href : `/${locale}/${href}`}
                   onClick={(event) => handleNavClick(event, href)}
                   className="font-manrope text-[15px] font-normal text-neutral-10 transition-colors hover:text-primary-500 active:text-primary-600 lgx:text-[17px] xl:text-[18px]"
                 >

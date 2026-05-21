@@ -29,6 +29,10 @@ type CardProps = {
   isActive?: boolean;
 };
 
+type YourInternetCardProps = CardProps & {
+  ctaHref: string;
+};
+
 export const CustomerSupportCard = ({ isActive }: CardProps) => {
   const t = useTranslations('landing.benefits.items.support');
   return (
@@ -93,7 +97,7 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
   );
 };
 
-export const YourInternetCard = ({ isActive }: CardProps) => {
+export const YourInternetCard = ({ isActive, ctaHref }: YourInternetCardProps) => {
   const t = useTranslations('landing.benefits.items.rules');
   return (
     <BenefitCard
@@ -107,6 +111,7 @@ export const YourInternetCard = ({ isActive }: CardProps) => {
           <Button
             variant="default"
             size="md"
+            href={ctaHref}
             className="rounded-md! px-8! py-4! text-[18px]! lgx:py-3.5!"
           >
             {t('cta')}

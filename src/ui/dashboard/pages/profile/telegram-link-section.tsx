@@ -44,11 +44,11 @@ export const TelegramLinkSection = ({
           {linkData ? (
             <Button
               type="button"
-              variant="orange"
+              variant="secondary"
               size="md"
               href={linkData.deep_link}
             >
-              {tProfile('telegram.getLink')}
+              {tProfile('telegram.openBot')}
             </Button>
           ) : (
             <Button

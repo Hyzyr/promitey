@@ -22,7 +22,7 @@ export const ForgotPasswordConfirmPage = async ({
   const t = await getTranslations('auth.forgot');
 
   return (
-    <AuthCard title={t('confirmTitle')} subtitle={t('confirmSubtitle')}>
+    <AuthCard title={t('resetTitle')} subtitle={t('resetSubtitle')}>
       <ForgotPasswordConfirmForm email={email} />
     </AuthCard>
   );

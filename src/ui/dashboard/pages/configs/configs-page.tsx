@@ -34,7 +34,7 @@ export const ConfigsPage = async () => {
             {t('configs.regenerateWarning')}
           </strong>
         </p>
-        <RecreateVpnButton className="flex flex-col items-end" />
+        <RecreateVpnButton className="flex flex-col items-start" />
       </section>
     </>
   );

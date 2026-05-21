@@ -110,16 +110,18 @@ export interface PromocodeActivateRequest {
   code: string;
 }
 
+export type SubscriptionType = 'tribute' | 'stars' | 'activation_code';
+
 export interface PromocodeActivateResponse {
   status: string;
   code: string;
-  subscription_type: string;
+  subscription_type: SubscriptionType;
   active_until: string;
 }
 
 export interface CurrentSubscriptionResponse {
   status: string;
-  subscription_type: string;
+  subscription_type: SubscriptionType;
   end_date: string;
 }
 

@@ -18,6 +18,7 @@ export const LoginForm = () => {
     onTotpSubmit,
     resetToPassword,
     serverError,
+    isRedirecting,
   } = useLogin();
 
   if (step === 'totp') {
@@ -27,6 +28,7 @@ export const LoginForm = () => {
         onSubmit={onTotpSubmit}
         onBack={resetToPassword}
         serverError={serverError}
+        isRedirecting={isRedirecting}
       />
     );
   }
@@ -37,6 +39,7 @@ export const LoginForm = () => {
     formState: { errors, isSubmitting },
   } = passwordForm;
   const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
+  const isSubmitBlocked = hasErrors || isRedirecting;
 
   return (
     <form
@@ -68,8 +71,8 @@ export const LoginForm = () => {
           variant="orange"
           size="md"
           className="w-full"
-          isLoading={isSubmitting}
-          disabled={hasErrors}
+          isLoading={isSubmitting || isRedirecting}
+          disabled={isSubmitBlocked}
         >
           {t('login.submit')}
         </Button>
@@ -87,6 +90,12 @@ export const LoginForm = () => {
       {serverError && (
         <p className="w-full max-w-80 self-center text-center font-montserrat text-[16px] leading-normal tracking-[0.16px] text-red-500">
           {serverError}
+        </p>
+      )}
+
+      {isRedirecting && (
+        <p className="w-full max-w-80 self-center text-center font-montserrat text-[16px] leading-normal tracking-[0.16px] text-neutral-500">
+          {t('login.redirecting')}
         </p>
       )}
     </form>

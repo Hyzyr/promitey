@@ -11,9 +11,16 @@ export interface TotpFormProps {
   onSubmit: UseLoginReturn['onTotpSubmit'];
   onBack: () => void;
   serverError: string | null;
+  isRedirecting: boolean;
 }
 
-export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps) => {
+export const TotpForm = ({
+  form,
+  onSubmit,
+  onBack,
+  serverError,
+  isRedirecting,
+}: TotpFormProps) => {
   const t = useTranslations('auth');
 
   const {
@@ -22,6 +29,7 @@ export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps)
     formState: { errors, isSubmitting },
   } = form;
   const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
+  const isSubmitBlocked = hasErrors || isRedirecting;
 
   return (
     <form
@@ -43,7 +51,7 @@ export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps)
       />
 
       {serverError && (
-        <p className="font-montserrat w-full max-w-[324px] self-center text-center text-[16px] leading-[1.5] tracking-[0.16px] text-red-500">
+        <p className="font-montserrat w-full max-w-81 self-center text-center text-[16px] leading-normal tracking-[0.16px] text-red-500">
           {serverError}
         </p>
       )}
@@ -54,8 +62,8 @@ export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps)
           variant="orange"
           size="md"
           className="w-full"
-          isLoading={isSubmitting}
-          disabled={hasErrors}
+          isLoading={isSubmitting || isRedirecting}
+          disabled={isSubmitBlocked}
         >
           {t('login.totpSubmit')}
         </Button>
@@ -65,10 +73,17 @@ export const TotpForm = ({ form, onSubmit, onBack, serverError }: TotpFormProps)
           size="md"
           className="w-full"
           onClick={onBack}
+          disabled={isRedirecting}
         >
           {t('login.totpBack')}
         </Button>
       </div>
+
+      {isRedirecting && (
+        <p className="font-montserrat w-full max-w-81 self-center text-center text-[16px] leading-normal tracking-[0.16px] text-neutral-500">
+          {t('login.redirecting')}
+        </p>
+      )}
     </form>
   );
 };

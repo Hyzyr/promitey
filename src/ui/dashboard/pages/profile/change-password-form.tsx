@@ -45,9 +45,6 @@ export const ChangePasswordForm = ({ className }: ChangePasswordFormProps) => {
       <h2 className="mb-2 text-[24px] font-medium text-neutral-800">
         {tProfile('changePassword')}
       </h2>
-      <p className="max-w-2xl text-sm leading-relaxed text-neutral-600">
-        {tProfile('passwordChange.description')}
-      </p>
 
       {serverError && (
         <p className="mt-3 text-sm text-red-500">{serverError}</p>
