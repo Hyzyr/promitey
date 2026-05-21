@@ -41,14 +41,14 @@ export const RegisterForm = () => {
           type="password"
           autoComplete="new-password"
           placeholder={t('placeholders.password')}
-          error={errors.password?.message}
+          error={submitCount > 0 ? errors.password?.message : undefined}
           {...register('password')}
         />
         <Input
           type="password"
           autoComplete="new-password"
           placeholder={t('placeholders.passwordRepeat')}
-          error={errors.passwordRepeat?.message}
+          error={submitCount > 0 ? errors.passwordRepeat?.message : undefined}
           {...register('passwordRepeat')}
         />
       </div>
@@ -62,7 +62,7 @@ export const RegisterForm = () => {
           size="md"
           className="w-full"
           isLoading={isSubmitting}
-          disabled={isSubmitDisabled}
+          disabled={submitCount !== 0 && isSubmitDisabled}
         >
           {t('register.submit')}
         </Button>
