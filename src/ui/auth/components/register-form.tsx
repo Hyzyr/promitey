@@ -16,12 +16,12 @@ export const RegisterForm = () => {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isSubmitting, submitCount },
+    formState: { errors, isSubmitting, isValid, submitCount },
   } = form;
   const password = watch('password') ?? '';
   const showPasswordRequirements =
-    (password.length > 0 || submitCount > 0) && !isPasswordRequirementsMet(password);
-  const isSubmitDisabled = isSubmitting || serverError !== null;
+    (submitCount > 0) && !isPasswordRequirementsMet(password);
+  const isSubmitDisabled = isSubmitting || !isValid || serverError !== null;
 
   return (
     <form

@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { cn } from '@/lib/utils';
 
 const bgImage = '/images/ellipse-blurred.png';

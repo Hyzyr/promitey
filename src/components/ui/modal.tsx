@@ -35,7 +35,11 @@ export const Modal = ({
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    setPortalRoot(document.getElementById('popups'));
+    const frameId = requestAnimationFrame(() => {
+      setPortalRoot(document.getElementById('popups'));
+    });
+
+    return () => cancelAnimationFrame(frameId);
   }, []);
 
   useEffect(() => {

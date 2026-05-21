@@ -15,7 +15,6 @@ export default function Image() {
   return new ImageResponse(
     (
       // ImageResponse renders plain HTML/CSS, so next/image is not available here.
-      // eslint-disable-next-line @next/next/no-img-element
       <img
         alt={alt}
         height={SEO_ASSETS.openGraphImageHeight}

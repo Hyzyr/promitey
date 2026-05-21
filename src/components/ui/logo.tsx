@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export interface LogoProps {
   size?: number;
   className?: string;

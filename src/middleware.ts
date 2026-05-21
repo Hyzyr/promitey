@@ -63,13 +63,7 @@ export default async function middleware(request: NextRequest) {
     const accessToken = request.cookies.get("auth_access_token");
     if (accessToken) {
       const locale = request.nextUrl.pathname.split("/")[1] ?? "ru";
-      const dashboardUrl = new URL(
-        selectedPlan ? `/${locale}/dashboard/subscription` : `/${locale}/dashboard`,
-        request.url,
-      );
-      if (selectedPlan) {
-        dashboardUrl.searchParams.set(PRICING_PLAN_QUERY_PARAM, selectedPlan);
-      }
+      const dashboardUrl = new URL(`/${locale}/dashboard`, request.url);
       return NextResponse.redirect(dashboardUrl);
     }
   }

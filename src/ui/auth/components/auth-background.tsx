@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 /**
  * Decorative background for the auth area.
  *
@@ -12,7 +10,7 @@ import Image from 'next/image';
  *   4. Optional /images/auth/decoration.png (left blob, desktop only)
  *   5. Dark gradient right panel (desktop only)
  *
- * The two PNG layers are rendered with Image and onError-hidden via CSS, so the
+ * The PNG layer is rendered with onError-hidden behavior, so the
  * shell remains pixel-correct even if assets are not yet supplied.
  */
 export const AuthBackground = () => {

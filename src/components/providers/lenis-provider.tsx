@@ -63,8 +63,13 @@ export const LenisProvider = ({
       document.body.style.scrollBehavior = 'smooth';
       return;
     }
-    setShouldEnableLenis(isSmoothScrollEnabled && !prefersNativeScroll());
-  }, []);
+
+    const frameId = requestAnimationFrame(() => {
+      setShouldEnableLenis(isSmoothScrollEnabled && !prefersNativeScroll());
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, [initialShouldEnableLenis]);
 
   if (!shouldEnableLenis) {
     return (

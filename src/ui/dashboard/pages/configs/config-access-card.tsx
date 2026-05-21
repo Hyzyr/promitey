@@ -217,9 +217,11 @@ const VlessConfigModal = ({
       showCloseButton
       className="max-w-xl"
     >
-      <p className="font-manrope text-base leading-relaxed text-neutral-300">
-        {t('description')}
-      </p>
+      {errorKey !== 'accessDenied' && (
+        <p className="font-manrope text-base leading-relaxed text-neutral-300">
+          {t('description')}
+        </p>
+      )}
 
       {isLoading && (
         <div className="flex min-h-55 items-center justify-center rounded-md bg-neutral-700 px-4 py-8 text-neutral-10">
@@ -270,18 +272,18 @@ const VlessConfigModal = ({
           {copyState === 'failed' && (
             <p className="text-sm text-red-500">{t('copyFailed')}</p>
           )}
-
-          <Button
-            type="button"
-            variant="orange"
-            size="md"
-            onClick={close}
-            className="w-full"
-          >
-            {tCommon('close')}
-          </Button>
         </div>
       )}
+
+      <Button
+        type="button"
+        variant="orange"
+        size="md"
+        onClick={close}
+        className="w-full"
+      >
+        {tCommon('close')}
+      </Button>
     </Modal>
   );
 };

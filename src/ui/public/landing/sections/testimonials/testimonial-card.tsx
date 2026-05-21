@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 import { instaSVG, quoteSVG } from '@/components/assets';
 import { StarRating } from '@/components/ui/star-rating';

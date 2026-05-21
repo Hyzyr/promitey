@@ -1,11 +1,10 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocale, useTranslations } from 'next-intl';
-import { useSearchParams } from 'next/navigation';
 import { useRouter } from '@/i18n/navigation';
 
 import { loginAction, loginTotpAction } from '../server/auth-actions';
@@ -13,11 +12,6 @@ import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
-import {
-  buildPostAuthHref,
-  resolveSelectedPricingPlan,
-  saveSelectedPricingPlan,
-} from '@/lib/pricing-selection';
 
 interface PasswordValues {
   email: string;
@@ -44,14 +38,12 @@ export interface UseLoginReturn {
 export function useLogin(): UseLoginReturn {
   const tErrors = useTranslations('auth.errors');
   const locale = useLocale();
-  const searchParams = useSearchParams();
   const router = useRouter();
 
   const [step, setStep] = useState<LoginStep>('password');
   const [tempToken, setTempToken] = useState('');
   const [serverError, setServerError] = useState<string | null>(null);
   const [isRedirecting, setIsRedirecting] = useState(false);
-  const selectedPlan = resolveSelectedPricingPlan(searchParams);
 
   const passwordSchema = z.object({
     email: z.string().min(1, tErrors('emailRequired')).email(tErrors('emailInvalid')),
@@ -85,12 +77,8 @@ export function useLogin(): UseLoginReturn {
   useClearAuthFormErrors(passwordForm, serverError !== null, clearServerError);
   useClearAuthFormErrors(totpForm, serverError !== null, clearServerError);
 
-  useEffect(() => {
-    if (selectedPlan) saveSelectedPricingPlan(selectedPlan);
-  }, [selectedPlan]);
-
   const redirectAfterAuth = () => {
-    const href = buildPostAuthHref(selectedPlan);
+    const href = '/dashboard';
 
     setIsRedirecting(true);
     router.replace(href);
