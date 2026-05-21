@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { DashboardSidebar } from '@/ui/dashboard/components/dashboard-sidebar';
 import { DashboardHeader } from '@/ui/dashboard/components/dashboard-header';
 import { DevModeBanner } from '@/ui/dashboard/components/dev-mode-banner';
-import { DEV_TEST_COOKIE } from '@/lib/dev-session';
+import { DEV_TEST_COOKIE, IS_DEV_MOCK_API_ENABLED } from '@/lib/dev-session';
 
 export async function generateMetadata({
   params,
@@ -26,7 +26,7 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const isDevSession =
-    process.env.NODE_ENV === 'development' &&
+    IS_DEV_MOCK_API_ENABLED &&
     (await cookies()).get(DEV_TEST_COOKIE)?.value === '1';
 
   return (

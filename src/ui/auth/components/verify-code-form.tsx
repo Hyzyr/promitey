@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, type ClipboardEvent, type KeyboardEvent } from 'react';
+import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
@@ -10,9 +10,8 @@ import {
 } from '@/components/ui/code-success-animation';
 import { AuthLink } from './auth-link';
 import { AuthStep } from './auth-step';
+import { VerificationCodeInput, VERIFICATION_CODE_LENGTH } from './verification-code-input';
 import { cn } from '@/lib/utils';
-
-const CODE_LENGTH = 6;
 
 export interface VerifyCodeFormProps {
   /** Email/login the code was sent to (for the description line). */
@@ -46,63 +45,19 @@ export const VerifyCodeForm = ({
 }: VerifyCodeFormProps) => {
   const t = useTranslations('auth');
 
-  const [digits, setDigits] = useState<string[]>(() =>
-    Array(CODE_LENGTH).fill(''),
-  );
+  const [code, setCode] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
-  const focusAt = (idx: number) => {
-    const el = inputsRef.current[idx];
-    if (el) {
-      el.focus();
-      el.select();
-    }
-  };
-
-  const handleChange = (idx: number, raw: string) => {
-    const ch = raw.replace(/\D/g, '').slice(-1);
+  const handleCodeChange = (nextCode: string) => {
     setError(null);
-    setDigits((prev) => {
-      const next = [...prev];
-      next[idx] = ch;
-      return next;
-    });
-    if (ch && idx < CODE_LENGTH - 1) focusAt(idx + 1);
-  };
-
-  const handleKeyDown = (idx: number, e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !digits[idx] && idx > 0) {
-      focusAt(idx - 1);
-    } else if (e.key === 'ArrowLeft' && idx > 0) {
-      e.preventDefault();
-      focusAt(idx - 1);
-    } else if (e.key === 'ArrowRight' && idx < CODE_LENGTH - 1) {
-      e.preventDefault();
-      focusAt(idx + 1);
-    }
-  };
-
-  const handlePaste = (e: ClipboardEvent<HTMLInputElement>) => {
-    const text = e.clipboardData.getData('text').replace(/\D/g, '');
-    if (!text) return;
-    e.preventDefault();
-    setError(null);
-    const chars = text.slice(0, CODE_LENGTH).split('');
-    const next = Array(CODE_LENGTH).fill('');
-    chars.forEach((c, i) => {
-      next[i] = c;
-    });
-    setDigits(next);
-    focusAt(Math.min(chars.length, CODE_LENGTH - 1));
+    setCode(nextCode);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const code = digits.join('');
-    if (code.length < CODE_LENGTH) {
+    if (code.length < VERIFICATION_CODE_LENGTH) {
       setError(t('errors.codeIncomplete'));
       return;
     }
@@ -146,27 +101,7 @@ export const VerifyCodeForm = ({
 
       {stepLabel && <AuthStep label={stepLabel} />}
 
-      <div className="flex w-full gap-3">
-        {digits.map((d, i) => (
-          <div key={i} className={cn('input light min-w-0 flex-1', error && 'error')}>
-            <input
-              ref={(el) => {
-                inputsRef.current[i] = el;
-              }}
-              type="text"
-              inputMode="numeric"
-              autoComplete="one-time-code"
-              aria-label={t('confirm.digitLabel', { index: i + 1 })}
-              maxLength={1}
-              value={d}
-              onChange={(e) => handleChange(i, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(i, e)}
-              onPaste={handlePaste}
-              className="text-center text-[18px] font-medium tracking-[0.32px]"
-            />
-          </div>
-        ))}
-      </div>
+      <VerificationCodeInput value={code} onChange={handleCodeChange} error={error ?? undefined} />
 
       {error && (
         <p className="font-manrope text-center text-[14px] text-red-500">

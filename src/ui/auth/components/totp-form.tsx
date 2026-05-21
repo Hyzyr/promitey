@@ -46,6 +46,7 @@ export const TotpForm = ({
         inputMode="numeric"
         autoComplete="one-time-code"
         placeholder={t('login.totpPlaceholder')}
+        maxLength={6}
         error={errors.code?.message}
         {...register('code')}
       />

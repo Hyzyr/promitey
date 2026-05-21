@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AuthLink } from './auth-link';
-import { PasswordRequirements } from './password-requirements';
+import { PasswordRequirements, isPasswordRequirementsMet } from './password-requirements';
 import { useRegister } from '@/ui/auth/hooks/use-register';
 
 export const RegisterForm = () => {
@@ -16,10 +16,12 @@ export const RegisterForm = () => {
     register,
     watch,
     handleSubmit,
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isSubmitting, submitCount },
   } = form;
   const password = watch('password') ?? '';
-  const isSubmitDisabled = !isValid || serverError !== null;
+  const showPasswordRequirements =
+    (password.length > 0 || submitCount > 0) && !isPasswordRequirementsMet(password);
+  const isSubmitDisabled = isSubmitting || serverError !== null;
 
   return (
     <form
@@ -42,7 +44,6 @@ export const RegisterForm = () => {
           error={errors.password?.message}
           {...register('password')}
         />
-        <PasswordRequirements password={password} />
         <Input
           type="password"
           autoComplete="new-password"
@@ -51,6 +52,8 @@ export const RegisterForm = () => {
           {...register('passwordRepeat')}
         />
       </div>
+
+      {showPasswordRequirements && <PasswordRequirements password={password} />}
 
       <div className="flex w-full flex-col items-center gap-3">
         <Button

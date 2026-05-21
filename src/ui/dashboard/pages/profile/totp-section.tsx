@@ -53,12 +53,11 @@ export function TotpSection({ initialEnabled, className }: TotpSectionProps) {
 
         <div className="flex justify-center rounded-md bg-neutral-20 px-5 py-6">
           <div className="rounded-sm bg-neutral-0 p-3 shadow-[0_13px_25.6px_rgba(0,0,0,.04)]">
-            <Image
+            <img
               src={setupData.qrDataUrl}
               alt={t('setup.qrAlt')}
               width={200}
               height={200}
-              unoptimized
               decoding="async"
               className="rounded-sm"
             />
@@ -70,7 +69,7 @@ export function TotpSection({ initialEnabled, className }: TotpSectionProps) {
             {t('setup.manualEntry')}
           </summary>
           <p className="mt-2 text-neutral-500">{t('setup.secret')}</p>
-          <p className="mt-1 break-all font-mono text-sm font-bold tracking-wider text-neutral-900">
+          <p className="mt-1 font-mono text-sm font-bold tracking-wider break-all text-neutral-900">
             {setupData.secret}
           </p>
         </details>
@@ -188,7 +187,7 @@ export function TotpSection({ initialEnabled, className }: TotpSectionProps) {
   }
 
   return (
-    <div className={cn('flex flex-col gap-4 md:flex-row md:items-start md:justify-between', className)}>
+    <div className={cn('flex flex-col gap-4', className)}>
       <div>
         <h2 className="text-[24px] font-medium text-neutral-800">
           {t('title')}
@@ -205,30 +204,32 @@ export function TotpSection({ initialEnabled, className }: TotpSectionProps) {
           {enabled ? t('status.enabled') : t('status.disabled')}
         </p>
       </div>
-      {enabled ? (
-        <Button
-          type="button"
-          onClick={openDisable}
-          disabled={isPending}
-          variant="secondary"
-          size="md"
-          className="shrink-0 text-red-600 hover:bg-red-50"
-        >
-          {t('disable.button')}
-        </Button>
-      ) : (
-        <Button
-          type="button"
-          onClick={openSetup}
-          disabled={isPending}
-          isLoading={isPending}
-          variant="orange"
-          size="md"
-          className="shrink-0"
-        >
-          {t('setup.button')}
-        </Button>
-      )}
+      <div className="flex items-start gap-2">
+        {enabled ? (
+          <Button
+            type="button"
+            onClick={openDisable}
+            disabled={isPending}
+            variant="secondary"
+            size="md"
+            className="shrink-0 text-red-600 hover:bg-red-50"
+          >
+            {t('disable.button')}
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            onClick={openSetup}
+            disabled={isPending}
+            isLoading={isPending}
+            variant="orange"
+            size="md"
+            className="shrink-0"
+          >
+            {t('setup.button')}
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

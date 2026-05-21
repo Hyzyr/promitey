@@ -29,12 +29,13 @@ export const ConfigTile = ({
         className,
       )}
     >
-      <Image
+      <img
         src={logo}
         alt=""
         width={122}
         height={122}
         className="h-30.5 w-30.5"
+        loading="eager"
       />
       <span className="text-center text-sm font-manrope text-neutral-600">{label}</span>
     </button>

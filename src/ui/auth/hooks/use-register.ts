@@ -14,6 +14,7 @@ import { saveRegistrationCredentials } from '../registration-session';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+import { createPasswordSchema } from '@/ui/auth/password-validation';
 import {
   PRICING_PLAN_QUERY_PARAM,
   getSelectedPricingPlanFromSearch,
@@ -42,12 +43,7 @@ export function useRegister(): UseRegisterReturn {
   const schema = z
     .object({
       email: z.string().min(1, tErrors('emailRequired')).email(tErrors('emailInvalid')),
-      password: z
-        .string()
-        .min(10, tErrors('passwordMin'))
-        .regex(/[A-Z]/, tErrors('passwordUppercase'))
-        .regex(/[a-z]/, tErrors('passwordLowercase'))
-        .regex(/\d/, tErrors('passwordNumber')),
+      password: createPasswordSchema(tErrors),
       passwordRepeat: z.string().min(1, tErrors('passwordRequired')),
     })
     .refine((d) => d.password === d.passwordRepeat, {

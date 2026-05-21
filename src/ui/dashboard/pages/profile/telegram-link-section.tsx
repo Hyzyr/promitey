@@ -18,7 +18,7 @@ export const TelegramLinkSection = ({
   className,
 }: TelegramLinkSectionProps) => {
   const tProfile = useTranslations('dashboard.profile');
-  const { linkData, loading, error: tokenError, onGetToken } = useTelegramLinkToken();
+  const { loading, error: tokenError, onGetToken } = useTelegramLinkToken();
   const isLinked = initialLinked;
 
   return (
@@ -41,26 +41,15 @@ export const TelegramLinkSection = ({
         </div>
       ) : (
         <div className="space-y-3">
-          {linkData ? (
-            <Button
-              type="button"
-              variant="secondary"
-              size="md"
-              href={linkData.deep_link}
-            >
-              {tProfile('telegram.openBot')}
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              variant="orange"
-              size="md"
-              onClick={onGetToken}
-              isLoading={loading}
-            >
-              {tProfile('telegram.getLink')}
-            </Button>
-          )}
+          <Button
+            type="button"
+            variant="orange"
+            size="md"
+            onClick={onGetToken}
+            isLoading={loading}
+          >
+            {tProfile('telegram.getLink')}
+          </Button>
 
           {tokenError && (
             <p className="text-sm text-red-500">{tokenError}</p>

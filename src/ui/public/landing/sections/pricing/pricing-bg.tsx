@@ -14,7 +14,7 @@ export const PricingBg = () => {
         className="absolute left-0 md:left-[15%] top-[10%] w-full md:w-[30%] opacity-30 h-0 circle shadow-[0px_0px_12vh_2vh_#fff]"
         style={{ borderRadius: 'inherit' }}
       />
-      <Image
+      <img
         src={bgImage}
         alt=""
         width={1280}

@@ -43,10 +43,9 @@ export const TestimonialCard = ({
       </div>
 
       <div className="relative hidden h-19.25 w-17.5 shrink-0 self-end overflow-hidden rounded-lg md:flex md:h-47.5 md:w-42.5 md:self-auto md:rounded-md">
-        <Image
+        <img
           src={photo}
           alt={name}
-          fill
           sizes="(min-width: 768px) 170px, 70px"
           loading="lazy"
           className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"
@@ -65,10 +64,9 @@ export const TestimonialCard = ({
         <div className="border-t border-neutral-40" />
         <div className="flex gap-3">
           <div className="rounded-[50%] relative flex h-15 w-15 shrink-0 self-end overflow-hidden md:hidden">
-            <Image
+            <img
               src={photo}
               alt={name}
-              fill
               sizes="60px"
               loading="lazy"
               className="absolute inset-0 h-full w-full rounded-[inherit] object-cover"

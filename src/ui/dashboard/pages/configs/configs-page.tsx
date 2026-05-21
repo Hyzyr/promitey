@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { getAccessToken } from '@/lib/session';
 import { redirect } from '@/i18n/navigation';
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
+import { getCurrentSubscriptionOrNull } from '@/ui/dashboard/server/subscription-data';
 
 import { ConfigDownloadCard } from './config-download-card';
 import { RecreateVpnButton } from './recreate-vpn-button';
@@ -16,13 +17,16 @@ export const ConfigsPage = async () => {
 
   if (!token) {
     const locale = await getLocale();
-    redirect({ href: '/login', locale });
+    return redirect({ href: '/login', locale });
   }
+
+  const subscription = await getCurrentSubscriptionOrNull(token);
+  const hasActiveSubscription = subscription?.status === 'active';
 
   return (
     <>
       <Breadcrumbs>{t('breadcrumb.configs')}</Breadcrumbs>
-      <ConfigDownloadCard />
+      <ConfigDownloadCard hasActiveSubscription={hasActiveSubscription} />
       <section
         className="flex w-full max-w-212.5 flex-col gap-3 rounded-md px-5 py-3 shadow-[0_13px_25.6px_rgba(0,0,0,.04)]"
         style={{ background: cardBackground }}

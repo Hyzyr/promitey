@@ -1,4 +1,4 @@
-import { IS_DEV } from '@/lib/dev-session';
+import { IS_DEV_MOCK_API_ENABLED } from '@/lib/dev-session';
 import { ApiError } from './api-error';
 import type {
   LoginSuccess,
@@ -111,13 +111,20 @@ verb 3
 // ── Route table ───────────────────────────────────────────────────────────────
 
 type RouteKey = `${'GET' | 'POST' | 'PUT' | 'DELETE'} ${string}`;
+type RouteHandler = (body: unknown) => unknown;
 
-const ROUTES: Partial<Record<RouteKey, () => unknown>> = {
+const ROUTES: Partial<Record<RouteKey, RouteHandler>> = {
   'POST /auth/login': () => ({ ...LOGIN_SUCCESS }),
   'POST /auth/login/totp': () => ({ ...TOKEN_PAIR }),
   'POST /auth/refresh': () => ({ ...TOKEN_PAIR }),
   'POST /auth/forgot-password': () => ({ ...FORGOT_PASSWORD_VERIFICATION_REQUIRED }),
-  'POST /auth/reset-password': () => STATUS_OK,
+  'POST /auth/reset-password': (body) => {
+    if (!isRecord(body) || body.code !== FORGOT_PASSWORD_VERIFICATION_REQUIRED.code) {
+      throw new ApiError('http', 400, 'invalid_code', 'invalid_code');
+    }
+
+    return STATUS_OK;
+  },
   'GET /me': () => ME,
   'GET /vpn/region': () => ({ ...REGION }),
   'PUT /vpn/region': () => ({ ...REGION }),
@@ -143,9 +150,9 @@ const ROUTES: Partial<Record<RouteKey, () => unknown>> = {
  * Throws ApiError for known error states (e.g. billing 501).
  * Throws if called outside development.
  */
-export function devMockFetch<T>(path: string, method: string): T {
-  if (!IS_DEV) {
-    throw new Error('[dev-mock] devMockFetch called outside of development mode.');
+export function devMockFetch<T>(path: string, method: string, body?: unknown): T {
+  if (!IS_DEV_MOCK_API_ENABLED) {
+    throw new Error('[dev-mock] devMockFetch called while ENABLE_DEV_MOCK_API is disabled.');
   }
 
   // Strip query params for matching
@@ -154,18 +161,22 @@ export function devMockFetch<T>(path: string, method: string): T {
   const handler = ROUTES[key];
 
   if (handler) {
-    return handler() as T;
+    return handler(body) as T;
   }
 
   throw new ApiError('http', 501, `[dev-mock] Unhandled route: ${key}`, 'dev_mock_unhandled_route');
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 /** Returns a mock Response object for binary endpoints (e.g. OpenVPN config). */
 export function devMockFetchBinary(_path: string): Response {
   void _path;
 
-  if (!IS_DEV) {
-    throw new Error('[dev-mock] devMockFetchBinary called outside of development mode.');
+  if (!IS_DEV_MOCK_API_ENABLED) {
+    throw new Error('[dev-mock] devMockFetchBinary called while ENABLE_DEV_MOCK_API is disabled.');
   }
 
   return new Response(DEV_OPENVPN_CONFIG, {

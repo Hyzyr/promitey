@@ -51,6 +51,9 @@
       "regionPlaceholder": "e.g. eu-west or auto",
       "downloadRegion": "Download region profile",
       "listUnavailable": "The API does not provide a full server list yet, so only direct region-code download can be offered safely. Add a backend region-list endpoint to show all available OpenVPN servers here.",
+      "errors": {
+        "accessDenied": "Config is not available yet. Make sure your subscription is active."
+      },
       "countries": {
         "auto": "Automatic selection",
         "fr": "France",
@@ -267,7 +270,7 @@
       "linkedStatus": "Telegram is connected",
       "linkedAt": "Linked on",
       "getLink": "Link account",
-      "openBot": "Open in Telegram",
+      "linkUnavailable": "Telegram linking is not configured yet. Please contact support.",
       "orCode": "Or enter the code shown by the bot",
       "codePlaceholder": "Bot code",
       "codeSubmit": "Link account",

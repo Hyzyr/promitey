@@ -59,7 +59,7 @@ export function useLogin(): UseLoginReturn {
   });
 
   const totpSchema = z.object({
-    code: z.string().length(6, tErrors('codeIncomplete')),
+    code: z.string().regex(/^\d{6}$/, tErrors('codeIncomplete')),
   });
 
   const passwordForm = useForm<PasswordValues>({

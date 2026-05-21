@@ -8,13 +8,12 @@ export interface LogoProps {
 export const Logo = ({ className }: LogoProps) => {
   return (
     <span className={className ?? 'logo'}>
-      <Image
+      <img
         src="/logo.svg"
         alt="Prometey VPN Logo"
         width={160}
         height={160}
         className="h-full w-full"
-        priority
       />
     </span>
   );
@@ -32,22 +31,20 @@ export const LogoWithText = ({
   return (
     <span className={className ?? 'logo'} style={style}>
       {!dark ? (
-        <Image
+        <img
           src="/logo-with-text.svg"
           alt="Prometey VPN Logo"
           width={260}
           height={80}
           className="h-full w-full"
-          priority
         />
       ) : (
-        <Image
+        <img
           src="/logo-with-text-dark.svg"
           alt="Prometey VPN Logo"
           width={260}
           height={80}
           className="h-full w-full"
-          priority
         />
       )}
     </span>

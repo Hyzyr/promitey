@@ -12,6 +12,8 @@ import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
+import { createPasswordSchema } from '@/ui/auth/password-validation';
+import { clearResetPasswordCode } from '@/ui/auth/reset-password-code-session';
 
 interface ResetPasswordValues {
   code: string;
@@ -25,9 +27,14 @@ export interface UseResetPasswordReturn {
   serverError: string | null;
 }
 
+export interface UseResetPasswordOptions {
+  initialCode?: string;
+  onInvalidCode?: () => void;
+}
+
 export function useResetPassword(
   email: string,
-  initialCode = '',
+  { initialCode = '', onInvalidCode }: UseResetPasswordOptions = {},
 ): UseResetPasswordReturn {
   const tErrors = useTranslations('auth.errors');
   const router = useRouter();
@@ -39,12 +46,7 @@ export function useResetPassword(
         .string()
         .min(1, tErrors('codeRequired'))
         .regex(/^\d{6}$/, tErrors('codeIncomplete')),
-      password: z
-        .string()
-        .min(10, tErrors('passwordMin'))
-        .regex(/[A-Z]/, tErrors('passwordUppercase'))
-        .regex(/[a-z]/, tErrors('passwordLowercase'))
-        .regex(/\d/, tErrors('passwordNumber')),
+      password: createPasswordSchema(tErrors),
       passwordRepeat: z.string().min(1, tErrors('passwordRequired')),
     })
     .refine((d) => d.password === d.passwordRepeat, {
@@ -58,15 +60,15 @@ export function useResetPassword(
     reValidateMode: 'onChange',
     defaultValues: {
       code: initialCode,
+      password: '',
+      passwordRepeat: '',
     },
   });
 
   function mapErrorCode(errorCode: string): string {
-    // invalid_code / code_expired for password-reset mean the reset link expired,
-    // not a generic "invalid code" — use domain-specific override.
     return mapApiError(errorCode, tErrors, {
-      invalid_code: tErrors('invalidResetToken'),
-      code_expired: tErrors('invalidResetToken'),
+      invalid_code: tErrors('invalidCode'),
+      code_expired: tErrors('invalidCode'),
     });
   }
 
@@ -89,11 +91,14 @@ export function useResetPassword(
 
       if (result.code === 'invalid_code' || result.code === 'code_expired') {
         form.setError('code', { type: 'server', message });
+        onInvalidCode?.();
+        return;
       }
 
       setServerError(message);
       return;
     }
+    clearResetPasswordCode(email);
     router.replace('/login');
   };
 

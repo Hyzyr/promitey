@@ -1,3 +1,9 @@
 import { ConfigAccessCard } from './config-access-card';
 
-export const ConfigDownloadCard = () => <ConfigAccessCard />;
+export interface ConfigDownloadCardProps {
+	hasActiveSubscription: boolean;
+}
+
+export const ConfigDownloadCard = ({ hasActiveSubscription }: ConfigDownloadCardProps) => (
+	<ConfigAccessCard hasActiveSubscription={hasActiveSubscription} />
+);

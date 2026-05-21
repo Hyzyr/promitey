@@ -22,7 +22,7 @@ export const RegisterConfirmPage = async ({
   const t = await getTranslations('auth.register');
 
   return (
-    <AuthCard title={t('verifyTitle')} subtitle={t('confirmSubtitle')}>
+    <AuthCard title={t('verifyTitle')}>
       <RegisterConfirmForm email={email} />
     </AuthCard>
   );

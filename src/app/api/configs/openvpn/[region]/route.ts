@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import { DEV_OPENVPN_CONFIG } from '@/api/client/dev-mock';
 import { isApiError } from '@/api/client/api-error';
 import { getOpenvpnConfigByRegion } from '@/api/vpn';
-import { DEV_TOKEN_SENTINEL, IS_DEV } from '@/lib/dev-session';
+import { DEV_TOKEN_SENTINEL, IS_DEV_MOCK_API_ENABLED } from '@/lib/dev-session';
 import { getAccessToken } from '@/lib/session';
 
 export async function GET(
@@ -21,7 +21,7 @@ export async function GET(
     return new NextResponse('Missing region', { status: 400 });
   }
 
-  if (IS_DEV && token === DEV_TOKEN_SENTINEL) {
+  if (IS_DEV_MOCK_API_ENABLED && token === DEV_TOKEN_SENTINEL) {
     return new NextResponse(DEV_OPENVPN_CONFIG, {
       status: 200,
       headers: buildOpenvpnHeaders(normalizedRegion),

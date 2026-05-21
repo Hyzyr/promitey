@@ -17,16 +17,6 @@ import { ConfigTile } from './config-tile';
 const cardBackground =
   'linear-gradient(180deg, rgba(255,255,255,.2) 0%, rgba(255,252,230,.2) 30.769%, rgba(254,233,232,.2) 100%), #ffffff';
 
-const anchorButtonClass = cn(
-  'flex items-center justify-center gap-2 rounded-md px-5 py-3 text-[18px] leading-[2.1] whitespace-nowrap',
-  'font-manrope font-semibold transition duration-150 focus-visible:outline-none active:scale-[0.97]',
-);
-
-const orangeAnchorClass = cn(
-  anchorButtonClass,
-  'bg-primary-500 text-neutral-900 hover:bg-primary-400 active:bg-primary-600',
-);
-
 const openvpnRegions = [
   { code: 'auto', flagCode: null },
   { code: 'fr', flagCode: 'fr' },
@@ -43,10 +33,11 @@ type ActiveModal = 'vless' | 'openvpn' | null;
 type VlessErrorKey = 'accessDenied' | 'marzban' | 'generic';
 
 export interface ConfigAccessCardProps {
+  hasActiveSubscription: boolean;
   className?: string;
 }
 
-export const ConfigAccessCard = ({ className }: ConfigAccessCardProps) => {
+export const ConfigAccessCard = ({ hasActiveSubscription, className }: ConfigAccessCardProps) => {
   const t = useTranslations('dashboard.configs');
   const tCommon = useTranslations('common');
   const [activeModal, setActiveModal] = useState<ActiveModal>(null);
@@ -65,10 +56,17 @@ export const ConfigAccessCard = ({ className }: ConfigAccessCardProps) => {
     vlessRequestIdRef.current = requestId;
 
     setActiveModal('vless');
-    setIsVlessLoading(true);
     setVlessErrorKey(null);
     setVlessCopyState('idle');
     setVlessConfig(null);
+
+    if (!hasActiveSubscription) {
+      setIsVlessLoading(false);
+      setVlessErrorKey('accessDenied');
+      return;
+    }
+
+    setIsVlessLoading(true);
 
     getVlessConfigAction()
       .then((result) => {
@@ -161,6 +159,7 @@ export const ConfigAccessCard = ({ className }: ConfigAccessCardProps) => {
         isOpen={activeModal === 'openvpn'}
         onClose={() => setActiveModal(null)}
         closeAriaLabel={tCommon('close')}
+        hasActiveSubscription={hasActiveSubscription}
       />
     </section>
   );
@@ -287,7 +286,16 @@ const VlessConfigModal = ({
   );
 };
 
-const OpenvpnConfigModal = ({ isOpen, onClose, closeAriaLabel }: ConfigModalProps) => {
+interface OpenvpnConfigModalProps extends ConfigModalProps {
+  hasActiveSubscription: boolean;
+}
+
+const OpenvpnConfigModal = ({
+  isOpen,
+  onClose,
+  closeAriaLabel,
+  hasActiveSubscription,
+}: OpenvpnConfigModalProps) => {
   const t = useTranslations('dashboard.configs.openvpn');
   const tCommon = useTranslations('common');
 
@@ -301,42 +309,45 @@ const OpenvpnConfigModal = ({ isOpen, onClose, closeAriaLabel }: ConfigModalProp
       showCloseButton
       className="max-w-xl"
     >
-      <div className="flex flex-col gap-3 rounded-sm bg-neutral-700 px-4 py-4">
-        <h3 className="font-manrope text-base font-semibold text-neutral-10">
-          {t('regionTitle')}
-        </h3>
-        <p className="text-sm leading-relaxed text-neutral-300">
-          {t('regionDescription')}
-        </p>
-        <div className="flex flex-col gap-2">
-          {openvpnRegions.map((region) => (
-            <a
-              key={region.code}
-              href={`/api/configs/openvpn/${region.code}`}
-              download
-              className="inline-flex items-center gap-3 rounded-sm bg-neutral-10 px-3 py-2.5 font-manrope text-sm font-semibold text-neutral-900 transition hover:bg-primary-500 active:scale-[0.97]"
-            >
-              {region.flagCode ? (
-                <img
-                  src={`https://flagcdn.com/w40/${region.flagCode}.png`}
-                  alt=""
-                  width={24}
-                  height={18}
-                  loading="lazy"
-                  className="h-4.5 w-6 rounded-xs object-cover"
-                />
-              ) : (
-                <Globe2 className="h-5 w-6 shrink-0" />
-              )}
-              <span className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                <span>{t(`countries.${region.code}`)}</span>
-                <span className="text-xs uppercase text-neutral-400">{region.code}</span>
-              </span>
-              <Download className="h-4 w-4 shrink-0" />
-            </a>
-          ))}
+      {hasActiveSubscription ? (
+        <div className="flex flex-col gap-3 rounded-sm bg-neutral-700 px-4 py-4">
+          <h3 className="font-manrope text-base font-semibold text-neutral-10">
+            {t('regionTitle')}
+          </h3>
+          <p className="text-sm leading-relaxed text-neutral-300">
+            {t('regionDescription')}
+          </p>
+          <div className="flex flex-col gap-2">
+            {openvpnRegions.map((region) => (
+              <a
+                key={region.code}
+                href={`/api/configs/openvpn/${region.code}`}
+                download
+                className="inline-flex items-center gap-3 rounded-sm bg-neutral-10 px-3 py-2.5 font-manrope text-sm font-semibold text-neutral-900 transition hover:bg-primary-500 active:scale-[0.97]"
+              >
+                {region.flagCode ? (
+                  <span
+                    aria-hidden="true"
+                    className="h-4.5 w-6 shrink-0 rounded-xs bg-cover bg-center"
+                    style={{ backgroundImage: `url(https://flagcdn.com/w40/${region.flagCode}.png)` }}
+                  />
+                ) : (
+                  <Globe2 className="h-5 w-6 shrink-0" />
+                )}
+                <span className="flex min-w-0 flex-1 items-center justify-between gap-3">
+                  <span>{t(`countries.${region.code}`)}</span>
+                  <span className="text-xs uppercase text-neutral-400">{region.code}</span>
+                </span>
+                <Download className="h-4 w-4 shrink-0" />
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex flex-col gap-4 rounded-sm bg-neutral-700 px-4 py-4">
+          <p className="text-sm leading-relaxed text-red-500">{t('errors.accessDenied')}</p>
+        </div>
+      )}
 
       <Button
         type="button"

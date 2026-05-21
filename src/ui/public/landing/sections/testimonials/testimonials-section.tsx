@@ -41,10 +41,9 @@ export const TestimonialsSection = () => {
       )}
     >
       <div className="pointer-events-none absolute -bottom-2 -left-5 w-[150%] pb-[80%] opacity-90 md:w-234.5 md:opacity-100">
-        <Image
+        <img
           src="/images/bg-blur-bottom-left.png"
-          alt=""
-          fill
+          alt="bg-blur"
           sizes="(min-width: 768px) 938px, 150vw"
           loading="lazy"
           className="absolute inset-0 h-full w-full object-contain object-bottom-left"

@@ -15,9 +15,9 @@ export const ForgotPasswordForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = form;
-  const hasErrors = Object.keys(errors).length > 0 || serverError !== null;
+  const isSubmitDisabled = isSubmitting || !isValid || serverError !== null;
 
   return (
     <form
@@ -50,7 +50,7 @@ export const ForgotPasswordForm = () => {
           size="md"
           className="w-full max-w-53.75 capitalize"
           isLoading={isSubmitting}
-          disabled={hasErrors}
+          disabled={isSubmitDisabled}
         >
           {t('forgot.next')}
         </Button>

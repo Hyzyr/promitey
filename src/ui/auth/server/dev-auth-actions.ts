@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers';
 import { getLocale } from 'next-intl/server';
 import { redirect } from '@/i18n/navigation';
-import { IS_DEV, DEV_TEST_COOKIE } from '@/lib/dev-session';
+import { DEV_TEST_COOKIE, IS_DEV_MOCK_API_ENABLED } from '@/lib/dev-session';
 
 const DEV_COOKIE_OPTS = {
   httpOnly: true,
@@ -13,12 +13,12 @@ const DEV_COOKIE_OPTS = {
 };
 
 /**
- * Activate the dev test session. Only callable in development.
+ * Activate the optional dev mock session.
  * Sets a cookie that bypasses real auth and returns fixture data everywhere.
  */
 export async function devLoginAction(): Promise<void> {
-  if (!IS_DEV) {
-    throw new Error('devLoginAction is only available in development mode.');
+  if (!IS_DEV_MOCK_API_ENABLED) {
+    throw new Error('devLoginAction is only available when ENABLE_DEV_MOCK_API=true.');
   }
   const [store, locale] = await Promise.all([cookies(), getLocale()]);
   store.set(DEV_TEST_COOKIE, '1', DEV_COOKIE_OPTS);
@@ -26,11 +26,11 @@ export async function devLoginAction(): Promise<void> {
 }
 
 /**
- * Clear the dev test session. Only callable in development.
+ * Clear the optional dev mock session.
  */
 export async function devLogoutAction(): Promise<void> {
-  if (!IS_DEV) {
-    throw new Error('devLogoutAction is only available in development mode.');
+  if (!IS_DEV_MOCK_API_ENABLED) {
+    throw new Error('devLogoutAction is only available when ENABLE_DEV_MOCK_API=true.');
   }
   const [store, locale] = await Promise.all([cookies(), getLocale()]);
   store.delete(DEV_TEST_COOKIE);

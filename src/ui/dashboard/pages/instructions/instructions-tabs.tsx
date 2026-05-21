@@ -134,7 +134,7 @@ export const InstructionsTabs = ({ className }: InstructionsTabsProps) => {
                       : 'border-neutral-30 bg-neutral-10 text-neutral-900 hover:-translate-y-0.5 hover:border-neutral-50 hover:bg-neutral-20',
                   )}
                 >
-                  <Image
+                  <img
                     src={protocolLogos[protocol]}
                     alt=""
                     width={60}

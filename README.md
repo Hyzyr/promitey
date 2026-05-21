@@ -2,6 +2,20 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Create a local environment file with the backend base URL before running the app:
+
+```bash
+API_BASE_URL=http://localhost:8000/api/v1
+```
+
+Development uses the real API by default. The old fixture backend is only available when explicitly enabled:
+
+```bash
+ENABLE_DEV_MOCK_API=true
+```
+
+Leave `ENABLE_DEV_MOCK_API` unset when testing the full user flow against the backend.
+
 First, run the development server:
 
 ```bash

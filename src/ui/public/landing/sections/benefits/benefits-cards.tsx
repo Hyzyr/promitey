@@ -46,7 +46,7 @@ export const CustomerSupportCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <Image
+        <img
           src={imgCustomerSupport}
           alt="blurred-o-shape"
           width={520}
@@ -78,7 +78,7 @@ export const TryItFreeCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <Image
+        <img
           src={imgTryItFree}
           alt="blurred-arc-shape"
           width={520}
@@ -120,7 +120,7 @@ export const YourInternetCard = ({ isActive, ctaHref }: YourInternetCardProps) =
       }
     >
       <ParallaxItem depth={0.22} reverse>
-        <Image
+        <img
           src={imgYourInternet}
           alt="blurred-circle-shape"
           width={640}
@@ -168,7 +168,7 @@ export const ForYourFamilyCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <Image
+        <img
           src={imgForYourFamily}
           alt="blurred-square-shape"
           width={520}
@@ -203,7 +203,7 @@ export const HighSpeedCard = ({ isActive }: CardProps) => {
       description={t('body')}
     >
       <ParallaxItem depth={0.22} reverse>
-        <Image
+        <img
           src={imgHighSpeed}
           alt="blurred-ellipse-shape"
           width={520}

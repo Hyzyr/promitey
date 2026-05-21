@@ -8,10 +8,7 @@ import { getTelegramLinkTokenAction } from '../server/profile-actions';
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 
-import type { SiteLinkTokenResponse } from '@/api/client/api-types';
-
 export interface UseTelegramLinkTokenReturn {
-  linkData: SiteLinkTokenResponse | null;
   loading: boolean;
   error: string | null;
   onGetToken: () => Promise<void>;
@@ -19,7 +16,7 @@ export interface UseTelegramLinkTokenReturn {
 
 export function useTelegramLinkToken(): UseTelegramLinkTokenReturn {
   const tErrors = useTranslations('auth.errors');
-  const [linkData, setLinkData] = useState<SiteLinkTokenResponse | null>(null);
+  const tTelegram = useTranslations('dashboard.profile.telegram');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,8 +30,14 @@ export function useTelegramLinkToken(): UseTelegramLinkTokenReturn {
       setError(mapApiError(result.code, tErrors));
       return;
     }
-    setLinkData(result.data);
+
+    if (!result.data.deep_link) {
+      setError(tTelegram('linkUnavailable'));
+      return;
+    }
+
+    window.open(result.data.deep_link, '_blank');
   };
 
-  return { linkData, loading, error, onGetToken };
+  return { loading, error, onGetToken };
 }

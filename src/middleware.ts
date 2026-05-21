@@ -1,7 +1,7 @@
 import createIntlMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "@/i18n/routing";
-import { DEV_TEST_COOKIE } from "@/lib/dev-session";
+import { DEV_TEST_COOKIE, IS_DEV_MOCK_API_ENABLED } from "@/lib/dev-session";
 import {
   PRICING_PLAN_QUERY_PARAM,
   normalizePricingPlanId,
@@ -77,8 +77,8 @@ export default async function middleware(request: NextRequest) {
   if (!isPublic) {
     const accessToken = request.cookies.get("auth_access_token");
 
-    // Dev test session bypasses real auth entirely
-    if (process.env.NODE_ENV === "development") {
+    // Optional mock session bypasses real auth only when explicitly enabled.
+    if (IS_DEV_MOCK_API_ENABLED) {
       const devCookie = request.cookies.get(DEV_TEST_COOKIE);
       if (devCookie?.value === "1") {
         return intlResponse;
