@@ -1,36 +1,24 @@
 'use client';
 
-import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { Copy, Download, Globe2, Link as LinkIcon } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
-import { Modal } from '@/components/ui/modal';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
-import { getVlessConfigAction, type VlessConfigData } from '@/ui/dashboard/server/vpn-actions';
+import { getVlessConfigAction } from '@/ui/dashboard/server/vpn-actions';
 
 import { ConfigTile } from './config-tile';
+import { OpenvpnConfigModal } from './openvpn-config-modal';
+import { VlessConfigModal, mapVlessErrorCode } from './vless-config-modal';
+
+import type { VlessConfigData } from '@/ui/dashboard/server/vpn-actions';
+import type { VlessCopyState, VlessErrorKey } from './vless-config-modal';
 
 const cardBackground =
   'linear-gradient(180deg, rgba(255,255,255,.2) 0%, rgba(255,252,230,.2) 30.769%, rgba(254,233,232,.2) 100%), #ffffff';
 
-const openvpnRegions = [
-  { code: 'auto', flagCode: null },
-  { code: 'fr', flagCode: 'fr' },
-  { code: 'uk', flagCode: 'gb' },
-  { code: 'pl', flagCode: 'pl' },
-  { code: 'us', flagCode: 'us' },
-  { code: 'iq', flagCode: 'iq' },
-  { code: 'ru', flagCode: 'ru' },
-  { code: 'de', flagCode: 'de' },
-  { code: 'nl', flagCode: 'nl' },
-];
-
 type ActiveModal = 'vless' | 'openvpn' | null;
-type VlessErrorKey = 'accessDenied' | 'marzban' | 'generic';
 
 export interface ConfigAccessCardProps {
   hasActiveSubscription: boolean;
@@ -44,10 +32,10 @@ export const ConfigAccessCard = ({ hasActiveSubscription, className }: ConfigAcc
   const [vlessConfig, setVlessConfig] = useState<VlessConfigData | null>(null);
   const [isVlessLoading, setIsVlessLoading] = useState(false);
   const [vlessErrorKey, setVlessErrorKey] = useState<VlessErrorKey | null>(null);
-  const [vlessCopyState, setVlessCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
+  const [vlessCopyState, setVlessCopyState] = useState<VlessCopyState>('idle');
   const vlessRequestIdRef = useRef(0);
 
-  const openModal = (modal: ActiveModal) => {
+  const openModal = (modal: Exclude<ActiveModal, null>) => {
     setActiveModal(modal);
   };
 
@@ -164,210 +152,3 @@ export const ConfigAccessCard = ({ hasActiveSubscription, className }: ConfigAcc
     </section>
   );
 };
-
-interface ConfigModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  closeAriaLabel: string;
-}
-
-interface VlessConfigModalProps extends ConfigModalProps {
-  config: VlessConfigData | null;
-  isLoading: boolean;
-  errorKey: VlessErrorKey | null;
-  copyState: 'idle' | 'copied' | 'failed';
-  setCopyState: (copyState: 'idle' | 'copied' | 'failed') => void;
-}
-
-const VlessConfigModal = ({
-  isOpen,
-  onClose,
-  closeAriaLabel,
-  config,
-  isLoading,
-  errorKey,
-  copyState,
-  setCopyState,
-}: VlessConfigModalProps) => {
-  const t = useTranslations('dashboard.configs.vless');
-  const tCommon = useTranslations('common');
-
-  const close = () => {
-    onClose();
-  };
-
-  const copyUrl = async () => {
-    if (!config) return;
-
-    try {
-      await navigator.clipboard.writeText(config.subscriptionUrl);
-      setCopyState('copied');
-    } catch {
-      setCopyState('failed');
-    }
-  };
-
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={close}
-      title={t('title')}
-      ariaLabel={t('ariaLabel')}
-      closeAriaLabel={closeAriaLabel}
-      showCloseButton
-      className="max-w-xl"
-    >
-      {errorKey !== 'accessDenied' && (
-        <p className="font-manrope text-base leading-relaxed text-neutral-300">
-          {t('description')}
-        </p>
-      )}
-
-      {isLoading && (
-        <div className="flex min-h-55 items-center justify-center rounded-md bg-neutral-700 px-4 py-8 text-neutral-10">
-          <span className="h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
-          <span className="ml-3 font-manrope text-base font-semibold">{t('loading')}</span>
-        </div>
-      )}
-
-      {errorKey && (
-        <div className="flex flex-col gap-4 rounded-sm bg-neutral-700 px-4 py-4">
-          <p className="text-sm leading-relaxed text-red-500">{t(`errors.${errorKey}`)}</p>
-        </div>
-      )}
-
-      {!isLoading && config && (
-        <div className="flex flex-col gap-5">
-          <div className="flex justify-center rounded-md bg-neutral-10 p-4">
-            <Image
-              src={config.qrDataUrl}
-              alt={t('qrAlt')}
-              width={220}
-              height={220}
-              unoptimized
-              className="h-55 w-55"
-            />
-          </div>
-
-          <div className="rounded-sm bg-neutral-700 px-4 py-3">
-            <div className="mb-3 flex items-center justify-between gap-3">
-              <p className="flex min-w-0 items-center gap-2 text-sm font-semibold text-neutral-10">
-                <LinkIcon className="h-4 w-4 shrink-0" />
-                {t('linkLabel')}
-              </p>
-              <button
-                type="button"
-                onClick={copyUrl}
-                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-sm bg-primary-500 px-3 py-1.5 font-manrope text-xs font-semibold text-neutral-900 transition hover:bg-primary-400 active:scale-[0.97]"
-              >
-                <Copy className="h-3.5 w-3.5" />
-                {copyState === 'copied' ? t('copied') : t('copy')}
-              </button>
-            </div>
-            <p className="break-all font-mono text-xs leading-relaxed text-neutral-300">
-              {config.subscriptionUrl}
-            </p>
-          </div>
-
-          {copyState === 'failed' && (
-            <p className="text-sm text-red-500">{t('copyFailed')}</p>
-          )}
-        </div>
-      )}
-
-      <Button
-        type="button"
-        variant="orange"
-        size="md"
-        onClick={close}
-        className="w-full"
-      >
-        {tCommon('close')}
-      </Button>
-    </Modal>
-  );
-};
-
-interface OpenvpnConfigModalProps extends ConfigModalProps {
-  hasActiveSubscription: boolean;
-}
-
-const OpenvpnConfigModal = ({
-  isOpen,
-  onClose,
-  closeAriaLabel,
-  hasActiveSubscription,
-}: OpenvpnConfigModalProps) => {
-  const t = useTranslations('dashboard.configs.openvpn');
-  const tCommon = useTranslations('common');
-
-  return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title={t('title')}
-      ariaLabel={t('ariaLabel')}
-      closeAriaLabel={closeAriaLabel}
-      showCloseButton
-      className="max-w-xl"
-    >
-      {hasActiveSubscription ? (
-        <div className="flex flex-col gap-3 rounded-sm bg-neutral-700 px-4 py-4">
-          <h3 className="font-manrope text-base font-semibold text-neutral-10">
-            {t('regionTitle')}
-          </h3>
-          <p className="text-sm leading-relaxed text-neutral-300">
-            {t('regionDescription')}
-          </p>
-          <div className="flex flex-col gap-2">
-            {openvpnRegions.map((region) => (
-              <a
-                key={region.code}
-                href={`/api/configs/openvpn/${region.code}`}
-                download
-                className="inline-flex items-center gap-3 rounded-sm bg-neutral-10 px-3 py-2.5 font-manrope text-sm font-semibold text-neutral-900 transition hover:bg-primary-500 active:scale-[0.97]"
-              >
-                {region.flagCode ? (
-                  <span
-                    aria-hidden="true"
-                    className="h-4.5 w-6 shrink-0 rounded-xs bg-cover bg-center"
-                    style={{ backgroundImage: `url(https://flagcdn.com/w40/${region.flagCode}.png)` }}
-                  />
-                ) : (
-                  <Globe2 className="h-5 w-6 shrink-0" />
-                )}
-                <span className="flex min-w-0 flex-1 items-center justify-between gap-3">
-                  <span>{t(`countries.${region.code}`)}</span>
-                  <span className="text-xs uppercase text-neutral-400">{region.code}</span>
-                </span>
-                <Download className="h-4 w-4 shrink-0" />
-              </a>
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-4 rounded-sm bg-neutral-700 px-4 py-4">
-          <p className="text-sm leading-relaxed text-red-500">{t('errors.accessDenied')}</p>
-        </div>
-      )}
-
-      <Button
-        type="button"
-        variant="orange"
-        size="md"
-        onClick={onClose}
-        className="w-full"
-      >
-        {tCommon('close')}
-      </Button>
-    </Modal>
-  );
-};
-
-function mapVlessErrorCode(code: string): VlessErrorKey {
-  if (code === 'config_access_denied' || code === 'unauthenticated') {
-    return 'accessDenied';
-  }
-  if (code === 'marzban_unavailable') return 'marzban';
-  return 'generic';
-}

@@ -32,7 +32,7 @@
       "copyFailed": "Copy failed. Select the link and copy it manually.",
       "open": "Open link",
       "errors": {
-        "accessDenied": "Config is not available yet. Make sure Telegram is linked and your subscription is active.",
+        "accessDenied": "Config is available with an active subscription.",
         "marzban": "VLESS service is not configured on the server yet.",
         "generic": "Could not load the VLESS configuration. Please try again."
       }
@@ -52,7 +52,7 @@
       "downloadRegion": "Download region profile",
       "listUnavailable": "The API does not provide a full server list yet, so only direct region-code download can be offered safely. Add a backend region-list endpoint to show all available OpenVPN servers here.",
       "errors": {
-        "accessDenied": "Config is not available yet. Make sure your subscription is active."
+        "accessDenied": "Config is available with an active subscription."
       },
       "countries": {
         "auto": "Automatic selection",

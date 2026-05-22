@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { useLenis } from '@/components/providers/lenis-provider';
-import { usePathname } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { Input, Textarea } from '@/components/ui/input';
 import { LogoWithText } from '@/components/ui/logo';
 import { FormatText } from '@/components/ui/format-text';
@@ -166,16 +166,26 @@ const FooterLink = ({ href, label, className }: FooterLinkProps) => {
     });
   };
 
+  const linkClassName = cn(
+    'font-manrope font-medium text-[16px] leading-[1.4] tracking-[-0.32px] text-neutral-20',
+    'transition-colors ease-in duration-200 hover:text-neutral-50 active:text-neutral-100',
+    className,
+  );
+
+  if (!href.startsWith('#')) {
+    return (
+      <Link href={href} className={linkClassName}>
+        {label}
+      </Link>
+    );
+  }
+
   return (
     <a
       key={href}
       href={href.startsWith('#') && !isLandingPage ? `/${locale}/${href}` : href}
       onClick={handleClick}
-      className={cn(
-        'font-manrope font-medium text-[16px] leading-[1.4] tracking-[-0.32px] text-neutral-20',
-        'transition-colors ease-in duration-200 hover:text-neutral-50 active:text-neutral-100',
-        className,
-      )}>
+      className={linkClassName}>
       {label}
     </a>
   );

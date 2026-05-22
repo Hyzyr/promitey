@@ -9,8 +9,9 @@ import {
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const PUBLIC_PATHS = ["/", "/login", "/register", "/forgot-password"];
+const PUBLIC_PATHS = ["/", "/login", "/register", "/forgot-password", "/legal"];
 const AUTH_ONLY_PATHS = ["/login", "/register", "/forgot-password"];
+const LEGAL_AUTH_REDIRECT_PATHS = ["/legal/login", "/legal/register", "/legal/forgot-password"];
 
 const COOKIE_BASE = {
   httpOnly: true,
@@ -24,6 +25,11 @@ function stripLocale(pathname: string): string {
     return "/" + segments.slice(2).join("/") || "/";
   }
   return pathname;
+}
+
+function getPathLocale(pathname: string): "ru" | "en" {
+  const locale = pathname.split("/")[1];
+  return routing.locales.includes(locale as "ru" | "en") ? (locale as "ru" | "en") : routing.defaultLocale;
 }
 
 async function attemptRefresh(
@@ -58,11 +64,19 @@ export default async function middleware(request: NextRequest) {
     (p) => strippedPath === p || strippedPath.startsWith(p + "/"),
   );
 
+  if (LEGAL_AUTH_REDIRECT_PATHS.includes(strippedPath)) {
+    const locale = getPathLocale(request.nextUrl.pathname);
+    const authPath = strippedPath.replace("/legal", "");
+    const redirectUrl = new URL(`/${locale}${authPath}`, request.url);
+    redirectUrl.search = request.nextUrl.search;
+    return NextResponse.redirect(redirectUrl);
+  }
+
   // Redirect already-authenticated users away from login/register/forgot-password
   if (isAuthOnlyPath) {
     const accessToken = request.cookies.get("auth_access_token");
     if (accessToken) {
-      const locale = request.nextUrl.pathname.split("/")[1] ?? "ru";
+      const locale = getPathLocale(request.nextUrl.pathname);
       const dashboardUrl = new URL(`/${locale}/dashboard`, request.url);
       return NextResponse.redirect(dashboardUrl);
     }
@@ -81,7 +95,7 @@ export default async function middleware(request: NextRequest) {
 
     if (!accessToken) {
       const refreshToken = request.cookies.get("auth_refresh_token");
-      const locale = request.nextUrl.pathname.split("/")[1] ?? "ru";
+      const locale = getPathLocale(request.nextUrl.pathname);
 
       if (refreshToken) {
         const tokens = await attemptRefresh(refreshToken.value);
