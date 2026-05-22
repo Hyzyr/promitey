@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useLocale, useTranslations } from 'next-intl';
-import { useRouter } from '@/i18n/navigation';
 
 import { loginAction, loginTotpAction } from '../server/auth-actions';
 import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
@@ -35,10 +34,24 @@ export interface UseLoginReturn {
   isRedirecting: boolean;
 }
 
+const AUTH_DEBUG_STORAGE_KEY = 'prometey-auth-debug';
+
+const isAuthDebugEnabled = () => {
+  if (typeof window === 'undefined') return false;
+
+  const searchParams = new URLSearchParams(window.location.search);
+  if (searchParams.get('authDebug') === '1') return true;
+
+  try {
+    return window.localStorage.getItem(AUTH_DEBUG_STORAGE_KEY) === '1';
+  } catch {
+    return false;
+  }
+};
+
 export function useLogin(): UseLoginReturn {
   const tErrors = useTranslations('auth.errors');
   const locale = useLocale();
-  const router = useRouter();
 
   const [step, setStep] = useState<LoginStep>('password');
   const [tempToken, setTempToken] = useState('');
@@ -77,22 +90,27 @@ export function useLogin(): UseLoginReturn {
   useClearAuthFormErrors(passwordForm, serverError !== null, clearServerError);
   useClearAuthFormErrors(totpForm, serverError !== null, clearServerError);
 
-  const redirectAfterAuth = () => {
-    const href = '/dashboard';
-
+  const redirectAfterAuth = async (source: 'password' | 'totp') => {
     setIsRedirecting(true);
-    router.replace(href);
-    router.refresh();
+    const target = `/${locale}/dashboard`;
 
-    window.setTimeout(() => {
-      window.location.assign(`/${locale}${href}`);
-    }, 1200);
+    if (isAuthDebugEnabled()) {
+      console.debug('[Prometey auth] redirecting to dashboard', {
+        source,
+        target,
+        path: window.location.pathname,
+      });
+    }
+
+    await Promise.resolve();
+    window.location.replace(target);
   };
 
   const onPasswordSubmit = async (values: PasswordValues) => {
     setServerError(null);
     const result = await loginAction({ email: values.email, password: values.password });
     reportForwardedServerError(result);
+
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;
@@ -101,7 +119,7 @@ export function useLogin(): UseLoginReturn {
       setTempToken(result.data.temp_token);
       setStep('totp');
     } else {
-      redirectAfterAuth();
+      await redirectAfterAuth('password');
     }
   };
 
@@ -109,11 +127,12 @@ export function useLogin(): UseLoginReturn {
     setServerError(null);
     const result = await loginTotpAction({ temp_token: tempToken, code: values.code });
     reportForwardedServerError(result);
+
     if (!result.ok) {
       setServerError(mapErrorCode(result.code));
       return;
     }
-    redirectAfterAuth();
+    await redirectAfterAuth('totp');
   };
 
   const resetToPassword = () => {
