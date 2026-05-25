@@ -20,7 +20,7 @@ export const RegisterForm = () => {
   } = form;
   const password = watch('password') ?? '';
   const showPasswordRequirements =
-    (submitCount > 0) && !isPasswordRequirementsMet(password);
+    (password.length > 0 || submitCount > 0) && !isPasswordRequirementsMet(password);
   const isSubmitDisabled = isSubmitting || !isValid || serverError !== null;
 
   return (
@@ -41,14 +41,14 @@ export const RegisterForm = () => {
           type="password"
           autoComplete="new-password"
           placeholder={t('placeholders.password')}
-          error={submitCount > 0 ? errors.password?.message : undefined}
+          error={errors.password?.message}
           {...register('password')}
         />
         <Input
           type="password"
           autoComplete="new-password"
           placeholder={t('placeholders.passwordRepeat')}
-          error={submitCount > 0 ? errors.passwordRepeat?.message : undefined}
+          error={errors.passwordRepeat?.message}
           {...register('passwordRepeat')}
         />
       </div>
@@ -62,7 +62,7 @@ export const RegisterForm = () => {
           size="md"
           className="w-full"
           isLoading={isSubmitting}
-          disabled={submitCount !== 0 && isSubmitDisabled}
+          disabled={isSubmitDisabled}
         >
           {t('register.submit')}
         </Button>

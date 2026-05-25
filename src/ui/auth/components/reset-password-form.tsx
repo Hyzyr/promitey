@@ -78,12 +78,7 @@ export const ResetPasswordForm = ({
 
     if (!isCodeValid) return;
 
-    if (!expectedCode) {
-      setError('code', { type: 'manual', message: t('errors.invalidResetToken') });
-      return;
-    }
-
-    if (code !== expectedCode) {
+    if (expectedCode && code !== expectedCode) {
       setError('code', { type: 'manual', message: t('errors.invalidCode') });
       return;
     }
