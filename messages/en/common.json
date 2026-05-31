@@ -4,5 +4,12 @@
   "cancel": "Cancel",
   "logout": "Log out",
   "close": "Close",
-  "language": "Language"
+  "language": "Language",
+  "notFound": {
+    "eyebrow": "404",
+    "title": "Page lost connection",
+    "body": "The address may be outdated or typed with a mistake. Return to Prometey and keep moving freely.",
+    "home": "Back to Home",
+    "pricing": "View Plans"
+  }
 }

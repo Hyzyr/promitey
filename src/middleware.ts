@@ -9,7 +9,7 @@ import {
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const PUBLIC_PATHS = ["/", "/login", "/register", "/forgot-password", "/legal"];
+const PROTECTED_PATHS = ["/dashboard"];
 const AUTH_ONLY_PATHS = ["/login", "/register", "/forgot-password"];
 const LEGAL_AUTH_REDIRECT_PATHS = ["/legal/login", "/legal/register", "/legal/forgot-password"];
 
@@ -57,7 +57,7 @@ export default async function middleware(request: NextRequest) {
   const selectedPlan = normalizePricingPlanId(
     request.nextUrl.searchParams.get(PRICING_PLAN_QUERY_PARAM),
   );
-  const isPublic = PUBLIC_PATHS.some(
+  const isProtected = PROTECTED_PATHS.some(
     (p) => strippedPath === p || strippedPath.startsWith(p + "/"),
   );
   const isAuthOnlyPath = AUTH_ONLY_PATHS.some(
@@ -82,7 +82,7 @@ export default async function middleware(request: NextRequest) {
     }
   }
 
-  if (!isPublic) {
+  if (isProtected) {
     const accessToken = request.cookies.get("auth_access_token");
 
     // Optional mock session bypasses real auth only when explicitly enabled.

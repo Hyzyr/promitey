@@ -38,6 +38,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# local deployment helpers
+*.helper.ignore.ps1
+*.helper.ignore.md
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
