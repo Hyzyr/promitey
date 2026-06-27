@@ -36,12 +36,37 @@ export const VerificationCodeInput = ({
   };
 
   const updateDigit = (index: number, rawValue: string) => {
-    const digit = rawValue.replace(/\D/g, '').slice(-1);
+    const sanitized = rawValue.replace(/\D/g, '');
+
+    if (!sanitized) {
+      const nextDigits = [...digits];
+      nextDigits[index] = '';
+      onChange(nextDigits.join('').slice(0, VERIFICATION_CODE_LENGTH));
+      return;
+    }
+
+    // Multiple characters can arrive at once from iOS one-time-code autofill or
+    // when the field already held a digit. Distribute them across the boxes
+    // starting at the current index so mobile keyboards never appear "stuck".
+    if (sanitized.length > 1) {
+      const nextDigits = [...digits];
+      for (
+        let offset = 0;
+        offset < sanitized.length && index + offset < VERIFICATION_CODE_LENGTH;
+        offset += 1
+      ) {
+        nextDigits[index + offset] = sanitized[offset];
+      }
+      onChange(nextDigits.join('').slice(0, VERIFICATION_CODE_LENGTH));
+      focusAt(Math.min(index + sanitized.length, VERIFICATION_CODE_LENGTH - 1));
+      return;
+    }
+
     const nextDigits = [...digits];
-    nextDigits[index] = digit;
+    nextDigits[index] = sanitized;
     onChange(nextDigits.join('').slice(0, VERIFICATION_CODE_LENGTH));
 
-    if (digit && index < VERIFICATION_CODE_LENGTH - 1) {
+    if (index < VERIFICATION_CODE_LENGTH - 1) {
       focusAt(index + 1);
     }
   };
@@ -87,11 +112,12 @@ export const VerificationCodeInput = ({
             }}
             type="text"
             inputMode="numeric"
-            autoComplete="one-time-code"
+            pattern="[0-9]*"
+            autoComplete={index === 0 ? 'one-time-code' : 'off'}
             aria-label={t('confirm.digitLabel', { index: index + 1 })}
-            maxLength={1}
             value={digit}
             disabled={disabled}
+            onFocus={(event) => event.currentTarget.select()}
             onChange={(event) => updateDigit(index, event.target.value)}
             onKeyDown={(event) => handleKeyDown(index, event)}
             onPaste={handlePaste}

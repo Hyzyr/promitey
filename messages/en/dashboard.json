@@ -102,6 +102,7 @@
     },
     "trial": {
       "button": "Activate trial",
+      "buttonShort": "Try free",
       "success": "Trial activated. Your subscription status is refreshing.",
       "alreadyUsed": "The trial period has already been used.",
       "unavailable": "Trial activation is not available right now.",
@@ -199,7 +200,7 @@
             "subtitle": "Android"
           },
           "ios": {
-            "title": "Shadowrocket",
+            "title": "Hiddify",
             "subtitle": "IOS"
           },
           "macos": {
@@ -211,7 +212,7 @@
           "v2rayNG (Android): https://github.com/2dust/v2rayNG",
           "V2RayN (Windows): https://github.com/2dust/v2rayN",
           "V2RayU (Mac): https://github.com/yanue/V2rayU",
-          "Shadowrocket (iOS): App Store"
+          "Hiddify (iOS): https://github.com/hiddify/hiddify-app"
         ],
         "setupSteps": [
           "Download and install the recommended VLESS client for your operating system.",

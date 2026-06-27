@@ -102,8 +102,16 @@ export function useLogin(): UseLoginReturn {
       });
     }
 
-    await Promise.resolve();
-    window.location.replace(target);
+    window.location.assign(target);
+
+    // Safety net: in rare cases the first hard navigation can be interrupted
+    // before the new document commits (e.g. an in-flight re-render). If we are
+    // still on the login page shortly after, force the navigation again.
+    window.setTimeout(() => {
+      if (window.location.pathname.includes('/login')) {
+        window.location.href = target;
+      }
+    }, 600);
   };
 
   const onPasswordSubmit = async (values: PasswordValues) => {

@@ -102,6 +102,7 @@
     },
     "trial": {
       "button": "Активировать пробный период",
+      "buttonShort": "Попробовать",
       "success": "Пробный период активирован. Статус подписки обновляется.",
       "alreadyUsed": "Пробный период уже был использован.",
       "unavailable": "Пробный период сейчас недоступен.",
@@ -199,7 +200,7 @@
             "subtitle": "Android"
           },
           "ios": {
-            "title": "Shadowrocket",
+            "title": "Hiddify",
             "subtitle": "IOS"
           },
           "macos": {
@@ -211,7 +212,7 @@
           "v2rayNG (Android): https://github.com/2dust/v2rayNG",
           "V2RayN (Windows): https://github.com/2dust/v2rayN",
           "V2RayU (Mac): https://github.com/yanue/V2rayU",
-          "Shadowrocket (iOS): App Store"
+          "Hiddify (iOS): https://github.com/hiddify/hiddify-app"
         ],
         "setupSteps": [
           "Скачайте и установите рекомендованный VLESS-клиент для вашей операционной системы.",

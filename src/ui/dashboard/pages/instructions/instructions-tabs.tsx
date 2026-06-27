@@ -75,7 +75,7 @@ const appOptions: Record<Protocol, AppOption[]> = {
     {
       key: 'ios',
       icon: appleSVG,
-      href: 'https://apps.apple.com/us/app/shadowrocket/id932747118',
+      href: 'https://github.com/hiddify/hiddify-app',
     },
     {
       key: 'macos',

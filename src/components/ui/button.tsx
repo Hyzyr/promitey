@@ -59,11 +59,21 @@ export const Button = ({
     className,
   );
 
-  const content = isLoading ? (
-    <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-  ) : (
-    <span className="inline-flex items-center justify-center gap-2 leading-1.1">
-      {children}
+  const content = (
+    <span className="relative inline-flex items-center justify-center gap-2 leading-1.1">
+      <span
+        className={cn(
+          'inline-flex items-center justify-center gap-2 leading-1.1',
+          isLoading && 'opacity-0',
+        )}
+      >
+        {children}
+      </span>
+      {isLoading && (
+        <span className="absolute inset-0 inline-flex items-center justify-center">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        </span>
+      )}
     </span>
   );
 
@@ -163,11 +173,21 @@ export const GlassButton = ({
     className,
   );
 
-  const content = isLoading ? (
-    <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-  ) : (
-    <span className="inline-flex items-center justify-center gap-2 leading-1.1">
-      {children}
+  const content = (
+    <span className="relative inline-flex items-center justify-center gap-2 leading-1.1">
+      <span
+        className={cn(
+          'inline-flex items-center justify-center gap-2 leading-1.1',
+          isLoading && 'opacity-0',
+        )}
+      >
+        {children}
+      </span>
+      {isLoading && (
+        <span className="absolute inset-0 inline-flex items-center justify-center">
+          <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        </span>
+      )}
     </span>
   );
 

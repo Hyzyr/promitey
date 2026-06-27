@@ -91,7 +91,7 @@ export const SubscriptionCard = async ({
         )}
       </div>
       {(showRenewButton || showTrial) && (
-        <div className="flex flex-wrap items-center justify-start gap-3">
+        <div className="flex w-full flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           {showTrial && <TrialActivationButton />}
 
           {showRenewButton && (
@@ -99,7 +99,7 @@ export const SubscriptionCard = async ({
               variant="secondary"
               size="md"
               href={EXTERNAL_LINKS.telegramBot}
-              className="rounded-sm bg-neutral-800/12 text-neutral-800"
+              className="w-full rounded-sm bg-neutral-800/12 text-center whitespace-normal text-neutral-800 sm:w-auto"
             >
               {t('renew')}
             </Button>

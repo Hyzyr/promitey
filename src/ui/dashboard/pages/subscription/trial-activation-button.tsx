@@ -40,15 +40,17 @@ export const TrialActivationButton = ({ className }: TrialActivationButtonProps)
   };
 
   return (
-    <div className={cn('flex flex-col items-start gap-2', className)}>
+    <div className={cn('flex w-full flex-col items-start gap-2 sm:w-auto', className)}>
       <Button
         type="button"
         variant="orange"
         size="md"
         onClick={activateTrial}
         isLoading={isPending}
+        className="w-full text-center sm:w-auto"
       >
-        {t('button')}
+        <span className="sm:hidden">{t('buttonShort')}</span>
+        <span className="hidden sm:inline">{t('button')}</span>
       </Button>
       {message && (
         <p className={isError ? 'text-sm text-red-500' : 'text-sm text-green-600'}>
