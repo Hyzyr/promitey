@@ -1,7 +1,6 @@
 import { getLocale, getTranslations } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
-import { EXTERNAL_LINKS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 import { TrialActivationButton } from './trial-activation-button';
@@ -98,7 +97,7 @@ export const SubscriptionCard = async ({
             <Button
               variant="secondary"
               size="md"
-              href={EXTERNAL_LINKS.telegramBot}
+              href="/dashboard/subscription"
               className="w-full rounded-sm bg-neutral-800/12 text-center whitespace-normal text-neutral-800 sm:w-auto"
             >
               {t('renew')}
@@ -121,6 +120,7 @@ function getSubscriptionTypeLabel(
   const labels: Record<SubscriptionType, string> = {
     tribute: t('types.tribute'),
     stars: t('types.stars'),
+    card: t('types.card'),
     activation_code: t('types.activationCode'),
   };
 

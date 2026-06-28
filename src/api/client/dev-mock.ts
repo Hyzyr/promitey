@@ -14,6 +14,9 @@ import type {
   VerificationRequired,
   PromocodeActivateResponse,
   CurrentSubscriptionResponse,
+  BillingCheckoutResponse,
+  SubscriptionManageResponse,
+  SubscriptionCancelResponse,
 } from './api-types';
 
 // ── Fixture data ──────────────────────────────────────────────────────────────
@@ -91,6 +94,44 @@ const CURRENT_SUBSCRIPTION: CurrentSubscriptionResponse = {
   end_date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
 };
 
+// In dev, `payment_url` points straight at the success return page so the
+// full checkout → redirect → return flow can be exercised without WATA.
+const BILLING_CHECKOUT: BillingCheckoutResponse = {
+  payment_url: '/dashboard/subscription/success?provider=dev',
+  order_id: `vpn-dev-${Math.random().toString(16).slice(2, 10)}`,
+  amount: 199,
+  currency: 'RUB',
+  plan: 'monthly',
+  duration: '30 days',
+};
+
+const SUBSCRIPTION_MANAGE: SubscriptionManageResponse = {
+  status: 'active',
+  subscription_type: 'card',
+  end_date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
+  days_remaining: 30,
+  current_plan: 'monthly',
+  actions: {
+    can_renew: true,
+    can_change_plan: true,
+    can_cancel: true,
+    renew_via: 'billing_checkout',
+  },
+  available_plans: [
+    { id: 'monthly', title: 'Monthly', amount: 199, currency: 'RUB' },
+    { id: 'quarterly', title: 'Quarterly', amount: 499, currency: 'RUB' },
+    { id: 'semiannual', title: '6 months', amount: 899, currency: 'RUB' },
+    { id: 'annual', title: 'Annual', amount: 1599, currency: 'RUB' },
+  ],
+  notice: '',
+};
+
+const SUBSCRIPTION_CANCEL: SubscriptionCancelResponse = {
+  status: 'cancelled',
+  end_date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30).toISOString(),
+  message: 'Subscription cancelled (dev fixture).',
+};
+
 export const DEV_OPENVPN_CONFIG = `# DEV MODE — sample OpenVPN config (not a real key)
 client
 dev tun
@@ -130,9 +171,11 @@ const ROUTES: Partial<Record<RouteKey, RouteHandler>> = {
   'PUT /vpn/region': () => ({ ...REGION }),
   'GET /vpn/vless/subscription': () => VLESS_SUBSCRIPTION,
   'POST /vpn/recreate': () => STATUS_OK,
-  'POST /billing/checkout': () => { throw new ApiError('http', 501, 'billing_unavailable', 'billing_unavailable'); },
+  'POST /billing/checkout': () => ({ ...BILLING_CHECKOUT }),
   'POST /promocode/activate': () => ({ ...PROMOCODE_ACTIVATE }),
   'GET /subscription/current': () => ({ ...CURRENT_SUBSCRIPTION }),
+  'GET /subscription/manage': () => ({ ...SUBSCRIPTION_MANAGE }),
+  'POST /subscription/cancel': () => ({ ...SUBSCRIPTION_CANCEL }),
   'PUT /auth/password': () => STATUS_OK,
   'PUT /auth/register': () => ({ ...REGISTER_VERIFICATION_REQUIRED }),
   'POST /auth/register': () => STATUS_OK,

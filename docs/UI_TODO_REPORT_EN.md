@@ -53,16 +53,16 @@ After review, the flow is already correct:
 
 ## ⏳ Left / temporary solutions
 
-### Payment (WATA card payment) — NOT implemented yet
-- **Decision:** `swagger.json` is the authoritative contract, and it still declares `POST /billing/checkout` as a **501 stub** (identical to `swagger-old.json` — there is no diff).
-- **Temporary solution (current behaviour):** the checkout call catches `501` and the UI falls back to **manual checkout via Telegram**. This is intentional and already wired.
-- **What is needed to finish:** the backend must actually ship the WATA endpoint and update swagger. The expected request/response is already described in the project note:
-  - `POST /api/v1/billing/checkout` body `{ "plan": "monthly" }`, plan ∈ `monthly | quarterly | semiannual | annual`
-  - returns `{ payment_url, order_id, amount, currency, plan, duration }`
-- **Plan once backend is ready:** add tariff selection → call checkout → redirect to `payment_url` → success/fail return pages that re-read subscription status.
+### Payment (WATA card payment) — IMPLEMENTED
+- **Status:** `swagger.json` now ships the real WATA contract, so the full card-payment flow is wired end to end.
+- **Endpoint:** `POST /api/v1/billing/checkout` body `{ "plan": "monthly" }`, plan ∈ `monthly | quarterly | semiannual | annual`, returns `{ payment_url, order_id, amount, currency, plan, duration }`.
+- **Flow:** plan selection (`checkout-plans.tsx`) → `checkoutAction(plan)` server action → redirect to the hosted WATA `payment_url` → return pages `/dashboard/subscription/success` and `/dashboard/subscription/fail` that re-read `GET /subscription/current` so the message reflects the real state regardless of the provider's return params.
+- **Error handling:** `400 → unknown_plan`, `502 → billing_provider_error`, `503/501 → billing_unavailable`, `401 → unauthenticated`. On the "unavailable" path the UI still offers manual checkout via Telegram as a fallback.
+- **Dev mode:** `src/api/client/dev-mock.ts` returns a mock checkout whose `payment_url` points straight at the success page, so the whole redirect/return flow is testable without WATA.
+- **Types/API:** `BillingPlan`, `BillingCheckoutRequest/Response`, `SubscriptionManage*`, `SubscriptionCancel*` added to `api-types.ts`; `SubscriptionType` now includes `card`; `billing-api.ts` exposes `checkout`, `getSubscriptionManage`, `cancelSubscription`.
 
 ### Cannot be changed from the frontend
-- Real online payments — blocked on backend (see above).
+- The live WATA merchant configuration (`WATA_ACCESS_TOKEN`) and webhook activation are backend concerns; the frontend gracefully degrades to the Telegram fallback if the backend reports `503`.
 - Hiddify App Store link uses the project's GitHub (matching the existing pattern for other clients) because a specific App Store ID could not be verified without guessing.
 
 ---

@@ -1,1 +1,7 @@
-export { checkout, activatePromocode, getCurrentSubscription } from './billing-api';
+export {
+  checkout,
+  activatePromocode,
+  getCurrentSubscription,
+  getSubscriptionManage,
+  cancelSubscription,
+} from './billing-api';

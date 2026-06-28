@@ -1,20 +1,25 @@
 import { apiFetch } from '../client/api-client';
 import type {
-  StatusOK,
   PromocodeActivateRequest,
   PromocodeActivateResponse,
   CurrentSubscriptionResponse,
+  BillingCheckoutRequest,
+  BillingCheckoutResponse,
+  SubscriptionManageResponse,
+  SubscriptionCancelResponse,
 } from '../client/api-types';
 
 /**
  * POST /billing/checkout
  *
- * Payment integration is not yet implemented on the backend.
- * The server always returns HTTP 501. The caller should catch ApiError
- * with status 501 and display an intentional "not available yet" state.
+ * Create a one-time card payment via WATA and obtain the hosted payment URL.
+ * The caller must redirect the user to the returned `payment_url`.
  */
-export async function checkout(token: string): Promise<StatusOK> {
-  return apiFetch('/billing/checkout', { method: 'POST', token });
+export async function checkout(
+  data: BillingCheckoutRequest,
+  token: string,
+): Promise<BillingCheckoutResponse> {
+  return apiFetch('/billing/checkout', { method: 'POST', body: data, token });
 }
 
 /** POST /promocode/activate — activate a promocode for the authenticated user */
@@ -30,4 +35,21 @@ export async function getCurrentSubscription(
   token: string,
 ): Promise<CurrentSubscriptionResponse> {
   return apiFetch('/subscription/current', { token });
+}
+
+/**
+ * GET /subscription/manage — read renewal/cancellation capabilities and the
+ * available plans (with prices) for the authenticated subscriber.
+ */
+export async function getSubscriptionManage(
+  token: string,
+): Promise<SubscriptionManageResponse> {
+  return apiFetch('/subscription/manage', { token });
+}
+
+/** POST /subscription/cancel — cancel the current subscription */
+export async function cancelSubscription(
+  token: string,
+): Promise<SubscriptionCancelResponse> {
+  return apiFetch('/subscription/cancel', { method: 'POST', token });
 }

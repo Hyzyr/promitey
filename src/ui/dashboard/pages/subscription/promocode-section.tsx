@@ -97,6 +97,7 @@ function getSubscriptionTypeLabel(
   const labels: Record<SubscriptionType, string> = {
     tribute: t('types.tribute'),
     stars: t('types.stars'),
+    card: t('types.card'),
     activation_code: t('types.activationCode'),
   };
 

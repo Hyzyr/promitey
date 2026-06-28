@@ -82,7 +82,18 @@
     "types": {
       "tribute": "Telegram Tribute",
       "stars": "Telegram Stars",
+      "card": "Bank card",
       "activationCode": "Activation code"
+    },
+    "result": {
+      "successTitle": "Payment successful",
+      "successActive": "Your subscription is now active. Enjoy your VPN!",
+      "successPending": "We received your payment and are confirming it with the provider. Your access will activate within a few minutes.",
+      "failTitle": "Payment was not completed",
+      "failDescription": "Your payment did not go through and you were not charged. You can try again at any time.",
+      "backToSubscription": "Back to subscription",
+      "tryAgain": "Try again",
+      "refreshStatus": "Refresh status"
     },
     "noSubscription": "No subscription yet",
     "noSubscriptionDescription": "Choose a plan or activate a promo code to get access.",
@@ -114,7 +125,28 @@
     "renew": "Renew subscription",
     "unavailable": "Online payments are not yet available. To subscribe or renew your plan, please contact us via Telegram — we will handle your payment manually.",
     "error": "We could not open the checkout flow. Please try again.",
-    "noSubscriptionInfo": "To activate or renew a subscription, click the button below. Payments are currently processed manually via Telegram."
+    "noSubscriptionInfo": "Pick a plan below and pay securely by bank card. It is a one-time payment — there are no recurring charges.",
+    "checkout": {
+      "title": "Choose a plan",
+      "description": "Select a plan and you'll be redirected to a secure payment page. Payment is one-time — your subscription will not auto-renew.",
+      "choose": "Choose",
+      "processing": "Redirecting…",
+      "manualHint": "Prefer to pay manually or having trouble?",
+      "manualCta": "Pay via Telegram",
+      "plans": {
+        "monthly": { "title": "Monthly", "duration": "30 days" },
+        "quarterly": { "title": "Quarterly", "duration": "90 days" },
+        "semiannual": { "title": "6 months", "duration": "180 days" },
+        "annual": { "title": "Annual", "duration": "365 days" }
+      },
+      "errors": {
+        "unknownPlan": "This plan is not available. Please choose another one.",
+        "unavailable": "Card payments are temporarily unavailable. Please try again later or pay via Telegram.",
+        "provider": "The payment provider returned an error. Please try again in a moment.",
+        "unauthenticated": "Please sign in again to continue.",
+        "generic": "We could not open the checkout. Please try again."
+      }
+    }
   },
   "servers": {
     "title": "Servers",

@@ -110,7 +110,7 @@ export interface PromocodeActivateRequest {
   code: string;
 }
 
-export type SubscriptionType = 'tribute' | 'stars' | 'activation_code';
+export type SubscriptionType = 'tribute' | 'stars' | 'card' | 'activation_code';
 
 export interface PromocodeActivateResponse {
   status: string;
@@ -123,6 +123,60 @@ export interface CurrentSubscriptionResponse {
   status: string;
   subscription_type: SubscriptionType;
   end_date: string;
+}
+
+/**
+ * Paid billing plans accepted by `POST /billing/checkout`.
+ * Each plan maps to a fixed-duration, one-time card payment via WATA.
+ */
+export type BillingPlan = 'monthly' | 'quarterly' | 'semiannual' | 'annual';
+
+export interface BillingCheckoutRequest {
+  plan: BillingPlan;
+}
+
+/**
+ * Response from `POST /billing/checkout`.
+ * `payment_url` is the hosted WATA page the user must be redirected to.
+ */
+export interface BillingCheckoutResponse {
+  payment_url: string;
+  order_id: string;
+  amount: number;
+  currency: string;
+  plan: BillingPlan;
+  duration: string;
+}
+
+export interface SubscriptionManageAction {
+  can_renew: boolean;
+  can_change_plan: boolean;
+  can_cancel: boolean;
+  renew_via: 'billing_checkout' | 'telegram_bot' | 'tribute';
+}
+
+export interface SubscriptionManagePlan {
+  id: BillingPlan;
+  title: string;
+  amount: number;
+  currency: string;
+}
+
+export interface SubscriptionManageResponse {
+  status: string;
+  subscription_type: SubscriptionType;
+  end_date: string;
+  days_remaining: number;
+  current_plan: string;
+  actions: SubscriptionManageAction;
+  available_plans: SubscriptionManagePlan[];
+  notice: string;
+}
+
+export interface SubscriptionCancelResponse {
+  status: 'cancelled';
+  end_date: string;
+  message: string;
 }
 
 export interface ChangePasswordRequest {

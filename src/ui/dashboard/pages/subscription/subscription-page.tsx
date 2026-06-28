@@ -6,7 +6,7 @@ import { getAccessToken } from '@/lib/session';
 import { Breadcrumbs } from '@/ui/dashboard/components/breadcrumbs';
 import { getCurrentSubscriptionOrNull } from '@/ui/dashboard/server/subscription-data';
 
-import { CheckoutButton } from './checkout-button';
+import { CheckoutPlans } from './checkout-plans';
 import { PromocodeSection } from './promocode-section';
 import { SubscriptionCard } from './subscription-card';
 
@@ -36,13 +36,7 @@ export const SubscriptionPage = async () => {
             className="max-w-none rounded-none bg-transparent px-0 py-0 shadow-none"
           />
 
-          <p className="mt-6 text-base leading-relaxed text-neutral-600">
-            {t('billing.noSubscriptionInfo')}
-          </p>
-
-          <div className="mt-8">
-            <CheckoutButton />
-          </div>
+          <CheckoutPlans className="mt-8 border-t border-neutral-30 pt-6" />
 
           <PromocodeSection className="mt-8 border-t border-neutral-30 pt-6" />
         </div>

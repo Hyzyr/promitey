@@ -8,20 +8,33 @@ import {
   unauthenticatedFailure,
   type ActionResult,
 } from '@/lib/server-error-forwarding';
-import type { PromocodeActivateResponse } from '@/api/client/api-types';
+import type {
+  PromocodeActivateResponse,
+  BillingPlan,
+  BillingCheckoutResponse,
+} from '@/api/client/api-types';
 
-export async function checkoutAction(): Promise<ActionResult<void>> {
+export async function checkoutAction(
+  plan: BillingPlan,
+): Promise<ActionResult<BillingCheckoutResponse>> {
   const token = await getAccessToken();
-  if (!token) return unauthenticatedFailure('checkoutAction');
+  if (!token) return unauthenticatedFailure<BillingCheckoutResponse>('checkoutAction');
 
   try {
-    await billingApi.checkout(token);
-    return { ok: true, data: undefined };
+    const data = await billingApi.checkout({ plan }, token);
+    return { ok: true, data };
   } catch (e) {
     if (isApiError(e)) {
-      if (e.status === 501) return actionFailure(e, 'checkoutAction', 'billing_unavailable');
+      // 400 — backend rejected the plan identifier
+      if (e.status === 400) return actionFailure<BillingCheckoutResponse>(e, 'checkoutAction', 'unknown_plan');
+      // 502 — WATA upstream returned an error
+      if (e.status === 502) return actionFailure<BillingCheckoutResponse>(e, 'checkoutAction', 'billing_provider_error');
+      // 503 / 501 — card payments not configured (no WATA_ACCESS_TOKEN)
+      if (e.status === 503 || e.status === 501) {
+        return actionFailure<BillingCheckoutResponse>(e, 'checkoutAction', 'billing_unavailable');
+      }
     }
-    return actionFailure(e, 'checkoutAction');
+    return actionFailure<BillingCheckoutResponse>(e, 'checkoutAction');
   }
 }
 

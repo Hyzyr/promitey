@@ -53,16 +53,16 @@
 
 ## ⏳ Осталось / временные решения
 
-### Оплата (WATA, оплата картой) — пока НЕ реализована
-- **Решение:** авторитетный контракт — `swagger.json`, и он по-прежнему описывает `POST /billing/checkout` как **заглушку 501** (идентичен `swagger-old.json` — отличий нет).
-- **Временное решение (текущее поведение):** вызов checkout ловит `501`, и UI откатывается на **ручную оплату через Telegram**. Это сделано намеренно и уже подключено.
-- **Что нужно для завершения:** бэкенд должен реально выпустить эндпоинт WATA и обновить swagger. Ожидаемый формат уже описан в заметке проекта:
-  - `POST /api/v1/billing/checkout` тело `{ "plan": "monthly" }`, plan ∈ `monthly | quarterly | semiannual | annual`
-  - ответ `{ payment_url, order_id, amount, currency, plan, duration }`
-- **План после готовности бэкенда:** выбор тарифа → вызов checkout → редирект на `payment_url` → страницы возврата success/fail, которые перечитывают статус подписки.
+### Оплата (WATA, оплата картой) — РЕАЛИЗОВАНА
+- **Статус:** `swagger.json` теперь содержит реальный контракт WATA, поэтому полный сценарий оплаты картой подключён от начала до конца.
+- **Эндпоинт:** `POST /api/v1/billing/checkout` тело `{ "plan": "monthly" }`, plan ∈ `monthly | quarterly | semiannual | annual`, ответ `{ payment_url, order_id, amount, currency, plan, duration }`.
+- **Сценарий:** выбор тарифа (`checkout-plans.tsx`) → серверный экшен `checkoutAction(plan)` → редирект на `payment_url` WATA → страницы возврата `/dashboard/subscription/success` и `/dashboard/subscription/fail`, которые заново читают `GET /subscription/current`, поэтому сообщение отражает реальный статус независимо от параметров возврата провайдера.
+- **Обработка ошибок:** `400 → unknown_plan`, `502 → billing_provider_error`, `503/501 → billing_unavailable`, `401 → unauthenticated`. При «недоступно» UI всё ещё предлагает ручную оплату через Telegram как запасной вариант.
+- **Dev-режим:** `src/api/client/dev-mock.ts` возвращает мок checkout, где `payment_url` ведёт сразу на страницу success — так весь цикл редиректа/возврата можно проверить без WATA.
+- **Типы/API:** в `api-types.ts` добавлены `BillingPlan`, `BillingCheckoutRequest/Response`, `SubscriptionManage*`, `SubscriptionCancel*`; `SubscriptionType` теперь включает `card`; `billing-api.ts` предоставляет `checkout`, `getSubscriptionManage`, `cancelSubscription`.
 
 ### Что нельзя изменить со стороны фронтенда
-- Реальные онлайн-платежи — заблокированы бэкендом (см. выше).
+- Боевая конфигурация мерчанта WATA (`WATA_ACCESS_TOKEN`) и активация вебхука — на стороне бэкенда; фронтенд аккуратно откатывается на Telegram, если бэкенд вернёт `503`.
 - Ссылка на Hiddify ведёт на GitHub проекта (как и у остальных клиентов), потому что точный App Store ID не удалось подтвердить без догадок.
 
 ---
