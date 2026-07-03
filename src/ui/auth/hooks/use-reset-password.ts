@@ -13,7 +13,6 @@ import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
 import { createPasswordSchema } from '@/ui/auth/password-validation';
-import { clearResetPasswordCode } from '@/ui/auth/reset-password-code-session';
 
 interface ResetPasswordValues {
   code: string;
@@ -98,7 +97,6 @@ export function useResetPassword(
       setServerError(message);
       return;
     }
-    clearResetPasswordCode(email);
     router.replace('/login');
   };
 

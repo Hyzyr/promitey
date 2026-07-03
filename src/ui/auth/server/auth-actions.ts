@@ -85,15 +85,15 @@ export async function logoutAction(): Promise<ActionResult> {
   return { ok: true, data: undefined };
 }
 
-/** Request a password-reset verification code; returns email/code for routing */
+/** Request a password-reset verification code; returns email for routing */
 export async function forgotPasswordAction(values: {
   email: string;
-}): Promise<ActionResult<{ email: string; code: string }>> {
+}): Promise<ActionResult<{ email: string }>> {
   try {
-    const result = await authApi.forgotPassword({ email: values.email });
-    return { ok: true, data: { email: values.email, code: result.code } };
+    await authApi.forgotPassword({ email: values.email });
+    return { ok: true, data: { email: values.email } };
   } catch (e) {
-    return actionFailure<{ email: string; code: string }>(e, 'forgotPasswordAction');
+    return actionFailure<{ email: string }>(e, 'forgotPasswordAction');
   }
 }
 

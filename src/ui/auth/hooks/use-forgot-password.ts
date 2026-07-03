@@ -12,7 +12,6 @@ import { useClearAuthFormErrors } from './use-clear-auth-form-errors';
 
 import { mapApiError } from '@/lib/api-error';
 import { reportForwardedServerError } from '@/lib/server-error-forwarding';
-import { saveResetPasswordCode } from '@/ui/auth/reset-password-code-session';
 
 interface ForgotPasswordValues {
   email: string;
@@ -57,7 +56,6 @@ export function useForgotPassword(): UseForgotPasswordReturn {
       setServerError(mapErrorCode(result.code));
       return;
     }
-    saveResetPasswordCode(result.data.email, result.data.code);
     router.push(`/forgot-password/confirm?email=${encodeURIComponent(result.data.email)}`);
   };
 

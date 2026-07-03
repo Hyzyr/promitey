@@ -90,7 +90,6 @@ export interface ResetPasswordRequest {
 
 export interface VerificationRequired {
   status: string;
-  code: string;
 }
 
 export interface RegisterConfirmRequest {

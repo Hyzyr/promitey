@@ -68,17 +68,14 @@ const TOTP_DISABLED: TotpStatusResponse = { status: 'ok', totp_enabled: false };
 
 const REGISTER_VERIFICATION_REQUIRED: VerificationRequired = {
   status: 'verification_required',
-  code: '111111',
 };
 
 const EMAIL_CHANGE_VERIFICATION_REQUIRED: VerificationRequired = {
   status: 'verification_required',
-  code: '999999',
 };
 
 const FORGOT_PASSWORD_VERIFICATION_REQUIRED: VerificationRequired = {
   status: 'verification_required',
-  code: '555555',
 };
 
 const PROMOCODE_ACTIVATE: PromocodeActivateResponse = {
@@ -159,13 +156,7 @@ const ROUTES: Partial<Record<RouteKey, RouteHandler>> = {
   'POST /auth/login/totp': () => ({ ...TOKEN_PAIR }),
   'POST /auth/refresh': () => ({ ...TOKEN_PAIR }),
   'POST /auth/forgot-password': () => ({ ...FORGOT_PASSWORD_VERIFICATION_REQUIRED }),
-  'POST /auth/reset-password': (body) => {
-    if (!isRecord(body) || body.code !== FORGOT_PASSWORD_VERIFICATION_REQUIRED.code) {
-      throw new ApiError('http', 400, 'invalid_code', 'invalid_code');
-    }
-
-    return STATUS_OK;
-  },
+  'POST /auth/reset-password': () => STATUS_OK,
   'GET /me': () => ME,
   'GET /vpn/region': () => ({ ...REGION }),
   'PUT /vpn/region': () => ({ ...REGION }),
@@ -208,10 +199,6 @@ export function devMockFetch<T>(path: string, method: string, body?: unknown): T
   }
 
   throw new ApiError('http', 501, `[dev-mock] Unhandled route: ${key}`, 'dev_mock_unhandled_route');
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 /** Returns a mock Response object for binary endpoints (e.g. OpenVPN config). */

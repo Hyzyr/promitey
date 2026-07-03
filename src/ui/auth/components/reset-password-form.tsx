@@ -6,13 +6,12 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useResetPassword } from '@/ui/auth/hooks/use-reset-password';
-import { readResetPasswordCode } from '@/ui/auth/reset-password-code-session';
 import { cn } from '@/lib/utils';
 
 import { AuthLink } from './auth-link';
 import { AuthStep } from './auth-step';
 import { PasswordRequirements, isPasswordRequirementsMet } from './password-requirements';
-import { VerificationCodeInput, VERIFICATION_CODE_LENGTH } from './verification-code-input';
+import { VerificationCodeInput } from './verification-code-input';
 
 export interface ResetPasswordFormProps {
   /** Email address the reset code was sent to. */
@@ -23,18 +22,12 @@ export interface ResetPasswordFormProps {
 
 type ResetPasswordStep = 'code' | 'password';
 
-const isVerificationCodeComplete = (code: string) =>
-  new RegExp(`^\\d{${VERIFICATION_CODE_LENGTH}}$`).test(code);
-
 export const ResetPasswordForm = ({
   email,
   initialCode = '',
 }: ResetPasswordFormProps) => {
   const t = useTranslations('auth');
   const [step, setStep] = useState<ResetPasswordStep>('code');
-  const [expectedCode] = useState(() =>
-    readResetPasswordCode(email) ?? (isVerificationCodeComplete(initialCode) ? initialCode : null),
-  );
   const [isCodeSubmitted, setIsCodeSubmitted] = useState(false);
   const { form, onSubmit, serverError } = useResetPassword(email, {
     initialCode,
@@ -48,7 +41,6 @@ export const ResetPasswordForm = ({
     register,
     watch,
     setValue,
-    setError,
     clearErrors,
     trigger,
     handleSubmit,
@@ -77,11 +69,6 @@ export const ResetPasswordForm = ({
     const isCodeValid = await trigger('code', { shouldFocus: true });
 
     if (!isCodeValid) return;
-
-    if (expectedCode && code !== expectedCode) {
-      setError('code', { type: 'manual', message: t('errors.invalidCode') });
-      return;
-    }
 
     setStep('password');
   };
