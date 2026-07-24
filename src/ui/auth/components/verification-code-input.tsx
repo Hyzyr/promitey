@@ -142,7 +142,7 @@ export const VerificationCodeInput = ({
             onChange={(event) => updateDigit(index, event.target.value)}
             onKeyDown={(event) => handleKeyDown(index, event)}
             onPaste={handlePaste}
-            className="p-[1em_0.5em]! text-center text-[18px] font-medium tracking-[0.32px] text-neutral-500"
+            className="px-1! py-4! text-center text-[18px] font-medium tracking-[0.32px] text-neutral-900"
           />
         </div>
       ))}
