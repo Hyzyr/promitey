@@ -14,7 +14,7 @@ export const FaqSection = () => {
     setOpen((prev) => (prev === i ? null : i));
   };
 
-  const faqCount = 6;
+  const faqCount = 5;
 
   return (
     <section

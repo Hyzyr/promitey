@@ -13,6 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
+import { LanguageSwitcher } from '@/components/ui/language-switcher';
 import { useScrollLock } from '@/hooks/use-scroll-lock';
 import { cn } from '@/lib/utils';
 
@@ -97,6 +98,14 @@ export const MobileDashboardMenu = ({
             </button>
 
             <nav className="flex flex-col gap-4">
+              <LanguageSwitcher
+                variant="dark"
+                size="full"
+                dropdownClassName="w-full"
+                onSelect={() => onOpenChange(false)}
+                className="mb-2"
+              />
+
               {DRAWER_ITEMS.map(({ href, icon: Icon, labelKey }) => {
                 const active =
                   href === '/dashboard'

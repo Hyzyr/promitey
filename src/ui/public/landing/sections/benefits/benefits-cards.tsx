@@ -15,7 +15,8 @@ import {
 } from './benefits-shapes';
 import { facebookSVG, telegramSVG, whatsappSVG } from '@/components/assets';
 import { BenefitCard, ParallaxItem } from './components';
-import { VideoCard } from '@/components/ui/video-card';
+// Temporarily disabled while the feedback card shows a static poster (see below).
+// import { VideoCard } from '@/components/ui/video-card';
 import { cn } from '@/lib/utils';
 
 const imgTryItFree = '/images/benefits/arc-blured.png';
@@ -143,6 +144,10 @@ export const YourInternetCard = ({ isActive, ctaHref }: YourInternetCardProps) =
           {facebookSVG}
         </span>
       </ParallaxItem>
+      {/*
+        Video version — temporarily replaced with a static poster.
+        Restore the <VideoCard> below (and remove the poster card) to re-enable playback.
+
       <VideoCard
         src="/videos/woman-feedback-promitey.webm"
         title="#feedback"
@@ -150,6 +155,32 @@ export const YourInternetCard = ({ isActive, ctaHref }: YourInternetCardProps) =
         className="right-[2.5%] bottom-[12%] h-auto w-[44%] rotate-[6.18deg] transition-all will-change-auto hover:w-[48%] hover:rotate-0 max-md:right-4 max-md:bottom-[10%] max-md:w-[50%]"
         playingClassName="w-[50%] rotate-0 max-md:w-[58%]"
       />
+      */}
+      <div
+        className={cn(
+          // Mirror VideoCard's wrapper so positioning/sizing stays identical.
+          'video-wrapper group absolute aspect-3/5 gpu-layer overflow-hidden rounded-lg shadow-2xl',
+          'right-[2.5%] bottom-[12%] h-auto w-[44%] rotate-[6.18deg] transition-all will-change-auto hover:w-[48%] hover:rotate-0 max-md:right-4 max-md:bottom-[10%] max-md:w-[50%]',
+        )}
+      >
+        <img
+          src="/images/feedback-video-poster.png"
+          alt="#feedback"
+          className="h-full! w-full! gpu-layer object-cover"
+          loading="lazy"
+        />
+        <div
+          role="presentation"
+          className="absolute inset-0 flex flex-col justify-end rounded-[inherit] p-4 video-card-gradient"
+        >
+          <span
+            className="font-manrope text-[22px] leading-snug font-bold tracking-[-0.02em] text-neutral-0"
+            aria-hidden="true"
+          >
+            #feedback
+          </span>
+        </div>
+      </div>
     </BenefitCard>
   );
 };

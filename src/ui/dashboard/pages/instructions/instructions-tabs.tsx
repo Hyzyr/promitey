@@ -32,11 +32,17 @@ const protocolLogos: Record<Protocol, string> = {
 };
 
 const videoSrc: Record<Protocol, string> = {
-  openvpn: '/videos/woman-feedback-promitey.webm',
-  vless: '/videos/woman-feedback-promitey.webm',
+  openvpn: '/videos/openvpn_guide.web.mp4',
+  vless: '/videos/openvpn_guide.web.mp4',
 };
 
 const videoPoster = '/images/feedback-video-poster.png';
+
+// The guide is a portrait (9:16) clip; keep the portrait framing on every tab.
+const isPortraitVideo: Record<Protocol, boolean> = {
+  openvpn: true,
+  vless: true,
+};
 
 const appOptions: Record<Protocol, AppOption[]> = {
   openvpn: [
@@ -91,6 +97,7 @@ export const InstructionsTabs = ({ className }: InstructionsTabsProps) => {
   const [activeProtocol, setActiveProtocol] = useState<Protocol>('openvpn');
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const activeApps = appOptions[activeProtocol];
+  const portrait = isPortraitVideo[activeProtocol];
 
   return (
     <section
@@ -219,18 +226,27 @@ export const InstructionsTabs = ({ className }: InstructionsTabsProps) => {
             </ul>
           </div>
 
-          <div className="flex w-full flex-col gap-3 lg:w-125">
+          <div
+            className={cn(
+              'flex w-full flex-col gap-3',
+              portrait ? 'lg:w-75' : 'lg:w-125',
+            )}
+          >
             <h2 className="text-[24px] font-medium text-neutral-800">
               {t('videoTitle')}
             </h2>
             <VideoCard
+              key={activeProtocol}
               src={videoSrc[activeProtocol]}
               title={t('videoAriaLabel')}
               autoPlay={false}
-              poster={videoPoster}
+              poster={portrait ? undefined : videoPoster}
               onPlayClick={() => setIsVideoModalOpen(true)}
               buttonClassName="top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2 scale-100 group-hover:top-1/2 group-hover:right-1/2 group-hover:translate-x-1/2 group-hover:-translate-y-1/2 group-hover:scale-100"
-              className="relative w-full aspect-500/325 rounded-sm"
+              className={cn(
+                'relative w-full rounded-sm',
+                portrait ? 'aspect-9/16 max-w-75' : 'aspect-500/325',
+              )}
             />
           </div>
         </div>
@@ -243,15 +259,20 @@ export const InstructionsTabs = ({ className }: InstructionsTabsProps) => {
         ariaLabel={t('videoAriaLabel')}
         closeAriaLabel={tCommon('close')}
         showCloseButton
-        className="max-w-250"
+        className={portrait ? 'max-w-105' : 'max-w-250'}
       >
         <video
           src={videoSrc[activeProtocol]}
-          poster={videoPoster}
+          poster={portrait ? undefined : videoPoster}
           controls
           autoPlay
           playsInline
-          className="aspect-video w-full rounded-sm bg-neutral-900 object-cover"
+          className={cn(
+            'w-full rounded-sm bg-neutral-900',
+            portrait
+              ? 'mx-auto aspect-9/16 max-h-[80vh] object-contain'
+              : 'aspect-video object-cover',
+          )}
         />
       </Modal>
     </section>

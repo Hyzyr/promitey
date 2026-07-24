@@ -45,30 +45,41 @@ export const VerificationCodeInput = ({
       return;
     }
 
-    // Multiple characters can arrive at once from iOS one-time-code autofill or
-    // when the field already held a digit. Distribute them across the boxes
-    // starting at the current index so mobile keyboards never appear "stuck".
-    if (sanitized.length > 1) {
-      const nextDigits = [...digits];
-      for (
-        let offset = 0;
-        offset < sanitized.length && index + offset < VERIFICATION_CODE_LENGTH;
-        offset += 1
-      ) {
-        nextDigits[index + offset] = sanitized[offset];
-      }
-      onChange(nextDigits.join('').slice(0, VERIFICATION_CODE_LENGTH));
-      focusAt(Math.min(index + sanitized.length, VERIFICATION_CODE_LENGTH - 1));
-      return;
+    // The box already holds a digit (value={digit}), so `rawValue` is the
+    // *whole* field content, not just the new keystroke. On mobile keyboards
+    // (Android GBoard, iOS composition) the incoming value can even equal the
+    // existing digit unchanged — which would collapse to a no-op re-render and
+    // make the input look frozen. Extract only the characters that differ from
+    // what this box currently shows, and distribute them from this box onward.
+    const current = digits[index];
+    let incoming = sanitized;
+    if (current && sanitized.startsWith(current)) {
+      // Typed after the existing digit: keep only the appended part.
+      incoming = sanitized.slice(current.length);
+    } else if (current && sanitized.endsWith(current)) {
+      // Some IMEs prepend the new digit before the old one.
+      incoming = sanitized.slice(0, sanitized.length - current.length);
+    }
+
+    // Fall back to the full sanitized value if the diff came out empty (e.g.
+    // the user replaced the digit with an identical one) so we still advance.
+    if (!incoming) {
+      incoming = sanitized.slice(-1);
     }
 
     const nextDigits = [...digits];
-    nextDigits[index] = sanitized;
-    onChange(nextDigits.join('').slice(0, VERIFICATION_CODE_LENGTH));
-
-    if (index < VERIFICATION_CODE_LENGTH - 1) {
-      focusAt(index + 1);
+    let written = 0;
+    for (
+      let offset = 0;
+      offset < incoming.length && index + offset < VERIFICATION_CODE_LENGTH;
+      offset += 1
+    ) {
+      nextDigits[index + offset] = incoming[offset];
+      written += 1;
     }
+
+    onChange(nextDigits.join('').slice(0, VERIFICATION_CODE_LENGTH));
+    focusAt(Math.min(index + written, VERIFICATION_CODE_LENGTH - 1));
   };
 
   const handleKeyDown = (index: number, event: KeyboardEvent<HTMLInputElement>) => {
@@ -113,6 +124,7 @@ export const VerificationCodeInput = ({
             type="text"
             inputMode="numeric"
             pattern="[0-9]*"
+            maxLength={1}
             autoComplete={index === 0 ? 'one-time-code' : 'off'}
             aria-label={t('confirm.digitLabel', { index: index + 1 })}
             value={digit}

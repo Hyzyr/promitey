@@ -133,19 +133,19 @@ export const PricingCard = ({
           )}
         >
           {perMonth && (
-            <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[24px]">
+            <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[20px] xxl:text-[24px]">
               {perMonth}
             </span>
           )}
           {!perMonth && reserveMissingMeta && (
             <span
-              className="font-manrope text-[14px] font-normal whitespace-nowrap text-neutral-600 opacity-0 md:text-[20px] lg:text-[18px] lgx:text-[24px]"
+              className="font-manrope text-[14px] font-normal whitespace-nowrap text-neutral-600 opacity-0 md:text-[20px] lg:text-[18px] lgx:text-[20px] xxl:text-[24px]"
               aria-hidden="true"
             >
               0 € / mo
             </span>
           )}
-          <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[24px]">
+          <span className="font-manrope text-[14px]  font-normal whitespace-nowrap text-neutral-600 md:text-[20px] lg:text-[18px] lgx:text-[20px] xxl:text-[24px]">
             {period}
           </span>
         </div>

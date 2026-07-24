@@ -16,7 +16,7 @@ export default async function LandingPage() {
       <HeroSection />
       <BenefitsSection isAuthenticated={isAuthenticated} />
       <ConnectGuide />
-      <TestimonialsSection /> 
+      {/* <TestimonialsSection />  */}
       <PricingSection />
       <FaqSection />
     </>

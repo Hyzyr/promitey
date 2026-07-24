@@ -117,28 +117,24 @@
     "title": "Frequently Asked Questions",
     "items": [
       {
-        "q": "What is Prometey VPN and how does it work?",
-        "a": "Prometey VPN is a service for security and freedom on the internet. We use modern protocols (VLESS and OpenVPN) to encrypt traffic and hide your real IP address from providers and websites."
+        "q": "Which servers will be available to me?",
+        "a": "Currently you can choose from servers in the following countries: France, United Kingdom, Poland, United States, Iraq, Russia, Germany, and Netherlands. Automatic selection of the best server is also available."
       },
       {
-        "q": "Why are your protocols better than regular ones?",
-        "a": "We use VLESS — one of the fastest and most 'invisible' protocols available today. It bypasses blocks where regular VPNs fail, while maintaining high speed."
+        "q": "What payment methods are available for the VPN?",
+        "a": "You can pay with a VISA, Mastercard, or MIR bank card, with cryptocurrency via Tribute, or with Telegram Stars."
       },
       {
-        "q": "On which devices can I use the VPN?",
-        "a": "iOS, Android, Windows, macOS, Linux, routers, and Smart TV."
+        "q": "Will my internet provider know that I'm using a VPN?",
+        "a": "Your provider will see a connection to a VPN but won't be able to track your traffic."
       },
       {
-        "q": "How many devices can I connect simultaneously?",
-        "a": "Up to 10 devices on one subscription."
+        "q": "Do you keep logs of user activity?",
+        "a": "No. We do not store the history of visited websites, IP addresses, or online actions."
       },
       {
-        "q": "Do you have a free trial period?",
-        "a": "Yes. No card required — try the service and decide for yourself."
-      },
-      {
-        "q": "What should I do if the key stops working?",
-        "a": "Write to us in Telegram — we will update the key in a minute."
+        "q": "Can I use the VPN on several devices at the same time?",
+        "a": "Yes, one configuration file can be used on up to 10 devices simultaneously."
       }
     ]
   },
