@@ -25,7 +25,10 @@ export const VerificationCodeInput = ({
   const t = useTranslations('auth');
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
-  const digits = Array.from({ length: VERIFICATION_CODE_LENGTH }, (_, index) => value[index] ?? '');
+  const digits = Array.from(
+    { length: VERIFICATION_CODE_LENGTH },
+    (_, index) => value[index] ?? '',
+  );
 
   const focusAt = (index: number) => {
     const input = inputsRef.current[index];
@@ -82,7 +85,10 @@ export const VerificationCodeInput = ({
     focusAt(Math.min(index + written, VERIFICATION_CODE_LENGTH - 1));
   };
 
-  const handleKeyDown = (index: number, event: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    event: KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (event.key === 'Backspace' && !digits[index] && index > 0) {
       focusAt(index - 1);
       return;
@@ -116,7 +122,10 @@ export const VerificationCodeInput = ({
   return (
     <div className={cn('flex w-full gap-3', className)}>
       {digits.map((digit, index) => (
-        <div key={index} className={cn('input light min-w-0 flex-1', error && 'error')}>
+        <div
+          key={index}
+          className={cn('light input min-w-0 flex-1', error && 'error')}
+        >
           <input
             ref={(input) => {
               inputsRef.current[index] = input;
@@ -133,7 +142,7 @@ export const VerificationCodeInput = ({
             onChange={(event) => updateDigit(index, event.target.value)}
             onKeyDown={(event) => handleKeyDown(index, event)}
             onPaste={handlePaste}
-            className="text-center text-[18px] font-medium tracking-[0.32px]"
+            className="color-neutral-500 padding-[1em_0.5em] text-center text-[18px] font-medium tracking-[0.32px]"
           />
         </div>
       ))}
